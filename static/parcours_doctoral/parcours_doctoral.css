@@ -1,0 +1,438 @@
+/*
+ *
+ *   OSIS stands for Open Student Information System. It's an application
+ *   designed to manage the core business of higher education institutions,
+ *   such as universities, faculties, institutes and professional schools.
+ *   The core business involves the administration of students, teachers,
+ *   courses, programs and so on.
+ *
+ *   Copyright (C) 2015-2022 Université catholique de Louvain (http://www.uclouvain.be)
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   A copy of this license - GNU General Public License - is available
+ *   at the root of the source code of this program.  If not,
+ *   see http://www.gnu.org/licenses/.
+ *
+ */
+
+blockquote {
+  padding: 5px 10px;
+  font-size: 1em;
+  font-style: italic;
+  white-space: pre-line;
+}
+
+.table caption {
+  font-weight: bold;
+  color: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.border-top {
+  border-top: 1px solid #eee;
+  padding-top: 1em;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1em;
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.inline-field-data dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.media-list .media {
+  margin-top: 0.5em;
+  border: 1px solid #ddd;
+  padding: 1em;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1em;
+}
+
+.align-items-baseline {
+  align-items: baseline;
+}
+
+.flex-container-no-wrap {
+  display: flex;
+  gap: 1em;
+}
+
+.flex-container-align-no-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
+.flex-container-no-wrap > * {
+  flex: 1;
+}
+
+.flex-container.align-top {
+  align-items: start;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.min_field {
+  width: max-content;
+}
+
+.popover-buttons:not(.unstyled) {
+  text-decoration: none !important;
+  margin-left: 5px;
+  font-size: 1.25em;
+  vertical-align: -.075em;
+  color: #337ab7 !important;
+}
+
+.popover {
+  max-width:600px;
+}
+
+.popover *:last-child {
+  margin-bottom: 0;
+}
+
+.required_field .form-label:after, .required_text:after, .required_panel .card-title:after {
+  content: " *";
+  color: red;
+}
+
+#template-messages-container > .card-body {
+  padding: 0;
+  margin: 1em 0;
+}
+
+#template-messages-container > .card-body > #pnl_error_messages {
+  margin: 0;
+}
+
+/* To override the bootstrap fieldset style */
+fieldset.custom-fieldset {
+  border: 1px solid #ddd;
+  padding: inherit;
+}
+
+fieldset.custom-fieldset > legend {
+  font-size: 1em;
+  width: fit-content;
+  border: none;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+.nav-pills.nav-grey > li.active > a,
+.nav-pills.nav-grey > li.active > a:focus,
+.nav-pills.nav-grey > li.active > a:hover {
+  background-color: #aaa;
+}
+
+
+.tabsbar-collapse > .navbar-nav > li > a {
+  line-height: 20px;
+  padding: 20px 15px;
+}
+
+.tabsbar-collapse > .navbar-nav > li > a.active {
+  background-color: #eee;
+}
+
+.tabsbar-collapse {
+  border-top: 1px solid #e7e7e7;
+}
+
+#doctorate-desktop-tabs > li > a {
+  line-height: 30px;
+}
+
+/* Subtabs */
+
+#subtabs {
+  border: solid 1px #ddd;
+  padding: 10px;
+}
+
+#subtabs .nav {
+  gap: 1px;
+}
+
+#subtabs li a {
+  padding: 15px;
+}
+
+#subtabs-xs > ul > li > a {
+  padding: 10px 15px;
+}
+
+.subtabs li a {
+  background-color: #eee;
+  line-height: 15px;
+}
+
+.subtabs li a.active {
+  background-color: #d9edf7;
+  color: #31708f;
+}
+
+.subtabs li a:hover {
+  background-color: #337ab7;
+  color: #fff;
+}
+
+select.select2-hidden-accessible + span {
+  width: 100% !important;
+  min-width: auto;
+}
+
+.select2-selection__rendered {
+  line-height: 1em !important;
+  overflow-y: visible !important;
+}
+
+.select2-selection__arrow {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+/*
+  TOGGLE SWITCH
+*/
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.osis-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.osis-slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .osis-slider {
+  background-color: rgb(51, 122, 183);
+}
+
+input:focus + .osis-slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .osis-slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+input:disabled + .osis-slider {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+/* Rounded sliders */
+.osis-slider.round {
+  border-radius: 17px;
+}
+
+.osis-slider.round:before {
+  border-radius: 50%;
+}
+
+.float-end > .input-group {
+  width: 0; /* Chrome fix of input-group inside panel title (doctoral training) */
+}
+
+.plain-text-widget {
+  width: 100%;
+  white-space: pre-line;
+}
+
+.debug-content {
+  background-color: #ffb4ff78;
+}
+
+.scroll-with-margin {
+  scroll-margin-top: 65px; /* To scroll under the nav menu */
+}
+
+body, html {
+  scroll-behavior: smooth;
+}
+
+.multi-widget ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.multi-widget ul label {
+  font-weight: normal;
+}
+
+.training-acronym {
+  font-size: 0.80em;
+  color: #888;
+  margin-left: 0.5em;
+}
+
+.select2-results__option--highlighted[aria-selected] .training-acronym {
+  color: #eee;
+}
+
+.select2-results hr {
+  padding: 0;
+  margin: 0;
+}
+
+.mt-1 {
+  margin-top: 1em;
+}
+
+/* Style utility classes */
+.fw-bold {
+  font-weight: 700;
+}
+
+.fw-normal {
+  font-weight: 400;
+}
+
+.fw-light {
+  font-weight: 300;
+}
+
+.fst-italic {
+  font-style: italic;
+}
+
+.text-decoration-underline {
+  text-decoration: underline;
+}
+
+.fst-bold-underline {
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.card-title {
+  margin-bottom: 0;
+}
+
+.btn-light.active, .btn-light:active, .btn-light:hover {
+	background-color: #e6e6e6;
+    border-color: #adadad;
+}
+
+#prevent-quitting-modal {
+  z-index: 2000;
+}
+
+/* The following code related to the bootstrap migration will be moved in the base css files in the future. */
+.hide-bs3-element {
+  display: none;
+}
+
+.display-bs5-element {
+  display: block !important;
+}
+
+.not-active {
+  pointer-events: none;
+  cursor: default;
+  opacity: .6
+}
+
+.validated {
+  color: var(--bs-success);
+}
+
+.not-validated {
+  color: var(--bs-warning);
+}
+
+.error {
+  color: var(--bs-danger);
+}
+
+.has-success {
+  color: var(--bs-success);
+}
+
+.invalid-feedback {
+  display: block;
+}
+
+/* End of the bootstrap migration code */

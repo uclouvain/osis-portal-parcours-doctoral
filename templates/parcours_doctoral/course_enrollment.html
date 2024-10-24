@@ -1,0 +1,133 @@
+{% extends "parcours_doctoral/tab_layout.html" %}
+{% load i18n static parcours_doctoral doctorate_enums django_bootstrap5 %}
+
+{% comment "License" %}
+  * OSIS stands for Open Student Information System. It's an application
+  * designed to manage the core business of higher education institutions,
+  * such as universities, faculties, institutes and professional schools.
+  * The core business involves the administration of students, teachers,
+  * courses, programs and so on.
+  *
+  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * A copy of this license - GNU General Public License - is available
+  * at the root of the source code of this program.  If not,
+  * see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+
+{% block tab_content %}
+  {% url "parcours_doctoral:course-enrollment:add" pk=view.kwargs.pk category='UCL_COURSE' as add_url %}
+  <h3>{% trans "Course unit enrolment" %}</h3>
+
+  <p>{% lorem %}</p>
+
+  {% if doctorate|can_make_action:'add_training' %}
+    <a href="{{ add_url }}" class="btn btn-light border border-dark-subtle mb-3">
+      {% trans "Enroll in a course" %}
+    </a>
+  {% endif %}
+
+  <h4>{% trans "Course units" %}</h4>
+  {% if activities %}
+    <div class="filter-status mb-3">
+      <strong>{% trans "Status" %}</strong>
+      <div class="btn-group btn-group-sm flex-wrap" role="radiogroup">
+        <button type="button" class="btn btn-light border border-dark-subtle active" data-status="all">
+          {% trans "All" context "filters" %}
+        </button>
+        {% for status_name, status_label in statuses %}
+          <button
+            type="button"
+            class="btn border border-dark-subtle btn-{{ status_name|status_as_class }}"
+            data-status="{{ status_name }}"
+          >
+            {{ status_label }}
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+
+    {# Special error handling #}
+    {% if activities_form.non_field_errors %}
+      <div class="alert alert-danger alert-dismissable alert-link">
+        {{ activities_form.non_field_errors.0 }}
+      </div>
+    {% endif %}
+
+    <form id="activities" action="" method="post">
+      {% csrf_token %}
+
+      <div id="activity-list">
+        {% for activity in activities %}
+          {% firstof 0 activity.category|lower|add:'.html' as template_name %}
+          {% if not activity.parent %}
+            {% include "parcours_doctoral/details/training/"|add:template_name %}
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if doctorate|can_make_action:'submit_training' %}
+        <button class="btn btn-light border border-dark-subtle" type="submit" name="_submit">{% trans "Submit selected activities" %}</button>
+      {% endif %}
+    </form>
+  {% else %}
+    {% trans "No course created at present." %}
+    {% if doctorate|can_make_action:'add_training' %}
+      <a href="{{ add_url }}">
+        {% trans "Enroll in a course" %}
+      </a>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+
+{% block style %}
+  {{ block.super }}
+  <link href="{% static "parcours_doctoral/training.css" %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block script %}
+  <script>
+  $(function () {
+    // Open the right panel depending on location hash
+    if (document.location.hash) {
+      const uuid = document.location.hash.slice(1);
+      $('#a-' + uuid).one('shown.bs.collapse', function () {
+        document.getElementById('h-' + uuid).scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }).collapse('show');
+    }
+
+    // Filters
+    const ALL_VALUES = 'all';
+    let current_filter_status = ALL_VALUES;
+    $('.filter-status button').on('click', function () {
+      current_filter_status = $(this).data('status');
+      $('.filter-status button').removeClass('active');
+      $(this).addClass('active');
+      apply_filters();
+    });
+
+    function apply_filters() {
+      const reStatus = new RegExp(`\\b${current_filter_status}\\b`);
+      $('#activity-list .card').each(function () {
+        $(this).show();
+        if ((current_filter_status !== ALL_VALUES && !$(this).data('status').match(reStatus))) {
+          $(this).hide();
+        }
+      });
+    }
+  });
+  </script>
+{% endblock %}

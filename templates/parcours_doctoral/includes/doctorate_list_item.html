@@ -1,0 +1,51 @@
+{% load i18n parcours_doctoral doctorate_enums %}
+
+{% comment "License" %}
+  * OSIS stands for Open Student Information System. It's an application
+  * designed to manage the core business of higher education institutions,
+  * such as universities, faculties, institutes and professional schools.
+  * The core business involves the administration of students, teachers,
+  * courses, programs and so on.
+  *
+  * Copyright (C) 2015-2024 Université catholique de Louvain
+  (http://www.uclouvain.be)
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * A copy of this license - GNU General Public License - is available
+  * at the root of the source code of this program.  If not,
+  * see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+{% panel additional_class="doctorate-item" cy_state=doctorate.statut %}
+  <h3 class="mt-0">
+    {% display doctorate.formation.intitule " (" doctorate.formation.campus.nom ")" as doctorate_title %}
+    {{ doctorate_title }} ({{ doctorate.reference }})
+    <span class="d-block"><small class="text-muted">{{ doctorate.formation.entite_gestion.intitule_secteur }}</small></span>
+  </h3>
+  <div>
+    <em>{% trans "Created on:" context "a doctorate" %} {{ doctorate.cree_le }}</em>
+  </div>
+  <div>
+    <em>
+      {% trans "Status:" %}
+      {{ doctorate.statut|enum_display:'ChoixStatutDoctorat' }}
+    </em>
+  </div>
+
+  {% footer %}
+  {% if doctorate|can_make_action:'retrieve_project' %}
+    <a class="btn border border-dark-subtle float-end" href="{% url 'parcours_doctoral:project' doctorate.uuid %}">
+      <span class="fas fa-pencil"></span>
+      {% trans "Modify" context 'edit' %}
+    </a>
+  {% endif %}
+{% endpanel %}

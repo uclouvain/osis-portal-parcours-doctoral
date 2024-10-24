@@ -1,0 +1,174 @@
+{% extends "bootstrap5/layout.html" %}
+{% load i18n static parcours_doctoral doctorate_enums %}
+
+{% comment "License" %}
+  * OSIS stands for Open Student Information System. It's an application
+  * designed to manage the core business of higher education institutions,
+  * such as universities, faculties, institutes and professional schools.
+  * The core business involves the administration of students, teachers,
+  * courses, programs and so on.
+  *
+  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * A copy of this license - GNU General Public License - is available
+  * at the root of the source code of this program.  If not,
+  * see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+{% comment "Usage" %}
+  `tab_layout.html` gère le layout des formulaires et des détails, ceci implique que :
+  - si la variable `form` est presente et possède des `visible_fields`, le bloc `form` contenant une balise
+  <form> est ajouté ainsi que les boutons de soumission dans les onglets et en bas de page.
+{% endcomment %}
+
+
+{% block style %}
+  <link href="{% static "parcours_doctoral/parcours_doctoral.css" %}" rel="stylesheet" />
+  {% if form %}
+    {{ form.media.css }}
+  {% endif %}
+{% endblock %}
+
+{% block script %}
+  {{ block.super }}
+  <script src="{% static 'js/vue.min.js' %}"></script>
+  <script src="{% static 'js/vue-i18n.min.js' %}"></script>
+  {% if form %}
+    {{ form.media.js }}
+  {% else %}
+    <script type="text/javascript" src="{% static 'osis_document/osis-document.umd.min.js' %}"></script>
+  {% endif %}
+  <script src="{% static 'parcours_doctoral/parcours_doctoral.js' %}"></script>
+  <script src="{% static 'parcours_doctoral/popover.js' %}"></script>
+{% endblock %}
+
+{% block breadcrumb %}
+  {% if doctorate %}
+    {% if doctorate.matricule_doctorant == user.person.global_id %}
+      <li class="breadcrumb-item active">
+        {% translate 'My PhD' context 'doctorate' %}
+      </li>
+    {% else %}
+      <li class="breadcrumb-item">
+        <a href="{% url 'parcours_doctoral:supervised-list' %}">{% trans "PhDs" %}</a>
+      </li>
+      <li class="breadcrumb-item active">
+        {{ doctorate.formation.intitule }} ({{ doctorate.reference }})
+      </li>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% trans "Save" context 'doctorate' as save_label %}
+
+  {% if form %}
+    {% include "parcours_doctoral/modal/prevent_quitting_modal.html" %}
+  {% endif %}
+
+  {# Header page title #}
+  <div class="page-header h3 clearfix">
+    <span class="d-inline-block">
+      {% block header_title %}{{ doctorate.formation.intitule }} ({{ doctorate.reference }}){% endblock %}
+    </span>
+  </div>
+
+  {# Well #}
+  {% block well %}
+    <div class="card card-body bg-light mb-3">
+      <div>
+        {% trans "Reference:" %}
+        {% display doctorate.formation.intitule " (" doctorate.formation.campus.nom ")" as doctorate_title %}
+        {{ doctorate_title }} ({{ doctorate.reference }})
+      </div>
+      <div>
+        {% trans "Status:" %}
+        {{ doctorate.statut|enum_display:'ChoixStatutDoctorat' }}
+      </div>
+    </div>
+  {% endblock well %}
+
+  {% block template_messages %}
+    <div id="template-messages-container">
+      {% include "template_messages.html" %}
+    </div>
+  {% endblock %}
+
+  {% url "parcours_doctoral:"|add:request.resolver_match.url_name view.kwargs.pk as cancel_url %}
+  {% url "parcours_doctoral:update:"|add:request.resolver_match.url_name view.kwargs.pk as change_url %}
+
+  {% block tabs_content %}
+    {% get_current_tab as current_tab %}
+
+    {% if form.visible_fields %}
+    {% elif change_url and change_url != request.path and doctorate|can_update_tab:current_tab %}
+      {# Display the edit button if accessible #}
+      <div class="text-end d-md-none">
+        <a href="{{ change_url }}" class="btn btn-primary">
+          <span class="fa-solid fa-floppy-disk" aria-hidden="true"></span>
+          {% trans 'Edit' %}
+        </a>
+      </div>
+    {% endif %}
+
+    {% current_subtabs as subtabs %}
+
+    {% doctorate_tabs doctorate with_submit=form.visible_fields %}
+
+    {% if subtabs|length > 1 %}
+      {# If there are multiple subtabs, display them on the side #}
+      <div id="subtabs-row" class="row m-auto gap-3 align-items-start">
+      <div id="subtabs" class="col d-none d-md-block subtabs" style="max-width: min-content">
+        {% get_current_parent_tab as current_parent %}
+        <div class="mt-1 fst-italic">{{ current_parent.label }}</div>
+        <hr>
+        {% doctorate_subtabs doctorate %}
+      </div>
+    {% endif %}
+
+  <div class="{% if subtabs|length > 1 %}col p-0{% endif %}{% if form %} quitting-context-excluded{% endif %}">
+    {% block tab_content %}
+      {% if form.visible_fields %}
+        <form id="doctorate-main-form" class="osis-form" method="post" action="">
+          {# Form and form buttons #}
+          {% csrf_token %}
+          {% block form %}{% endblock %}
+          {% block submit_button_bottom %}
+            {% get_current_tab as current_tab %}
+            <div class="text-end mb-3">
+              {% block submit_button %}
+                <button
+                  type="submit" class="{{ submit_class|default:'btn btn-light border border-dark-subtle' }}"
+                  {% if cancel_url and not doctorate|can_update_tab:current_tab %}
+                  disabled
+                  {% endif %}
+                  form="doctorate-main-form"
+                >
+                  <i class="fa-solid {{ submit_icon|default:'fa-floppy-disk' }}"></i>
+                  {{ submit_label|default:save_label }}
+                </button>
+              {% endblock submit_button %}
+            </div>
+          {% endblock submit_button_bottom %}
+        </form>
+        {% block after_form %}{% endblock %}
+      {% endif %}
+    {% endblock %}
+  </div>
+  {% if subtabs|length > 1 %}
+    {# End sibling tabs #}
+    </div>
+  {% endif %}
+  {% endblock tabs_content %}
+  {% block extra_content %}{% endblock %}
+{% endblock %}

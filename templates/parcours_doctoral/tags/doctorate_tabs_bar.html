@@ -1,0 +1,136 @@
+{% load i18n parcours_doctoral %}
+
+{% comment "License" %}
+  * OSIS stands for Open Student Information System. It's an application
+  * designed to manage the core business of higher education institutions,
+  * such as universities, faculties, institutes and professional schools.
+  * The core business involves the administration of students, teachers,
+  * courses, programs and so on.
+  *
+  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * A copy of this license - GNU General Public License - is available
+  * at the root of the source code of this program.  If not,
+  * see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+{% comment "Usage" %}
+  You can use this template tag by displaying {% doctorate_tabs doctorate %}.
+  If these tabs are diplaying a form and you need a submit button inside tab bar, use
+  {% doctorate_tabs doctorate with_submit=True %}.
+
+  It also display subtabs while on mobile displays, but you need to show
+  {% doctorate_subtabs doctorate %} for other displays.
+{% endcomment %}
+{% trans "Save" context 'doctorate' as save_label %}
+
+<div class="mb-3">
+  {# Nav for mobile display #}
+  <nav class="navbar navbar-light bg-light d-md-none mb-3 mt-3 pb-0 border rounded">
+    <div class="container-fluid p-0">
+    {# Toggle for better mobile display: display only the current item #}
+    <div class="d-flex justify-content-center w-100 p-3">
+      <div class="navbar-text text-center flex-1">
+        <strong>
+          {% if active_parent.icon %}
+            <span class="fa fa-{{ active_parent.icon }}"></span>
+          {% endif %}
+          {{ active_parent.label }}
+        </strong>
+      </div>
+      <button
+        type="button"
+        class="navbar-toggler tabsbar-toggle collapsed"
+        data-bs-toggle="collapse"
+        data-bs-target="#doctorate-navbar"
+        aria-expanded="false"
+        aria-label="{% translate 'Toggle navigation' %}"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse tabsbar-collapse w-100 mt-1" id="doctorate-navbar">
+      <ul class="nav navbar-nav">
+        {% for parent, children in tab_tree.items %}
+          {% if parent == active_parent %}
+            {% include 'parcours_doctoral/doctorate_tab_entry.html' with tab=children.0 is_active=True icon=parent.icon label=parent.label %}
+            <div id="subtabs-xs" class="subtabs ms-5">
+              {% doctorate_subtabs doctorate %}
+            </div>
+          {% else %}
+            {% include 'parcours_doctoral/doctorate_tab_entry.html' with tab=children.0 icon=parent.icon label=parent.label %}
+          {% endif %}
+        {% endfor %}
+    </div><!-- /.navbar-collapse -->
+    </div>
+  </nav>
+
+  {# Nav for desktop display #}
+  <ul id="doctorate-desktop-tabs" class="nav nav-tabs d-none d-md-flex">
+    {% for parent, children in tab_tree.items %}
+      {% if parent == active_parent %}
+        {% include 'parcours_doctoral/doctorate_tab_entry.html' with tab=children.0 is_active=True icon=parent.icon label=parent.label %}
+      {% else %}
+        {% include 'parcours_doctoral/doctorate_tab_entry.html' with tab=children.0 icon=parent.icon label=parent.label %}
+      {% endif %}
+    {% endfor %}
+
+    {# Submit button if needed (mobile display) #}
+    {% get_current_tab as current_tab %}
+    {% if with_submit %}
+      <div class="ms-auto">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          form="doctorate-main-form"
+          {% if not doctorate|can_update_tab:current_tab %}
+          disabled
+          {% endif %}
+        >
+          <i class="fa-solid {{ submit_icon|default:'fa-floppy-disk' }}"></i>
+          {{ submit_label|default:save_label }}
+        </button>
+      </div>
+    {% else %}
+      {% url 'parcours_doctoral:update:'|add:request.resolver_match.url_name view.kwargs.pk as change_url %}
+      {% if change_url and change_url != request.path and doctorate|can_update_tab:current_tab %}
+        <div class="ms-auto">
+          <a href="{{ change_url }}" class="btn btn-primary">
+            <span class="fa-solid fa-floppy-disk" aria-hidden="true"></span>
+            {% trans 'Edit' %}
+          </a>
+        </div>
+      {% endif %}
+    {% endif %}
+
+  </ul>
+
+  {# Submit button if needed (mobile display) #}
+  {% if with_submit %}
+    <div class="text-end d-md-none">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        form="doctorate-main-form"
+        {% if not doctorate|can_update_tab:current_tab %}
+        disabled
+        {% endif %}
+      >
+        <i class="fa-solid {{ submit_icon|default:'fa-floppy-disk' }}"></i>
+        {{ submit_label|default:save_label }}
+      </button>
+    </div>
+  {% endif %}
+</div>
