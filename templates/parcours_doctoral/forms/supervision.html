@@ -1,5 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load bootstrap3 i18n static parcours_doctoral osis_document %}
+{% load django_bootstrap5 i18n static parcours_doctoral osis_document %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -29,7 +29,7 @@
   {% panel _("Proposal summary") %}
     {% if doctorate.fiche_archive_signatures_envoyees %}
       {% get_file_url doctorate.fiche_archive_signatures_envoyees.0 as file_url %}
-      <a href="{{ file_url }}" class="btn btn-default" target="_blank">
+      <a href="{{ file_url }}" class="btn border border-dark-subtle" target="_blank">
         <span class="fa fa-file-download"></span>
         {% trans "Download as PDF" %}
       </a>
@@ -41,7 +41,7 @@
   {% if doctorate|can_make_action:'add_approval' and approval_form and approval_form.decision %}
     {% include "parcours_doctoral/modal/prevent_quitting_modal.html" %}
     {% panel _("Proposal approved") %}
-      {% bootstrap_form_errors approval_form %}
+      {% bootstrap_form_errors approval_form type='non_fields'  %}
       <form class="osis-form approval-form" method="post" action="">
         {% csrf_token %}
         {% bootstrap_field approval_form.decision %}
@@ -83,7 +83,7 @@
   {% if doctorate|can_make_action:'add_member' and add_form and add_form.type %}
     <form class="osis-form" method="post" action="">
       {% csrf_token %}
-      {% bootstrap_form_errors add_form %}
+      {% bootstrap_form_errors add_form type='non_fields' %}
       {% panel _("Add a promoter or a CA member") %}
         <div class="row">
           <div class="col-md-12">
@@ -99,8 +99,8 @@
             {% bootstrap_field add_form.person %}
           </div>
           <div class="col-md-6" id="external-person">
-            <div class="panel panel-default">
-              <div class="panel-body">
+            <div class="card mb-3">
+              <div class="card-body">
                 {% bootstrap_field add_form.prenom %}
                 {% bootstrap_field add_form.nom %}
                 {% bootstrap_field add_form.email %}
@@ -126,8 +126,8 @@
       <button
         type="button"
         class="btn btn-success btn-lg"
-        data-toggle="modal"
-        data-target="#request-signatures-modal"
+        data-bs-toggle="modal"
+        data-bs-target="#request-signatures-modal"
       >
         {% trans "Request signatures" %}
       </button>
@@ -138,6 +138,7 @@
 {% endblock tab_content %}
 
 {% block script %}
+  {{ block.super }}
   {{ add_form.media }}
   {{ approval_form.media }}
   {{ approve_by_pdf_form.media }}
@@ -180,7 +181,7 @@
 {% endblock %}
 
 {% block style %}
-  <link href="{% static "parcours_doctoral/parcours_doctoral.css" %}" rel="stylesheet" />
+  {{ block.super }}
   <style>
     .approval-form textarea {
       resize: vertical;
@@ -193,6 +194,10 @@
     .signature-item + .well dl,
     .signature-item + .well .media-list,
     .signature-item + .well .media-heading {
+      margin-bottom: 0;
+    }
+
+    #request-signatures-modal .alert ul {
       margin-bottom: 0;
     }
   </style>

@@ -1,5 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load i18n parcours_doctoral doctorate_enums bootstrap3 %}
+{% load i18n parcours_doctoral doctorate_enums django_bootstrap5 %}
 
 {% comment "License" %}
 * OSIS stands for Open Student Information System. It's an application
@@ -73,7 +73,7 @@
   {% if form %}
   <script>
     $(function () {
-      $('#id_justification_non_docteur').closest('.form-group').dependsOn({
+      $('#id_justification_non_docteur').closest('.mb-3').dependsOn({
         '#id_titre': { values: ['NON_DOCTEUR'] },
       }, { duration: 0, valueOnDisable: '', });
       $('.ucl_show').dependsOn({
@@ -99,10 +99,10 @@
 {% block style %}
   {{ block.super }}
   <style>
-  .radio {
-    display: inline;
-    margin-right: 20px;
-  }
+    #id_institution_principale .form-check {
+     display: inline-block;
+     margin-right: 1rem;
+   }
   .membre-container {
     display: flex;
     justify-content: space-between;

@@ -1,4 +1,4 @@
-{% load bootstrap3 i18n static parcours_doctoral %}
+{% load django_bootstrap5 i18n static parcours_doctoral %}
 
 {% comment "License" %}
     * OSIS stands for Open Student Information System. It's an application
@@ -35,17 +35,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button
-                    type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                >
-                    <span aria-hidden="true">&times;</span>
-                </button>
                 <h4 class="modal-title" id="request-signatures-label">
                     {% trans "Request signatures" %}
                 </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             {% if signature_conditions %}
@@ -64,8 +57,8 @@
                 <div class="modal-footer">
                     <button
                         type="button"
-                        class="btn btn-default"
-                        data-dismiss="modal"
+                        class="btn btn-light border border-dark-subtle"
+                        data-bs-dismiss="modal"
                     >
                         {% trans "Close" %}
                     </button>
@@ -95,8 +88,8 @@
                         </button>
                         <button
                             type="button"
-                            class="btn btn-default"
-                            data-dismiss="modal"
+                            class="btn btn-light border border-dark-subtle"
+                            data-bs-dismiss="modal"
                         >
                             {% trans "Close" %}
                         </button>

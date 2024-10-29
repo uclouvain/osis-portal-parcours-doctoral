@@ -1,5 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load bootstrap3 i18n static parcours_doctoral %}
+{% load django_bootstrap5 i18n static parcours_doctoral %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -26,23 +26,23 @@
 {% endcomment %}
 
 {% block form %}
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">{% trans "Defense method" context "doctorate tab" %}</h4>
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4 class="card-title">{% trans "Defense method" context "doctorate tab" %}</h4>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
       {% include 'parcours_doctoral/includes/jury_description.html' %}
 
-      {% bootstrap_form_errors form %}
+      {% bootstrap_form_errors form type='non_fields' %}
 
       {% csrf_token %}
 
-      {% bootstrap_field_with_tooltip form.titre_propose "required_field" %}
-      {% bootstrap_field_with_tooltip form.formule_defense "required_field" %}
+      {% bootstrap_field_with_tooltip form.titre_propose wrapper_class="mb-3 required_field" %}
+      {% bootstrap_field_with_tooltip form.formule_defense wrapper_class="mb-3 required_field" %}
       {% bootstrap_field form.date_indicative %}
-      {% bootstrap_field form.langue_redaction form_group_class="form-group required_field" %}
-      {% bootstrap_field form.langue_soutenance form_group_class="form-group required_field" %}
-      {% bootstrap_field form.commentaire form_group_class="form-group" %}
+      {% bootstrap_field form.langue_redaction wrapper_class="mb-3 required_field" %}
+      {% bootstrap_field form.langue_soutenance wrapper_class="mb-3 required_field" %}
+      {% bootstrap_field form.commentaire wrapper_class="mb-3" %}
     </div>
   </div>
 {% endblock %}

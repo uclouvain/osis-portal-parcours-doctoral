@@ -1,4 +1,4 @@
-{% extends 'parcours_doctoral/modal/modal.html' %}{% load bootstrap3 i18n %}
+{% extends 'parcours_doctoral/modal/modal.html' %}{% load django_bootstrap5 i18n %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -36,7 +36,7 @@
   <form class="osis-form no-prevent-quitting" method="post" action="" id="confirmation-modal-form">
     {% csrf_token %}
     <input type="hidden" name="confirmed-id">
-    <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Cancel" %}</button>
+    <button type="button" class="btn btn-light border border-dark-subtle" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
     <button type="submit" class="btn btn-danger" name="confirm" form="confirmation-modal-form">
       {% trans "Confirm" %}
     </button>

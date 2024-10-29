@@ -25,25 +25,24 @@
 {% endcomment %}
 
 <div
-  class="panel panel-{{ activity|status_as_class }}"
+  class="card card-{{ activity|status_as_class }}"
   data-status="{{ activity.status }}"
   data-type="{{ activity.category }}"
 >
-  <div class="panel-heading" role="tab" id="h-{{ activity.uuid }}">
-    <h3 class="panel-title">
+  <div class="card-header" role="tab" id="h-{{ activity.uuid }}">
+    <h3 class="card-title d-flex align-items-start gap-3">
       {% include "parcours_doctoral/details/training/_panel_title.html" %}
-      {% include "parcours_doctoral/details/training/_activity_title.html" %}
       <div class="clearfix"></div>
     </h3>
   </div>
   <div
     id="a-{{ activity.uuid }}"
-    class="panel-collapse collapse"
+    class="card-body panel-collapse collapse"
     role="tabpanel"
     aria-labelledby="h-{{ activity.uuid }}"
   >
-    <div class="panel-body">
-      <div class="form-group">
+    <div>
+      <div class="mb-3">
         <strong class="d-block">{% trans "Context" %}</strong>
         {{ activity.context|enum_display:'ContexteFormation' }}
         <strong class="d-block">{% trans "Learning unit" %}</strong>

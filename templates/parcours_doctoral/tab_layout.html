@@ -1,5 +1,5 @@
-{% extends "layout.html" %}
-{% load bootstrap3 i18n static parcours_doctoral doctorate_enums %}
+{% extends "bootstrap5/layout.html" %}
+{% load i18n static parcours_doctoral doctorate_enums %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -26,11 +26,9 @@
 {% endcomment %}
 
 {% comment "Usage" %}
-  `tab_layout.html` gère le layout des formulaires et des détails, ceci implique
-  - si la variable `form` est présente, le {% block form %} est affiché
-  - si dans `form` il y a des `visible_fields`, la balise
-  <form> est ajoutée
-  ainsi que les boutons de soumission dans les onglets et en bas de page
+  `tab_layout.html` gère le layout des formulaires et des détails, ceci implique que :
+  - si la variable `form` est presente et possède des `visible_fields`, le bloc `form` contenant une balise
+  <form> est ajouté ainsi que les boutons de soumission dans les onglets et en bas de page.
 {% endcomment %}
 
 
@@ -43,29 +41,31 @@
 
 {% block script %}
   {{ block.super }}
+  <script src="{% static 'js/vue.min.js' %}"></script>
+  <script src="{% static 'js/vue-i18n.min.js' %}"></script>
   {% if form %}
     {{ form.media.js }}
+  {% else %}
+    <script type="text/javascript" src="{% static 'osis_document/osis-document.umd.min.js' %}"></script>
   {% endif %}
   <script src="{% static 'parcours_doctoral/parcours_doctoral.js' %}"></script>
   <script src="{% static 'parcours_doctoral/popover.js' %}"></script>
 {% endblock %}
 
-{% block breadcrumb_area %}
-  {% if doctorate and doctorate.matricule_doctorant != user.person.global_id %}
+{% block breadcrumb %}
+  {% if doctorate and doctorate.matricule_doctorant != user.person.global_id or request.resolver_match.url_name == 'supervised-list' %}
     {% url 'parcours_doctoral:supervised-list' as list_url %}
   {% else %}
     {% url 'parcours_doctoral:list' as list_url %}
   {% endif %}
-  <ol class="breadcrumb">
-    <li>
-      <a href="{{ list_url }}">{% trans "PhDs" %}</a>
+  <li class="breadcrumb-item">
+    <a href="{{ list_url }}">{% trans "PhDs" %}</a>
+  </li>
+  {% if doctorate %}
+    <li class="breadcrumb-item active">
+      {% block breadcrumb_title %}{{ doctorate.doctorat.intitule }} ({{ doctorate.reference }}){% endblock %}
     </li>
-    {% if doctorate %}
-      <li class="active">
-        {% block breadcrumb_title %}{{ doctorate.doctorat.intitule }} ({{ doctorate.reference }}){% endblock %}
-      </li>
-    {% endif %}
-  </ol>
+  {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -87,7 +87,7 @@
       {% block header_title %}{{ doctorate.doctorat.intitule }} ({{ doctorate.reference }}){% endblock %}
     </span>
     {% if user.is_authenticated %}
-      <a href="{{ list_url }}" class="pull-right h5 text-primary">
+      <a href="{{ list_url }}" class="float-end fs-6 text text-primary">
         <span class="fa fa-stream"></span>
         {% trans "Back to PhDs" %}
       </a>
@@ -96,7 +96,7 @@
 
   {# Well #}
   {% block well %}
-    <div class="well">
+    <div class="card card-body bg-light mb-3">
       <div>
         {% trans "Reference:" %}
         {% display doctorate.doctorat.intitule " (" doctorate.doctorat.campus ")" as doctorate_title %}
@@ -124,9 +124,9 @@
     {% if form.visible_fields %}
     {% elif change_url and change_url != request.path and doctorate|can_update_tab:current_tab %}
       {# Display the edit button if accessible #}
-      <div class="text-right visible-xs visible-sm">
+      <div class="text-end d-md-none">
         <a href="{{ change_url }}" class="btn btn-primary">
-          <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+          <span class="fa-solid fa-floppy-disk" aria-hidden="true"></span>
           {% trans 'Edit' %}
         </a>
       </div>
@@ -138,16 +138,16 @@
 
     {% if subtabs|length > 1 %}
       {# If there are multiple subtabs, display them on the side #}
-      <div id="subtabs-row" class="row">
-      <div id="subtabs" class="col-md-2 visible-md visible-lg">
+      <div id="subtabs-row" class="row m-auto gap-3 align-items-start">
+      <div id="subtabs" class="col d-none d-md-block subtabs" style="max-width: min-content">
         {% get_current_parent_tab as current_parent %}
-        <div id="subtab-current-parent">{{ current_parent.label }}</div>
+        <div class="mt-1 fst-italic">{{ current_parent.label }}</div>
         <hr>
         {% doctorate_subtabs doctorate %}
       </div>
     {% endif %}
 
-  <div class="{% if subtabs|length > 1 %}col-md-10 {% endif %}{% if form %}quitting-context-excluded{% endif %}">
+  <div class="{% if subtabs|length > 1 %}col p-0{% endif %}{% if form %} quitting-context-excluded{% endif %}">
     {% block tab_content %}
       {% if form.visible_fields %}
         <form id="doctorate-main-form" class="osis-form" method="post" action="">
@@ -156,10 +156,10 @@
           {% block form %}{% endblock %}
           {% block submit_button_bottom %}
             {% get_current_tab as current_tab %}
-            <div class="text-right form-group">
+            <div class="text-end mb-3">
               {% block submit_button %}
                 <button
-                  type="submit" class="{{ submit_class|default:'btn btn-default' }}"
+                  type="submit" class="{{ submit_class|default:'btn btn-light border border-dark-subtle' }}"
                   {% if cancel_url and not doctorate|can_update_tab:current_tab %}
                   disabled
                   {% endif %}
@@ -182,9 +182,4 @@
   {% endif %}
   {% endblock tabs_content %}
   {% block extra_content %}{% endblock %}
-{% endblock %}
-
-{% block footer %}
-  {% include "parcours_doctoral/includes/footer.html" %}
-  {{ block.super }}
 {% endblock %}

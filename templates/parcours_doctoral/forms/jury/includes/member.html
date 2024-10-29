@@ -23,13 +23,13 @@
 * see http://www.gnu.org/licenses/.
 {% endcomment %}
 <div>
-<strong>{% if membre.justification_non_docteur %}<a tabindex="0" class="fa fa-exclamation-triangle popover-buttons" data-content="{{ membre.justification_non_docteur|linebreaksbr }}" role="button" data-original-title="" title=""></a> {% endif %}{% if membre.titre and membre.titre != 'NON_DOCTEUR' %}<em>{{ membre.titre | enum_display:'TitreMembre' }}</em> {% endif %}{{ membre.prenom }} {{ membre.nom }}</strong>
+<strong>{% if membre.justification_non_docteur %}<a tabindex="0" class="fa fa-exclamation-triangle popover-buttons" data-bs-content="{{ membre.justification_non_docteur|linebreaksbr }}" role="button" data-bs-original-title="" title=""></a> {% endif %}{% if membre.titre and membre.titre != 'NON_DOCTEUR' %}<em>{{ membre.titre | enum_display:'TitreMembre' }}</em> {% endif %}{{ membre.prenom }} {{ membre.nom }}</strong>
 (<a href="mailto:{{ membre.email }}">{{ membre.email }}</a>) - {{ membre.institution }}{% if membre.autre_institution %}, {{ membre.autre_institution }}{% endif %}
 {% if membre.est_promoteur %} - <strong>{% trans "Supervisor" %}</strong>{% endif %}
 </div>
 {% if form %}
 <div class="btn-group">
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <button type="button" class="btn btn-light border border-dark-subtle dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <i class="fa fa-cog"></i> {% trans "Actions" %}
   </button>
   <form class="membre-role-form no-prevent-quitting" action="{% url 'parcours_doctoral:update:jury-member:change-role' pk=jury.uuid member_pk=membre.uuid %}" method="post">
@@ -37,12 +37,12 @@
     <input type="hidden" name="role">
   </form>
   <ul class="dropdown-menu dropdown-menu-right">
-    {% if not membre.est_promoteur and not membre.role == 'PRESIDENT' %}<li><a class="membre-role-submit" href="#" data-role="PRESIDENT">{% trans "Set as president" %}</a></li>{% endif %}
-    {% if not membre.role == 'SECRETAIRE' %}<li><a class="membre-role-submit" href="#" data-role="SECRETAIRE">{% trans "Set as secretary" %}</a></li>{% endif %}
-    {% if not membre.role == 'MEMBRE' %}<li><a class="membre-role-submit" href="#" data-role="MEMBRE">{% trans "Set as member" %}</a></li>{% endif %}
+    {% if not membre.est_promoteur and not membre.role == 'PRESIDENT' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="PRESIDENT">{% trans "Set as president" %}</a></li>{% endif %}
+    {% if not membre.role == 'SECRETAIRE' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="SECRETAIRE">{% trans "Set as secretary" %}</a></li>{% endif %}
+    {% if not membre.role == 'MEMBRE' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="MEMBRE">{% trans "Set as member" %}</a></li>{% endif %}
     {% if not membre.est_promoteur %}
-    <li><a href="{% url 'parcours_doctoral:update:jury-member:update' pk=jury.uuid member_pk=membre.uuid %}">{% trans "Update" %}</a></li>
-    <li><a href="#deleteModal-{{ membre.uuid }}" data-toggle="modal" data-target="#deleteModal-{{ membre.uuid }}">{% trans "Remove" context "jury member" %}</a></li>
+    <li><a class="dropdown-item" href="{% url 'parcours_doctoral:update:jury-member:update' pk=jury.uuid member_pk=membre.uuid %}">{% trans "Update" %}</a></li>
+    <li><a class="dropdown-item" href="#deleteModal-{{ membre.uuid }}" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ membre.uuid }}">{% trans "Remove" context "jury member" %}</a></li>
     {% endif %}
   </ul>
 </div>
@@ -55,10 +55,8 @@
       <form action="{% url 'parcours_doctoral:update:jury-member:remove' pk=jury.uuid member_pk=membre.uuid %}" method="post">
         {% csrf_token %}
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
           <h4 class="modal-title" id="deleteModalLabel-{{ membre.uuid }}">{% trans "Remove?" context "jury member" %}</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <p>
@@ -68,7 +66,7 @@
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "Close" %}</button>
+          <button type="button" class="btn btn-light border border-dark-subtle" data-bs-dismiss="modal">{% trans "Close" %}</button>
           <input type="submit" class="btn btn-danger" value="{% trans 'Confirm' %}">
         </div>
       </form>

@@ -36,29 +36,29 @@
 
 <a
   role="button"
-  data-toggle="collapse"
-  data-parent="#accordion"
+  data-bs-toggle="collapse"
   href="#a-{{ activity.uuid }}"
   aria-expanded="false"
   aria-controls="a-{{ activity.uuid }}"
-  class="collapsed"
+  class="collapsed activity-collapse-button"
 ></a>
 <span class="badge">{{ activity.status|enum_display:'StatutActivite' }}</span>
+
+{% include "parcours_doctoral/details/training/_activity_title.html" %}
 
 {% trans "Please check the details of the activity (and sub-activities) to fill in all the mandatory fields" as not_complete_sub %}
 {% trans "Please check the details of the activity to fill in all mandatory fields" as not_complete %}
 
-<div style="width: auto" class="pull-right">
-
-  <div class="input-group input-group-sm{% if activity.uuid in form.activities_in_error %} has-error{% endif %}">
+<div class="w-auto ms-auto">
+  <div class="input-group flex-nowrap input-group-sm{% if activity.uuid in form.activities_in_error %} has-error{% endif %}">
     {% if doctorate|can_make_action:'add_training' %}
       {# Student only #}
       {% if activity.category|safe == "SEMINAR" and activity.status|safe != "NON_SOUMISE" and add_communication_url %}
         {# Do not display the dropdown #}
       {% elif activity.status|safe == "NON_SOUMISE" or add_communication_url or add_publication_url %}
-        <div class="input-group-btn">
+        <div>
           <button
-            type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            type="button" class="btn btn-light border border-dark-subtle dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false"
           >
             {% trans "Actions" %} <span class="caret"></span>
@@ -66,7 +66,7 @@
           <ul class="dropdown-menu dropdown-menu-right">
             {% if activity.status|safe == "NON_SOUMISE" %}
               <li>
-                <a href="{{ edit_url }}">
+                <a href="{{ edit_url }}" class="dropdown-item">
                   {% trans "Edit" %}
                 </a>
               </li>
@@ -74,8 +74,8 @@
                 <li
                   {% if not activity.can_be_submitted %}
                     class="disabled"
-                    data-toggle="tooltip"
-                    data-container="body"
+                    data-bs-toggle="tooltip"
+                    data-bs-container="body"
                     {% if activity.category|safe == 'SEMINAR' %}
                     title="{{ not_complete_sub }}"
                     {% else %}
@@ -88,6 +88,7 @@
                     {% if activity.can_be_submitted %}
                     onclick="$('[name=activity_ids]').val(['{{ activity.uuid }}']);$('form#activities').submit();return false;"
                     {% endif %}
+                    class="dropdown-item"
                   >
                     {% trans "Submit" %}
                   </a>
@@ -97,28 +98,28 @@
             {# Can't add a communication to seminar once submitted #}
             {% if activity.category|safe == "SEMINAR" and activity.status|safe == "NON_SOUMISE" and add_communication_url %}
               <li>
-                <a href="{{ add_communication_url }}?parent={{ activity.uuid }}">
+                <a href="{{ add_communication_url }}?parent={{ activity.uuid }}" class="dropdown-item">
                   {% trans "Add a paper/presentation" %}
                 </a>
               </li>
               {# Can add a communication to others once submitted #}
               {% elif activity.category|safe != "SEMINAR" and add_communication_url %}
               <li>
-                <a href="{{ add_communication_url }}?parent={{ activity.uuid }}">
+                <a href="{{ add_communication_url }}?parent={{ activity.uuid }}" class="dropdown-item">
                   {% trans "Add a paper/presentation" %}
                 </a>
               </li>
             {% endif %}
             {% if add_publication_url %}
               <li>
-                <a href="{{ add_publication_url }}?parent={{ activity.uuid }}">
+                <a href="{{ add_publication_url }}?parent={{ activity.uuid }}" class="dropdown-item">
                   {% trans "Add a publication" %}
                 </a>
               </li>
             {% endif %}
             {% if activity.status|safe == "NON_SOUMISE" %}
               <li>
-                <a href="{{ delete_url }}">
+                <a href="{{ delete_url }}" class="dropdown-item">
                   {% trans "Delete" %}
                 </a>
               </li>
@@ -127,10 +128,10 @@
         </div>
         {% if not remove_batch_action and activity.status|safe == "NON_SOUMISE" %}
           <label
-            class="input-group-addon"
+            class="input-group-text"
             {% if not activity.can_be_submitted %}
-            data-toggle="tooltip"
-            data-container="body"
+            data-bs-toggle="tooltip"
+            data-bs-container="body"
               {% if activity.category == 'SEMINAR' %}
             title="{{ not_complete_sub }}"
               {% else %}
@@ -156,52 +157,40 @@
         {# No assent on seminar communication #}
       {% else %}
         {% url namespace|add:":assent" pk=view.kwargs.pk activity_id=activity.uuid as assent_url %}
-        <a href="{{ assent_url }}" class="btn btn-default btn-sm">
+        <a href="{{ assent_url }}" class="btn btn-light border border-dark-subtle btn-md">
           {% trans "Give an opinion" %}
         </a>
       {% endif %}
     {% endif %}
 
     {% if activity.reference_promoter_assent is not None or activity.cdd_comment %}
-      <div class="input-group-btn">
-        {% if activity.reference_promoter_assent is not None %}
-          <button
-            type="button"
-            data-trigger="focus"
-            data-html="true"
-            data-content="{{ activity.reference_promoter_comment|linebreaksbr|force_escape }}"
-            data-toggle="popover"
-            data-placement="auto left"
-            data-container="body"
-            {% if activity.reference_promoter_assent %}
-            title="{% trans "Lead supervisor approval" %}"
-            class="btn btn-sm btn-success"
-              >
-              <span class="glyphicon glyphicon-ok-circle"></span>
-            {% else %}
-              title="{% trans "Negative assessment by lead supervisor" %}"
-              class="btn btn-sm btn-danger"
-              >
-              <span class="glyphicon glyphicon-remove-circle"></span>
-            {% endif %}
-          </button>
-        {% endif %}
-        {% if activity.cdd_comment %}
-          <button
-            type="button"
-            data-trigger="focus"
-            data-html="true"
-            data-content="{{ activity.cdd_comment|linebreaksbr|force_escape }}"
-            data-toggle="popover"
-            data-placement="auto left"
-            title="{% trans "Comment for PhD Committee manager" %}"
-            data-container="body"
-            class="btn btn-sm btn-danger"
-          >
-            <span class="glyphicon glyphicon-info-sign"></span>
-          </button>
-        {% endif %}
-      </div>
+      {% if activity.reference_promoter_assent is not None %}
+        <button
+          type="button"
+          data-bs-content="{{ activity.reference_promoter_comment|linebreaksbr|force_escape }}"
+          {% if activity.reference_promoter_assent %}
+          title="{% trans "Lead supervisor approval" %}"
+          class="btn btn-md btn-success popover-buttons"
+        >
+            <span class="fa-regular fa-circle-check"></span>
+          {% else %}
+            title="{% trans "Negative assessment by lead supervisor" %}"
+            class="btn btn-md btn-danger popover-buttons unstyled"
+            >
+            <span class="fa-regular fa-circle-xmark"></span>
+          {% endif %}
+        </button>
+      {% endif %}
+      {% if activity.cdd_comment %}
+        <button
+          type="button"
+          data-bs-content="{{ activity.cdd_comment|linebreaksbr|force_escape }}"
+          title="{% trans "Comment for PhD Committee manager" %}"
+          class="btn btn-md btn-danger popover-buttons unstyled"
+        >
+          <span class="fa-solid fa-circle-info"></span>
+        </button>
+      {% endif %}
     {% endif %}
   </div>
 </div>

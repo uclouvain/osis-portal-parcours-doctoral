@@ -24,7 +24,7 @@
 * see http://www.gnu.org/licenses/.
 {% endcomment %}
 
-<ul class="nav nav-pills nav-stacked nav-grey">
+<ul class="nav navbar-nav">
     {% for child in subtabs %}
         {% if child.name == active_tab %}
           {% include 'parcours_doctoral/doctorate_tab_entry.html' with tab=child is_active=True %}

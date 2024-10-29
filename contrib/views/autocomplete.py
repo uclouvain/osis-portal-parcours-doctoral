@@ -23,7 +23,7 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-
+import itertools
 from typing import List
 
 from dal import autocomplete
@@ -32,11 +32,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils.translation import get_language, gettext_lazy as _
 from osis_organisation_sdk.model.entite_type_enum import EntiteTypeEnum
+from osis_reference_sdk.model.university import University
 from waffle import switch_is_active
 
+from admission.contrib.views.autocomplete import SuperiorInstituteAutocomplete
 from base.models.enums.entity_type import INSTITUTE
 from osis_admission_sdk.model.scholarship import Scholarship
 from parcours_doctoral.constants import BE_ISO_CODE
+from parcours_doctoral.contrib.enums.diploma import StudyType
 from parcours_doctoral.contrib.forms import EMPTY_VALUE
 from parcours_doctoral.services.autocomplete import DoctorateAutocompleteService
 from parcours_doctoral.services.organisation import EntitiesService
@@ -44,6 +47,8 @@ from parcours_doctoral.services.reference import (
     CitiesService,
     CountriesService,
     LanguageService,
+    UniversityService,
+    SuperiorNonUniversityService,
 )
 from parcours_doctoral.utils import (
     format_entity_address,
@@ -51,6 +56,7 @@ from parcours_doctoral.utils import (
     format_scholarship,
     format_training,
     format_training_with_year,
+    format_school_title,
 )
 
 __all__ = [
@@ -64,6 +70,7 @@ __all__ = [
     "InstituteLocationAutocomplete",
     "LearningUnitYearsAutocomplete",
     "ScholarshipAutocomplete",
+    "SuperiorInstituteAutocomplete",
 ]
 
 LANGUAGE_FR = 'FR'
@@ -333,6 +340,62 @@ class LearningUnitYearsAutocomplete(LoginRequiredMixin, PaginatedAutocompleteMix
             dict(
                 id=result['acronym'],
                 text=f"{result['acronym']} - {result['title']}",
+            )
+            for result in results
+        ]
+
+
+class SuperiorInstituteAutocomplete(LoginRequiredMixin, PaginatedAutocompleteMixin, autocomplete.Select2ListView):
+    urlpatterns = 'superior-institute'
+
+    def get_list(self):
+        additional_filters = {}
+        country = self.forwarded.get('country')
+        is_belgian = self.forwarded.get('is_belgian') in TRUTHY_VALUES
+        if country:
+            additional_filters['country_iso_code'] = country
+        elif is_belgian:
+            additional_filters['country_iso_code'] = BE_ISO_CODE
+        additional_filters.update(self.get_webservice_pagination_kwargs())
+
+        universities = UniversityService.get_universities(
+            person=self.request.user.person,
+            search=self.q,
+            active=True,
+            **additional_filters,
+        )
+        total_universities = universities.count
+        universities = universities.results
+
+        # In case we ran out of universities to show
+        if len(universities) < self.paginate_by or additional_filters['offset'] >= total_universities:
+            if universities:
+                # We only get the amount we need to hit the limit so that later calls can just substract the total
+                # to get the current offset.
+                additional_filters['limit'] = self.paginate_by - total_universities % self.paginate_by
+                additional_filters['offset'] = 0
+            else:
+                additional_filters['offset'] -= total_universities
+            superior_non_universities = SuperiorNonUniversityService.get_superior_non_universities(
+                person=self.request.user.person,
+                search=self.q,
+                active=True,
+                **additional_filters,
+            )
+        else:
+            superior_non_universities = []
+
+        return sorted(
+            itertools.chain(universities, superior_non_universities),
+            key=lambda institute: institute.name,
+        )
+
+    def results(self, results):
+        return [
+            dict(
+                id=result.uuid,
+                text=format_school_title(result),
+                type=StudyType.UNIVERSITY.name if isinstance(result, University) else StudyType.NON_UNIVERSITY.name,
             )
             for result in results
         ]

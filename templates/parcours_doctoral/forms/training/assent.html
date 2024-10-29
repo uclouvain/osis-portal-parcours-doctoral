@@ -1,5 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load i18n static parcours_doctoral bootstrap3 %}
+{% load i18n static parcours_doctoral django_bootstrap5 %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -50,7 +50,7 @@
 {% block after_form %}
   {% firstof 0 activity.object_type|snake_case|add:'.html' as template_name %}
   {% if activity.parent %}
-    <div class="panel panel-default">
+    <div class="card">
   {% endif %}
   {% include "parcours_doctoral/details/training/"|add:template_name with remove_action=True %}
   {% if activity.parent %}

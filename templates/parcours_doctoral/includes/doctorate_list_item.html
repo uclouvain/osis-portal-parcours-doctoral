@@ -26,10 +26,10 @@
 {% endcomment %}
 
 {% panel additional_class="doctorate-item" cy_state=doctorate.statut %}
-  <h3 style="margin-top: 0">
+  <h3 class="mt-0">
     {% display doctorate.doctorat.intitule " (" doctorate.doctorat.campus ")" as doctorate_title %}
     {{ doctorate_title }} ({{ doctorate.reference }})
-    <span style="display:block;"><small>{{ doctorate.intitule_secteur_formation }}</small></span>
+    <span class="d-block"><small class="text-muted">{{ doctorate.intitule_secteur_formation }}</small></span>
   </h3>
   <div>
     <em>{% trans "Created on:" context "a doctorate" %} {{ doctorate.creee_le }}</em>
@@ -43,7 +43,7 @@
 
   {% footer %}
   {% if doctorate|can_make_action:'retrieve_project' %}
-    <a class="btn btn-default pull-right" href="{% url 'parcours_doctoral:project' doctorate.uuid %}">
+    <a class="btn border border-dark-subtle float-end" href="{% url 'parcours_doctoral:project' doctorate.uuid %}">
       <span class="fas fa-pencil"></span>
       {% trans "Modify" context 'edit' %}
     </a>

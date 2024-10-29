@@ -1,5 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load bootstrap3 i18n static parcours_doctoral %}
+{% load django_bootstrap5 i18n static parcours_doctoral %}
 
 {% comment "License" %}
 * OSIS stands for Open Student Information System. It's an application
@@ -25,11 +25,11 @@
 * see http://www.gnu.org/licenses/.
 {% endcomment %}
 {% block tab_content %}
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">{% trans "Confirmation exam" %}</h4>
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4 class="card-title">{% trans "Confirmation exam" %}</h4>
     </div>
-    <div class="panel-body">
+    <div class="card-body">
       {% include 'parcours_doctoral/includes/confirmation_papers_description.html' %}
       <div>
         {% field_data _("Definitive admission date") doctorate.admission_acceptee_le inline=True %}
@@ -48,11 +48,11 @@
     </div>
   </div>
   {% if previous_confirmation_papers %}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">{% trans "Previous confirmation exams" %}</h4>
+    <div class="card mb-3">
+      <div class="card-header">
+        <h4 class="card-title">{% trans "Previous confirmation exams" %}</h4>
       </div>
-      <div class="panel-body">
+      <div class="card-body">
         {% for confirmation_paper in previous_confirmation_papers %}
           <div class="past-confirmation-paper">
             {% field_data _("Confirmation exam date") confirmation_paper.date inline=True %}

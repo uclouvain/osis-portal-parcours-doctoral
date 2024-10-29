@@ -1,6 +1,6 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
 
-{% load bootstrap3 i18n static parcours_doctoral osis_document %}
+{% load django_bootstrap5 i18n static parcours_doctoral osis_document %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -31,7 +31,7 @@
   {% panel _("Proposal summary") %}
     {% if doctorate.fiche_archive_signatures_envoyees %}
       {% get_file_url doctorate.fiche_archive_signatures_envoyees.0 as file_url %}
-      <a href="{{ file_url }}" class="btn btn-default" target="_blank">
+      <a href="{{ file_url }}" class="btn border border-dark-subtle" target="_blank">
         <span class="fa fa-file-download"></span>
         {% trans "Download as PDF" %}
       </a>
@@ -47,7 +47,7 @@
       {% include "parcours_doctoral/modal/prevent_quitting_modal.html" %}
 
       {% panel _("Proposal approved") %}
-        {% bootstrap_form_errors approval_form %}
+        {% bootstrap_form_errors approval_form type='non_fields'  %}
         <form class="osis-form approval-form" method="post" action="">
           {% csrf_token %}
           {% bootstrap_field approval_form.decision %}

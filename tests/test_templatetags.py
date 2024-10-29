@@ -69,15 +69,15 @@ class TemplateTagsTestCase(TestCase):
     def test_normal_panel(self):
         template = Template("{% load parcours_doctoral %}{% panel 'Coucou' %}{% endpanel %}")
         rendered = template.render(Context())
-        self.assertIn('<h4 class="panel-title">', rendered)
+        self.assertIn('<h4 class="card-title">', rendered)
         self.assertIn('Coucou', rendered)
-        self.assertIn('<div class="panel-body">', rendered)
+        self.assertIn('<div class="card-body">', rendered)
 
     def test_panel_no_title(self):
         template = Template("{% load parcours_doctoral %}{% panel %}{% endpanel %}")
         rendered = template.render(Context())
-        self.assertNotIn('<h4 class="panel-title">', rendered)
-        self.assertIn('<div class="panel-body">', rendered)
+        self.assertNotIn('<h4 class="card-title">', rendered)
+        self.assertIn('<div class="card-body">', rendered)
 
     def test_enum_value(self):
         class TestEnum(ChoiceEnum):

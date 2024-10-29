@@ -35,8 +35,13 @@ from django import template
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.core.validators import EMPTY_VALUES
-from django.utils.safestring import SafeString
+from django.template.defaultfilters import force_escape
+from django.utils.safestring import SafeString, mark_safe
 from django.utils.translation import get_language, gettext_lazy as _, pgettext, pgettext_lazy
+from django_bootstrap5.forms import render_field
+from django_bootstrap5.renderers import FieldRenderer
+from django_bootstrap5.templatetags.django_bootstrap5 import bootstrap_field
+from django.test import override_settings
 
 from osis_admission_sdk.exceptions import ForbiddenException, NotFoundException, UnauthorizedException
 from osis_admission_sdk.model.supervision_dto_promoteur import SupervisionDTOPromoteur
@@ -346,14 +351,19 @@ def add_str(arg1, arg2):
     return f'{arg1}{arg2}'
 
 
-@register.inclusion_tag('parcours_doctoral/tags/bootstrap_field_with_tooltip.html')
-def bootstrap_field_with_tooltip(field, classes='', show_help=False, html_tooltip=False):
-    return {
-        'field': field,
-        'classes': classes,
-        'show_help': show_help,
-        'html_tooltip': html_tooltip,
-    }
+@register.simple_tag
+def bootstrap_field_with_tooltip(field, **kwargs):
+    """Override the default bootstrap_field method to display the field help text in a tooltip."""
+    tooltip_content = f"""
+      <a
+          tabindex="0"
+          class="fa fa-question-circle popover-buttons"
+          data-bs-content="<p>{force_escape(field.help_text)}</p>"
+          role="button"
+      ></a>
+    """
+    field.label = mark_safe(field.label + tooltip_content)
+    return bootstrap_field(field, **kwargs, show_help=False)
 
 
 @register.filter

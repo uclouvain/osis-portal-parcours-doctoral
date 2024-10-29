@@ -1,5 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load bootstrap3 i18n static parcours_doctoral %}
+{% load django_bootstrap5 i18n static parcours_doctoral %}
 
 {% comment "License" %}
 * OSIS stands for Open Student Information System. It's an application
@@ -26,12 +26,12 @@
 {% endcomment %}
 
 {% block form %}
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">{% trans "Confirmation exam" %}</h4>
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4 class="card-title">{% trans "Confirmation exam" %}</h4>
     </div>
-    <div class="panel-body">
-      {% bootstrap_form_errors form %}
+    <div class="card-body">
+      {% bootstrap_form_errors form type='non_fields' %}
       {% include 'parcours_doctoral/includes/confirmation_papers_description.html' %}
 
       {% field_data _("Confirmation exam date") confirmation_paper.date inline=True %}

@@ -40,7 +40,7 @@ __all__ = [
     'DoctorateExternalConfirmView',
     'DoctorateExternalApprovalView',
 ]
-__namespace__ = {'public-doctorate': 'public/doctorate/<uuid:pk>'}
+__namespace__ = {'public': 'public/<uuid:pk>'}
 
 
 class DoctorateExternalApprovalView(UserPassesTestMixin, WebServiceFormMixin, FormView):
@@ -93,7 +93,7 @@ class DoctorateExternalApprovalView(UserPassesTestMixin, WebServiceFormMixin, Fo
     def get_success_url(self):
         messages.info(self.request, _("Your decision has been saved."))
         return self.request.POST.get('redirect_to') or resolve_url(
-            'parcours_doctoral:public-doctorate:external-confirm',
+            'parcours_doctoral:public:external-confirm',
             pk=self.kwargs['pk'],
         )
 

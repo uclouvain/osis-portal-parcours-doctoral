@@ -1,5 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load i18n static parcours_doctoral bootstrap3 %}
+{% load i18n static parcours_doctoral django_bootstrap5 %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -34,7 +34,7 @@
   <p>{% trans "This activity and its potential subactivities will be discontinued" %}</p>
   <form action="" method="post">
     {% csrf_token %}
-    <div class="text-right">
+    <div class="text-end">
       <a href="{{ back_url }}#{{ view.kwargs.activity_id }}">
         {% trans "Cancel" %}
       </a>

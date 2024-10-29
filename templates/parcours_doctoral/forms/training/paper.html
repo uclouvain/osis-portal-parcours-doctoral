@@ -1,4 +1,4 @@
-{% load i18n bootstrap3 parcours_doctoral %}
+{% load i18n django_bootstrap5 parcours_doctoral %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -37,7 +37,7 @@
 <p>{% lorem %}</p>
 
 <div class="row">
-  {% bootstrap_field form.type form_group_class="form-group col-md-4 required_field" %}
-  {% bootstrap_field_with_tooltip form.ects classes="form-group col-md-4 required_field" %}
+  {% bootstrap_field form.type wrapper_class="mb-3 col-md-4 required_field" %}
+  {% bootstrap_field_with_tooltip form.ects wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
 {% bootstrap_field form.comment placeholder="" %}

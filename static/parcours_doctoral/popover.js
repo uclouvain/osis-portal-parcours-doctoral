@@ -23,15 +23,27 @@
  *   see http://www.gnu.org/licenses/.
  *
  */
+
+new bootstrap.Popover(document.body, {
+  selector: '.popover-buttons',
+  html: true,
+  placement: 'top',
+  fallbackPlacements: ['auto'],
+  toggle: 'popover',
+  trigger: 'focus',
+});
+
 $(function () {
-  $('body').popover({
-    selector: '.popover-buttons',
-    html: 'true',
-    placement: 'auto top',
-    toggle: 'popover',
-    trigger: 'focus',
+  const body = $('body');
+
+  // To prevent the popover from closing when clicking inside it (i.e. when a link is inside a popover)
+  body.on('mousedown', '.popover', function(e) {
+    e.preventDefault();
+    return false;
   });
-  $('body').on('mousedown', '.popover', function(e) {
+
+  // To prevent to trigger another action when we want to open a popover (i.e. when the button is inside a label)
+  body.on('click', '.popover-buttons', function(e) {
     e.preventDefault();
     return false;
   });

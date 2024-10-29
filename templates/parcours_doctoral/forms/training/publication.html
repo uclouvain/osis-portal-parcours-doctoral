@@ -1,4 +1,4 @@
-{% load i18n bootstrap3 parcours_doctoral %}
+{% load i18n django_bootstrap5 parcours_doctoral %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -37,24 +37,24 @@
 <p>{% lorem %}</p>
 
 <div class="row">
-  {% bootstrap_field form.type form_group_class="form-group col-md-4" %}
+  {% bootstrap_field form.type wrapper_class="mb-3 col-md-4" %}
 </div>
-{% bootstrap_field form.title form_group_class="form-group required_field" placeholder="" %}
+{% bootstrap_field form.title wrapper_class="mb-3 required_field" placeholder="" %}
 <div class="row">
-  {% bootstrap_field form.start_date form_group_class="form-group col-md-3 required_field" %}
-  {% bootstrap_field form.journal form_group_class="form-group col-md-9 required_field" placeholder="" %}
+  {% bootstrap_field form.start_date wrapper_class="mb-3 col-md-3 required_field" %}
+  {% bootstrap_field form.journal wrapper_class="mb-3 col-md-9 required_field" placeholder="" %}
 </div>
-{% bootstrap_field form.authors form_group_class="form-group required_field" placeholder="" %}
+{% bootstrap_field form.authors wrapper_class="mb-3 required_field" placeholder="" %}
 <div class="row">
-  {% bootstrap_field form.role form_group_class="form-group col-md-4 required_field" placeholder="" %}
-  {% bootstrap_field form.publication_status form_group_class="form-group col-md-4 required_field" %}
+  {% bootstrap_field form.role wrapper_class="mb-3 col-md-4 required_field" placeholder="" %}
+  {% bootstrap_field form.publication_status wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
 {% bootstrap_field form.summary %}
 {% bootstrap_field form.keywords placeholder="" %}
 
 <div class="row">
-  {% bootstrap_field form.dial_reference form_group_class="form-group col-md-4" placeholder="" %}
-  {% bootstrap_field_with_tooltip form.ects classes="form-group col-md-4 required_field" %}
+  {% bootstrap_field form.dial_reference wrapper_class="mb-3 col-md-4" placeholder="" %}
+  {% bootstrap_field_with_tooltip form.ects wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
-{% bootstrap_field form.acceptation_proof form_group_class="form-group required_field"  %}
+{% bootstrap_field form.acceptation_proof wrapper_class="mb-3 required_field"  %}
 {% bootstrap_field form.comment placeholder="" %}

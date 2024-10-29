@@ -1,5 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load bootstrap3 i18n static parcours_doctoral doctorate_enums %}
+{% load django_bootstrap5 i18n static parcours_doctoral doctorate_enums %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -35,7 +35,7 @@
         {% endblocktrans %}
     </h4>
 
-    {% bootstrap_form_errors form %}
+    {% bootstrap_form_errors form type='non_fields' %}
 
     <button type="submit" class="btn btn-danger">
         {% trans "Confirm" %}

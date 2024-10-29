@@ -34,38 +34,39 @@
 {% endcomment %}
 {% trans "Save" context 'doctorate' as save_label %}
 
-<div class="form-group">
+<div class="mb-3">
   {# Nav for mobile display #}
-  <nav class="navbar navbar-default visible-xs visible-sm">
-    {# Toggle for better mobile display #}
-    <button
-      type="button"
-      class="navbar-toggle tabsbar-toggle collapsed"
-      data-toggle="collapse"
-      data-target="#doctorate-navbar"
-      aria-expanded="false"
-    >
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    {# While collapsed: display only the current item #}
-    <div class="visible-xs visible-sm navbar-text col-xs-9">
-      <strong>
-        {% if active_parent.icon %}
-          <span class="fa fa-{{ active_parent.icon }}"></span>
-        {% endif %}
-        {{ active_parent.label }}
-      </strong>
+  <nav class="navbar navbar-light bg-light d-md-none mb-3 mt-3 pb-0 border rounded">
+    <div class="container-fluid p-0">
+    {# Toggle for better mobile display: display only the current item #}
+    <div class="d-flex justify-content-center w-100 p-3">
+      <div class="navbar-text text-center flex-1">
+        <strong>
+          {% if active_parent.icon %}
+            <span class="fa fa-{{ active_parent.icon }}"></span>
+          {% endif %}
+          {{ active_parent.label }}
+        </strong>
+      </div>
+      <button
+        type="button"
+        class="navbar-toggler tabsbar-toggle collapsed"
+        data-bs-toggle="collapse"
+        data-bs-target="#doctorate-navbar"
+        aria-expanded="false"
+        aria-label="{% translate 'Toggle navigation' %}"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse tabsbar-collapse" id="doctorate-navbar">
+    <div class="collapse tabsbar-collapse w-100 mt-1" id="doctorate-navbar">
       <ul class="nav navbar-nav">
         {% for parent, children in tab_tree.items %}
           {% if parent == active_parent %}
             {% include 'parcours_doctoral/doctorate_tab_entry.html' with tab=children.0 is_active=True icon=parent.icon label=parent.label %}
-            <div id="subtabs-xs" class="col-xs-offset-1">
+            <div id="subtabs-xs" class="subtabs ms-5">
               {% doctorate_subtabs doctorate %}
             </div>
           {% else %}
@@ -73,10 +74,11 @@
           {% endif %}
         {% endfor %}
     </div><!-- /.navbar-collapse -->
+    </div>
   </nav>
 
   {# Nav for desktop display #}
-  <ul class="nav nav-tabs visible-md visible-lg">
+  <ul id="doctorate-desktop-tabs" class="nav nav-tabs d-none d-md-flex">
     {% for parent, children in tab_tree.items %}
       {% if parent == active_parent %}
         {% include 'parcours_doctoral/doctorate_tab_entry.html' with tab=children.0 is_active=True icon=parent.icon label=parent.label %}
@@ -88,7 +90,7 @@
     {# Submit button if needed (mobile display) #}
     {% get_current_tab as current_tab %}
     {% if with_submit %}
-      <div class="text-right visible-md visible-lg">
+      <div class="ms-auto">
         <button
           type="submit"
           class="btn btn-primary"
@@ -104,9 +106,9 @@
     {% else %}
       {% url 'parcours_doctoral:update:'|add:request.resolver_match.url_name view.kwargs.pk as change_url %}
       {% if change_url and change_url != request.path and doctorate|can_update_tab:current_tab %}
-        <div class="text-right">
+        <div class="ms-auto">
           <a href="{{ change_url }}" class="btn btn-primary">
-            <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+            <span class="fa-solid fa-floppy-disk" aria-hidden="true"></span>
             {% trans 'Edit' %}
           </a>
         </div>
@@ -117,7 +119,7 @@
 
   {# Submit button if needed (mobile display) #}
   {% if with_submit %}
-    <div class="text-right visible-xs visible-sm">
+    <div class="text-end d-md-none">
       <button
         type="submit"
         class="btn btn-primary"

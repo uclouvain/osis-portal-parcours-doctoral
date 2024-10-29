@@ -1,4 +1,4 @@
-{% load i18n bootstrap3 parcours_doctoral %}
+{% load i18n django_bootstrap5 parcours_doctoral %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -36,24 +36,24 @@
 
 <h3>{% trans "Description" %}</h3>
 <div class="row">
-  {% bootstrap_field form.type form_group_class="form-group col-md-4 required_field" %}
+  {% bootstrap_field form.type wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
 <div class="row">
-  {% bootstrap_field form.subtype form_group_class="form-group col-md-4 required_field" %}
+  {% bootstrap_field form.subtype wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
-{% bootstrap_field form.title form_group_class="form-group required_field" placeholder="" %}
+{% bootstrap_field form.title wrapper_class="mb-3 required_field" placeholder="" %}
 <div class="row">
-  {% bootstrap_field form.start_date form_group_class="form-group col-md-4 required_field" %}
-  {% bootstrap_field form.is_online form_group_class="form-group col-md-4 required_field" %}
+  {% bootstrap_field form.start_date wrapper_class="mb-3 col-md-4 required_field" %}
+  {% bootstrap_field form.is_online wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
-{% bootstrap_field form.organizing_institution form_group_class="form-group required_field" placeholder="" %}
+{% bootstrap_field form.organizing_institution wrapper_class="mb-3 required_field" placeholder="" %}
 {% bootstrap_field form.website placeholder="https://" %}
-{% bootstrap_field form.subtitle form_group_class="form-group required_field" placeholder="" %}
+{% bootstrap_field form.subtitle wrapper_class="mb-3 required_field" placeholder="" %}
 {% bootstrap_field form.summary %}
 
 <h3>{% trans "Participation" %}</h3>
 <div class="row">
-  {% bootstrap_field_with_tooltip form.ects classes="form-group col-md-4 required_field" %}
+  {% bootstrap_field_with_tooltip form.ects wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
 {% bootstrap_field form.participating_proof %}
 {% bootstrap_field form.comment placeholder="" %}

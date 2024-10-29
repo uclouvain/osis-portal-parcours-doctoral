@@ -32,10 +32,17 @@
 
 <li
   role="presentation"
-  {% if is_active %}class="active"
-  {% elif not tab_url %}class="hidden"{% endif %}
+  class="{% if tab_url %}nav-item{% else %} hidden{% endif %}"
 >
-  <a href="{{ tab_url }}">
+  <a
+    href="{{ tab_url }}"
+    {% if is_active %}
+      aria-current="page"
+      class="nav-link active"
+    {% else %}
+      class="nav-link"
+    {% endif %}
+  >
     {% firstof icon tab.icon as icon %}
     {% firstof label tab.label as label %}
     {% if icon %}

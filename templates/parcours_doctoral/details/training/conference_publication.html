@@ -27,26 +27,23 @@
 {% display activity.ects|default:""|floatformat:"-2" " ECTS" as ects %}
 
 <div
-  class="subpanel panel-{{ activity|status_as_class }}"
+  class="subpanel card card-{{ activity|status_as_class }}"
   data-status="{{ activity.status }}"
   data-type="{{ activity.category }}"
 >
-  <div class="panel-heading" role="tab" id="h-{{ activity.uuid }}">
-    <h3 class="panel-title">
+  <div class="card-header" role="tab" id="h-{{ activity.uuid }}">
+    <h3 class="card-title d-flex align-items-start gap-3">
       {% include "parcours_doctoral/details/training/_panel_title.html" %}
-      {% include "parcours_doctoral/details/training/_activity_title.html" %}
       <div class="clearfix"></div>
     </h3>
   </div>
   <div
     id="a-{{ activity.uuid }}"
-    {% if not remove_action %}
-    class="panel-collapse collapse"
-    {% endif %}
+    class="card-body{% if not remove_action %} panel-collapse collapse{% endif %}"
     role="tabpanel"
     aria-labelledby="h-{{ activity.uuid }}"
   >
-    <div class="panel-body">
+    <div>
       <div>
         <strong class="d-block">{% trans "Description" %}</strong>
         {% display activity.role "," activity.authors '<br/>'|safe %}
@@ -65,8 +62,8 @@
           {{ activity.committee|enum_display:'ChoixComiteSelection' }}
         </p>
       {% endif %}
-      {% if activity.summary %}
-        <div class="form-group">
+      {% if activity.summary or True %}
+        <div class="mb-3">
           <strong class="d-block">{% trans "Summary" context "paper summary" %}</strong>
           {% document_visualizer activity.summary %}
         </div>
@@ -92,13 +89,13 @@
         {% endif %}
       </div>
       {% if activity.acceptation_proof %}
-        <div class="form-group">
+        <div class="mb-3">
           <strong class="d-block">{% trans "Proof of acceptance or publication" %}</strong>
           {% document_visualizer activity.acceptation_proof %}
         </div>
       {% endif %}
       {% if activity.comment %}
-        <div class="form-group">
+        <div class="mb-3">
           <strong class="d-block">{% trans "Comments" %}</strong>
           {{ activity.comment|linebreaks }}
         </div>

@@ -1,4 +1,4 @@
-{% load i18n bootstrap3 %}
+{% load i18n django_bootstrap5 %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -36,17 +36,17 @@
 
 <h3>{% trans "Description" %}</h3>
 <div class="row">
-  {% bootstrap_field form.start_date form_group_class="form-group col-md-4 required_field" %}
-  {% bootstrap_field form.is_online form_group_class="form-group col-md-4 required_field" %}
+  {% bootstrap_field form.start_date wrapper_class="mb-3 col-md-4 required_field" %}
+  {% bootstrap_field form.is_online wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
 <div class="row">
-  {% bootstrap_field form.country form_group_class="form-group col-md-4 required_field" %}
-  {% bootstrap_field form.city form_group_class="form-group col-md-4 required_field" placeholder="" %}
+  {% bootstrap_field form.country wrapper_class="mb-3 col-md-4 required_field" %}
+  {% bootstrap_field form.city wrapper_class="mb-3 col-md-4 required_field" placeholder="" %}
 </div>
-{% bootstrap_field form.organizing_institution form_group_class="form-group required_field" placeholder="" %}
+{% bootstrap_field form.organizing_institution wrapper_class="mb-3 required_field" placeholder="" %}
 {% bootstrap_field form.website placeholder="https://" %}
-{% bootstrap_field form.title form_group_class="form-group required_field" placeholder="" %}
-{% bootstrap_field form.authors form_group_class="form-group required_field" placeholder="" %}
+{% bootstrap_field form.title wrapper_class="mb-3 required_field" placeholder="" %}
+{% bootstrap_field form.authors wrapper_class="mb-3 required_field" placeholder="" %}
 
 <h3>{% trans "Participation" %}</h3>
 {% bootstrap_field form.participating_proof %}

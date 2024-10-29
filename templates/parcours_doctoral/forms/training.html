@@ -1,5 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load i18n static parcours_doctoral bootstrap3 %}
+{% load i18n static parcours_doctoral django_bootstrap5 %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -32,7 +32,7 @@
 
 {% block submit_button_bottom %}
   {% url request.resolver_match.namespace pk=view.kwargs.pk as back_url %}
-  <div class="text-right form-group">
+  <div class="text-end mb-3">
     <a href="{{ back_url }}" class="text-danger">
       {% trans "Cancel" %}
     </a>
@@ -47,9 +47,13 @@
   <script>
   $(function () {
     {# Scripts cannot be inside form includes as dependsOn is included in form.media #}
-    $('#container_start_date a.popover-buttons').length && $('#container_start_date a.popover-buttons').dependsOn({
-      '#id_organizing_institution_0': { values: ['UCLouvain'] },
-    });
+    const datePopover = $('[for="id_start_date"] > a.popover-buttons');
+    const institutionInput = $('#id_organizing_institution_0');
+    if(datePopover.length) {
+        institutionInput.on('change', function () {
+          datePopover.toggle(institutionInput.val() === 'UCLouvain');
+        }).trigger('change');
+    }
     $('#id_academic_year').change(function () {
       $('#id_learning_unit_year').val(null).trigger('change');
     });

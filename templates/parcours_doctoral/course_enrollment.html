@@ -1,5 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load i18n static parcours_doctoral doctorate_enums bootstrap3 %}
+{% load i18n static parcours_doctoral doctorate_enums django_bootstrap5 %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -33,23 +33,23 @@
   <p>{% lorem %}</p>
 
   {% if doctorate|can_make_action:'add_training' %}
-    <a href="{{ add_url }}" class="btn btn-default">
+    <a href="{{ add_url }}" class="btn btn-light border border-dark-subtle mb-3">
       {% trans "Enroll in a course" %}
     </a>
   {% endif %}
 
   <h4>{% trans "Course units" %}</h4>
   {% if activities %}
-    <div class="filter-status form-group">
+    <div class="filter-status mb-3">
       <strong>{% trans "Status" %}</strong>
-      <div class="btn-group btn-group-sm" role="radiogroup">
-        <button type="button" class="btn btn-default active" data-status="all">
+      <div class="btn-group btn-group-sm flex-wrap" role="radiogroup">
+        <button type="button" class="btn btn-light border border-dark-subtle active" data-status="all">
           {% trans "All" context "filters" %}
         </button>
         {% for status_name, status_label in statuses %}
           <button
             type="button"
-            class="btn btn-default btn-{{ status_name|status_as_class }}"
+            class="btn border border-dark-subtle btn-{{ status_name|status_as_class }}"
             data-status="{{ status_name }}"
           >
             {{ status_label }}
@@ -78,7 +78,7 @@
       </div>
 
       {% if doctorate|can_make_action:'submit_training' %}
-        <button class="btn btn-default" type="submit" name="_submit">{% trans "Submit selected activities" %}</button>
+        <button class="btn btn-light border border-dark-subtle" type="submit" name="_submit">{% trans "Submit selected activities" %}</button>
       {% endif %}
     </form>
   {% else %}
@@ -92,47 +92,15 @@
 {% endblock %}
 
 
-
 {% block style %}
   {{ block.super }}
-  <style>
-    .panel {
-      margin-bottom: 2em;
-    }
-
-    .panel-heading .panel-title {
-      line-height: 1.3em;
-    }
-
-    .panel-heading .panel-title > a {
-      float: left;
-      font-size: 1.5em;
-      padding-right: .3em;
-    }
-
-    .panel-heading .panel-title > a:focus,
-    .panel-heading .panel-title > a:hover {
-      text-decoration: none;
-    }
-
-    .panel-heading .panel-title > a:after {
-      font-family: 'Glyphicons Halflings';
-      content: "\e114";
-    }
-
-    .panel-heading .panel-title > a.collapsed:after {
-      content: "\e080";
-    }
-  </style>
+  <link href="{% static "parcours_doctoral/training.css" %}" rel="stylesheet" />
 {% endblock %}
 
 
 {% block script %}
-  <script src="{% static 'osis_document/osis-document.umd.min.js' %}"></script>
   <script>
   $(function () {
-    $('[data-toggle="popover"]').popover();
-
     // Open the right panel depending on location hash
     if (document.location.hash) {
       const uuid = document.location.hash.slice(1);
@@ -153,7 +121,7 @@
 
     function apply_filters() {
       const reStatus = new RegExp(`\\b${current_filter_status}\\b`);
-      $('#activity-list .panel').each(function () {
+      $('#activity-list .card').each(function () {
         $(this).show();
         if ((current_filter_status !== ALL_VALUES && !$(this).data('status').match(reStatus))) {
           $(this).hide();

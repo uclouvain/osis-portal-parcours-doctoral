@@ -1,4 +1,4 @@
-{% extends "parcours_doctoral/tab_layout.html" %}{% load bootstrap3 i18n static parcours_doctoral doctorate_enums %}
+{% extends "parcours_doctoral/tab_layout.html" %}{% load django_bootstrap5 i18n static parcours_doctoral doctorate_enums %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -25,8 +25,6 @@
   * see http://www.gnu.org/licenses/.
 {% endcomment %}
 
-{% block breadcrumb_area %}{% endblock %}
-
 {% block content %}
   <div class="page-header">
     <div class="row">
@@ -38,11 +36,11 @@
 
   {% for doctorate in doctorates %}
     {% panel additional_class="doctorate-item" cy_matricule=doctorate.matricule_doctorant cy_type="doctorat" cy_state=doctorate.statut %}
-      <h3 style="margin-top: 0">
+      <h3 class="mt-0">
         {{ doctorate.prenom_doctorant }} {{ doctorate.nom_doctorant }}
         ({{ doctorate.reference }})
         {% display doctorate.doctorat.intitule " (" doctorate.doctorat.campus ")" as doctorate_title %}
-        <div><small>{{ doctorate_title }}
+        <div><small class="text-muted">{{ doctorate_title }}
           - {{ doctorate.intitule_secteur_formation }}</small></div>
       </h3>
       <div>
@@ -57,22 +55,22 @@
 
       {% footer %}
 
-      <div class="dropdown pull-right">
+      <div class="dropdown float-end">
         <button
           type="button"
-          class="btn btn-default dropdown-toggle"
-          data-toggle="dropdown"
+          class="btn btn-light border border-dark-subtle dropdown-toggle"
+          data-bs-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <span class="glyphicon glyphicon-eye-open"></span>
+          <span class="fa-solid fa-eye"></span>
           {% trans "View" %}
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
           {% for parent, subtabs in tab_tree.items %}
             {% for subtab in subtabs %}
-              {% include 'parcours_doctoral/doctorate_tab_entry.html' with doctorate=doctorate tab=subtab %}
+              {% include 'parcours_doctoral/doctorate_dropdown_entry.html' with doctorate=doctorate tab=subtab %}
             {% endfor %}
           {% endfor %}
         </ul>

@@ -1,4 +1,4 @@
-{% load i18n bootstrap3 parcours_doctoral %}
+{% load i18n django_bootstrap5 parcours_doctoral %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -38,17 +38,17 @@
 
 <h3>{% trans "Context" %}</h3>
 <div class="row">
-  {% bootstrap_field form.type form_group_class="form-group col-md-4" %}
+  {% bootstrap_field form.type wrapper_class="mb-3 col-md-4" %}
 </div>
-{% bootstrap_field form.title form_group_class="form-group required_field" placeholder="" %}
+{% bootstrap_field form.title wrapper_class="mb-3 required_field" placeholder="" %}
 <div class="row">
-  {% bootstrap_field form.start_date form_group_class="form-group col-md-4 required_field" %}
-  {% bootstrap_field form.end_date form_group_class="form-group col-md-4 required_field" %}
+  {% bootstrap_field form.start_date wrapper_class="mb-3 col-md-4 required_field" %}
+  {% bootstrap_field form.end_date wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
 
 <h3>{% trans "Your participation in the event" %}</h3>
 <div class="row">
-  {% bootstrap_field form.hour_volume form_group_class="form-group col-md-4 required_field" placeholder="" %}
-  {% bootstrap_field_with_tooltip form.ects classes="form-group col-md-4 required_field" %}
+  {% bootstrap_field form.hour_volume wrapper_class="mb-3 col-md-4 required_field" placeholder="" %}
+  {% bootstrap_field_with_tooltip form.ects wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
-{% bootstrap_field form.participating_proof  form_group_class="form-group required_field"  %}
+{% bootstrap_field form.participating_proof  wrapper_class="mb-3 required_field"  %}

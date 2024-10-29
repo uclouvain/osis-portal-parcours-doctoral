@@ -54,7 +54,7 @@ class SupervisionTestCase(TestCase):
         self.update_url = resolve_url("parcours_doctoral:update:supervision", pk=self.pk)
         self.detail_url = resolve_url("parcours_doctoral:supervision", pk=self.pk)
         self.external_url = resolve_url(
-            "parcours_doctoral:public-doctorate:external-approval",
+            "parcours_doctoral:public:external-approval",
             pk=self.pk,
             token="promoter-token",
         )
