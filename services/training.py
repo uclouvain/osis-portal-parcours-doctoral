@@ -25,24 +25,24 @@
 # ##############################################################################
 from importlib import import_module
 
+import osis_parcours_doctoral_sdk
 from django.http import HttpResponseBadRequest
+from osis_parcours_doctoral_sdk.api import doctorate_api
 
-from parcours_doctoral.services.mixins import ServiceMeta
-from parcours_doctoral.utils.utils import to_snake_case
-from frontoffice.settings.osis_sdk import admission as admission_sdk
+from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk
 from frontoffice.settings.osis_sdk.utils import (
     ApiBusinessException,
     MultipleApiBusinessException,
     build_mandatory_auth_headers,
 )
-from osis_admission_sdk import ApiClient, ApiException
-from osis_admission_sdk.api import propositions_api
+from parcours_doctoral.services.mixins import ServiceMeta
+from parcours_doctoral.utils.utils import to_snake_case
 
 
 class APIClient:
     def __new__(cls):
-        api_config = admission_sdk.build_configuration()
-        return propositions_api.PropositionsApi(ApiClient(configuration=api_config))
+        api_config = parcours_doctoral_sdk.build_configuration()
+        return doctorate_api.DoctorateApi(osis_parcours_doctoral_sdk.ApiClient(configuration=api_config))
 
 
 class ActivityApiBusinessException(ApiBusinessException):
@@ -52,7 +52,7 @@ class ActivityApiBusinessException(ApiBusinessException):
 
 
 class DoctorateTrainingService(metaclass=ServiceMeta):
-    api_exception_cls = ApiException
+    api_exception_cls = osis_parcours_doctoral_sdk.ApiException
 
     @classmethod
     def get_config(cls, person, uuid):
@@ -110,7 +110,7 @@ class DoctorateTrainingService(metaclass=ServiceMeta):
     @classmethod
     def _get_activity(cls, kwargs):
         class_name = kwargs["object_type"]
-        module = import_module(f'osis_admission_sdk.model.{to_snake_case(class_name)}')
+        module = import_module(f'osis_parcours_doctoral_sdk.model.{to_snake_case(class_name)}')
         activity_class = getattr(module, class_name)
         return activity_class(**kwargs)
 
@@ -122,7 +122,7 @@ class DoctorateTrainingService(metaclass=ServiceMeta):
                 **build_mandatory_auth_headers(person),
                 doctoral_training_batch=kwargs,
             )
-        except ApiException as api_exception:
+        except osis_parcours_doctoral_sdk.ApiException as api_exception:
             # We need special API handling to add activity info
             if api_exception.status == HttpResponseBadRequest.status_code:
                 import json

@@ -33,13 +33,13 @@ from django.shortcuts import resolve_url
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 
-from parcours_doctoral.services.mixins import WebServiceFormMixin
 from parcours_doctoral.services.doctorate import DoctorateService
+from parcours_doctoral.services.mixins import WebServiceFormMixin
 
-__all__ = ['DoctorateRequestSignaturesView']
+__all__ = ['RequestSignaturesView']
 
 
-class DoctorateRequestSignaturesView(LoginRequiredMixin, SuccessMessageMixin, WebServiceFormMixin, FormView):
+class RequestSignaturesView(LoginRequiredMixin, SuccessMessageMixin, WebServiceFormMixin, FormView):
     urlpatterns = 'request-signatures'
     form_class = Form
     success_message = _("Signature requests sent")

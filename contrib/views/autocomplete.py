@@ -32,42 +32,32 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.utils.translation import get_language, gettext_lazy as _
 from osis_organisation_sdk.model.entite_type_enum import EntiteTypeEnum
+from osis_parcours_doctoral_sdk.model.scholarship import Scholarship
 from osis_reference_sdk.model.university import University
-from waffle import switch_is_active
 
-from admission.contrib.views.autocomplete import SuperiorInstituteAutocomplete
 from base.models.enums.entity_type import INSTITUTE
-from osis_admission_sdk.model.scholarship import Scholarship
 from parcours_doctoral.constants import BE_ISO_CODE
 from parcours_doctoral.contrib.enums.diploma import StudyType
-from parcours_doctoral.contrib.forms import EMPTY_VALUE
 from parcours_doctoral.services.autocomplete import DoctorateAutocompleteService
 from parcours_doctoral.services.organisation import EntitiesService
 from parcours_doctoral.services.reference import (
-    CitiesService,
     CountriesService,
     LanguageService,
     UniversityService,
     SuperiorNonUniversityService,
 )
 from parcours_doctoral.utils import (
-    format_entity_address,
     format_entity_title,
     format_scholarship,
-    format_training,
-    format_training_with_year,
     format_school_title,
 )
 
 __all__ = [
-    "DoctorateAutocomplete",
     "CountryAutocomplete",
-    "CityAutocomplete",
     "LanguageAutocomplete",
     "TutorAutocomplete",
     "PersonAutocomplete",
     "InstituteAutocomplete",
-    "InstituteLocationAutocomplete",
     "LearningUnitYearsAutocomplete",
     "ScholarshipAutocomplete",
     "SuperiorInstituteAutocomplete",
@@ -110,41 +100,13 @@ class PaginatedAutocompleteMixin:
         )
 
 
-class DoctorateAutocomplete(LoginRequiredMixin, autocomplete.Select2ListView):
-    urlpatterns = 'doctorate'
-
-    def get_list(self):
-        selected_campus = self.forwarded.get('campus') or EMPTY_VALUE
-        return DoctorateAutocompleteService.get_doctorates(
-            person=self.request.user.person,
-            sigle=self.forwarded['sector'],
-            campus=selected_campus if selected_campus != EMPTY_VALUE else '',
-            acronym_or_name=self.q,
-        )
-
-    def results(self, results):
-        format_method = format_training_with_year if switch_is_active('debug') else format_training
-        return [
-            dict(
-                id="{result.sigle}-{result.annee}".format(result=result),
-                sigle=result.sigle,
-                sigle_entite_gestion=result.sigle_entite_gestion,
-                text=format_method(result),
-            )
-            for result in results
-        ]
-
-    def autocomplete_results(self, results):
-        return results
-
-
 class ScholarshipAutocomplete(LoginRequiredMixin, PaginatedAutocompleteMixin, autocomplete.Select2ListView):
     urlpatterns = 'scholarship'
 
     def get_list(self):
+        # TODO to replace by the reference service
         return DoctorateAutocompleteService.get_scholarships(
             person=self.request.user.person,
-            scholarship_type=self.forwarded.get('scholarship_type'),
             search=self.q,
             **self.get_webservice_pagination_kwargs(),
         ).get('results')
@@ -190,24 +152,6 @@ class CountryAutocomplete(LoginRequiredMixin, PaginatedAutocompleteMixin, autoco
             for country in results
             if not self.forwarded.get('exclude_be', False) or country.iso_code != BE_ISO_CODE
         ]
-
-
-class CityAutocomplete(LoginRequiredMixin, autocomplete.Select2ListView):
-    urlpatterns = 'city'
-
-    def get_list(self):
-        return CitiesService.get_cities(
-            person=self.request.user.person,
-            search=self.q,
-            zip_code=self.forwarded.get('postal_code', ''),
-        )
-
-    def autocomplete_results(self, results):
-        return results
-
-    def results(self, results):
-        """Return the result dictionary."""
-        return [dict(id=city.name, text=city.name) for city in results]
 
 
 class LanguageAutocomplete(LoginRequiredMixin, PaginatedAutocompleteMixin, autocomplete.Select2ListView):
@@ -303,26 +247,6 @@ class InstituteAutocomplete(LoginRequiredMixin, PaginatedAutocompleteMixin, auto
             )
             for entity in results
         ]
-
-
-class InstituteLocationAutocomplete(LoginRequiredMixin, autocomplete.Select2ListView):
-    urlpatterns = 'institute-location'
-
-    def get_list(self):
-        # Return a list of addresses related to the thesis institute, if defined
-        if not self.forwarded['institut_these']:
-            return []
-        return EntitiesService.get_ucl_entity_addresses(
-            person=self.request.user.person,
-            uuid=self.forwarded['institut_these'],
-        )
-
-    def results(self, results):
-        formatted_results = []
-        for address in results:
-            formatted_address = format_entity_address(address)
-            formatted_results.append({'id': formatted_address, 'text': formatted_address})
-        return formatted_results
 
 
 class LearningUnitYearsAutocomplete(LoginRequiredMixin, PaginatedAutocompleteMixin, autocomplete.Select2ListView):

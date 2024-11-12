@@ -33,11 +33,13 @@ from parcours_doctoral.contrib.forms.extension_request import ExtensionRequestFo
 
 class ExtensionRequestFormTestCase(TestCase):
     def test_extension_request_form_valid_data(self):
-        form = ExtensionRequestForm(data={
-            'nouvelle_echeance': datetime.date(2022, 12, 31),
-            'justification_succincte': 'My reason',
-            'lettre_justification': [],
-        })
+        form = ExtensionRequestForm(
+            data={
+                'nouvelle_echeance': datetime.date(2022, 12, 31),
+                'justification_succincte': 'My reason',
+                'lettre_justification': [],
+            }
+        )
 
         self.assertTrue(form.is_valid())
         self.assertEqual(

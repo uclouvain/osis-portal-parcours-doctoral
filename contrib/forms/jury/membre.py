@@ -127,6 +127,12 @@ class JuryMembreForm(forms.Form):
             self.fields['matricule'].widget.choices = EMPTY_CHOICE + ((matricule, str(person)),)
 
     def clean(self):
-        if 'institution_principale' in self.cleaned_data:
-            del self.cleaned_data['institution_principale']
-        return self.cleaned_data
+        cleaned_data = super().clean()
+
+        main_institution = cleaned_data.pop('institution_principale')
+
+        if main_institution == self.InstitutionPrincipaleChoices.UCL.name:
+            if not cleaned_data.get('matricule'):
+                self.add_error('matricule', _("Please select a member"))
+
+        return cleaned_data

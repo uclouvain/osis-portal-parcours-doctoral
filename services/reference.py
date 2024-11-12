@@ -23,29 +23,45 @@
 #    see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-import datetime
 from functools import lru_cache
 from typing import List
 
+import osis_parcours_doctoral_sdk
 from django.http import Http404
-from osis_reference_sdk import ApiClient, ApiException
+from osis_parcours_doctoral_sdk import ApiClient, ApiException
+from osis_parcours_doctoral_sdk.api import references_api as doctorate_references_api
+from osis_reference_sdk import ApiClient
 from osis_reference_sdk.api import (
     academic_years_api,
-    cities_api,
     countries_api,
     languages_api,
-    diplomas_api,
-    high_schools_api,
     superior_non_universities_api,
     universities_api,
 )
 from osis_reference_sdk.model.academic_year import AcademicYear
 
-from parcours_doctoral.contrib.enums.diploma import StudyType
-from parcours_doctoral.services.mixins import ServiceMeta
-from base.models.person import Person
+from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk
 from frontoffice.settings.osis_sdk import reference as reference_sdk
 from frontoffice.settings.osis_sdk.utils import build_mandatory_auth_headers
+from parcours_doctoral.contrib.enums.diploma import StudyType
+from parcours_doctoral.services.mixins import ServiceMeta
+
+
+class DoctorateReferencesAPIClient:
+    def __new__(cls):
+        api_config = parcours_doctoral_sdk.build_configuration()
+        return doctorate_references_api.ReferencesApi(osis_parcours_doctoral_sdk.ApiClient(configuration=api_config))
+
+
+class DoctorateReferencesService(metaclass=ServiceMeta):
+    api_exception_cls = osis_parcours_doctoral_sdk.ApiException
+
+    @classmethod
+    def get_scholarship(cls, person, scholarship_uuid):
+        return DoctorateReferencesAPIClient().retrieve_scholarship(
+            uuid=scholarship_uuid,
+            **build_mandatory_auth_headers(person),
+        )
 
 
 class CountriesAPIClient:
@@ -89,28 +105,6 @@ class CountriesService(metaclass=ServiceMeta):
         return countries[0]
 
 
-class CitiesAPIClient:
-    def __new__(cls):
-        api_config = reference_sdk.build_configuration()
-        return cities_api.CitiesApi(ApiClient(configuration=api_config))
-
-
-class CitiesService(metaclass=ServiceMeta):
-    api_exception_cls = ApiException
-
-    @classmethod
-    def get_cities(cls, person: 'Person' = None, *args, **kwargs):
-        return (
-            CitiesAPIClient()
-            .cities_list(
-                *args,
-                **kwargs,
-                **build_mandatory_auth_headers(person),
-            )
-            .results
-        )
-
-
 class AcademicYearAPIClient:
     def __new__(cls):
         api_config = reference_sdk.build_configuration()
@@ -130,22 +124,6 @@ class AcademicYearService(metaclass=ServiceMeta):
                 **build_mandatory_auth_headers(person),
             )
             .results
-        )
-
-    @classmethod
-    def get_current_academic_year(cls, person, academic_years=None):
-        """Returns the current academic year"""
-        if not academic_years:
-            academic_years = cls.get_academic_years(person)
-
-        today_date = datetime.date.today()
-        return next(
-            (
-                academic_year.year
-                for academic_year in reversed(academic_years)
-                if academic_year.start_date <= today_date <= academic_year.end_date
-            ),
-            None,
         )
 
 
@@ -183,64 +161,6 @@ class LanguageService(metaclass=ServiceMeta):
             .results
         )
         return languages[0] if languages else None
-
-
-class HighSchoolAPIClient:
-    def __new__(cls):
-        api_config = reference_sdk.build_configuration()
-        return high_schools_api.HighSchoolsApi(ApiClient(configuration=api_config))
-
-
-class HighSchoolService(metaclass=ServiceMeta):
-    api_exception_cls = ApiException
-
-    @classmethod
-    def get_high_schools(cls, person, **kwargs):
-        return (
-            HighSchoolAPIClient()
-            .high_schools_list(
-                **kwargs,
-                **build_mandatory_auth_headers(person),
-            )
-            .results
-        )
-
-    @classmethod
-    def get_high_school(cls, person, uuid):
-        return HighSchoolAPIClient().high_school_read(
-            uuid=uuid,
-            **build_mandatory_auth_headers(person),
-        )
-
-
-class DiplomaAPIClient:
-    def __new__(cls):
-        api_config = reference_sdk.build_configuration()
-        return diplomas_api.DiplomasApi(ApiClient(configuration=api_config))
-
-
-class DiplomaService(metaclass=ServiceMeta):
-    api_exception_cls = ApiException
-
-    @classmethod
-    def get_diplomas(cls, person, **kwargs):
-        return (
-            DiplomaAPIClient()
-            .diplomas_list(
-                limit=kwargs.pop('limit', 100),
-                **kwargs,
-                **build_mandatory_auth_headers(person),
-            )
-            .results
-        )
-
-    @classmethod
-    def get_diploma(cls, person, uuid, **kwargs):
-        return DiplomaAPIClient().diploma_read(
-            uuid=uuid,
-            **kwargs,
-            **build_mandatory_auth_headers(person),
-        )
 
 
 class SuperiorNonUniversityAPIClient:

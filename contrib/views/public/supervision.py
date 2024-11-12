@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,25 +28,44 @@ from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import resolve_url
 from django.utils.functional import cached_property
-from django.views.generic import FormView, TemplateView
 from django.utils.translation import gettext_lazy as _
+from django.views.generic import FormView, TemplateView
 
 from parcours_doctoral.contrib.enums import DecisionApprovalEnum
 from parcours_doctoral.contrib.forms.supervision import DoctorateApprovalForm
+from parcours_doctoral.contrib.views.public.mixins import ExternalViewMixin
+from parcours_doctoral.services.doctorate import DoctorateSupervisionService, ExternalDoctorateService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
-from parcours_doctoral.services.doctorate import DoctorateSupervisionService
+
+__namespace__ = None
 
 __all__ = [
-    'DoctorateExternalConfirmView',
-    'DoctorateExternalApprovalView',
+    'ExternalSupervisionView',
 ]
-__namespace__ = {'public': 'public/<uuid:pk>'}
+
+
+class ExternalSupervisionView(ExternalViewMixin, TemplateView):
+    urlpatterns = {'supervision': 'supervision/<token>'}
+    template_name = 'parcours_doctoral/details/external_supervision.html'
+
+    @cached_property
+    def data(self):
+        return ExternalDoctorateService.get_supervision(
+            uuid=self.doctorate_uuid,
+            token=self.kwargs['token'],
+        ).to_dict()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['doctorate'] = self.data['parcours_doctoral']
+        context['supervision'] = self.data['supervision']
+        return context
 
 
 class DoctorateExternalApprovalView(UserPassesTestMixin, WebServiceFormMixin, FormView):
     urlpatterns = {'external-approval': 'external-approval/<token>'}
     form_class = DoctorateApprovalForm
-    template_name = 'parcours_doctoral/forms/external_approval.html'
+    template_name = 'parcours_doctoral/forms/external_supervision.html'
 
     def test_func(self):
         return self.request.user.is_anonymous

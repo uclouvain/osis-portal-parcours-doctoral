@@ -53,18 +53,19 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  {% if doctorate and doctorate.matricule_doctorant != user.person.global_id or request.resolver_match.url_name == 'supervised-list' %}
-    {% url 'parcours_doctoral:supervised-list' as list_url %}
-  {% else %}
-    {% url 'parcours_doctoral:list' as list_url %}
-  {% endif %}
-  <li class="breadcrumb-item">
-    <a href="{{ list_url }}">{% trans "PhDs" %}</a>
-  </li>
   {% if doctorate %}
-    <li class="breadcrumb-item active">
-      {% block breadcrumb_title %}{{ doctorate.doctorat.intitule }} ({{ doctorate.reference }}){% endblock %}
-    </li>
+    {% if doctorate.matricule_doctorant == user.person.global_id %}
+      <li class="breadcrumb-item active">
+        {% translate 'My PhD' context 'doctorate' %}
+      </li>
+    {% else %}
+      <li class="breadcrumb-item">
+        <a href="{% url 'parcours_doctoral:supervised-list' %}">{% trans "PhDs" %}</a>
+      </li>
+      <li class="breadcrumb-item active">
+        {{ doctorate.formation.intitule }} ({{ doctorate.reference }})
+      </li>
+    {% endif %}
   {% endif %}
 {% endblock %}
 
@@ -75,23 +76,11 @@
     {% include "parcours_doctoral/modal/prevent_quitting_modal.html" %}
   {% endif %}
 
-  {% if doctorate and doctorate.matricule_doctorant != user.person.global_id %}
-    {% url 'parcours_doctoral:supervised-list' as list_url %}
-  {% else %}
-    {% url 'parcours_doctoral:list' as list_url %}
-  {% endif %}
-
   {# Header page title #}
   <div class="page-header h3 clearfix">
     <span class="d-inline-block">
-      {% block header_title %}{{ doctorate.doctorat.intitule }} ({{ doctorate.reference }}){% endblock %}
+      {% block header_title %}{{ doctorate.formation.intitule }} ({{ doctorate.reference }}){% endblock %}
     </span>
-    {% if user.is_authenticated %}
-      <a href="{{ list_url }}" class="float-end fs-6 text text-primary">
-        <span class="fa fa-stream"></span>
-        {% trans "Back to PhDs" %}
-      </a>
-    {% endif %}
   </div>
 
   {# Well #}
@@ -99,7 +88,7 @@
     <div class="card card-body bg-light mb-3">
       <div>
         {% trans "Reference:" %}
-        {% display doctorate.doctorat.intitule " (" doctorate.doctorat.campus ")" as doctorate_title %}
+        {% display doctorate.formation.intitule " (" doctorate.formation.campus.nom ")" as doctorate_title %}
         {{ doctorate_title }} ({{ doctorate.reference }})
       </div>
       <div>

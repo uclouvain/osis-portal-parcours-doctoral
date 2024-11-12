@@ -27,20 +27,20 @@
 <div class="dashboard-doctorate">
   <div class="dashboard-grid dashboard-fixed-placement" >
     {% get_dashboard_links as links %}
-    {% if 'url' in links.list_doctorates %}
+    {% if 'url' in links.list %}
       <div class="grid-item">
         <i class="far fa-address-card" style="grid-area: icon;"></i>
         <h4 class="media-heading" style="grid-area: title;">
-          <a href="{% url 'parcours_doctoral:list' %}" id="lnk_doctorate">
-            {% trans 'My PhD' context 'doctorate' %}
+          <a href="{% url 'parcours_doctoral:redirect' %}" id="lnk_doctorate">
+            {% translate 'My PhD' context 'doctorate' %}
           </a>
         </h4>
         <div class="description" style="grid-area: description;">
-          <p>{% trans 'Create and manage my UCLouvain application' %}.</p>
+          <p>{% translate 'Manage my PhD' %}.</p>
         </div>
       </div>
     {% endif %}
-    {% if 'url' in links.list_supervised %}
+    {% if 'url' in links.supervised_list %}
       <div class="grid-item">
         <i class="far fa-address-card" style="grid-area: icon;"></i>
         <h4 class="media-heading" style="grid-area: title;">
@@ -48,11 +48,11 @@
             href="{% url 'parcours_doctoral:supervised-list' %}"
             id="lnk_member_doctorate"
           >
-            {% trans 'Management of PhDs' %}
+            {% translate 'Management of PhDs' %}
           </a>
         </h4>
         <div class="description" style="grid-area: description;">
-          <p>{% trans "Access my PhD students' files" %}.</p>
+          <p>{% translate "Access my PhD students' applications" %}.</p>
         </div>
       </div>
     {% endif %}

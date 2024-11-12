@@ -24,18 +24,18 @@
 #
 # ##############################################################################
 import osis_learning_unit_sdk
-from osis_admission_sdk import ApiClient, ApiException
-from osis_admission_sdk.api import autocomplete_api
 from osis_learning_unit_sdk.api import learning_units_api
+from osis_parcours_doctoral_sdk import ApiClient, ApiException
+from osis_parcours_doctoral_sdk.api import autocomplete_api
 
-from parcours_doctoral.services.mixins import ServiceMeta
-from frontoffice.settings.osis_sdk import admission as admission_sdk, learning_unit as learning_unit_sdk
+from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk, learning_unit as learning_unit_sdk
 from frontoffice.settings.osis_sdk.utils import build_mandatory_auth_headers
+from parcours_doctoral.services.mixins import ServiceMeta
 
 
 class DoctorateAutocompleteAPIClient:
     def __new__(cls):
-        api_config = admission_sdk.build_configuration()
+        api_config = parcours_doctoral_sdk.build_configuration()
         return autocomplete_api.AutocompleteApi(ApiClient(configuration=api_config))
 
 
@@ -43,22 +43,8 @@ class DoctorateAutocompleteService(metaclass=ServiceMeta):
     api_exception_cls = ApiException
 
     @classmethod
-    def get_sectors(cls, person=None):
-        return DoctorateAutocompleteAPIClient().list_sector_dtos(**build_mandatory_auth_headers(person))
-
-    @classmethod
-    def get_doctorates(cls, person=None, sigle="", campus="", acronym_or_name=''):
-        return DoctorateAutocompleteAPIClient().list_doctorat_dtos(
-            sigle=sigle,
-            campus=campus,
-            acronym_or_name=acronym_or_name,
-            **build_mandatory_auth_headers(person),
-        )
-
-    @classmethod
-    def get_scholarships(cls, person, scholarship_type, search='', **kwargs):
+    def get_scholarships(cls, person, search='', **kwargs):
         return DoctorateAutocompleteAPIClient().list_scholarships(
-            scholarship_type=scholarship_type,
             search=search,
             **kwargs,
             **build_mandatory_auth_headers(person),
@@ -86,12 +72,5 @@ class DoctorateAutocompleteService(metaclass=ServiceMeta):
         return api_instance.learningunits_list(
             year=int(year),
             acronym_like=acronym_search,
-            **build_mandatory_auth_headers(person),
-        )['results']
-
-    @classmethod
-    def list_diplomatic_posts(cls, person, **kwargs):
-        return DoctorateAutocompleteAPIClient().list_diplomatic_posts(
-            **kwargs,
             **build_mandatory_auth_headers(person),
         )['results']

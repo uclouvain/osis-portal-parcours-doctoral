@@ -26,32 +26,37 @@
 {% endcomment %}
 
 {% block tab_content %}
-    {% trans "Defense method" context "doctorate tab" as panel_title %}
-    {% panel panel_title %}
-        {% include 'parcours_doctoral/includes/jury_description.html' %}
-
-        {% field_data _("Proposed thesis title") jury.titre_propose %}
-        <div class="row">
-          <div class="col-md-4">
-            {% trans 'Information about a potential cotutelle are to be inputted in the "Doctoral project" part.' as cotutelle_tooltip %}
-            {% field_data _("Cotutelle thesis") cotutelle.cotutelle tooltip=cotutelle_tooltip %}
-          </div>
-          {% if cotutelle.cotutelle %}
-          <div class="col-md-4">
-            {% field_data _("Partner institution") cotutelle.institution %}
-          </div>
+  {% trans "Defense method" context "doctorate tab" as panel_title %}
+  {% panel panel_title %}
+    {% include 'parcours_doctoral/includes/jury_description.html' %}
+    {% field_data _("Proposed thesis title") jury.titre_propose %}
+    <div class="row">
+      <div class="col-md-4">
+        {% trans 'Information about a potential cotutelle are to be inputted in the "Doctoral project" part.' as cotutelle_tooltip %}
+        {% field_data _("Cotutelle thesis") doctorate.cotutelle.cotutelle tooltip=cotutelle_tooltip %}
+      </div>
+      {% if doctorate.cotutelle.cotutelle %}
+        <div class="col-md-4">
+          {% get_superior_institute_name doctorate.cotutelle.institution as institution %}
+          {% if institution %}
+            {% field_data _("Partner institution") institution %}
+          {% elif doctorate.cotutelle.autre_institution %}
+            {% field_data _("Partner institution name") doctorate.cotutelle.autre_institution_nom %}
+            {% field_data _("Partner institution address") doctorate.cotutelle.autre_institution_adresse %}
           {% endif %}
         </div>
-        {% field_data _("Defense method") jury.formule_defense|enum_display:'FormuleDefense' %}
-        {% field_data _("Defense indicative date") jury.date_indicative %}
-        <div class="row">
-          <div class="col-md-4">
-            {% field_data _("Thesis language") jury.nom_langue_redaction %}
-          </div>
-          <div class="col-md-4">
-            {% field_data _("Defense language") jury.langue_soutenance|enum_display:'ChoixLangueRedactionThese' %}
-          </div>
-        </div>
-        {% if jury.commentaire %}{% field_data _("Comment") jury.commentaire|linebreaks %}{% endif %}
-    {% endpanel %}
+      {% endif %}
+    </div>
+    {% field_data _("Defense method") jury.formule_defense|enum_display:'FormuleDefense' %}
+    {% field_data _("Defense indicative date") jury.date_indicative %}
+    <div class="row">
+      <div class="col-md-4">
+        {% field_data _("Thesis language") doctorate.projet.nom_langue_redaction_these %}
+      </div>
+      <div class="col-md-4">
+        {% field_data _("Defense language") jury.langue_soutenance|enum_display:'ChoixLangueRedactionThese' %}
+      </div>
+    </div>
+    {% if jury.commentaire %}{% field_data _("Comment") jury.commentaire|linebreaks %}{% endif %}
+  {% endpanel %}
 {% endblock %}

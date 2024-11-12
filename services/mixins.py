@@ -29,11 +29,10 @@ from copy import copy
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.utils.translation import gettext_lazy as _
-from osis_admission_sdk import OpenApiException
+from osis_parcours_doctoral_sdk import OpenApiException
 
 from base.models.person import Person
 from frontoffice.settings.osis_sdk.utils import MultipleApiBusinessException, api_exception_handler
-
 
 INVALID_LENGTH_RE = re.compile('Invalid value for `([^`]+)`, length must be less than or equal to `([^`]+)`')
 

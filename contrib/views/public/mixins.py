@@ -23,25 +23,13 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-
-from django.views.generic import TemplateView
-
-from parcours_doctoral.contrib.views.mixins import LoadViewMixin
-from parcours_doctoral.services.doctorate import DoctorateService
-
-__all__ = ['ExtensionRequestDetailView']
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 
-class ExtensionRequestDetailView(LoadViewMixin, TemplateView):
-    template_name = 'parcours_doctoral/details/extension_request.html'
-    permission_link_to_check = 'update_confirmation_extension'
+class ExternalViewMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_anonymous
 
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-
-        context_data['confirmation_paper'] = DoctorateService.get_last_confirmation_paper(
-            person=self.request.user.person,
-            uuid=self.doctorate_uuid,
-        )
-
-        return context_data
+    @property
+    def doctorate_uuid(self):
+        return str(self.kwargs['pk'])

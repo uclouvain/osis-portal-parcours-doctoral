@@ -24,52 +24,29 @@
 #
 # ##############################################################################
 
-from dal import forward
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from parcours_doctoral.contrib.enums.experience_precedente import ChoixDoctoratDejaRealise
 from parcours_doctoral.contrib.enums.financement import (
     ChoixTypeContratTravail,
     ChoixTypeFinancement,
 )
-from parcours_doctoral.contrib.enums.scholarship import TypeBourse
 from parcours_doctoral.contrib.forms import (
     autocomplete,
     CustomDateInput,
     EMPTY_CHOICE,
     SelectOrOtherField,
-    get_thesis_location_initial_choices,
     get_scholarship_choices,
     DoctorateFileUploadField as FileUploadField,
-    get_language_initial_choices,
     RadioBooleanField,
 )
-from parcours_doctoral.contrib.views.autocomplete import LANGUAGE_UNDECIDED
 from parcours_doctoral.utils import mark_safe_lazy
 
-SCIENCE_DOCTORATE = 'SC3DP'
 
-COMMISSION_CDSS = 'CDSS'
-
-COMMISSIONS_CDE_CLSM = ['CDE', 'CLSM']
-
-
-class DoctorateProjectForm(forms.Form):
-    justification = forms.CharField(
-        label=_("Brief justification"),
-        widget=forms.Textarea(
-            attrs={
-                'rows': 2,
-                'placeholder': _("Reasons for provisional admission."),
-            }
-        ),
-        required=False,
-    )
-    type_financement = forms.ChoiceField(
+class FundingForm(forms.Form):
+    type = forms.ChoiceField(
         label=_("Current funding"),
         choices=EMPTY_CHOICE + ChoixTypeFinancement.choices(),
-        required=False,
         help_text=_(
             "If you don't have any funding yet, please choose \"Self-funding\" and explain the"
             " considered funding in the \"Comment\" area."
@@ -93,7 +70,6 @@ class DoctorateProjectForm(forms.Form):
         required=False,
         widget=autocomplete.ListSelect2(
             url='parcours_doctoral:autocomplete:scholarship',
-            forward=[forward.Const(TypeBourse.BOURSE_INTERNATIONALE_DOCTORAT.name, 'scholarship_type')],
         ),
     )
     autre_bourse_recherche = forms.CharField(
@@ -146,115 +122,10 @@ class DoctorateProjectForm(forms.Form):
             ),
         ),
     )
-    commentaire_financement = forms.CharField(
+    commentaire = forms.CharField(
         label=_("Comment"),
         required=False,
         widget=forms.Textarea,
-    )
-
-    lieu_these = forms.CharField(
-        label=_("Thesis location"),
-        required=False,
-        help_text=_(
-            "If known, indicate the name of the laboratory, clinical department or research centre where the thesis "
-            "will be carried out"
-        ),
-        max_length=255,
-    )
-    titre_projet = forms.CharField(
-        label=_("Project title (max. 100 characters)"),
-        required=False,
-        max_length=1023,
-    )
-    resume_projet = forms.CharField(
-        label=_("Project resume (max. 2000 characters)"),
-        help_text=_("Write your resume in the language decided with your accompanying committee."),
-        required=False,
-        widget=forms.Textarea,
-    )
-    documents_projet = FileUploadField(
-        label=_("PhD research project"),
-        required=False,
-    )
-    graphe_gantt = FileUploadField(
-        label=_("Gantt chart"),
-        required=False,
-    )
-    proposition_programme_doctoral = FileUploadField(
-        label=_("PhD proposal"),
-        required=False,
-    )
-    projet_formation_complementaire = FileUploadField(
-        label=_("Complementary training proposition"),
-        required=False,
-        help_text=_(
-            "Depending on your previous experience and your research project, the PhD Committee may require you to "
-            "take additional PhD training, up to a maximum of 60 credits. If so, please indicate here a proposal "
-            "for additional training."
-        ),
-    )
-    lettres_recommandation = FileUploadField(
-        label=_("Letters of recommendation"),
-        required=False,
-    )
-    langue_redaction_these = forms.CharField(
-        label=_("Thesis language"),
-        widget=autocomplete.ListSelect2(
-            url="parcours_doctoral:autocomplete:language",
-            attrs={
-                "data-html": True,
-            },
-            forward=(forward.Const(True, 'show_top_languages'),),
-        ),
-        required=False,
-    )
-
-    projet_doctoral_deja_commence = RadioBooleanField(
-        label=_("Has your PhD project already started?"),
-        required=False,
-        initial=False,
-    )
-    projet_doctoral_institution = forms.CharField(
-        label=_("Institution"),
-        required=False,
-        max_length=255,
-    )
-    projet_doctoral_date_debut = forms.DateField(
-        label=_("Work start date"),
-        widget=CustomDateInput(),
-        required=False,
-    )
-    doctorat_deja_realise = forms.ChoiceField(
-        label=_("Have you previously enrolled for a PhD?"),
-        choices=ChoixDoctoratDejaRealise.choices(),
-        initial=ChoixDoctoratDejaRealise.NO.name,
-        required=False,
-        help_text=_("Indicate any completed or interrupted PhD studies in which you are no longer enrolled."),
-    )
-    institution = forms.CharField(
-        label=_("Institution in which the PhD has been realised / started."),
-        required=False,
-        max_length=255,
-    )
-    domaine_these = forms.CharField(
-        label=_("Doctorate thesis field"),
-        required=False,
-        max_length=255,
-    )
-    non_soutenue = forms.BooleanField(
-        label=_("No defense"),
-        required=False,
-    )
-    date_soutenance = forms.DateField(
-        label=_("Defence date"),
-        widget=CustomDateInput(),
-        required=False,
-    )
-    raison_non_soutenue = forms.CharField(
-        label=_("No defense reason"),
-        widget=forms.Textarea(attrs={'rows': 2}),
-        required=False,
-        max_length=255,
     )
 
     class Media:
@@ -262,14 +133,8 @@ class DoctorateProjectForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.person = getattr(self, 'person', kwargs.pop('person', None))
-        super().__init__(*args, **kwargs)
 
-        # Add the specified thesis position in the choices of the related field
-        self.fields['lieu_these'].widget.choices = get_thesis_location_initial_choices(
-            self.data.get(self.add_prefix("lieu_these"), self.initial.get("lieu_these")),
-        )
-        if self.data.get(self.add_prefix("raison_non_soutenue"), self.initial.get("raison_non_soutenue")):
-            self.fields['non_soutenue'].initial = True
+        super().__init__(*args, **kwargs)
 
         scholarship_uuid = self.data.get(self.add_prefix('bourse_recherche'), self.initial.get('bourse_recherche'))
         if scholarship_uuid:
@@ -278,18 +143,9 @@ class DoctorateProjectForm(forms.Form):
                 person=self.person,
             )
 
-        lang_code = self.data.get(self.add_prefix("langue_redaction_these"), self.initial.get("langue_redaction_these"))
-        if lang_code == LANGUAGE_UNDECIDED:
-            choices = ((LANGUAGE_UNDECIDED, _('Undecided')),)
-        else:
-            choices = get_language_initial_choices(lang_code, self.person)
-        self.fields["langue_redaction_these"].widget.choices = choices
-
         # Initialize some fields if they are not already set in the input data
         for field in [
             'est_lie_fnrs_fria_fresh_csc',
-            'projet_doctoral_deja_commence',
-            'doctorat_deja_realise',
         ]:
             if self.initial.get(field) in {None, ''}:
                 self.initial[field] = self.fields[field].initial
@@ -298,14 +154,14 @@ class DoctorateProjectForm(forms.Form):
         data = super().clean()
 
         # Some consistency checks
-        if data.get('type_financement') == ChoixTypeFinancement.WORK_CONTRACT.name:
+        if data.get('type') == ChoixTypeFinancement.WORK_CONTRACT.name:
             if not data.get('type_contrat_travail'):
                 self.add_error('type_contrat_travail', _("This field is required."))
 
             if not data.get('eft'):
                 self.add_error('eft', _("This field is required."))
 
-        elif data.get('type_financement') == ChoixTypeFinancement.SEARCH_SCHOLARSHIP.name:
+        elif data.get('type') == ChoixTypeFinancement.SEARCH_SCHOLARSHIP.name:
             if data.get('bourse_recherche'):
                 data['autre_bourse_recherche'] = ''
             elif data.get('autre_bourse_recherche'):
@@ -313,8 +169,5 @@ class DoctorateProjectForm(forms.Form):
             else:
                 self.add_error('bourse_recherche', _('This field is required.'))
                 self.add_error('autre_bourse_recherche', '')
-
-        if data.get('non_soutenue') and not data.get('raison_non_soutenue'):
-            self.add_error('raison_non_soutenue', _("This field is required."))
 
         return data

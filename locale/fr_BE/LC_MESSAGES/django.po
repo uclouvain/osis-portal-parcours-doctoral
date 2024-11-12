@@ -47,13 +47,6 @@ msgstr ""
 "doctorat.html' target='_blank'>https://uclouvain.be/fr/chercher/valodoc/"
 "attestation-acces-au-doctorat.html</a>"
 
-msgid ""
-"A technical or IT problem? <a href=\"http://uclouvain.be/8282\" "
-"target=\"_blank\">Contact the Service Desk</a>"
-msgstr ""
-"Un problème technique ou informatique ? <a href=\"http://uclouvain.be/8282\" "
-"target=\"_blank\">Contactez le Service Desk</a>"
-
 msgid "ACCEPTEE"
 msgstr "Acceptée"
 
@@ -70,7 +63,7 @@ msgctxt "publication-status"
 msgid "Accepted"
 msgstr "Acceptée"
 
-msgid "Access my PhD students' files"
+msgid "Access my PhD students' applications"
 msgstr "Accéder aux dossiers de mes doctorants"
 
 msgid "Actions"
@@ -148,9 +141,6 @@ msgstr "Ajouter une valorisation des acquis d'expérience"
 msgid "Admission"
 msgstr "Admission"
 
-msgid "Admission type"
-msgstr "Type de l'admission"
-
 msgctxt "filters"
 msgid "All"
 msgstr "Tout"
@@ -201,9 +191,6 @@ msgstr "En attente de validation"
 
 msgid "BIOLOGY"
 msgstr "Biologie"
-
-msgid "Back to PhDs"
-msgstr "Revenir aux doctorats"
 
 msgctxt "doctorate"
 msgid "Back to page"
@@ -263,8 +250,8 @@ msgstr "Modifier la publication de cette conférence"
 msgid "China Scholarship Council (CSC)"
 msgstr "China Scholarship Council (CSC)"
 
-msgid "Choice of joint supervision is not yet defined"
-msgstr "Le choix de la cotutelle n'est pas encore défini"
+msgid "Choice of joint supervision is not yet defined."
+msgstr "Le choix de la cotutelle n'est pas encore défini."
 
 msgid "City"
 msgstr "Ville"
@@ -368,9 +355,6 @@ msgstr "Cours"
 msgid "Course units and courses"
 msgstr "Cours et formation"
 
-msgid "Create and manage my UCLouvain application"
-msgstr "Créer et gérer ma demande d'inscription UCLouvain"
-
 msgctxt "a doctorate"
 msgid "Created on:"
 msgstr "Créé le :"
@@ -414,17 +398,6 @@ msgctxt "doctorate decision"
 msgid "Denied"
 msgstr "Rejetée"
 
-msgid ""
-"Depending on your previous experience and your research project, the PhD "
-"Committee may require you to take additional PhD training, up to a maximum "
-"of 60 credits. If so, please indicate here a proposal for additional "
-"training."
-msgstr ""
-"En fonction de votre parcours antérieur et de votre projet de recherche, une "
-"formation complémentaire à la formation doctorale peut être imposée par la "
-"CDD, pour un maximum de 60 crédits. Le cas échéant, veuillez indiquer ici "
-"une proposition de formation complémentaire."
-
 msgid "Description"
 msgstr "Description"
 
@@ -442,9 +415,6 @@ msgstr "ARES - Coopération au développement"
 
 msgid "Doctor"
 msgstr "Docteur"
-
-msgid "Doctorate thesis field"
-msgstr "Domaine de la thèse de doctorat"
 
 msgid "Does not have a doctor title"
 msgstr "N'est pas porteur du titre de docteur"
@@ -523,34 +493,6 @@ msgstr "Quitter sans enregistrer"
 
 msgid "External"
 msgstr "Externe"
-
-msgid ""
-"Extract from the Doctoral Regulations (Article 2.1):<br /> \"Pre-admission "
-"is an optional stage of the doctoral programme. It aims to allow the "
-"candidate to complete the administrative and social formalities that would "
-"require a prior registration for the doctorate. [...] Pre-admission is valid "
-"for a maximum period of 12 months. Recourse to a pre-admission phase must be "
-"justified, the objectives to be achieved planned and the duration of the pre-"
-"admission period fixed in accordance with them. Unless exceptionally "
-"authorised by the CSD, FRIA or FNRS scholarship holders and, in general, "
-"doctoral candidates engaged in a research project that has already been "
-"defined, are not authorised to take a pre-admission phase for a doctorate.\" "
-"<br /> Please also consult the special provisions of the field for all pre-"
-"admission conditions."
-msgstr ""
-"Extrait du Règlement doctoral (article 2.1) :<br /> « La pré-admission est "
-"une étape facultative du cursus doctoral. Elle vise à permettre au ou à la "
-"candidat·e d’accomplir les formalités administratives et sociales qui "
-"nécessiteraient une inscription préalable au doctorat. […] La pré-admission "
-"est valable pour une période de 12 mois maximum. Le recours à une phase de "
-"pré-admission doit être motivé, les objectifs à atteindre planifiés et la "
-"durée de la période de pré-admission fixée en fonction de ceux-ci. Sauf "
-"autorisation exceptionnelle de la CDD, les boursiers·ières FRIA ou FNRS et, "
-"de manière générale, les doctorant·es engagé·es dans le cadre d'un projet de "
-"recherche déjà défini, ne sont pas autorisé·es à prendre une préadmission au "
-"doctorat. ». <br /> Veuillez également consulter les dispositions "
-"particulières du domaine afin de connaître toutes les conditions de pré-"
-"admission."
 
 msgid "FNRS"
 msgstr "FNRS"
@@ -647,13 +589,6 @@ msgstr ""
 "d’accompagnement sur la demande de prolongation."
 
 msgid ""
-"If known, indicate the name of the laboratory, clinical department or "
-"research centre where the thesis will be carried out"
-msgstr ""
-"Si connu, indiquez ici le nom du laboratoire, du service clinique ou du "
-"centre de recherche où sera réalisée la thèse"
-
-msgid ""
 "If necessary, please finish inputting doctoral activities and complete the "
 "defense preparation below before submitting the jury proposition."
 msgstr ""
@@ -708,13 +643,6 @@ msgid "Incomplete field"
 msgstr "Non renseigné(e)"
 
 msgid ""
-"Indicate any completed or interrupted PhD studies in which you are no longer "
-"enrolled."
-msgstr ""
-"Indiquez ici un éventuel parcours doctoral précédent, abouti ou interrompu, "
-"dans lequel vous n’êtes plus inscrit à ce jour."
-
-msgid ""
 "Information about a potential cotutelle are to be inputted in the \"Doctoral "
 "project\" part."
 msgstr ""
@@ -732,9 +660,6 @@ msgstr "Nom de l'établissement"
 
 msgid "Institution"
 msgstr "Institution"
-
-msgid "Institution in which the PhD has been realised / started."
-msgstr "Institution où le PhD a été réalisé/entamé."
 
 msgid "Internal"
 msgstr "Interne"
@@ -842,6 +767,9 @@ msgctxt "gender male"
 msgid "Male"
 msgstr "Masculin"
 
+msgid "Manage my PhD"
+msgstr "Gérer mon projet de recherche"
+
 msgid "Management of PhDs"
 msgstr "Gestion des doctorats"
 
@@ -874,7 +802,7 @@ msgstr "Motivation de la cotutelle"
 
 msgctxt "doctorate"
 msgid "My PhD"
-msgstr "Mon doctorat"
+msgstr "Mon projet de recherche"
 
 msgid "N/A"
 msgstr "Sans objet"
@@ -911,9 +839,6 @@ msgstr "Aucune activité n'a été sélectionnée."
 
 msgid "No course created at present."
 msgstr "Aucun cours créé pour le moment."
-
-msgid "No defense"
-msgstr "Non soutenue"
 
 msgid "No defense reason"
 msgstr "Raison de non-soutenance"
@@ -1010,6 +935,12 @@ msgstr "Certificat de participation"
 msgid "Partner institution"
 msgstr "Institution partenaire"
 
+msgid "Partner institution address"
+msgstr "Adresse de l'institution partenaire"
+
+msgid "Partner institution name"
+msgstr "Nom de l'institution partenaire"
+
 msgid "Personal data"
 msgstr "Données personnelles"
 
@@ -1071,6 +1002,9 @@ msgstr ""
 "Veuillez consulter les dispositions particulières de votre commission "
 "doctorale de domaine pour le choix des activités."
 
+msgid "Please select a member"
+msgstr "Merci de sélectionner un membre"
+
 msgid "Poster"
 msgstr "Poster"
 
@@ -1086,23 +1020,14 @@ msgstr "Président"
 msgid "Previous confirmation exams"
 msgstr "Épreuves de confirmation passées"
 
-msgid "Previous research experience"
-msgstr "Expérience précédente de recherche"
-
 msgid "Professor"
 msgstr "Professeur"
 
 msgid "Project resume"
 msgstr "Résumé"
 
-msgid "Project resume (max. 2000 characters)"
-msgstr "Résumé (max. 2000 caractères)"
-
 msgid "Project title"
 msgstr "Sujet"
-
-msgid "Project title (max. 100 characters)"
-msgstr "Sujet (max. 100 caractères)"
 
 msgid "Promoters"
 msgstr "Promotion"
@@ -1197,9 +1122,6 @@ msgstr "Refusée"
 msgid "RESIDENCY"
 msgstr "Séjour de perfectionnement de recherche"
 
-msgid "Reasons for provisional admission."
-msgstr "Détaillez ici les raisons justifiant une admission provisoire."
-
 msgid ""
 "Refer to the specific measures of your doctoral commission to know if one of "
 "these method is mandatory to you."
@@ -1282,9 +1204,6 @@ msgstr "Confirmation soumise"
 msgctxt "doctorate"
 msgid "Save"
 msgstr "Enregistrer"
-
-msgid "Save and continue"
-msgstr "Enregistrer et continuer"
 
 msgid "Scholarship end date"
 msgstr "Date de fin de la bourse"
@@ -1463,23 +1382,11 @@ msgstr ""
 "votre gestionnaire de dossier et respecter l'usage prévu par votre "
 "commission doctorale de domaine."
 
-msgid ""
-"The format of the documents to be uploaded below may vary from one CDD to "
-"another. Find out more on your CDD's website or from your doctoral manager."
-msgstr ""
-"Le format des documents à téléverser ci-dessous peut varier d'une commission "
-"doctorale de domaine (CDD) à l'autre. Informez-vous sur le site web de votre "
-"CDD ou auprès de votre gestionnaire de doctorat."
-
 msgid "The start date must be earlier than or the same as the end date."
 msgstr "La date de début doit être antérieure ou égale à la date de fin."
 
-msgid ""
-"The summary of the proposal in PDF format is being generated. Please come "
-"back later to access it."
-msgstr ""
-"Le résumé de la proposition au format PDF est en cours de génération, "
-"veuillez revenir plus tard pour y accéder."
+msgid "The summary of the proposal in PDF format cannot be found."
+msgstr "Le résumé de la proposition au format PDF n'a pas été trouvé."
 
 msgid "There is no request for a new deadline."
 msgstr "Il n'y a pas de demande de nouvelle échéance."
@@ -1543,6 +1450,9 @@ msgstr ""
 "A téléverser obligatoirement si vous êtes boursier.ère du F.R.S.-FNRS (y "
 "compris Télévie), du FRIA ou du FRESH. Le canevas de cet avis est fourni par "
 "votre fonds de recherche."
+
+msgid "Toggle navigation"
+msgstr ""
 
 msgid "Total hourly volume"
 msgstr "Volume horaire total"
@@ -1613,12 +1523,6 @@ msgid ""
 "institution?"
 msgstr ""
 "Souhaitez-vous réaliser votre thèse en cotutelle avec une autre institution ?"
-
-msgid ""
-"Write your resume in the language decided with your accompanying committee."
-msgstr ""
-"Rédigez votre résumé dans la langue convenue avec votre comité "
-"d'accompagnement."
 
 msgid "YES"
 msgstr "Oui"

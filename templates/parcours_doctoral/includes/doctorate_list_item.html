@@ -27,12 +27,12 @@
 
 {% panel additional_class="doctorate-item" cy_state=doctorate.statut %}
   <h3 class="mt-0">
-    {% display doctorate.doctorat.intitule " (" doctorate.doctorat.campus ")" as doctorate_title %}
+    {% display doctorate.formation.intitule " (" doctorate.formation.campus.nom ")" as doctorate_title %}
     {{ doctorate_title }} ({{ doctorate.reference }})
-    <span class="d-block"><small class="text-muted">{{ doctorate.intitule_secteur_formation }}</small></span>
+    <span class="d-block"><small class="text-muted">{{ doctorate.formation.entite_gestion.intitule_secteur }}</small></span>
   </h3>
   <div>
-    <em>{% trans "Created on:" context "a doctorate" %} {{ doctorate.creee_le }}</em>
+    <em>{% trans "Created on:" context "a doctorate" %} {{ doctorate.cree_le }}</em>
   </div>
   <div>
     <em>

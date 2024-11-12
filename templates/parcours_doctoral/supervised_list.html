@@ -25,6 +25,12 @@
   * see http://www.gnu.org/licenses/.
 {% endcomment %}
 
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">
+    {% trans "PhDs" %}
+  </li>
+{% endblock %}
+
 {% block content %}
   <div class="page-header">
     <div class="row">
@@ -39,12 +45,12 @@
       <h3 class="mt-0">
         {{ doctorate.prenom_doctorant }} {{ doctorate.nom_doctorant }}
         ({{ doctorate.reference }})
-        {% display doctorate.doctorat.intitule " (" doctorate.doctorat.campus ")" as doctorate_title %}
+        {% display doctorate.formation.intitule " (" doctorate.formation.campus.nom ")" as doctorate_title %}
         <div><small class="text-muted">{{ doctorate_title }}
-          - {{ doctorate.intitule_secteur_formation }}</small></div>
+          - {{ doctorate.formation.entite_gestion.intitule_secteur }}</small></div>
       </h3>
       <div>
-        <em>{% trans "Created on:" context "a doctorate" %} {{ doctorate.creee_le }}</em>
+        <em>{% trans "Created on:" context "a doctorate" %} {{ doctorate.cree_le }}</em>
       </div>
       <div>
         <em>

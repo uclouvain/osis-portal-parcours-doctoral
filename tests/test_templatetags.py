@@ -31,15 +31,17 @@ from django.core.exceptions import ImproperlyConfigured
 from django.template import Context, Template
 from django.test import RequestFactory, TestCase
 from django.urls import resolve
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, pgettext
 from django.views.generic import FormView
+from osis_parcours_doctoral_sdk.exceptions import UnauthorizedException
+from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import ParcoursDoctoralDTOLinks
 
 from base.models.utils.utils import ChoiceEnum
 from base.tests.factories.person import PersonFactory
-from osis_admission_sdk.exceptions import UnauthorizedException
 from parcours_doctoral.contrib.forms import PDF_MIME_TYPE, DoctorateFileUploadField
 from parcours_doctoral.templatetags.parcours_doctoral import (
-    TAB_TREES,
+    TAB_TREE,
     Tab,
     can_make_action,
     can_read_tab,
@@ -59,9 +61,9 @@ class TemplateTagsTestCase(TestCase):
         class Doctorate:
             def __init__(self, links=None):
                 self.links = links or {
-                    'retrieve_coordinates': {'url': 'my_url', 'method': 'GET'},
-                    'update_coordinates': {'url': 'my_url', 'method': 'POST'},
-                    'retrieve_person': {'error': 'Method not allowed', 'method': 'GET'},
+                    'retrieve_funding': {'url': 'my_url', 'method': 'GET'},
+                    'update_funding': {'url': 'my_url', 'method': 'POST'},
+                    'retrieve_project': {'error': 'Method not allowed', 'method': 'GET'},
                 }
 
         cls.Doctorate = Doctorate
@@ -134,43 +136,62 @@ class TemplateTagsTestCase(TestCase):
         self.assertEqual('TEST A, TEST B', rendered)
 
     def test_tabs(self):
+        doctorate_uuid = '55375049-9d61-4c11-9f41-7460463a5ae3'
+
         class MockedFormView(FormView):
             def __new__(cls, *args, **kwargs):
-                return Mock(kwargs={}, spec=cls)
+                return Mock(
+                    kwargs={
+                        'pk': doctorate_uuid,
+                    },
+                    spec=cls,
+                )
 
-        person_tab_url = '/admission/create/person'
-        template = Template("{% load parcours_doctoral %}{% doctorate_tabs %}")
-
-        request = RequestFactory().get(person_tab_url)
-        request.resolver_match = resolve(person_tab_url)
-        rendered = template.render(Context({'view': MockedFormView(), 'request': request}))
-        self.assertNotIn('confirm-paper', rendered)
-        self.assertInHTML(
-            """<li role="presentation" class="active">
-            <a href="/admission/create/person">
-                <span class="fa fa-id-card"></span>
-                {}
-            </a>
-        </li>""".format(
-                _("Personal data")
+        project_tab_url = f'/parcours_doctoral/{doctorate_uuid}/project'
+        template = Template("{% load parcours_doctoral %}{% doctorate_tabs doctorate %}")
+        doctorate = Mock(
+            uuid=doctorate_uuid,
+            links=ParcoursDoctoralDTOLinks(
+                retrieve_project=ActionLink._from_openapi_data(method='GET', url='ok'),
             ),
+        )
+
+        request = RequestFactory().get(project_tab_url)
+        request.resolver_match = resolve(project_tab_url)
+        rendered = template.render(Context({'view': MockedFormView(), 'request': request, 'doctorate': doctorate}))
+        self.assertNotIn('confirm-paper', rendered)
+        self.assertIn(project_tab_url, rendered)
+        self.assertInHTML(
+            """
+            <li role="presentation" class="nav-item">
+                <a
+                    href="/parcours_doctoral/55375049-9d61-4c11-9f41-7460463a5ae3/project"
+                    aria-current="page"
+                    class="nav-link active"
+                    >
+                    <span class="fa fa-person-chalkboard"></span>
+                    Projet de recherche
+                </a>
+            </li>
+            """,
             rendered,
         )
 
         # Should work on non-tab urls
-        another_tab_url = '/parcours_doctoral/55375049-9d61-4c11-9f41-7460463a5ae3/remove-member/type/matricule'
+        another_tab_url = '/parcours_doctoral/list'
         request = RequestFactory().get(another_tab_url)
         request.resolver_match = resolve(another_tab_url)
-        rendered = template.render(Context({'view': MockedFormView(), 'request': request}))
+        rendered = template.render(Context({'view': MockedFormView(), 'request': request, 'doctorate': doctorate}))
+        self.assertIn(project_tab_url, rendered)
         self.assertInHTML(
-            """<li role="presentation">
-            <a href="/admission/create/person">
-                <span class="fa fa-id-card"></span>
-                {}
-            </a>
-        </li>""".format(
-                _("Personal data")
-            ),
+            """
+            <li role="presentation" class="nav-item">
+                <a href="/parcours_doctoral/55375049-9d61-4c11-9f41-7460463a5ae3/project" class="nav-link">
+                    <span class="fa fa-person-chalkboard"></span>
+                    Projet de recherche
+                </a>
+            </li>
+            """,
             rendered,
         )
 
@@ -205,49 +226,49 @@ class TemplateTagsTestCase(TestCase):
 
     def test_valid_tab_tree_no_doctorate(self):
         # No doctorate is specified -> return the original tab tree
-        valid_tab_tree = get_valid_tab_tree(TAB_TREES['doctorate'], doctorate=None)
-        self.assertEqual(valid_tab_tree, TAB_TREES['doctorate'])
+        valid_tab_tree = get_valid_tab_tree(TAB_TREE, doctorate=None)
+        self.assertEqual(valid_tab_tree, TAB_TREE)
 
     def test_valid_tab_tree_read_mode(self):
         # Only one read tab is allowed -> return it and its parent
 
         doctorate = self.Doctorate()
 
-        valid_tab_tree = get_valid_tab_tree(TAB_TREES['doctorate'], doctorate)
+        valid_tab_tree = get_valid_tab_tree(TAB_TREE, doctorate)
 
         parent_tabs = list(valid_tab_tree.keys())
 
         # Check parent tabs
         self.assertEqual(len(parent_tabs), 1)
-        self.assertEqual(parent_tabs[0].label, _('Personal data'))
+        self.assertEqual(parent_tabs[0].label, pgettext('tab name', 'Research project'))
 
         # Check children tabs
-        self.assertIn('coordonnees', valid_tab_tree[parent_tabs[0]])
+        self.assertIn('funding', valid_tab_tree[parent_tabs[0]])
 
     def test_valid_tab_tree_update_mode(self):
         # Only one form tab is allowed -> return it and its parent
 
         doctorate = self.Doctorate()
-        valid_tab_tree = get_valid_tab_tree(TAB_TREES['doctorate'], doctorate)
+        valid_tab_tree = get_valid_tab_tree(TAB_TREE, doctorate)
 
         parent_tabs = list(valid_tab_tree.keys())
 
         # Check parent tabs
         self.assertEqual(len(parent_tabs), 1)
-        self.assertEqual(parent_tabs[0].label, _('Personal data'))
+        self.assertEqual(parent_tabs[0].label, pgettext('tab name', 'Research project'))
 
         # Check children tabs
-        self.assertIn('coordonnees', valid_tab_tree[parent_tabs[0]])
+        self.assertIn('funding', valid_tab_tree[parent_tabs[0]])
 
     def test_can_make_action_valid_existing_action(self):
         # The tab action is specified in the doctorate as allowed -> return True
         doctorate = self.Doctorate()
-        self.assertTrue(can_make_action(doctorate, 'retrieve_coordinates'))
+        self.assertTrue(can_make_action(doctorate, 'retrieve_funding'))
 
     def test_can_make_action_invalid_existing_action(self):
         # The tab action is specified in the doctorate as not allowed -> return False
         doctorate = self.Doctorate()
-        self.assertFalse(can_make_action(doctorate, 'retrieve_person'))
+        self.assertFalse(can_make_action(doctorate, 'retrieve_project'))
 
     def test_can_make_action_not_returned_action(self):
         # The tab action is not specified in the doctorate -> return False
@@ -257,12 +278,12 @@ class TemplateTagsTestCase(TestCase):
     def test_can_read_tab_valid_existing_tab(self):
         # The tab action is specified in the doctorate as allowed -> return True
         doctorate = self.Doctorate()
-        self.assertTrue(can_read_tab(doctorate, Tab('coordonnees', '')))
+        self.assertTrue(can_read_tab(doctorate, Tab('funding', '')))
 
     def test_can_read_tab_invalid_existing_tab(self):
         # The tab action is well configured as not allowed -> return False
         doctorate = self.Doctorate()
-        self.assertFalse(can_read_tab(doctorate, Tab('person', '')))
+        self.assertFalse(can_read_tab(doctorate, Tab('project', '')))
 
     def test_can_read_tab_not_returned_action(self):
         # The tab action is not specified in the doctorate -> return False
@@ -280,19 +301,19 @@ class TemplateTagsTestCase(TestCase):
         doctorate = self.Doctorate()
         delattr(doctorate, 'links')
         with self.assertRaisesMessage(ImproperlyConfigured, 'links'):
-            can_read_tab(doctorate, Tab('coordonnees', ''))
+            can_read_tab(doctorate, Tab('funding', ''))
 
     def test_can_update_tab_valid_existing_action(self):
         # The tab action is specified in the doctorate as allowed -> return True
         doctorate = self.Doctorate()
-        self.assertTrue(can_update_tab(doctorate, Tab('coordonnees', '')))
+        self.assertTrue(can_update_tab(doctorate, Tab('funding', '')))
 
     def test_get_dashboard_links_tag(self):
         template = Template(
             """{% load parcours_doctoral %}{% get_dashboard_links %}
-            {% if 'url' in links.list_propositions %}coucou{% endif %}"""
+            {% if 'url' in links.list_doctorates %}coucou{% endif %}"""
         )
-        with patch('parcours_doctoral.services.doctorate.DoctoratePropositionService') as mock_api:
+        with patch('parcours_doctoral.services.doctorate.DoctorateService') as mock_api:
             mock_api.side_effect = UnauthorizedException
             request = RequestFactory()
             request.user = PersonFactory().user

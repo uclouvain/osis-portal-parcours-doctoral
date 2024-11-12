@@ -28,19 +28,19 @@ from unittest.mock import ANY, Mock, patch
 from django.shortcuts import resolve_url
 from django.test import TestCase, override_settings
 from django.utils.translation import gettext_lazy as _
-from osis_admission_sdk import ApiException
-from osis_admission_sdk.model.supervision_dto_promoteur import SupervisionDTOPromoteur
-from parcours_doctoral.contrib.enums import ChoixStatutDoctorat
+from osis_parcours_doctoral_sdk import ApiException
+from osis_parcours_doctoral_sdk.model.supervision_dto_promoteur import SupervisionDTOPromoteur
 
+from base.tests.factories.person import PersonFactory
+from frontoffice.settings.osis_sdk.utils import ApiBusinessException, MultipleApiBusinessException
+from parcours_doctoral.contrib.enums import ChoixStatutDoctorat
 from parcours_doctoral.contrib.enums.actor import ActorType, ChoixEtatSignature
 from parcours_doctoral.contrib.enums.supervision import DecisionApprovalEnum
 from parcours_doctoral.contrib.forms import PDF_MIME_TYPE
 from parcours_doctoral.contrib.forms.supervision import ACTOR_EXTERNAL, EXTERNAL_FIELDS
-from base.tests.factories.person import PersonFactory
-from frontoffice.settings.osis_sdk.utils import ApiBusinessException, MultipleApiBusinessException
 
 
-@override_settings(ADMISSION_TOKEN_EXTERNAL='api-token-external')
+@override_settings(PARCOURS_DOCTORAL_TOKEN_EXTERNAL='api-token-external')
 class SupervisionTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -70,7 +70,7 @@ class SupervisionTestCase(TestCase):
             'token': 'promoter-token',
         }
 
-        api_patcher = patch("osis_admission_sdk.api.propositions_api.PropositionsApi")
+        api_patcher = patch("osis_parcours_doctoral_sdk.api.propositions_api.PropositionsApi")
         self.mock_api = api_patcher.start()
         self.addCleanup(api_patcher.stop)
         self.mock_api.return_value.retrieve_doctorate_proposition.return_value = Mock(

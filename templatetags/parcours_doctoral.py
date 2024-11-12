@@ -29,7 +29,6 @@ import re
 from contextlib import suppress
 from dataclasses import dataclass
 from inspect import getfullargspec
-from typing import Union
 
 from django import template
 from django.conf import settings
@@ -38,18 +37,15 @@ from django.core.validators import EMPTY_VALUES
 from django.template.defaultfilters import force_escape
 from django.utils.safestring import SafeString, mark_safe
 from django.utils.translation import get_language, gettext_lazy as _, pgettext, pgettext_lazy
-from django_bootstrap5.forms import render_field
-from django_bootstrap5.renderers import FieldRenderer
 from django_bootstrap5.templatetags.django_bootstrap5 import bootstrap_field
-from django.test import override_settings
+from osis_parcours_doctoral_sdk.exceptions import ForbiddenException, NotFoundException, UnauthorizedException
+from osis_parcours_doctoral_sdk.model.supervision_dto_promoteur import SupervisionDTOPromoteur
 
-from osis_admission_sdk.exceptions import ForbiddenException, NotFoundException, UnauthorizedException
-from osis_admission_sdk.model.supervision_dto_promoteur import SupervisionDTOPromoteur
 from parcours_doctoral.constants import READ_ACTIONS_BY_TAB, UPDATE_ACTIONS_BY_TAB
 from parcours_doctoral.contrib.enums.training import CategorieActivite, ChoixTypeEpreuve, StatutActivite
 from parcours_doctoral.contrib.forms.supervision import DoctorateMemberSupervisionForm
-from parcours_doctoral.services.reference import CountriesService
-from parcours_doctoral.utils import to_snake_case, format_academic_year
+from parcours_doctoral.services.reference import CountriesService, LanguageService, SuperiorInstituteService
+from parcours_doctoral.utils import to_snake_case, format_school_title
 
 register = template.Library()
 
@@ -112,30 +108,29 @@ class Tab:
         return self.name
 
 
-TAB_TREES = {
-    'doctorate': {
-        Tab('doctorate', pgettext('tab name', 'Research project'), 'person-chalkboard'): [
-            Tab('project', pgettext('tab name', 'Research project')),
-            Tab('cotutelle', _('Cotutelle')),
-            Tab('supervision', _('Support committee')),
-        ],
-        Tab('confirmation-paper', _('Confirmation'), 'list-check'): [
-            Tab('confirmation-paper', _('Confirmation exam')),
-            Tab('extension-request', _('New deadline')),
-        ],
-        Tab('training', pgettext_lazy('doctorate', 'Course'), 'book-open-reader'): [
-            Tab('doctoral-training', _('PhD training')),
-            Tab('complementary-training', _('Complementary training')),
-            Tab('course-enrollment', _('Course unit enrolment')),
-        ],
-        Tab('defense', pgettext('doctorate tab', 'Defense'), 'person-chalkboard'): [
-            Tab('jury-preparation', pgettext('doctorate tab', 'Defense method')),
-            Tab('jury', _('Jury composition')),
-            # Tab('jury-supervision', _('Jury supervision')),
-            # Tab('private-defense', _('Private defense')),
-            # Tab('public-defense', _('Public defense')),
-        ],
-    },
+TAB_TREE = {
+    Tab('doctorate', pgettext('tab name', 'Research project'), 'person-chalkboard'): [
+        Tab('project', pgettext('tab name', 'Research project')),
+        Tab('cotutelle', _('Cotutelle')),
+        Tab('funding', _('Funding')),
+        Tab('supervision', _('Support committee')),
+    ],
+    Tab('confirmation-paper', _('Confirmation'), 'list-check'): [
+        Tab('confirmation-paper', _('Confirmation exam')),
+        Tab('extension-request', _('New deadline')),
+    ],
+    Tab('training', pgettext_lazy('doctorate', 'Course'), 'book-open-reader'): [
+        Tab('doctoral-training', _('PhD training')),
+        Tab('complementary-training', _('Complementary training')),
+        Tab('course-enrollment', _('Course unit enrolment')),
+    ],
+    Tab('defense', pgettext('doctorate tab', 'Defense'), 'person-chalkboard'): [
+        Tab('jury-preparation', pgettext('doctorate tab', 'Defense method')),
+        Tab('jury', _('Jury composition')),
+        # Tab('jury-supervision', _('Jury supervision')),
+        # Tab('private-defense', _('Private defense')),
+        # Tab('public-defense', _('Public defense')),
+    ],
 }
 
 
@@ -157,7 +152,12 @@ def can_make_action(doctorate, action_name):
 def _can_access_tab(doctorate, tab_name, actions_by_tab):
     """Return true if the specified tab can be opened for this doctorate, otherwise return False"""
     try:
-        return can_make_action(doctorate, actions_by_tab[tab_name])
+        actions = actions_by_tab[tab_name]
+        if isinstance(actions, str):
+            return can_make_action(doctorate, actions)
+        elif isinstance(actions, list):
+            return any(can_make_action(doctorate, action) for action in actions)
+        raise ImproperlyConfigured(f'{actions} should be a string or a list')
     except AttributeError:
         raise ImproperlyConfigured("The doctorate should contain the 'links' property to check tab access")
     except KeyError:
@@ -206,7 +206,7 @@ def doctorate_tabs(context, doctorate=None, with_submit=False):
     current_tab_name = get_current_tab_name(context)
 
     # Create a new tab tree based on the default one but depending on the permissions links
-    tab_tree = TAB_TREES['doctorate']
+    tab_tree = TAB_TREE
     context['tab_tree'] = get_valid_tab_tree(tab_tree, doctorate)
 
     return {
@@ -221,21 +221,21 @@ def doctorate_tabs(context, doctorate=None, with_submit=False):
 @register.simple_tag(takes_context=True)
 def current_subtabs(context):
     current_tab_name = get_current_tab_name(context)
-    current_tab_tree = TAB_TREES['doctorate']
+    current_tab_tree = TAB_TREE
     return current_tab_tree.get(_get_active_parent(current_tab_tree, current_tab_name), [])
 
 
 @register.simple_tag(takes_context=True)
 def get_current_parent_tab(context):
     current_tab_name = get_current_tab_name(context)
-    current_tab_tree = TAB_TREES['doctorate']
+    current_tab_tree = TAB_TREE
     return _get_active_parent(current_tab_tree, current_tab_name)
 
 
 @register.simple_tag(takes_context=True)
 def get_current_tab(context):
     current_tab_name = get_current_tab_name(context)
-    current_tab_tree = TAB_TREES['doctorate']
+    current_tab_tree = TAB_TREE
     return next(
         (tab for subtabs in current_tab_tree.values() for tab in subtabs if tab.name == current_tab_name),
         None,
@@ -532,12 +532,6 @@ def status_list(activity):
 
 
 @register.filter
-def get_academic_year(year: Union[int, str]):
-    """Return the academic year related to a specific year."""
-    return format_academic_year(year)
-
-
-@register.filter
 def snake_case(value):
     return to_snake_case(str(value))
 
@@ -599,3 +593,26 @@ def value_if_all(value, *conditions):
 def value_if_any(value, *conditions):
     """Return the value if any condition is true."""
     return value if any(conditions) else ''
+
+
+@register.simple_tag(takes_context=True)
+def get_language_name(context, code):
+    """Return the label of the language associated to the iso code."""
+    if not code:
+        return ''
+    language = LanguageService.get_language(code=code, person=context['request'].user.person)
+    if get_language() == settings.LANGUAGE_CODE:
+        return language.name
+    return language.name_en
+
+
+@register.simple_tag(takes_context=True)
+def get_superior_institute_name(context, organisation_uuid):
+    """Return the label of the institute associated to the uuid."""
+    if not organisation_uuid:
+        return ''
+    institute = SuperiorInstituteService.get_superior_institute(
+        person=context['request'].user.person,
+        uuid=organisation_uuid,
+    )
+    return mark_safe(format_school_title(institute))

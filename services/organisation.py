@@ -26,10 +26,10 @@
 from osis_organisation_sdk import ApiClient, ApiException
 from osis_organisation_sdk.api import entites_api
 
-from parcours_doctoral.constants import UCL_CODE
-from parcours_doctoral.services.mixins import ServiceMeta
 from frontoffice.settings.osis_sdk import organisation as organisation_sdk
 from frontoffice.settings.osis_sdk.utils import build_mandatory_auth_headers
+from parcours_doctoral.constants import UCL_CODE
+from parcours_doctoral.services.mixins import ServiceMeta
 
 
 class EntitiesAPIClient:
@@ -43,13 +43,17 @@ class EntitiesService(metaclass=ServiceMeta):
 
     @classmethod
     def get_ucl_entities(cls, person, entity_type, *args, **kwargs):
-        return EntitiesAPIClient().get_entities(
-            entity_type=entity_type,
-            organisation_code=UCL_CODE,
-            *args,
-            **kwargs,
-            **build_mandatory_auth_headers(person),
-        ).results
+        return (
+            EntitiesAPIClient()
+            .get_entities(
+                entity_type=entity_type,
+                organisation_code=UCL_CODE,
+                *args,
+                **kwargs,
+                **build_mandatory_auth_headers(person),
+            )
+            .results
+        )
 
     @classmethod
     def get_ucl_entity(cls, person, uuid, *args, **kwargs):
@@ -65,14 +69,16 @@ class EntitiesService(metaclass=ServiceMeta):
     def get_ucl_entity_addresses(cls, person, uuid, *args, **kwargs):
         # TODO will become (again) a list of results
         offset = 0
-        return [EntitiesAPIClient().get_entity_addresses(
-            organisation_code=UCL_CODE,
-            uuid=uuid,
-            offset=offset,
-            *args,
-            **kwargs,
-            **build_mandatory_auth_headers(person)
-        )]
+        return [
+            EntitiesAPIClient().get_entity_addresses(
+                organisation_code=UCL_CODE,
+                uuid=uuid,
+                offset=offset,
+                *args,
+                **kwargs,
+                **build_mandatory_auth_headers(person),
+            )
+        ]
         # has_next = True
         # results = []
         # while has_next:

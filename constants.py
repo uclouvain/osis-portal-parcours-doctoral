@@ -24,43 +24,48 @@
 #
 # ##############################################################################
 
-# Association between a read-only tab name (path name) and an action link key
+# Association between a read-only tab name (path name) and one or several action link keys
 from django.utils.translation import gettext_lazy as _
 
 READ_ACTIONS_BY_TAB = {
     # Project
     'project': 'retrieve_project',
     'cotutelle': 'retrieve_cotutelle',
+    'funding': 'retrieve_funding',
     'supervision': 'retrieve_supervision',
     # Confirmation paper
     'confirmation-paper': 'retrieve_confirmation',
     'extension-request': 'update_confirmation_extension',
-    # Others
-    'doctoral-training': 'retrieve_doctoral_training',
-    'complementary-training': 'retrieve_complementary_training',
-    'course-enrollment': 'retrieve_course_enrollment',
+    # Jury
     'jury-preparation': 'retrieve_jury_preparation',
     'jury': 'list_jury_members',
+    'jury_member': 'retrieve_jury_member',
+    # Others
+    'doctoral-training': 'retrieve_doctorate_training',
+    'complementary-training': 'retrieve_complementary_training',
+    'course-enrollment': 'retrieve_course_enrollment',
     'private-defense': '',
     'public-defense': '',
     'messages': '',
 }
 
-# Association between a write-only tab name (path name) and an action link key
+# Association between a write-only tab name (path name) and one or several action link keys
 UPDATE_ACTIONS_BY_TAB = {
     # Project
-    'project': 'update_project',
     'cotutelle': 'update_cotutelle',
     'supervision': 'request_signatures',
+    'funding': 'update_funding',
     # Confirmation paper
-    'confirmation-paper': 'update_confirmation',
+    'confirmation-paper': ['update_confirmation', 'upload_pdf_confirmation'],
     'extension-request': 'update_confirmation_extension',
+    # Jury
+    'jury-preparation': 'update_jury_preparation',
+    'jury': 'create_jury_members',
+    'jury_member': 'update_jury_member',
     # Others
-    'doctoral-training': 'retrieve_doctoral_training',
+    'doctoral-training': 'retrieve_doctorate_training',
     'complementary-training': 'retrieve_complementary_training',
     'course-enrollment': 'retrieve_course_enrollment',
-    'jury-preparation': 'update_jury_preparation',
-    'jury': 'list_jury_members',
     'private-defense': '',
     'public-defense': '',
     'messages': '',
@@ -87,5 +92,3 @@ PLUS_5_ISO_CODES = [
     'LI',  # Liechtenstein
     'MC',  # Monaco
 ]
-
-PROPOSITION_JUST_SUBMITTED = 'proposition_just_submitted'

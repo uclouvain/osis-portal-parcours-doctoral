@@ -26,18 +26,24 @@
 {% endcomment %}
 
 {% block tab_content %}
-    {% panel _("Cotutelle") %}
-        {% if cotutelle.cotutelle is None %}
-            {% trans "Choice of joint supervision is not yet defined" %}
-        {% elif cotutelle.cotutelle %}
-            {% field_data _("Is it a Wallonia-Brussels Federation institution?") cotutelle.institution_fwb|yesno %}
-            {% field_data _("Partner institution") cotutelle.institution %}
-            {% field_data _("Motivation for joint supervision") cotutelle.motivation|linebreaks %}
-            {% field_data _("Joint supervision request") cotutelle.demande_ouverture %}
-            {% field_data _("Joint supervision agreement") cotutelle.convention %}
-            {% field_data _("Other documents relating to joint supervision") cotutelle.autres_documents %}
-        {% else %}
-            {% trans "No joint supervision" %}
-        {% endif %}
-    {% endpanel %}
+  {% panel _("Cotutelle") %}
+    {% if doctorate.cotutelle.cotutelle is None %}
+      {% trans "Choice of joint supervision is not yet defined." %}
+    {% elif doctorate.cotutelle.cotutelle %}
+      {% field_data _("Is it a Wallonia-Brussels Federation institution?") doctorate.cotutelle.institution_fwb|yesno %}
+      {% get_superior_institute_name doctorate.cotutelle.institution as institution %}
+      {% if institution %}
+        {% field_data _("Partner institution") institution %}
+      {% elif doctorate.cotutelle.autre_institution %}
+        {% field_data _("Institute name") doctorate.cotutelle.autre_institution_nom %}
+        {% field_data _("Institute address") doctorate.cotutelle.autre_institution_adresse %}
+      {% endif %}
+      {% field_data _("Motivation for joint supervision") doctorate.cotutelle.motivation|linebreaks %}
+      {% field_data _("Joint supervision request") doctorate.cotutelle.demande_ouverture %}
+      {% field_data _("Joint supervision agreement") doctorate.cotutelle.convention %}
+      {% field_data _("Other documents relating to joint supervision") doctorate.cotutelle.autres_documents %}
+    {% else %}
+      {% trans "No joint supervision" %}
+    {% endif %}
+  {% endpanel %}
 {% endblock %}

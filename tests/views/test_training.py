@@ -27,67 +27,45 @@ import datetime
 from unittest.mock import Mock, patch
 
 from django.shortcuts import resolve_url
-from django.test import TestCase, override_settings
+from django.test import override_settings
 from django.utils.translation import gettext_lazy as _
-from osis_admission_sdk import ApiException
-from osis_admission_sdk.model.seminar_communication import SeminarCommunication
+from osis_parcours_doctoral_sdk import ApiException
+from osis_parcours_doctoral_sdk.model.seminar_communication import SeminarCommunication
 
 from parcours_doctoral.contrib.enums import CategorieActivite, ContexteFormation
-from parcours_doctoral.contrib.enums.doctorat import ChoixStatutDoctorat
 from parcours_doctoral.contrib.enums.training import StatutActivite
-from base.tests.factories.person import PersonFactory
+from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
 
 @override_settings(OSIS_DOCUMENT_BASE_URL='http://dummyurl')
-class TrainingTestCase(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.phd_student = PersonFactory()
-
+class TrainingTestCase(BaseDoctorateTestCase):
     def setUp(self):
-        self.client.force_login(self.phd_student.user)
-        self.url = resolve_url("parcours_doctoral:doctoral-training", pk="3c5cdc60-2537-4a12-a396-64d2e9e34876")
+        super().setUp()
 
-        api_patcher = patch("osis_admission_sdk.api.propositions_api.PropositionsApi")
-        self.mock_api = api_patcher.start()
+        self.client.force_login(self.person.user)
+        self.url = resolve_url("parcours_doctoral:doctoral-training", pk=self.doctorate_uuid)
 
-        self.mock_api.return_value.retrieve_doctorate_dto.return_value = Mock(
-            links={'add_training': {'url': 'ok'}},
-            reference='21-300001',
-            doctorat=None,
-            intitule_formation='Informatique',
-            statut=ChoixStatutDoctorat.ADMITTED.name,
-            sigle_formation='INFO',
-            annee_formation=2022,
-            matricule_doctorant=self.phd_student.global_id,
-            prenom_doctorant='John',
-            nom_doctorantig='Doe',
-            uuid='uuid1',
-            erreurs=[],
-        )
-        self.mock_api.return_value.list_doctoral_training.return_value = []
-        self.mock_api.return_value.create_doctoral_training.return_value = dict(
+        self.mock_doctorate_api.return_value.list_doctoral_training.return_value = []
+        self.mock_doctorate_api.return_value.create_doctoral_training.return_value = dict(
             uuid='uuid-created',
         )
-        self.mock_api.return_value.update_training.return_value = dict(
+        self.mock_doctorate_api.return_value.update_training.return_value = dict(
             uuid='uuid-edited',
         )
 
-        self.mock_api.return_value.retrieve_training.return_value = Mock(
+        self.mock_doctorate_api.return_value.retrieve_training.return_value = Mock(
             category=CategorieActivite.CONFERENCE.name,
         )
-        self.mock_api.return_value.retrieve_training.return_value.to_dict.return_value = dict(
+        self.mock_doctorate_api.return_value.retrieve_training.return_value.to_dict.return_value = dict(
             category=CategorieActivite.CONFERENCE.name,
             type="",
             participating_proof=[],
             parent=None,
         )
 
-        self.addCleanup(api_patcher.stop)
-
     def test_doctoral_training_list(self):
         # This is mostly for testing {% training_categories %}
-        self.mock_api.return_value.list_doctoral_training.return_value = [
+        self.mock_doctorate_api.return_value.list_doctoral_training.return_value = [
             Mock(
                 spec=SeminarCommunication,
                 category="COMMUNICATION",
@@ -168,25 +146,25 @@ class TrainingTestCase(TestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "osis-document.umd.min.js")
-        self.assertContains(response, "Informatique")
+        self.assertContains(response, "L-CDAR24-0000-0002")
         self.assertContains(response, "45")
 
     def test_complementary_training_list(self):
-        url = resolve_url("parcours_doctoral:complementary-training", pk="3c5cdc60-2537-4a12-a396-64d2e9e34876")
+        url = resolve_url("parcours_doctoral:complementary-training", pk=self.doctorate_uuid)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Informatique")
+        self.assertContains(response, "L-CDAR24-0000-0002")
 
     def test_course_enrollment_list(self):
-        url = resolve_url("parcours_doctoral:course-enrollment", pk="3c5cdc60-2537-4a12-a396-64d2e9e34876")
+        url = resolve_url("parcours_doctoral:course-enrollment", pk=self.doctorate_uuid)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Informatique")
+        self.assertContains(response, "L-CDAR24-0000-0002")
 
     def test_create_wrong_category(self):
         url = resolve_url(
             "parcours_doctoral:doctoral-training:add",
-            pk="3c5cdc60-2537-4a12-a396-64d2e9e34876",
+            pk=self.doctorate_uuid,
             category="UNKNOWN",
         )
         response = self.client.get(url)
@@ -195,7 +173,7 @@ class TrainingTestCase(TestCase):
     def test_create(self):
         url = resolve_url(
             "parcours_doctoral:doctoral-training:add",
-            pk="3c5cdc60-2537-4a12-a396-64d2e9e34876",
+            pk=self.doctorate_uuid,
             category=CategorieActivite.CONFERENCE.name,
         )
         response = self.client.get(url)
@@ -221,7 +199,7 @@ class TrainingTestCase(TestCase):
     def test_create_wrong_dates(self):
         url = resolve_url(
             "parcours_doctoral:doctoral-training:add",
-            pk="3c5cdc60-2537-4a12-a396-64d2e9e34876",
+            pk=self.doctorate_uuid,
             category=CategorieActivite.CONFERENCE.name,
         )
         response = self.client.get(url)
@@ -243,7 +221,7 @@ class TrainingTestCase(TestCase):
     def test_create_with_parent(self):
         url = resolve_url(
             "parcours_doctoral:doctoral-training:add",
-            pk="3c5cdc60-2537-4a12-a396-64d2e9e34876",
+            pk=self.doctorate_uuid,
             category=CategorieActivite.COMMUNICATION.name,
         )
         response = self.client.get(f"{url}?parent=uuid-parent")
@@ -252,7 +230,7 @@ class TrainingTestCase(TestCase):
     def test_update(self):
         url = resolve_url(
             "parcours_doctoral:doctoral-training:edit",
-            pk="3c5cdc60-2537-4a12-a396-64d2e9e34876",
+            pk=self.doctorate_uuid,
             activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
         )
         response = self.client.get(url)
@@ -293,11 +271,11 @@ class TrainingTestCase(TestCase):
                 title="parent",
             )
 
-        self.mock_api.return_value.retrieve_training.side_effect = side_effect
+        self.mock_doctorate_api.return_value.retrieve_training.side_effect = side_effect
 
         url = resolve_url(
             "parcours_doctoral:doctoral-training:edit",
-            pk="3c5cdc60-2537-4a12-a396-64d2e9e34876",
+            pk=self.doctorate_uuid,
             activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
         )
         response = self.client.get(url)
@@ -321,11 +299,11 @@ class TrainingTestCase(TestCase):
     def test_submit(self):
         activity_mock = Mock(uuid='test', ects=10)
         activity_mock.get = dict(uuid='test', ects=10).get
-        self.mock_api.return_value.list_doctoral_training.return_value = [activity_mock]
+        self.mock_doctorate_api.return_value.list_doctoral_training.return_value = [activity_mock]
         data = {
             'activity_ids': ['test'],
         }
-        self.mock_api.return_value.submit_training.return_value = data
+        self.mock_doctorate_api.return_value.submit_training.return_value = data
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, self.url)
@@ -333,12 +311,12 @@ class TrainingTestCase(TestCase):
     def test_submit_with_errors(self):
         activity_mock = Mock(uuid='test', ects=10)
         activity_mock.get = dict(uuid='test', ects=10).get
-        self.mock_api.return_value.list_doctoral_training.return_value = [activity_mock]
+        self.mock_doctorate_api.return_value.list_doctoral_training.return_value = [activity_mock]
         data = {
             'activity_ids': ['test'],
         }
         # Exception related to an activity
-        self.mock_api.return_value.submit_training.side_effect = ApiException(
+        self.mock_doctorate_api.return_value.submit_training.side_effect = ApiException(
             http_resp=Mock(
                 status=400,
                 data='{"errors":[{"activite_id": "test", "detail": "Pas bon", "status_code": 0}]}',
@@ -349,7 +327,7 @@ class TrainingTestCase(TestCase):
         self.assertFormError(response, "activities_form", None, "Pas bon")
 
         # Any other exception
-        self.mock_api.return_value.submit_training.side_effect = ApiException(
+        self.mock_doctorate_api.return_value.submit_training.side_effect = ApiException(
             http_resp=Mock(
                 status=502,
             ),
@@ -373,13 +351,13 @@ class TrainingTestCase(TestCase):
         )
         url = resolve_url(
             "parcours_doctoral:course-enrollment:edit",
-            pk="3c5cdc60-2537-4a12-a396-64d2e9e34876",
+            pk=self.doctorate_uuid,
             activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
         )
-        self.mock_api.return_value.retrieve_training.return_value = Mock(
+        self.mock_doctorate_api.return_value.retrieve_training.return_value = Mock(
             category=CategorieActivite.UCL_COURSE.name,
         )
-        self.mock_api.return_value.retrieve_training.return_value.to_dict.return_value = dict(
+        self.mock_doctorate_api.return_value.retrieve_training.return_value.to_dict.return_value = dict(
             category=CategorieActivite.UCL_COURSE.name,
             learning_unit_year='ESA2004',
             learning_unit_title='Something',
@@ -399,7 +377,7 @@ class TrainingTestCase(TestCase):
     def test_assent(self):
         url = resolve_url(
             "parcours_doctoral:course-enrollment:assent",
-            pk="3c5cdc60-2537-4a12-a396-64d2e9e34876",
+            pk=self.doctorate_uuid,
             activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
         )
         activity_data = dict(
@@ -410,8 +388,8 @@ class TrainingTestCase(TestCase):
             reference_promoter_comment="",
             status=[StatutActivite.SOUMISE.name],
         )
-        self.mock_api.return_value.retrieve_training.return_value = Mock(**activity_data)
-        self.mock_api.return_value.retrieve_training.return_value.to_dict.return_value = activity_data
+        self.mock_doctorate_api.return_value.retrieve_training.return_value = Mock(**activity_data)
+        self.mock_doctorate_api.return_value.retrieve_training.return_value.to_dict.return_value = activity_data
         response = self.client.get(url)
         self.assertContains(response, "dependsOn.min.js", count=1)
         self.assertContains(response, "Foo bar")
@@ -425,13 +403,13 @@ class TrainingTestCase(TestCase):
     def test_delete(self):
         url = resolve_url(
             "parcours_doctoral:course-enrollment:delete",
-            pk="3c5cdc60-2537-4a12-a396-64d2e9e34876",
+            pk=self.doctorate_uuid,
             activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
         )
-        self.mock_api.return_value.retrieve_training.return_value = Mock(
+        self.mock_doctorate_api.return_value.retrieve_training.return_value = Mock(
             category=CategorieActivite.UCL_COURSE.name,
         )
-        self.mock_api.return_value.retrieve_training.return_value.to_dict.return_value = dict(
+        self.mock_doctorate_api.return_value.retrieve_training.return_value.to_dict.return_value = dict(
             category=CategorieActivite.UCL_COURSE.name,
             reference_promoter_assent=None,
             reference_promoter_comment="",

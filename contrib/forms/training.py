@@ -29,9 +29,8 @@ from functools import partial
 from django import forms
 from django.core import validators
 from django.utils.translation import get_language, gettext_lazy as _, pgettext_lazy
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 
-from osis_admission_sdk.model.doctorate_proposition_dto import DoctoratePropositionDTO
-from parcours_doctoral.contrib.enums import AdmissionType
 from parcours_doctoral.contrib.enums.training import (
     ChoixComiteSelection,
     ChoixStatutPublication,
@@ -151,7 +150,7 @@ class ActivityFormMixin(forms.Form):
 
     def __init__(
         self,
-        doctorate: DoctoratePropositionDTO = None,
+        doctorate: ParcoursDoctoralDTO = None,
         config_types=None,
         person=None,
         *args,
@@ -627,8 +626,9 @@ class UclCourseForm(ActivityFormMixin, forms.Form):
 
         # Filter out disabled contexts
         choices = dict(self.fields['context'].widget.choices)
-        if self.doctorate.type_admission == AdmissionType.PRE_ADMISSION.name:
-            del choices[ContexteFormation.DOCTORAL_TRAINING.name]
+        # TODO be sure that the following lines are not needed
+        # if self.doctorate.type_admission == AdmissionType.PRE_ADMISSION.name:
+        #     del choices[ContexteFormation.DOCTORAL_TRAINING.name]
         if not self.config_types.get('is_complementary_training_enabled'):
             del choices[ContexteFormation.COMPLEMENTARY_TRAINING.name]
         self.fields['context'].widget.choices = list(choices.items())

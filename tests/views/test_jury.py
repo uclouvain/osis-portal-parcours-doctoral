@@ -24,10 +24,10 @@
 #
 # ##############################################################################
 import datetime
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
-from django.test import TestCase
+from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 
 from parcours_doctoral.contrib.enums import (
     FormuleDefense,
@@ -37,27 +37,23 @@ from parcours_doctoral.contrib.enums import (
     GenreMembre,
 )
 from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
-from base.tests.factories.person import PersonFactory
+from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
 
-class JuryPreparationTestCase(TestCase):
+class JuryPreparationTestCase(BaseDoctorateTestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.person = PersonFactory()
+        super().setUpTestData()
+
+        cls.url = resolve_url("parcours_doctoral:update:jury-preparation", pk=cls.doctorate_uuid)
+        cls.detail_url = resolve_url("parcours_doctoral:jury-preparation", pk=cls.doctorate_uuid)
 
     def setUp(self):
-        self.url = resolve_url("parcours_doctoral:update:jury-preparation", pk="3c5cdc60-2537-4a12-a396-64d2e9e34876")
+        super().setUp()
+
         self.client.force_login(self.person.user)
 
-        api_patcher = patch("osis_admission_sdk.api.propositions_api.PropositionsApi")
-        self.mock_api = api_patcher.start()
-        self.addCleanup(api_patcher.stop)
-
-        self.mock_api.return_value.retrieve_doctorate_dto.return_value = Mock(
-            links={'retrieve_jury_preparation': {'url': 'ok'}, 'update_jury_preparation': {'url': 'ok'}},
-            erreurs=[],
-        )
-        self.mock_api.return_value.retrieve_jury_preparation.return_value = Mock(
+        self.mock_doctorate_api.return_value.retrieve_jury_preparation.return_value = Mock(
             titre_propose="titre",
             formule_defense=FormuleDefense.FORMULE_1.name,
             date_indicative=datetime.date(2023, 4, 19),
@@ -66,64 +62,62 @@ class JuryPreparationTestCase(TestCase):
             commentaire="Foobar",
         )
 
-    def test_update_no_permission(self):
-        self.mock_api.return_value.retrieve_doctorate_dto.return_value.links = {
-            'update_jury_preparation': {'error': 'no access'},
-        }
+    def test_jury_update_no_permission(self):
+        self.mock_doctorate_object.links['update_jury_preparation'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
+    def test_jury_get_no_permission(self):
+        self.mock_doctorate_object.links['retrieve_jury_preparation'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 403)
+
     def test_jury_get(self):
-        url = resolve_url("parcours_doctoral:jury-preparation", pk="3c5cdc60-2537-4a12-a396-64d2e9e34876")
-        response = self.client.get(url)
+        response = self.client.get(self.detail_url)
         self.assertContains(response, "Foobar")
 
     def test_jury_get_form(self):
         response = self.client.get(self.url)
         self.assertContains(response, "Foobar")
-        self.assertContains(response, '<form class="osis-form"')
+        self.assertContains(response, '<form')
         self.assertEqual(response.context['form'].initial['titre_propose'], "titre")
 
-    def test_jury_update_with_data(self, *args):
+    def test_jury_update_with_data(self):
         response = self.client.post(
             self.url,
             {
                 "titre_propose": "titre bis",
                 "formule_defense": FormuleDefense.FORMULE_1.name,
                 "date_indicative": '2023-04-01',
-                "langue_redaction": ChoixLangueRedactionThese.FRENCH.name,
+                "langue_redaction": 'FR',
                 "langue_soutenance": ChoixLangueRedactionThese.FRENCH.name,
                 "commentaire": "Foobar bis",
             },
         )
         self.assertEqual(response.status_code, 302)
-        self.mock_api.return_value.update_jury_preparation.assert_called()
-        last_call_kwargs = self.mock_api.return_value.update_jury_preparation.call_args[1]
+        self.mock_doctorate_api.return_value.update_jury_preparation.assert_called()
+        last_call_kwargs = self.mock_doctorate_api.return_value.update_jury_preparation.call_args[1]
         self.assertIn("titre_propose", last_call_kwargs['modifier_jury_command'])
         self.assertEqual(last_call_kwargs['modifier_jury_command']['titre_propose'], "titre bis")
 
 
-class JuryTestCase(TestCase):
-    @classmethod
-    def setUpTestData(cls):
-        cls.person = PersonFactory()
-
+class JuryTestCase(BaseDoctorateTestCase):
     def setUp(self):
-        self.url = resolve_url("parcours_doctoral:jury", pk="3c5cdc60-2537-4a12-a396-64d2e9e34876")
+        super().setUp()
+
+        self.detail_url = resolve_url("parcours_doctoral:jury", pk=self.doctorate_uuid)
+        self.form_url = resolve_url("parcours_doctoral:update:jury", pk=self.doctorate_uuid)
+
         self.client.force_login(self.person.user)
 
-        api_patcher = patch("osis_admission_sdk.api.propositions_api.PropositionsApi")
-        self.mock_api = api_patcher.start()
-        self.addCleanup(api_patcher.stop)
-
-        self.mock_api.return_value.retrieve_doctorate_dto.return_value = Mock(
-            links={'list_jury_members': {'url': 'ok'}, 'create_jury_member': {'url': 'ok'}},
-            erreurs=[],
-        )
-        self.mock_api.return_value.retrieve_jury_preparation.return_value = Mock(
+        self.mock_doctorate_api.return_value.retrieve_jury_preparation.return_value = Mock(
             uuid="3c5cdc60-2537-4a12-a396-64d2e9e34876",
         )
-        self.mock_api.return_value.list_jury_members.return_value = [
+        self.mock_doctorate_api.return_value.list_jury_members.return_value = [
             Mock(
                 uuid="3c5cdc60-2537-4a12-a396-64d2e9e34876",
                 role=RoleJury.MEMBRE.name,
@@ -156,13 +150,27 @@ class JuryTestCase(TestCase):
             ),
         ]
 
+    def test_jury_get_no_permission(self):
+        self.mock_doctorate_object.links['list_jury_members'] = ActionLink._from_openapi_data(error='access error')
+        response = self.client.get(self.detail_url)
+        self.assertEqual(response.status_code, 403)
+
     def test_jury_get(self):
-        response = self.client.get(self.url)
+        response = self.client.get(self.detail_url)
+        self.assertContains(response, "autre nom")
+
+    def test_jury_create_no_permission(self):
+        self.mock_doctorate_object.links['create_jury_members'] = ActionLink._from_openapi_data(error='access error')
+        response = self.client.get(self.form_url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_jury_create(self):
+        response = self.client.get(self.form_url)
         self.assertContains(response, "autre nom")
 
     def test_jury_create_with_data(self, *args):
         response = self.client.post(
-            self.url,
+            self.form_url,
             {
                 "institution_principale": JuryMembreForm.InstitutionPrincipaleChoices.OTHER.name,
                 "matricule": '',
@@ -178,7 +186,7 @@ class JuryTestCase(TestCase):
             },
         )
         self.assertEqual(response.status_code, 302)
-        self.mock_api.return_value.create_jury_members.assert_called()
-        last_call_kwargs = self.mock_api.return_value.create_jury_members.call_args[1]
+        self.mock_doctorate_api.return_value.create_jury_members.assert_called()
+        last_call_kwargs = self.mock_doctorate_api.return_value.create_jury_members.call_args[1]
         self.assertIn("matricule", last_call_kwargs['ajouter_membre_command'])
         self.assertEqual(last_call_kwargs['ajouter_membre_command']['email'], "email@example.org")

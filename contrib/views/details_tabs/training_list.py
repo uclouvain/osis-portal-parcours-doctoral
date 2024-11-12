@@ -30,12 +30,12 @@ from django.utils.functional import cached_property
 from django.utils.translation import get_language
 from django.views.generic import FormView
 
+from frontoffice.settings.osis_sdk.utils import MultipleApiBusinessException
 from parcours_doctoral.contrib.enums import CategorieActivite, StatutActivite
 from parcours_doctoral.contrib.forms.training import BatchActivityForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.mixins import WebServiceFormMixin
 from parcours_doctoral.services.training import DoctorateTrainingService
-from frontoffice.settings.osis_sdk.utils import MultipleApiBusinessException
 
 __all__ = [
     'DoctoralTrainingListView',
@@ -49,6 +49,7 @@ class DoctoralTrainingListView(LoadViewMixin, WebServiceFormMixin, FormView):
     urlpatterns = 'doctoral-training'
     template_name = 'parcours_doctoral/training_list.html'
     form_class = BatchActivityForm
+    permission_link_to_check = 'retrieve_doctorate_training'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -99,6 +100,7 @@ class DoctoralTrainingListView(LoadViewMixin, WebServiceFormMixin, FormView):
 class ComplementaryTrainingListView(DoctoralTrainingListView):
     urlpatterns = 'complementary-training'
     template_name = "parcours_doctoral/complementary_training_list.html"
+    permission_link_to_check = 'retrieve_complementary_training'
 
     @cached_property
     def activities(self):
@@ -111,6 +113,7 @@ class ComplementaryTrainingListView(DoctoralTrainingListView):
 class CourseEnrollmentListView(DoctoralTrainingListView):
     urlpatterns = 'course-enrollment'
     template_name = "parcours_doctoral/course_enrollment.html"
+    permission_link_to_check = 'retrieve_course_enrollment'
 
     @cached_property
     def activities(self):

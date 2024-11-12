@@ -31,7 +31,7 @@
     </div>
     <div id="container_{{ widget.name }}" class="select-or-other-container mb-3 col-md-4 {{ classes }}">
     {% if not widget.help_text %}
-      <label for="{{ widget.attrs.id }}">{% trans "If other, specify" %}</label>
+      <label class="form-label" for="{{ widget.attrs.id }}">{% trans "If other, specify" %}</label>
       {% include widget.template_name %}
     {% else %}
       <label class="form-label" for="{{ widget.attrs.id }}">

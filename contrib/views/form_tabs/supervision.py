@@ -29,24 +29,20 @@ from django.views.generic import FormView
 from parcours_doctoral.contrib.enums.actor import ActorType
 from parcours_doctoral.contrib.forms.supervision import ACTOR_EXTERNAL, DoctorateSupervisionForm, EXTERNAL_FIELDS
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
+from parcours_doctoral.services.doctorate import DoctorateSupervisionService, DoctorateService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
-from parcours_doctoral.services.doctorate import DoctorateSupervisionService
-
-__all__ = [
-    "DoctorateSupervisionFormView",
-]
 
 
-class DoctorateSupervisionFormView(LoadViewMixin, WebServiceFormMixin, FormView):
+class SupervisionFormView(LoadViewMixin, WebServiceFormMixin, FormView):
     template_name = 'parcours_doctoral/forms/supervision.html'
     form_class = DoctorateSupervisionForm
     extra_context = {'custom_form_template': True}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['supervision'] = DoctorateSupervisionService.get_supervision(
+        context['supervision'] = DoctorateService.get_supervision(
             person=self.request.user.person,
-            uuid=self.doctorate_uuid,
+            uuid_doctorate=self.doctorate_uuid,
         )
         context['signature_conditions'] = DoctorateSupervisionService.get_signature_conditions(
             person=self.request.user.person,

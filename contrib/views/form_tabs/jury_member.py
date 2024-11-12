@@ -36,20 +36,22 @@ from frontoffice.settings.osis_sdk.utils import MultipleApiBusinessException
 from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
 from parcours_doctoral.contrib.forms.jury.membre_role import JuryMembreRoleForm
 from parcours_doctoral.contrib.views.details_tabs.jury import LoadJuryViewMixin
-from parcours_doctoral.services.mixins import WebServiceFormMixin
 from parcours_doctoral.services.doctorate import DoctorateJuryService, JuryBusinessException
+from parcours_doctoral.services.mixins import WebServiceFormMixin
 from reference.models.country import Country
 
 __all__ = [
-    "DoctorateJuryMemberRemoveView",
-    "DoctorateJuryMembreUpdateFormView",
-    "DoctorateJuryMemberChangeRoleView",
+    "JuryMemberRemoveView",
+    "JuryMembreUpdateFormView",
+    "JuryMemberChangeRoleView",
 ]
 
 __namespace__ = {'jury-member': 'jury-member/<uuid:member_pk>'}
 
 
 class LoadJuryMemberViewMixin(LoadJuryViewMixin):
+    permission_link_to_check = 'update_jury_preparation'
+
     @cached_property
     def membre(self):
         return DoctorateJuryService.retrieve_jury_member(
@@ -68,7 +70,7 @@ class LoadJuryMemberViewMixin(LoadJuryViewMixin):
         return context
 
 
-class DoctorateJuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormMixin, FormView):
+class JuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormMixin, FormView):
     urlpatterns = 'update'
     template_name = 'parcours_doctoral/forms/jury/member_update.html'
     form_class = JuryMembreForm
@@ -87,7 +89,7 @@ class DoctorateJuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormM
 
     def get_success_url(self):
         return self.request.POST.get('redirect_to') or reverse(
-            'parcours_doctoral:jury',
+            'parcours_doctoral:update:jury',
             kwargs={'pk': self.doctorate_uuid},
         )
 
@@ -118,14 +120,8 @@ class DoctorateJuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormM
             **data,
         )
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if 'url' not in context['doctorate'].links['update_jury_preparation']:
-            raise PermissionDenied(context['doctorate'].links['update_jury_preparation']['error'])
-        return context
 
-
-class DoctorateJuryMemberRemoveView(LoadJuryMemberViewMixin, WebServiceFormMixin, View):
+class JuryMemberRemoveView(LoadJuryMemberViewMixin, WebServiceFormMixin, View):
     urlpatterns = 'remove'
 
     def post(self, request, *args, **kwargs):
@@ -140,10 +136,10 @@ class DoctorateJuryMemberRemoveView(LoadJuryMemberViewMixin, WebServiceFormMixin
                 messages.error(request, exception.detail)
         except PermissionDenied as e:
             messages.error(request, str(e))
-        return redirect('parcours_doctoral:jury', pk=self.doctorate_uuid)
+        return redirect('parcours_doctoral:update:jury', pk=self.doctorate_uuid)
 
 
-class DoctorateJuryMemberChangeRoleView(LoadJuryMemberViewMixin, WebServiceFormMixin, View):
+class JuryMemberChangeRoleView(LoadJuryMemberViewMixin, WebServiceFormMixin, View):
     urlpatterns = 'change-role'
 
     def post(self, request, *args, **kwargs):
@@ -163,4 +159,4 @@ class DoctorateJuryMemberChangeRoleView(LoadJuryMemberViewMixin, WebServiceFormM
                 messages.error(request, str(e))
         else:
             messages.error(self.request, str(form.errors))
-        return redirect('parcours_doctoral:jury', pk=self.doctorate_uuid)
+        return redirect('parcours_doctoral:update:jury', pk=self.doctorate_uuid)

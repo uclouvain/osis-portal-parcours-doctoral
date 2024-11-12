@@ -24,43 +24,27 @@
 #
 # ##############################################################################
 import datetime
-from unittest.mock import Mock, patch, ANY
+from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
-from django.test import TestCase, override_settings
+from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 
-from parcours_doctoral.contrib.enums.doctorat import ChoixStatutDoctorat
-from parcours_doctoral.contrib.forms import PDF_MIME_TYPE
 from base.tests.factories.person import PersonFactory
+from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
 
-@override_settings(OSIS_DOCUMENT_BASE_URL='http://dummyurl')
-class ExtensionRequestDetailViewTestCase(TestCase):
+class ExtensionRequestDetailViewTestCase(BaseDoctorateTestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.phd_student = PersonFactory()
+        super().setUpTestData()
+
+        cls.person = PersonFactory()
+        cls.url = resolve_url("parcours_doctoral:extension-request", pk=cls.doctorate_uuid)
 
     def setUp(self):
-        self.client.force_login(self.phd_student.user)
+        super().setUp()
 
-        self.url = resolve_url("parcours_doctoral:extension-request", pk="3c5cdc60-2537-4a12-a396-64d2e9e34876")
-
-        api_patcher = patch("osis_admission_sdk.api.propositions_api.PropositionsApi")
-        self.mock_api = api_patcher.start()
-
-        self.mock_api.return_value.retrieve_doctorate_dto.return_value = Mock(
-            links={'update_confirmation': {'url': 'ok'}},
-            reference='21-300001',
-            intitule_formation='Informatique',
-            statut=ChoixStatutDoctorat.ADMITTED.name,
-            sigle_formation='INFO',
-            annee_formation=2022,
-            matricule_doctorant=self.phd_student.global_id,
-            prenom_doctorant='John',
-            nom_doctorantig='Doe',
-            uuid='uuid1',
-        )
-        self.mock_api.return_value.retrieve_last_confirmation_paper.return_value = Mock(
+        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.return_value = Mock(
             uuid='c1',
             date_limite='2022-06-10',
             date='2022-04-03',
@@ -77,73 +61,57 @@ class ExtensionRequestDetailViewTestCase(TestCase):
             ),
         )
 
-        self.addCleanup(api_patcher.stop)
+    def test_get_no_permission(self):
+        self.client.force_login(self.person.user)
+        self.mock_doctorate_object.links['update_confirmation_extension'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
 
     def test_get_confirmation_paper(self):
+        self.client.force_login(self.person.user)
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_api.return_value.retrieve_doctorate_dto.assert_called()
-        self.assertEqual(response.context.get('doctorate').uuid, 'uuid1')
+        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
-        self.mock_api.return_value.retrieve_last_confirmation_paper.assert_called()
+        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.assert_called()
 
         self.assertContains(response, "osis-document.umd.min.js")
         self.assertIsNotNone(response.context.get('confirmation_paper'))
         self.assertEqual(response.context.get('confirmation_paper').uuid, 'c1')
 
     def test_get_no_confirmation_paper(self):
-        self.mock_api.return_value.retrieve_last_confirmation_paper.return_value = None
+        self.client.force_login(self.person.user)
+        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.return_value = None
 
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_api.return_value.retrieve_doctorate_dto.assert_called()
-        self.assertEqual(response.context.get('doctorate').uuid, 'uuid1')
+        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
-        self.mock_api.return_value.retrieve_last_confirmation_paper.assert_called()
+        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.assert_called()
 
         self.assertIsNone(response.context.get('confirmation_paper'))
 
 
-@override_settings(OSIS_DOCUMENT_BASE_URL='http://dummyurl')
-class ExtensionRequestFormViewTestCase(TestCase):
+class ExtensionRequestFormViewTestCase(BaseDoctorateTestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.phd_student = PersonFactory()
+        super().setUpTestData()
+
         cls.promoter = PersonFactory()
-        cls.api_default_params = {
-            'accept_language': ANY,
-            'x_user_first_name': ANY,
-            'x_user_last_name': ANY,
-            'x_user_email': ANY,
-            'x_user_global_id': ANY,
-        }
+        cls.url = resolve_url("parcours_doctoral:update:extension-request", pk=cls.doctorate_uuid)
 
     def setUp(self):
-        self.url = resolve_url(
-            "parcours_doctoral:update:extension-request",
-            pk="3c5cdc60-2537-4a12-a396-64d2e9e34876",
-        )
+        super().setUp()
 
-        api_patcher = patch("osis_admission_sdk.api.propositions_api.PropositionsApi")
-        self.mock_api = api_patcher.start()
-
-        self.mock_api.return_value.retrieve_doctorate_dto.return_value = Mock(
-            links={'update_confirmation': {'url': 'ok'}},
-            reference='21-300001',
-            intitule_formation='Informatique',
-            statut=ChoixStatutDoctorat.ADMITTED.name,
-            sigle_formation='INFO',
-            annee_formation=2022,
-            matricule_doctorant=self.phd_student.global_id,
-            prenom_doctorant='John',
-            nom_doctorantig='Doe',
-            uuid='uuid1',
-        )
-        self.mock_api.return_value.retrieve_last_confirmation_paper.return_value = Mock(
+        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.return_value = Mock(
             uuid='c1',
             date_limite='2022-06-10',
             date='2022-04-03',
@@ -169,30 +137,27 @@ class ExtensionRequestFormViewTestCase(TestCase):
                 ),
             ),
         )
-        self.addCleanup(api_patcher.stop)
-        # Mock document api
-        patcher = patch('osis_document.api.utils.get_remote_token', return_value='foobar')
-        patcher.start()
-        self.addCleanup(patcher.stop)
-        patcher = patch(
-            'osis_document.api.utils.get_remote_metadata',
-            return_value={'name': 'myfile', 'mimetype': PDF_MIME_TYPE, 'size': 1},
+
+    def test_get_no_permission(self):
+        self.client.force_login(self.person.user)
+        self.mock_doctorate_object.links['update_confirmation_extension'] = ActionLink._from_openapi_data(
+            error='access error',
         )
-        patcher.start()
-        self.addCleanup(patcher.stop)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
 
     def test_get_confirmation_paper(self):
-        self.client.force_login(self.phd_student.user)
+        self.client.force_login(self.person.user)
 
         response = self.client.get(self.url)
         self.assertContains(response, "osis-document.umd.min.js")
 
         # Load the doctorate information
-        self.mock_api.return_value.retrieve_doctorate_dto.assert_called()
-        self.assertEqual(response.context.get('doctorate').uuid, 'uuid1')
+        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
-        self.mock_api.return_value.retrieve_last_confirmation_paper.assert_called()
+        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.assert_called()
 
         # Initialize the form
         self.assertEqual(response.context.get('form').initial['nouvelle_echeance'], '2023-01-01')
@@ -200,24 +165,24 @@ class ExtensionRequestFormViewTestCase(TestCase):
         self.assertEqual(response.context.get('form').initial['lettre_justification'], ['f2'])
 
     def test_get_no_confirmation_paper(self):
-        self.client.force_login(self.phd_student.user)
+        self.client.force_login(self.person.user)
 
-        self.mock_api.return_value.retrieve_last_confirmation_paper.return_value = None
+        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.return_value = None
 
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_api.return_value.retrieve_doctorate_dto.assert_called()
-        self.assertEqual(response.context.get('doctorate').uuid, 'uuid1')
+        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
-        self.mock_api.return_value.retrieve_last_confirmation_paper.assert_called()
+        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.assert_called()
 
         self.assertIsNone(response.context.get('confirmation_paper'))
         self.assertEqual(response.context.get('form').initial, {})
 
     def test_post_a_confirmation_paper(self):
-        self.client.force_login(self.phd_student.user)
+        self.client.force_login(self.person.user)
 
         self.client.post(
             self.url,
@@ -228,9 +193,9 @@ class ExtensionRequestFormViewTestCase(TestCase):
             },
         )
         # Call the API with the right data
-        self.mock_api.return_value.submit_confirmation_paper_extension_request.assert_called()
-        self.mock_api.return_value.submit_confirmation_paper_extension_request.assert_called_with(
-            uuid='3c5cdc60-2537-4a12-a396-64d2e9e34876',
+        self.mock_doctorate_api.return_value.submit_confirmation_paper_extension_request.assert_called()
+        self.mock_doctorate_api.return_value.submit_confirmation_paper_extension_request.assert_called_with(
+            uuid=self.doctorate_uuid,
             submit_confirmation_paper_extension_request_command={
                 'nouvelle_echeance': datetime.date(2024, 1, 1),
                 'justification_succincte': 'My second reason',

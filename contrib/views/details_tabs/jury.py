@@ -25,22 +25,18 @@
 # ##############################################################################
 
 from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView
 
 from parcours_doctoral.contrib.enums import RoleJury
-from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
+from parcours_doctoral.services.doctorate import DoctorateJuryService
 
-__all__ = [
-    'DoctorateJuryPreparationDetailView',
-    'DoctorateJuryDetailView',
-]
 __namespace__ = False
 
-from parcours_doctoral.services.mixins import WebServiceFormMixin
-
-from parcours_doctoral.services.doctorate import DoctorateJuryService, DoctorateCotutelleService, JuryBusinessException
+__all__ = [
+    'JuryPreparationDetailView',
+    'JuryDetailView',
+]
 
 
 class LoadJuryViewMixin(LoadViewMixin):
@@ -59,35 +55,16 @@ class LoadJuryViewMixin(LoadViewMixin):
         return context
 
 
-class DoctorateJuryPreparationDetailView(LoadJuryViewMixin, TemplateView):
+class JuryPreparationDetailView(LoadJuryViewMixin, TemplateView):
     urlpatterns = 'jury-preparation'
     template_name = 'parcours_doctoral/details/jury/preparation.html'
-
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        context_data['cotutelle'] = DoctorateCotutelleService.get_cotutelle(
-            person=self.request.user.person,
-            uuid=self.doctorate_uuid,
-        )
-        return context_data
+    permission_link_to_check = 'retrieve_jury_preparation'
 
 
-class DoctorateJuryDetailView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
+class JuryDetailView(LoadJuryViewMixin, TemplateView):
     urlpatterns = 'jury'
     template_name = 'parcours_doctoral/forms/jury/jury.html'
-    form_class = JuryMembreForm
-    error_mapping = {
-        JuryBusinessException.NonDocteurSansJustificationException: "justification_non_docteur",
-        JuryBusinessException.MembreExterneSansInstitutionException: "institution",
-        JuryBusinessException.MembreExterneSansPaysException: "pays",
-        JuryBusinessException.MembreExterneSansNomException: "nom",
-        JuryBusinessException.MembreExterneSansPrenomException: "prenom",
-        JuryBusinessException.MembreExterneSansTitreException: "titre",
-        JuryBusinessException.MembreExterneSansGenreException: "genre",
-        JuryBusinessException.MembreExterneSansEmailException: "email",
-        JuryBusinessException.MembreDejaDansJuryException: "matricule",
-    }
-    extra_context = {'submit_label': gettext_lazy('Add')}
+    permission_link_to_check = 'list_jury_members'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -99,10 +76,3 @@ class DoctorateJuryDetailView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
         context_data['membre_president'] = (membre for membre in membres if membre.role == RoleJury.PRESIDENT.name)
         context_data['membre_secretaire'] = (membre for membre in membres if membre.role == RoleJury.SECRETAIRE.name)
         return context_data
-
-    def call_webservice(self, data):
-        return DoctorateJuryService.create_jury_member(
-            person=self.person,
-            uuid=self.doctorate_uuid,
-            **data,
-        )

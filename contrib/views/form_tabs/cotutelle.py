@@ -23,20 +23,20 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from django.core.exceptions import PermissionDenied
 from django.views.generic import FormView
 
 from parcours_doctoral.contrib.forms.cotutelle import DoctorateCotutelleForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
+from parcours_doctoral.services.doctorate import DoctorateService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
-from parcours_doctoral.services.doctorate import DoctorateCotutelleService
 
-__all__ = ['DoctorateCotutelleFormView']
+__all__ = ['CotutelleFormView']
 
 
-class DoctorateCotutelleFormView(LoadViewMixin, WebServiceFormMixin, FormView):
+class CotutelleFormView(LoadViewMixin, WebServiceFormMixin, FormView):
     template_name = 'parcours_doctoral/forms/cotutelle.html'
     form_class = DoctorateCotutelleForm
+    permission_link_to_check = 'update_cotutelle'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -44,36 +44,25 @@ class DoctorateCotutelleFormView(LoadViewMixin, WebServiceFormMixin, FormView):
         return kwargs
 
     def get_initial(self):
-        cotutelle = DoctorateCotutelleService.get_cotutelle(
-            person=self.person,
-            uuid=self.doctorate_uuid,
-        )
-        initial = cotutelle.to_dict()
-        if initial['cotutelle'] is not None:
-            initial['cotutelle'] = 'YES' if initial['cotutelle'] else 'NO'
-            if initial['institution_fwb'] is not None:
-                initial['institution_fwb'] = 'true' if initial['institution_fwb'] else 'false'
+        initial = self.doctorate.cotutelle.to_dict()
+        initial['cotutelle'] = 'YES' if initial['cotutelle'] else 'NO'
+        if initial['institution_fwb'] is not None:
+            initial['institution_fwb'] = 'true' if initial['institution_fwb'] else 'false'
         return initial
 
     def call_webservice(self, data):
-        DoctorateCotutelleService.update_cotutelle(person=self.person, **data)
+        DoctorateService.update_cotutelle(person=self.person, uuid_doctorate=self.doctorate_uuid, data=data)
 
     def prepare_data(self, data: dict):
-        if data['cotutelle'] == 'NO':
+        if data.pop('cotutelle') == 'NO':
             data.update(
-                motivation="",
+                motivation='',
                 institution_fwb=None,
-                institution="",
+                institution='',
                 demande_ouverture=[],
                 convention=[],
                 autres_documents=[],
             )
-        del data['cotutelle']
-        data['uuid'] = self.doctorate_uuid
+        if not data['institution']:
+            data['institution'] = ''
         return data
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if 'url' not in context['doctorate'].links['update_cotutelle']:
-            raise PermissionDenied(context['doctorate'].links['update_cotutelle']['error'])
-        return context

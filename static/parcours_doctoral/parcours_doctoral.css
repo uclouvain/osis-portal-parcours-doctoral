@@ -223,12 +223,9 @@ select.select2-hidden-accessible + span {
   min-width: auto;
 }
 
-.select2-selection.select2-selection--single {
-  /*padding: 6px 12px;*/
-}
-
 .select2-selection__rendered {
   line-height: 1em !important;
+  overflow-y: visible !important;
 }
 
 .select2-selection__arrow {
@@ -399,7 +396,11 @@ body, html {
     border-color: #adadad;
 }
 
-/* The following code related to the bootstrap migration will be moved in the base css files. */
+#prevent-quitting-modal {
+  z-index: 2000;
+}
+
+/* The following code related to the bootstrap migration will be moved in the base css files in the future. */
 .hide-bs3-element {
   display: none;
 }
@@ -428,6 +429,10 @@ body, html {
 
 .has-success {
   color: var(--bs-success);
+}
+
+.invalid-feedback {
+  display: block;
 }
 
 /* End of the bootstrap migration code */

@@ -23,15 +23,30 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import resolve_url
 from django.utils.functional import cached_property
 from django.views.generic.base import ContextMixin
 
 from parcours_doctoral.services.doctorate import DoctorateService
+from parcours_doctoral.templatetags.parcours_doctoral import can_make_action
 
 
-class LoadViewMixin(LoginRequiredMixin, ContextMixin):
+class LoadViewMixin(LoginRequiredMixin, PermissionRequiredMixin, ContextMixin):
+    permission_link_to_check = ''
+
+    def has_permission(self):
+        if self.doctorate_uuid and self.permission_link_to_check:
+            doctorate = self.doctorate
+
+            if not can_make_action(doctorate, self.permission_link_to_check):
+                return False
+
+        return True
+
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
@@ -50,28 +65,10 @@ class LoadViewMixin(LoginRequiredMixin, ContextMixin):
 
     @cached_property
     def doctorate(self):
-        # Simulate the merging of the doctorate and the proposition TODO to remove after the refactoring
-        proposition = DoctorateService.get_proposition(
+        return DoctorateService.get_doctorate(
             person=self.person,
             uuid=self.doctorate_uuid,
         )
-        doctorat = DoctorateService.get_doctorate(
-            person=self.person,
-            uuid=self.doctorate_uuid,
-        )
-        for field in [
-            'titre_these',
-            'matricule_doctorant',
-            'noma_doctorant',
-            'genre_doctorant',
-            'prenom_doctorant',
-            'nom_doctorant',
-            'statut',
-        ]:
-            setattr(proposition, field, getattr(doctorat, field))
-        for link_key, link_value in doctorat.links.to_dict().items():
-            proposition.links.set_attribute(link_key, link_value)
-        return proposition
 
     def _get_url(self, tab_name, update=False):
         """Return the URL for the given tab."""

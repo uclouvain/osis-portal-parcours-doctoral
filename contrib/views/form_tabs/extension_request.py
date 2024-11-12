@@ -26,20 +26,21 @@
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
+from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
 
 from parcours_doctoral.contrib.forms.extension_request import ExtensionRequestForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.doctorate import DoctorateService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
-from osis_admission_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
 
-__all__ = ['DoctorateExtensionRequestFormView']
+__all__ = ['ExtensionRequestFormView']
 
 
-class DoctorateExtensionRequestFormView(LoadViewMixin, WebServiceFormMixin, FormView):
+class ExtensionRequestFormView(LoadViewMixin, WebServiceFormMixin, FormView):
     template_name = 'parcours_doctoral/forms/extension_request.html'
     form_class = ExtensionRequestForm
     extra_context = {'submit_label': _('Submit my new deadline')}
+    permission_link_to_check = 'update_confirmation_extension'
 
     @cached_property
     def confirmation_paper(self) -> ConfirmationPaperDTO:

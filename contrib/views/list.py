@@ -27,7 +27,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
 from parcours_doctoral.services.doctorate import DoctorateService
-from parcours_doctoral.templatetags.parcours_doctoral import TAB_TREES
+from parcours_doctoral.templatetags.parcours_doctoral import TAB_TREE
 
 __all__ = [
     'DoctorateListView',
@@ -37,15 +37,14 @@ __namespace__ = False
 
 
 class DoctorateListView(LoginRequiredMixin, TemplateView):
-    urlpatterns = {'list': ''}
+    urlpatterns = {'list': 'list'}
     template_name = 'parcours_doctoral/doctorate_list.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        result = DoctorateService().get_propositions(self.request.user.person)
-        context['doctorates'] = result.doctorate_propositions
-        context['global_links'] = result.links
-        context['doctorate_tab_tree'] = TAB_TREES['doctorate']
+        result = DoctorateService().get_doctorates(self.request.user.person)
+        context['doctorates'] = result
+        context['doctorate_tab_tree'] = TAB_TREE
         return context
 
 
@@ -55,6 +54,6 @@ class DoctorateMemberListView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['doctorates'] = DoctorateService().get_supervised_propositions(self.request.user.person)
-        context['tab_tree'] = TAB_TREES['doctorate']
+        context['doctorates'] = DoctorateService().get_supervised_doctorates(self.request.user.person)
+        context['tab_tree'] = TAB_TREE
         return context

@@ -24,24 +24,26 @@
 #
 # ##############################################################################
 
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
-from parcours_doctoral.services.doctorate import DoctorateService
 
-__all__ = ['ExtensionRequestDetailView']
+__all__ = ['FundingDetailView']
 
 
-class ExtensionRequestDetailView(LoadViewMixin, TemplateView):
-    template_name = 'parcours_doctoral/details/extension_request.html'
-    permission_link_to_check = 'update_confirmation_extension'
+class FundingDetailView(LoadViewMixin, TemplateView):
+    template_name = 'parcours_doctoral/details/funding.html'
+    permission_link_to_check = 'retrieve_funding'
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
 
-        context_data['confirmation_paper'] = DoctorateService.get_last_confirmation_paper(
-            person=self.request.user.person,
-            uuid=self.doctorate_uuid,
-        )
+        # There is a bug with translated strings with percent signs
+        # https://docs.djangoproject.com/en/3.2/topics/i18n/translation/#troubleshooting-gettext-incorrectly-detects-python-format-in-strings-with-percent-signs
+        # xgettext:no-python-format
+        context_data['fte_label'] = _('Full-time equivalent (as %)')
+        # xgettext:no-python-format
+        context_data['allocated_time_label'] = _('Time allocated for thesis (in %)')
 
         return context_data

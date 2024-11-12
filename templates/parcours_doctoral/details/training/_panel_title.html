@@ -73,7 +73,6 @@
               {% if not remove_batch_action %}
                 <li
                   {% if not activity.can_be_submitted %}
-                    class="disabled"
                     data-bs-toggle="tooltip"
                     data-bs-container="body"
                     {% if activity.category|safe == 'SEMINAR' %}
@@ -86,9 +85,11 @@
                   <a
                     href="#"
                     {% if activity.can_be_submitted %}
-                    onclick="$('[name=activity_ids]').val(['{{ activity.uuid }}']);$('form#activities').submit();return false;"
-                    {% endif %}
                     class="dropdown-item"
+                    onclick="$('[name=activity_ids]').val(['{{ activity.uuid }}']);$('form#activities').submit();return false;"
+                    {% else %}
+                    class="dropdown-item disabled"
+                    {% endif %}
                   >
                     {% trans "Submit" %}
                   </a>

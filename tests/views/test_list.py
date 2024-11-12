@@ -29,47 +29,43 @@ from django.shortcuts import resolve_url
 from django.test import TestCase
 from django.urls import reverse
 
-from parcours_doctoral.contrib.enums import ChoixStatutDoctorat
 from base.tests.factories.person import PersonFactory
+from parcours_doctoral.contrib.enums import ChoixStatutDoctorat
 
 
 class ListTestCase(TestCase):
-    @patch('osis_admission_sdk.api.propositions_api.PropositionsApi')
+    @patch('osis_parcours_doctoral_sdk.api.doctorate_api.DoctorateApi')
     def test_list(self, api, *args):
         self.client.force_login(PersonFactory().user)
-        api.return_value.list_propositions.return_value = Mock(
-            doctorate_propositions=[
-                Mock(
-                    uuid='3c5cdc60-2537-4a12-a396-64d2e9e34876',
-                    links={'retrieve_project': {'url': 'access granted'}},
-                    statut=ChoixStatutDoctorat.ADMITTED.name,
-                    erreurs=[],
-                    doctorat=Mock(
-                        type='PHD',
-                    ),
+        api.return_value.list_doctorates.return_value = [
+            Mock(
+                uuid='3c5cdc60-2537-4a12-a396-64d2e9e34876',
+                links={'retrieve_project': {'url': 'access granted'}},
+                statut=ChoixStatutDoctorat.ADMITTED.name,
+                erreurs=[],
+                doctorat=Mock(
+                    type='PHD',
                 ),
-                Mock(
-                    uuid='b3729603-c991-489f-8d8d-1d3a11b64dad',
-                    links={},
-                    erreurs=[],
-                    statut=ChoixStatutDoctorat.ADMITTED.name,
-                    doctorat=Mock(
-                        type='PHD',
-                    ),
+            ),
+            Mock(
+                uuid='b3729603-c991-489f-8d8d-1d3a11b64dad',
+                links={},
+                erreurs=[],
+                statut=ChoixStatutDoctorat.ADMITTED.name,
+                doctorat=Mock(
+                    type='PHD',
                 ),
-            ],
-            links={
-            },
-        )
+            ),
+        ]
         url = reverse('parcours_doctoral:list')
         response = self.client.get(url)
         detail_url = resolve_url('parcours_doctoral:project', pk='3c5cdc60-2537-4a12-a396-64d2e9e34876')
         self.assertContains(response, detail_url)
 
-    @patch('osis_admission_sdk.api.propositions_api.PropositionsApi')
+    @patch('osis_parcours_doctoral_sdk.api.doctorate_api.DoctorateApi')
     def test_list_supervised(self, api, *args):
         self.client.force_login(PersonFactory().user)
-        api.return_value.list_supervised_propositions.return_value = [
+        api.return_value.list_supervised_doctorates.return_value = [
             Mock(
                 uuid='3c5cdc60-2537-4a12-a396-64d2e9e34876',
                 links={'retrieve_project': {'url': 'access granted'}},

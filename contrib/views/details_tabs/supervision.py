@@ -23,7 +23,6 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -34,49 +33,36 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 from django.views.generic.edit import BaseFormView
+from osis_parcours_doctoral_sdk import ApiException
 
-from parcours_doctoral.contrib.enums import ActorType, ChoixStatutDoctorat, DecisionApprovalEnum, \
-    ChoixStatutDoctorat
+from parcours_doctoral.contrib.enums import ActorType, DecisionApprovalEnum
+from parcours_doctoral.contrib.forms.supervision import DoctorateApprovalForm, DoctorateApprovalByPdfForm
 from parcours_doctoral.contrib.forms.supervision import (
-    DoctorateApprovalByPdfForm,
-    DoctorateApprovalForm,
     DoctorateMemberSupervisionForm,
 )
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
+from parcours_doctoral.services.doctorate import DoctorateService
+from parcours_doctoral.services.doctorate import DoctorateSupervisionService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
-from parcours_doctoral.services.doctorate import DoctorateService, DoctorateSupervisionService
-from osis_admission_sdk import ApiException
 
 __all__ = [
-    'DoctorateSupervisionDetailView',
-    'DoctorateRemoveActorView',
-    'DoctorateSetReferencePromoterView',
-    'DoctorateApprovalByPdfView',
-    'DoctorateExternalResendView',
-    'DoctorateEditExternalMemberView',
+    'SupervisionDetailView',
 ]
 __namespace__ = False
 
 
-class DoctorateSupervisionDetailView(LoadViewMixin, WebServiceFormMixin, FormView):
+class SupervisionDetailView(LoadViewMixin, WebServiceFormMixin, FormView):
     urlpatterns = 'supervision'
-    template_name = 'parcours_doctoral/forms/supervision.html'
+    template_name = 'parcours_doctoral/details/supervision.html'
+    permission_link_to_check = 'retrieve_supervision'
     form_class = DoctorateApprovalForm
     rejecting = False
 
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        # TODO prevent to go on specific status ?
-        # If ability to update supervision, redirect on update page
-        if 'url' in self.doctorate.links['request_signatures']:
-            return redirect('parcours_doctoral:update:supervision', **self.kwargs)
-        return self.render_to_response(context)
-
     @cached_property
     def supervision(self):
-        return DoctorateSupervisionService.get_supervision(
+        return DoctorateService.get_supervision(
             person=self.person,
-            uuid=self.doctorate_uuid,
+            uuid_doctorate=self.doctorate_uuid,
         ).to_dict()
 
     def get_context_data(self, **kwargs):
@@ -88,7 +74,7 @@ class DoctorateSupervisionDetailView(LoadViewMixin, WebServiceFormMixin, FormVie
 
     def get_initial(self):
         return {
-            'institut_these': self.doctorate.institut_these,
+            'institut_these': self.doctorate.projet.institut_these,
         }
 
     def get_form_kwargs(self):
@@ -98,7 +84,7 @@ class DoctorateSupervisionDetailView(LoadViewMixin, WebServiceFormMixin, FormVie
             # User is the reference promoter
             self.get_current_member_uuid() == self.supervision['promoteur_reference']
             # institut_these is not yet set
-            and not self.doctorate.institut_these
+            and not self.doctorate.projet.institut_these
         )
         return kwargs
 
@@ -170,9 +156,9 @@ class DoctorateRemoveActorView(LoadViewMixin, WebServiceFormMixin, FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         try:
-            supervision = DoctorateSupervisionService.get_supervision(
+            supervision = DoctorateService.get_supervision(
                 person=self.person,
-                uuid=self.doctorate_uuid,
+                uuid_doctorate=self.doctorate_uuid,
             ).to_dict()
             context['member'] = self.get_member(supervision)
         except (ApiException, AttributeError, KeyError):

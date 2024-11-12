@@ -26,21 +26,25 @@
 from django.utils.functional import cached_property
 from django.utils.translation import gettext as _
 from django.views.generic import FormView
+from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
 
 from parcours_doctoral.contrib.forms.confirmation_paper import ConfirmationPaperForm, PromoterConfirmationPaperForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.doctorate import DoctorateService, ConfirmationPaperBusinessException
 from parcours_doctoral.services.mixins import WebServiceFormMixin
-from osis_admission_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
 
-__all__ = ['DoctorateConfirmationPaperFormView']
+__all__ = ['ConfirmationPaperFormView']
 
 
-class DoctorateConfirmationPaperFormView(LoadViewMixin, WebServiceFormMixin, FormView):
+class ConfirmationPaperFormView(LoadViewMixin, WebServiceFormMixin, FormView):
     urlpatterns = {'confirmation-paper': 'confirmation'}
     error_mapping = {
         ConfirmationPaperBusinessException.EpreuveConfirmationDateIncorrecteException: 'date',
     }
+
+    @property
+    def permission_link_to_check(self):
+        return 'update_confirmation' if self.is_doctorate_student else 'upload_pdf_confirmation'
 
     @cached_property
     def confirmation_paper(self) -> ConfirmationPaperDTO:

@@ -125,8 +125,8 @@ class TrainingActivityFormMixin(LoadViewMixin, WebServiceFormMixin, FormMixin, A
         data['object_type'] = self.get_form_class().object_type
 
         # Get category from edited object or view kwargs
-        from osis_admission_sdk.model.categorie_activite import CategorieActivite
-        from osis_admission_sdk.model.contexte_formation import ContexteFormation as ContexteFormationModel
+        from osis_parcours_doctoral_sdk.model.categorie_activite import CategorieActivite
+        from osis_parcours_doctoral_sdk.model.contexte_formation import ContexteFormation as ContexteFormationModel
 
         data['category'] = CategorieActivite(self.category)
 

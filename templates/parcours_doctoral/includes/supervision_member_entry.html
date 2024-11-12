@@ -79,7 +79,6 @@
       {% trans "Edit" %}
     </button>
   {% endif %}
-
   {% if user.is_authenticated and doctorate|can_make_action:'remove_member' %}
     <a href="{{ remove_url }}" class="btn btn-danger float-end">
       <i class="fas fa-trash-alt"></i>
@@ -112,7 +111,6 @@
     </button>
   {% endif %}
 
-
   {# Action buttons #}
   <div class="panel-group" style="flex-basis: 100%;">
     {% if user.is_authenticated and doctorate|can_make_action:'approve_by_pdf' and signature.statut == 'INVITED' %}
@@ -121,7 +119,7 @@
           <form action="{% url 'parcours_doctoral:approve-by-pdf' pk=doctorate.uuid %}" method="post">
             {% csrf_token %}
             {{ approve_by_pdf_form.pdf }}
-            <input type="hidden" name="uuid_membre" value="{{ member.uuid }}" />
+            <input type="hidden" name="uuid_membre" value="{{ member.uuid }}"/>
             <button type="submit" class="btn btn-primary float-end">
               {% blocktrans with first_name=member.prenom last_name=member.nom trimmed %}
                 Approve on behalf of {{ first_name }} {{ last_name }}
@@ -136,7 +134,7 @@
       {% panel _("Resend invitation") id="resend-invite-"|add:member.uuid additional_class="collapse" %}
         <form action="{% url 'parcours_doctoral:resend-invite' pk=doctorate.uuid uuid=member.uuid %}" method="post">
           {% csrf_token %}
-          <input type="hidden" name="uuid_membre" value="{{ member.uuid }}" />
+          <input type="hidden" name="uuid_membre" value="{{ member.uuid }}"/>
           <button type="submit" class="btn btn-primary float-end">
             {% trans "Confirm" %}
           </button>
@@ -146,7 +144,8 @@
 
     {% if user.is_authenticated and doctorate|can_make_action:'edit_external_member' and member.est_externe %}
       {% url 'parcours_doctoral:edit-external-member' pk=doctorate.uuid uuid=member.uuid as edit_external_member_url %}
-      <form method="post" action="{{ edit_external_member_url }}" id="edit_external_member_form-{{ member.uuid }}" class="collapse">
+      <form method="post" action="{{ edit_external_member_url }}" id="edit_external_member_form-{{ member.uuid }}"
+            class="collapse">
         {% csrf_token %}
         {% edit_external_member_form member as edit_external_member_form %}
         <div class="">
@@ -154,7 +153,7 @@
             <div class="card-body">
               {% bootstrap_form edit_external_member_form %}
               <button type="submit" class="btn btn-primary float-end" name="edit_external_member_form">
-                {% trans "Save" context 'doctorate'  %}
+                {% trans "Save" context 'doctorate' %}
               </button>
             </div>
           </div>
@@ -186,5 +185,5 @@
 {% endif %}
 
 {% if not forloop.last %}
-  <hr />
+  <hr/>
 {% endif %}

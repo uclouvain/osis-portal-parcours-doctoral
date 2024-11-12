@@ -27,18 +27,10 @@
 from django.views.generic import TemplateView
 
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
-from parcours_doctoral.services.doctorate import DoctorateCotutelleService
 
-__all__ = ['DoctorateCotutelleDetailView']
+__all__ = ['CotutelleDetailView']
 
 
-class DoctorateCotutelleDetailView(LoadViewMixin, TemplateView):
+class CotutelleDetailView(LoadViewMixin, TemplateView):
     template_name = 'parcours_doctoral/details/cotutelle.html'
-
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-        context_data['cotutelle'] = DoctorateCotutelleService.get_cotutelle(
-            person=self.request.user.person,
-            uuid=self.doctorate_uuid,
-        ).to_dict()
-        return context_data
+    permission_link_to_check = 'retrieve_cotutelle'

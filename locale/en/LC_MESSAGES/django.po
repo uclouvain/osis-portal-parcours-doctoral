@@ -41,11 +41,6 @@ msgid ""
 "valodoc/confirmation-eligibility-doctoral-programme.html</a>"
 msgstr ""
 
-msgid ""
-"A technical or IT problem? <a href=\"http://uclouvain.be/8282\" "
-"target=\"_blank\">Contact the Service Desk</a>"
-msgstr ""
-
 msgid "ACCEPTEE"
 msgstr "Accepted"
 
@@ -62,7 +57,7 @@ msgctxt "publication-status"
 msgid "Accepted"
 msgstr ""
 
-msgid "Access my PhD students' files"
+msgid "Access my PhD students' applications"
 msgstr ""
 
 msgid "Actions"
@@ -140,9 +135,6 @@ msgstr ""
 msgid "Admission"
 msgstr ""
 
-msgid "Admission type"
-msgstr ""
-
 msgctxt "filters"
 msgid "All"
 msgstr ""
@@ -191,9 +183,6 @@ msgstr ""
 
 msgid "BIOLOGY"
 msgstr "Biology"
-
-msgid "Back to PhDs"
-msgstr ""
 
 msgctxt "doctorate"
 msgid "Back to page"
@@ -253,7 +242,7 @@ msgstr ""
 msgid "China Scholarship Council (CSC)"
 msgstr ""
 
-msgid "Choice of joint supervision is not yet defined"
+msgid "Choice of joint supervision is not yet defined."
 msgstr ""
 
 msgid "City"
@@ -355,9 +344,6 @@ msgstr ""
 msgid "Course units and courses"
 msgstr ""
 
-msgid "Create and manage my UCLouvain application"
-msgstr ""
-
 msgctxt "a doctorate"
 msgid "Created on:"
 msgstr ""
@@ -401,13 +387,6 @@ msgctxt "doctorate decision"
 msgid "Denied"
 msgstr ""
 
-msgid ""
-"Depending on your previous experience and your research project, the PhD "
-"Committee may require you to take additional PhD training, up to a maximum "
-"of 60 credits. If so, please indicate here a proposal for additional "
-"training."
-msgstr ""
-
 msgid "Description"
 msgstr ""
 
@@ -424,9 +403,6 @@ msgid "Development cooperation (ARES)"
 msgstr ""
 
 msgid "Doctor"
-msgstr ""
-
-msgid "Doctorate thesis field"
 msgstr ""
 
 msgid "Does not have a doctor title"
@@ -506,33 +482,6 @@ msgstr ""
 
 msgid "External"
 msgstr ""
-
-msgid ""
-"Extract from the Doctoral Regulations (Article 2.1):<br /> \"Pre-admission "
-"is an optional stage of the doctoral programme. It aims to allow the "
-"candidate to complete the administrative and social formalities that would "
-"require a prior registration for the doctorate. [...] Pre-admission is valid "
-"for a maximum period of 12 months. Recourse to a pre-admission phase must be "
-"justified, the objectives to be achieved planned and the duration of the pre-"
-"admission period fixed in accordance with them. Unless exceptionally "
-"authorised by the CSD, FRIA or FNRS scholarship holders and, in general, "
-"doctoral candidates engaged in a research project that has already been "
-"defined, are not authorised to take a pre-admission phase for a doctorate.\" "
-"<br /> Please also consult the special provisions of the field for all pre-"
-"admission conditions."
-msgstr ""
-"Extract from the Doctoral Regulations (Article 2.1):<br /> « Pre-admission "
-"is an optional stage of the doctoral programme. It aims to allow the "
-"candidate to complete the administrative and social formalities that would "
-"require a prior registration for the doctorate. [...] Pre-admission is valid "
-"for a maximum period of 12 months. Recourse to a pre-admission phase must be "
-"justified, the objectives to be achieved planned and the duration of the pre-"
-"admission period fixed in accordance with them. Unless exceptionally "
-"authorised by the CSD, FRIA or FNRS scholarship holders and, in general, "
-"doctoral candidates engaged in a research project that has already been "
-"defined, are not authorised to take a pre-admission phase for a doctorate. » "
-"<br /> Please also consult the special provisions of the field for all pre-"
-"admission conditions."
 
 msgid "FNRS"
 msgstr ""
@@ -622,11 +571,6 @@ msgid ""
 msgstr ""
 
 msgid ""
-"If known, indicate the name of the laboratory, clinical department or "
-"research centre where the thesis will be carried out"
-msgstr ""
-
-msgid ""
 "If necessary, please finish inputting doctoral activities and complete the "
 "defense preparation below before submitting the jury proposition."
 msgstr ""
@@ -668,11 +612,6 @@ msgid "Incomplete field"
 msgstr ""
 
 msgid ""
-"Indicate any completed or interrupted PhD studies in which you are no longer "
-"enrolled."
-msgstr ""
-
-msgid ""
 "Information about a potential cotutelle are to be inputted in the \"Doctoral "
 "project\" part."
 msgstr ""
@@ -687,9 +626,6 @@ msgid "Institute name"
 msgstr ""
 
 msgid "Institution"
-msgstr ""
-
-msgid "Institution in which the PhD has been realised / started."
 msgstr ""
 
 msgid "Internal"
@@ -796,6 +732,9 @@ msgctxt "gender male"
 msgid "Male"
 msgstr ""
 
+msgid "Manage my PhD"
+msgstr ""
+
 msgid "Management of PhDs"
 msgstr ""
 
@@ -860,9 +799,6 @@ msgid "No activity selected."
 msgstr ""
 
 msgid "No course created at present."
-msgstr ""
-
-msgid "No defense"
 msgstr ""
 
 msgid "No defense reason"
@@ -956,6 +892,12 @@ msgstr ""
 msgid "Partner institution"
 msgstr ""
 
+msgid "Partner institution address"
+msgstr ""
+
+msgid "Partner institution name"
+msgstr ""
+
 msgid "Personal data"
 msgstr ""
 
@@ -1008,6 +950,9 @@ msgid ""
 "for your activities choice."
 msgstr ""
 
+msgid "Please select a member"
+msgstr ""
+
 msgid "Poster"
 msgstr ""
 
@@ -1023,22 +968,13 @@ msgstr ""
 msgid "Previous confirmation exams"
 msgstr ""
 
-msgid "Previous research experience"
-msgstr ""
-
 msgid "Professor"
 msgstr ""
 
 msgid "Project resume"
 msgstr ""
 
-msgid "Project resume (max. 2000 characters)"
-msgstr ""
-
 msgid "Project title"
-msgstr ""
-
-msgid "Project title (max. 100 characters)"
 msgstr ""
 
 msgid "Promoters"
@@ -1132,9 +1068,6 @@ msgstr "Denied"
 msgid "RESIDENCY"
 msgstr "Advanced research residency"
 
-msgid "Reasons for provisional admission."
-msgstr ""
-
 msgid ""
 "Refer to the specific measures of your doctoral commission to know if one of "
 "these method is mandatory to you."
@@ -1214,9 +1147,6 @@ msgstr "Submitted confirmation"
 
 msgctxt "doctorate"
 msgid "Save"
-msgstr ""
-
-msgid "Save and continue"
 msgstr ""
 
 msgid "Scholarship end date"
@@ -1374,17 +1304,10 @@ msgid ""
 "committee."
 msgstr ""
 
-msgid ""
-"The format of the documents to be uploaded below may vary from one CDD to "
-"another. Find out more on your CDD's website or from your doctoral manager."
-msgstr ""
-
 msgid "The start date must be earlier than or the same as the end date."
 msgstr ""
 
-msgid ""
-"The summary of the proposal in PDF format is being generated. Please come "
-"back later to access it."
+msgid "The summary of the proposal in PDF format cannot be found."
 msgstr ""
 
 msgid "There is no request for a new deadline."
@@ -1444,6 +1367,9 @@ msgid ""
 msgstr ""
 "To be uploaded if you have a F.R.S.-FNRS (including Télévie), FRIA or FRESH "
 "grant. The canvas for this opinion is provided by your research fund."
+
+msgid "Toggle navigation"
+msgstr ""
 
 msgid "Total hourly volume"
 msgstr ""
@@ -1512,10 +1438,6 @@ msgstr ""
 msgid ""
 "Would you like to carry out your thesis under joint supervision with another "
 "institution?"
-msgstr ""
-
-msgid ""
-"Write your resume in the language decided with your accompanying committee."
 msgstr ""
 
 msgid "YES"

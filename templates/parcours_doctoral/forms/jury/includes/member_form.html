@@ -65,7 +65,7 @@
   </div>
 
   <div class="text-center">
-    {% if cancel %}<a class="btn btn-light border border-dark-subtle" href="{% url 'parcours_doctoral:jury' jury.uuid %}">{% trans 'Cancel' %}</a>{% endif %}
+    {% if cancel %}<a class="btn btn-light border border-dark-subtle" href="{% url 'parcours_doctoral:update:jury' jury.uuid %}">{% trans 'Cancel' %}</a>{% endif %}
     <button class="btn btn-primary" type="submit">
       <span class="fa-solid fa-floppy-disk" aria-hidden="true"></span>
       {{ submit_label|default:_('Add') }}

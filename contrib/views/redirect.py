@@ -23,21 +23,27 @@
 #    see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
-from parcours_doctoral.templatetags.parcours_doctoral import can_make_action
+from parcours_doctoral.services.doctorate import DoctorateService
+from parcours_doctoral.templatetags.parcours_doctoral import can_make_action, TAB_TREE
 
-__all__ = ['DoctorateRedirectView']
+__all__ = [
+    'RedirectView',
+    'RedirectDetailView',
+]
 
 __namespace__ = False
 
 
-class DoctorateRedirectView(LoadViewMixin, RedirectView):
+class RedirectDetailView(LoadViewMixin, RedirectView):
     urlpatterns = {
-        'base': '<uuid:pk>/',
+        'redirect_detail': '<uuid:pk>/',
     }
 
     def get_redirect_url(self, *args, **kwargs):
@@ -55,3 +61,25 @@ class DoctorateRedirectView(LoadViewMixin, RedirectView):
             pass
 
         return reverse('parcours_doctoral:list')
+
+
+class RedirectView(LoginRequiredMixin, TemplateView):
+    urlpatterns = {'redirect': ''}
+    template_name = 'parcours_doctoral/doctorate_list.html'
+
+    def get(self, request, *args, **kwargs):
+        doctorates = DoctorateService().get_doctorates(request.user.person)
+
+        # If there is only one doctorate, redirect to the related project page
+        if len(doctorates) == 1:
+            current_doctorate = doctorates[0]
+            if can_make_action(current_doctorate, 'retrieve_project'):
+                return redirect('parcours_doctoral:project', pk=current_doctorate.uuid)
+
+        # else, display the list
+        context = self.get_context_data(**kwargs)
+
+        context['doctorates'] = doctorates
+        context['doctorate_tab_tree'] = TAB_TREE
+
+        return self.render_to_response(context)

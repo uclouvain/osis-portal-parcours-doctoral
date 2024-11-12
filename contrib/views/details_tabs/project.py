@@ -24,30 +24,13 @@
 #
 # ##############################################################################
 
-from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
-from parcours_doctoral.constants import PROPOSITION_JUST_SUBMITTED
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 
-__all__ = ['DoctorateProjectDetailView']
+__all__ = ['ProjectDetailView']
 
 
-class DoctorateProjectDetailView(LoadViewMixin, TemplateView):
+class ProjectDetailView(LoadViewMixin, TemplateView):
     template_name = 'parcours_doctoral/details/project.html'
-
-    def get_context_data(self, **kwargs):
-        context_data = super().get_context_data(**kwargs)
-
-        # There is a bug with translated strings with percent signs
-        # https://docs.djangoproject.com/en/3.2/topics/i18n/translation/#troubleshooting-gettext-incorrectly-detects-python-format-in-strings-with-percent-signs
-        # xgettext:no-python-format
-        context_data['fte_label'] = _("Full-time equivalent (as %)")
-        # xgettext:no-python-format
-        context_data['allocated_time_label'] = _("Time allocated for thesis (in %)")
-
-        if PROPOSITION_JUST_SUBMITTED in self.request.session:
-            del self.request.session[PROPOSITION_JUST_SUBMITTED]
-            context_data['just_submitted'] = True
-
-        return context_data
+    permission_link_to_check = 'retrieve_project'

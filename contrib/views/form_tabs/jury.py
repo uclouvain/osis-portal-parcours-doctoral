@@ -23,25 +23,28 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from django.core.exceptions import PermissionDenied
+from django.utils.translation import gettext_lazy
 from django.views.generic import FormView
 
+from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
 from parcours_doctoral.contrib.forms.jury.preparation import JuryPreparationForm
-from parcours_doctoral.contrib.views.details_tabs.jury import LoadJuryViewMixin
+from parcours_doctoral.contrib.views.details_tabs.jury import LoadJuryViewMixin, JuryDetailView
+from parcours_doctoral.services.doctorate import DoctorateJuryService, JuryBusinessException
 from parcours_doctoral.services.mixins import WebServiceFormMixin
-from parcours_doctoral.services.doctorate import DoctorateJuryService
 
-
-__all__ = [
-    'DoctorateJuryFormView',
-]
 __namespace__ = False
 
+__all__ = [
+    'JuryPreparationFormView',
+    'JuryFormView',
+]
 
-class DoctorateJuryFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
+
+class JuryPreparationFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
     urlpatterns = 'jury-preparation'
     template_name = 'parcours_doctoral/forms/jury/preparation.html'
     form_class = JuryPreparationForm
+    permission_link_to_check = 'update_jury_preparation'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -65,8 +68,30 @@ class DoctorateJuryFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
             **data,
         )
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if 'url' not in context['doctorate'].links['update_jury_preparation']:
-            raise PermissionDenied(context['doctorate'].links['update_jury_preparation']['error'])
-        return context
+
+class JuryFormView(JuryDetailView, WebServiceFormMixin, FormView):
+    form_class = JuryMembreForm
+    error_mapping = {
+        JuryBusinessException.NonDocteurSansJustificationException: "justification_non_docteur",
+        JuryBusinessException.MembreExterneSansInstitutionException: "institution",
+        JuryBusinessException.MembreExterneSansPaysException: "pays",
+        JuryBusinessException.MembreExterneSansNomException: "nom",
+        JuryBusinessException.MembreExterneSansPrenomException: "prenom",
+        JuryBusinessException.MembreExterneSansTitreException: "titre",
+        JuryBusinessException.MembreExterneSansGenreException: "genre",
+        JuryBusinessException.MembreExterneSansEmailException: "email",
+        JuryBusinessException.MembreDejaDansJuryException: "matricule",
+    }
+    extra_context = {'submit_label': gettext_lazy('Add')}
+    permission_link_to_check = 'create_jury_members'
+
+    def call_webservice(self, data):
+        return DoctorateJuryService.create_jury_member(
+            person=self.person,
+            uuid=self.doctorate_uuid,
+            **data,
+        )
+
+    @property
+    def success_url(self):
+        return self.request.path

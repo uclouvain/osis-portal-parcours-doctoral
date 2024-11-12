@@ -30,15 +30,13 @@ from unittest.mock import ANY, Mock, patch
 
 from django.test import TestCase
 from django.urls import reverse
-from osis_organisation_sdk.model.address import Address
 from osis_organisation_sdk.model.entite import Entite
 from osis_organisation_sdk.model.paginated_entites import PaginatedEntites
+from osis_parcours_doctoral_sdk.model.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
-from osis_admission_sdk.model.doctorat_dto import DoctoratDTO
-from osis_admission_sdk.model.scholarship import Scholarship
 from parcours_doctoral.contrib.enums.scholarship import TypeBourse
-from parcours_doctoral.tests.utils import MockCity, MockCountry, MockLanguage
+from parcours_doctoral.tests.utils import MockCountry, MockLanguage
 
 DEFAULT_API_PARAMS = {
     'accept_language': ANY,
@@ -52,38 +50,6 @@ DEFAULT_API_PARAMS = {
 class AutocompleteTestCase(TestCase):
     def setUp(self):
         self.client.force_login(PersonFactory().user)
-
-    @patch('osis_admission_sdk.api.autocomplete_api.AutocompleteApi')
-    def test_autocomplete_doctorate(self, api):
-        api.return_value.list_doctorat_dtos.return_value = [
-            DoctoratDTO(
-                sigle='FOOBAR',
-                intitule='Foobar',
-                annee=2021,
-                sigle_entite_gestion="CDE",
-                campus="Louvain-La-Neuve",
-                type='PHD',
-                campus_inscription='Mons',
-                code='CODE',
-            ),
-        ]
-        url = reverse('parcours_doctoral:autocomplete:doctorate')
-        response = self.client.get(url, {'forward': json.dumps({'sector': 'SSH'}), 'q': 'foo'})
-        results = [
-            {
-                'id': 'FOOBAR-2021',
-                'sigle': 'FOOBAR',
-                'sigle_entite_gestion': 'CDE',
-                'text': 'Foobar (Louvain-La-Neuve) <span class="training-acronym">FOOBAR</span>',
-            }
-        ]
-        self.assertDictEqual(response.json(), {'results': results})
-        api.return_value.list_doctorat_dtos.assert_called_with(
-            acronym_or_name='foo',
-            sigle='SSH',
-            campus='',
-            **DEFAULT_API_PARAMS,
-        )
 
     @patch('osis_reference_sdk.api.countries_api.CountriesApi')
     def test_autocomplete_country(self, api):
@@ -186,51 +152,7 @@ class AutocompleteTestCase(TestCase):
         self.assertDictEqual(response.json(), {'pagination': {'more': False}, 'results': expected})
         self.assertEqual(api.return_value.languages_list.call_args[1]['search'], 'F')
 
-    @patch('osis_reference_sdk.api.cities_api.CitiesApi')
-    def test_autocomplete_city(self, api):
-        api.return_value.cities_list.return_value = Mock(
-            results=[
-                MockCity(name='Pintintin-les-Creumeuil'),
-                MockCity(name='Montreuil-les-Sardouille'),
-            ]
-        )
-        url = reverse('parcours_doctoral:autocomplete:city')
-        response = self.client.get(url, {'forward': json.dumps({'postal_code': '1111'}), 'q': ''})
-        expected = [
-            {
-                'id': 'Pintintin-les-Creumeuil',
-                'text': 'Pintintin-les-Creumeuil',
-            },
-            {
-                'id': 'Montreuil-les-Sardouille',
-                'text': 'Montreuil-les-Sardouille',
-            },
-        ]
-        self.assertDictEqual(response.json(), {'results': expected})
-        self.assertEqual(api.return_value.cities_list.call_args[1]['zip_code'], '1111')
-
-        api.return_value.cities_list.return_value = Mock(
-            results=[
-                MockCity(name='Montreuil-les-Sardouille'),
-            ]
-        )
-        response = self.client.get(url, {'forward': json.dumps({'postal_code': '1111'}), 'q': 'Mont'})
-        expected = [
-            {
-                'id': 'Montreuil-les-Sardouille',
-                'text': 'Montreuil-les-Sardouille',
-            },
-        ]
-        self.assertDictEqual(response.json(), {'results': expected})
-        self.assertEqual(api.return_value.cities_list.call_args[1]['zip_code'], '1111')
-        self.assertEqual(api.return_value.cities_list.call_args[1]['search'], 'Mont')
-
-        # Without the postal code
-        response = self.client.get(url, {'forward': json.dumps({'postal_code': ''}), 'q': 'Mont'})
-        self.assertDictEqual(response.json(), {'results': expected})
-        self.assertEqual(api.return_value.cities_list.call_args[1]['search'], 'Mont')
-
-    @patch('osis_admission_sdk.api.autocomplete_api.AutocompleteApi')
+    @patch('osis_parcours_doctoral_sdk.api.autocomplete_api.AutocompleteApi')
     def test_autocomplete_tutors(self, api):
         api.return_value.list_tutors.return_value = {
             'results': [
@@ -252,7 +174,7 @@ class AutocompleteTestCase(TestCase):
         ]
         self.assertDictEqual(response.json(), {'pagination': {'more': False}, 'results': expected})
 
-    @patch('osis_admission_sdk.api.autocomplete_api.AutocompleteApi')
+    @patch('osis_parcours_doctoral_sdk.api.autocomplete_api.AutocompleteApi')
     def test_autocomplete_persons(self, api):
         api.return_value.list_people.return_value = {
             'results': [
@@ -309,51 +231,6 @@ class AutocompleteTestCase(TestCase):
         ]
         self.assertDictEqual(response.json(), {'pagination': {'more': False}, 'results': expected})
 
-    @patch('osis_organisation_sdk.api.entites_api.EntitesApi')
-    def test_autocomplete_institute_location(self, api):
-        mock_locations = [
-            Address(
-                state='Belgique',
-                street='Place de l\'université',
-                street_number='1',
-                postal_code='1348',
-                city='Ottignies-Louvain-la-Neuve',
-                country_iso_code='BE',
-                is_main=True,
-            ),
-            Address(
-                state='Belgique',
-                street='Avenue E. Mounier',
-                street_number='81',
-                postal_code='1200',
-                city='Woluwe-Saint-Lambert',
-                country_iso_code='BE',
-                is_main=True,
-            ),
-        ]
-        # TODO This will become (again) paginated later
-        # api.return_value.get_entity_addresses.return_value = PaginatedAddresses(
-        #     results=mock_locations,
-        #     next=None,
-        # )
-        api.return_value.get_entity_addresses.return_value = mock_locations[0]
-        url = reverse('parcours_doctoral:autocomplete:institute-location')
-
-        response = self.client.get(url, {'forward': json.dumps({'institut_these': ''})}, {'uuid': 'uuid1'})
-        self.assertDictEqual(response.json(), {'results': []})
-
-        response = self.client.get(url, {'forward': json.dumps({'institut_these': 'IFL'})}, {'uuid': 'uuid1'})
-        expected = [
-            {
-                'id': 'Place de l\'université 1, 1348 Ottignies-Louvain-la-Neuve, Belgique',
-                'text': 'Place de l\'université 1, 1348 Ottignies-Louvain-la-Neuve, Belgique',
-                # }, {
-                #     'id': 'Avenue E. Mounier 81, 1200 Woluwe-Saint-Lambert, Belgique',
-                #     'text': 'Avenue E. Mounier 81, 1200 Woluwe-Saint-Lambert, Belgique',
-            },
-        ]
-        self.assertDictEqual(response.json(), {'results': expected})
-
     @patch('osis_learning_unit_sdk.api.learning_units_api.LearningUnitsApi')
     def test_autocomplete_learning_unit_year(self, api):
         api.return_value.learningunits_list.return_value = {
@@ -370,7 +247,7 @@ class AutocompleteTestCase(TestCase):
         ]
         self.assertDictEqual(response.json(), {'pagination': {'more': False}, 'results': expected})
 
-    @patch('osis_admission_sdk.api.autocomplete_api.AutocompleteApi')
+    @patch('osis_parcours_doctoral_sdk.api.autocomplete_api.AutocompleteApi')
     def test_autocomplete_scholarship(self, api):
         first_scholarship_uuid = str(uuid.uuid4())
         second_scholarship_uuid = str(uuid.uuid4())

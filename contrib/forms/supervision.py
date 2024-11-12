@@ -39,7 +39,6 @@ from parcours_doctoral.contrib.forms import (
 )
 
 ACTOR_EXTERNAL = "EXTERNAL"
-
 EXTERNAL_FIELDS = [
     'prenom',
     'nom',
