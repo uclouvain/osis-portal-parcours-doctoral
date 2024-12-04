@@ -62,7 +62,7 @@
           {{ activity.committee|enum_display:'ChoixComiteSelection' }}
         </p>
       {% endif %}
-      {% if activity.summary or True %}
+      {% if activity.summary %}
         <div class="mb-3">
           <strong class="d-block">{% trans "Summary" context "paper summary" %}</strong>
           {% document_visualizer activity.summary %}
