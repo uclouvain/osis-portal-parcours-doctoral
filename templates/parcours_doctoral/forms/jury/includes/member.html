@@ -36,7 +36,7 @@
     {% csrf_token %}
     <input type="hidden" name="role">
   </form>
-  <ul class="dropdown-menu dropdown-menu-right">
+  <ul class="dropdown-menu dropdown-menu-end">
     {% if not membre.est_promoteur and not membre.role == 'PRESIDENT' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="PRESIDENT">{% trans "Set as president" %}</a></li>{% endif %}
     {% if not membre.role == 'SECRETAIRE' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="SECRETAIRE">{% trans "Set as secretary" %}</a></li>{% endif %}
     {% if not membre.role == 'MEMBRE' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="MEMBRE">{% trans "Set as member" %}</a></li>{% endif %}
