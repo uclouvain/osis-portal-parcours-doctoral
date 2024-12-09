@@ -425,6 +425,9 @@ msgstr "N'est pas porteur du titre de docteur"
 msgid "Download as PDF"
 msgstr "Télécharger en tant que PDF"
 
+msgid "Download the request to modify the supervisory panel"
+msgstr "Télécharger la demande de modification du comité d'accompagnement"
+
 msgid "Dr"
 msgstr "Dr."
 
@@ -804,6 +807,9 @@ msgid ""
 msgstr ""
 "Formule 2 (La défense et la soutenance sont organisées le même jour, et "
 "soumises à une condition de recevabilité)"
+
+msgid "Modification of the supervisory panel"
+msgstr "Modification du comité d'accompagnement"
 
 msgctxt "edit"
 msgid "Modify"

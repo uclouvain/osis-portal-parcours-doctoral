@@ -174,6 +174,7 @@ class BaseDoctorateTestCase(TestCase):
                         'retrieve_funding',
                         'update_funding',
                         'retrieve_supervision',
+                        'retrieve_supervision_canvas',
                         'retrieve_confirmation',
                         'update_confirmation',
                         'update_confirmation_extension',
