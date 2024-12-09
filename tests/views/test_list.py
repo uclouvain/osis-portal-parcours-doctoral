@@ -41,7 +41,7 @@ class ListTestCase(TestCase):
             Mock(
                 uuid='3c5cdc60-2537-4a12-a396-64d2e9e34876',
                 links={'retrieve_project': {'url': 'access granted'}},
-                statut=ChoixStatutDoctorat.ADMITTED.name,
+                statut=ChoixStatutDoctorat.ADMIS.name,
                 erreurs=[],
                 doctorat=Mock(
                     type='PHD',
@@ -51,7 +51,7 @@ class ListTestCase(TestCase):
                 uuid='b3729603-c991-489f-8d8d-1d3a11b64dad',
                 links={},
                 erreurs=[],
-                statut=ChoixStatutDoctorat.ADMITTED.name,
+                statut=ChoixStatutDoctorat.ADMIS.name,
                 doctorat=Mock(
                     type='PHD',
                 ),

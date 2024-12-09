@@ -44,10 +44,7 @@ msgstr ""
 msgid "ACCEPTEE"
 msgstr "Accepted"
 
-msgid "ADMISSION_IN_PROGRESS"
-msgstr "Admission in progress"
-
-msgid "ADMITTED"
+msgid "ADMIS"
 msgstr "Admitted"
 
 msgid "Academic year"
@@ -212,11 +209,17 @@ msgstr "Further training"
 msgid "CONFERENCE"
 msgstr "Conferences, symposiums"
 
+msgid "CONFIRMATION_A_REPRESENTER"
+msgstr "Repeat confirmation exam"
+
 msgid "CONFIRMATION_PAPER"
 msgstr "Confirmation exam"
 
-msgid "CONFIRMATION_TO_BE_REPEATED"
-msgstr "Repeat confirmation exam"
+msgid "CONFIRMATION_REUSSIE"
+msgstr "Passed confirmation exam"
+
+msgid "CONFIRMATION_SOUMISE"
+msgstr "Submitted confirmation"
 
 msgid "COURSE"
 msgstr "Course units, courses and schools"
@@ -435,6 +438,15 @@ msgstr ""
 
 msgid "ECTS for the participation"
 msgstr ""
+
+msgid "EN_ATTENTE_DE_SIGNATURE"
+msgstr "Waiting for signature"
+
+msgid "EN_ATTENTE_INJECTION_EPC"
+msgstr "Waiting for EPC injection"
+
+msgid "EN_COURS_DE_CREATION_PAR_GESTIONNAIRE"
+msgstr "Being created by a manager"
 
 msgid "Edit"
 msgstr ""
@@ -771,11 +783,11 @@ msgstr ""
 msgid "NO"
 msgstr "No"
 
+msgid "NON_AUTORISE_A_POURSUIVRE"
+msgstr "Not allowed to continue"
+
 msgid "NON_SOUMISE"
 msgstr ""
-
-msgid "NOT_ALLOWED_TO_CONTINUE"
-msgstr "Not allowed to continue"
 
 msgid "NOT_INVITED"
 msgstr "Not invited to sign"
@@ -858,9 +870,6 @@ msgstr "Paper"
 
 msgid "PARTIAL"
 msgstr "Partially"
-
-msgid "PASSED_CONFIRMATION"
-msgstr "Passed confirmation exam"
 
 msgid "PDF file"
 msgstr ""
@@ -1141,9 +1150,6 @@ msgstr "Submitted"
 
 msgid "STATISTICS"
 msgstr "Statistics"
-
-msgid "SUBMITTED_CONFIRMATION"
-msgstr "Submitted confirmation"
 
 msgctxt "doctorate"
 msgid "Save"

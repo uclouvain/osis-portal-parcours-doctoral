@@ -50,10 +50,7 @@ msgstr ""
 msgid "ACCEPTEE"
 msgstr "Acceptée"
 
-msgid "ADMISSION_IN_PROGRESS"
-msgstr "Admission en cours"
-
-msgid "ADMITTED"
+msgid "ADMIS"
 msgstr "Admis"
 
 msgid "Academic year"
@@ -220,11 +217,17 @@ msgstr "Formation complémentaire"
 msgid "CONFERENCE"
 msgstr "Conférences, colloques"
 
+msgid "CONFIRMATION_A_REPRESENTER"
+msgstr "Confirmation à représenter"
+
 msgid "CONFIRMATION_PAPER"
 msgstr "Épreuve de confirmation"
 
-msgid "CONFIRMATION_TO_BE_REPEATED"
-msgstr "Confirmation à représenter"
+msgid "CONFIRMATION_REUSSIE"
+msgstr "Épreuve de confirmation réussie"
+
+msgid "CONFIRMATION_SOUMISE"
+msgstr "Confirmation soumise"
 
 msgid "COURSE"
 msgstr "Cours, formation et écoles"
@@ -446,6 +449,15 @@ msgstr "ECTS pour la participation"
 
 msgid "ECTS for the participation"
 msgstr "ECTS pour la participation"
+
+msgid "EN_ATTENTE_DE_SIGNATURE"
+msgstr "En attente de signature"
+
+msgid "EN_ATTENTE_INJECTION_EPC"
+msgstr "En attente d'injection EPC"
+
+msgid "EN_COURS_DE_CREATION_PAR_GESTIONNAIRE"
+msgstr "En cours de création par un gestionnaire"
 
 msgid "Edit"
 msgstr "Modifier"
@@ -810,11 +822,11 @@ msgstr "Sans objet"
 msgid "NO"
 msgstr "Non"
 
+msgid "NON_AUTORISE_A_POURSUIVRE"
+msgstr "Non autorisé à poursuivre"
+
 msgid "NON_SOUMISE"
 msgstr "Non soumise"
-
-msgid "NOT_ALLOWED_TO_CONTINUE"
-msgstr "Non autorisé à poursuivre"
 
 msgid "NOT_INVITED"
 msgstr "Pas encore invité à signer"
@@ -901,9 +913,6 @@ msgstr "Épreuve"
 
 msgid "PARTIAL"
 msgstr "En partie"
-
-msgid "PASSED_CONFIRMATION"
-msgstr "Épreuve de confirmation réussie"
 
 msgid "PDF file"
 msgstr "Fichier PDF"
@@ -1197,9 +1206,6 @@ msgstr "Soumise"
 
 msgid "STATISTICS"
 msgstr "Statistiques"
-
-msgid "SUBMITTED_CONFIRMATION"
-msgstr "Confirmation soumise"
 
 msgctxt "doctorate"
 msgid "Save"
