@@ -414,6 +414,9 @@ msgstr ""
 msgid "Download as PDF"
 msgstr ""
 
+msgid "Download the request to modify the supervisory panel"
+msgstr ""
+
 msgid "Dr"
 msgstr ""
 
@@ -764,6 +767,9 @@ msgstr ""
 msgid ""
 "Method 2 (The private defense and the public defense are organised the same "
 "day, and subjected to an admissibility condition)"
+msgstr ""
+
+msgid "Modification of the supervisory panel"
 msgstr ""
 
 msgctxt "edit"

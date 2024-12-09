@@ -32,12 +32,19 @@ from django.conf import settings
 from django.utils.translation import get_language
 from osis_parcours_doctoral_sdk import ApiException
 from osis_parcours_doctoral_sdk.api import doctorate_api
-from osis_parcours_doctoral_sdk.model.confirmation_paper_canvas import ConfirmationPaperCanvas
+from osis_parcours_doctoral_sdk.model.confirmation_paper_canvas import (
+    ConfirmationPaperCanvas,
+)
 from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
 from osis_parcours_doctoral_sdk.model.jury_identity_dto import JuryIdentityDTO
-from osis_parcours_doctoral_sdk.model.membre_jury_identity_dto import MembreJuryIdentityDTO
+from osis_parcours_doctoral_sdk.model.membre_jury_identity_dto import (
+    MembreJuryIdentityDTO,
+)
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_identity_dto import ParcoursDoctoralIdentityDTO
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_identity_dto import (
+    ParcoursDoctoralIdentityDTO,
+)
+from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
 from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
 
 from base.models.person import Person
@@ -104,6 +111,13 @@ class DoctorateService(metaclass=ServiceMeta):
     @classmethod
     def get_supervision(cls, person, uuid_doctorate) -> SupervisionDTO:
         return DoctorateAPIClient().retrieve_supervision(
+            uuid=uuid_doctorate,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_supervision_canvas(cls, person, uuid_doctorate) -> SupervisionCanvas:
+        return DoctorateAPIClient().retrieve_supervision_canvas(
             uuid=uuid_doctorate,
             **build_mandatory_auth_headers(person),
         )
