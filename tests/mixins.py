@@ -24,19 +24,27 @@
 #
 # ##############################################################################
 import datetime
-from unittest.mock import patch, MagicMock, ANY
+from unittest.mock import ANY, MagicMock, patch
 from uuid import uuid4
 
 from django.test import TestCase, override_settings
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_cotutelle import ParcoursDoctoralDTOCotutelle
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_financement import ParcoursDoctoralDTOFinancement
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_cotutelle import (
+    ParcoursDoctoralDTOCotutelle,
+)
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_financement import (
+    ParcoursDoctoralDTOFinancement,
+)
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_financement_bourse_recherche import (
     ParcoursDoctoralDTOFinancementBourseRecherche,
 )
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import ParcoursDoctoralDTOLinks
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_projet import ParcoursDoctoralDTOProjet
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import (
+    ParcoursDoctoralDTOLinks,
+)
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_projet import (
+    ParcoursDoctoralDTOProjet,
+)
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_recherche_dto_formation import (
     ParcoursDoctoralRechercheDTOFormation,
 )
@@ -51,7 +59,10 @@ from osis_reference_sdk.model.language import Language
 
 from base.tests.factories.person import PersonFactory
 from parcours_doctoral.contrib.enums import ChoixStatutDoctorat
-from parcours_doctoral.contrib.enums.financement import ChoixTypeContratTravail, ChoixTypeFinancement
+from parcours_doctoral.contrib.enums.financement import (
+    ChoixTypeContratTravail,
+    ChoixTypeFinancement,
+)
 from parcours_doctoral.contrib.enums.proximity_commission import (
     ChoixCommissionProximiteCDSS,
 )
@@ -163,6 +174,7 @@ class BaseDoctorateTestCase(TestCase):
                         'retrieve_funding',
                         'update_funding',
                         'retrieve_supervision',
+                        'retrieve_supervision_canvas',
                         'retrieve_confirmation',
                         'update_confirmation',
                         'update_confirmation_extension',
