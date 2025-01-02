@@ -58,7 +58,10 @@ from parcours_doctoral.contrib.enums.proximity_commission import (
 from parcours_doctoral.contrib.forms import PDF_MIME_TYPE
 
 
-@override_settings(OSIS_DOCUMENT_BASE_URL='http://dummyurl.com/document/')
+@override_settings(
+    OSIS_DOCUMENT_BASE_URL='http://dummyurl.com/document/',
+    PARCOURS_DOCTORAL_TOKEN_EXTERNAL='api-token-external',
+)
 class BaseDoctorateTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):

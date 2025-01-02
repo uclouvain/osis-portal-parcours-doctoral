@@ -1452,7 +1452,7 @@ msgstr ""
 "votre fonds de recherche."
 
 msgid "Toggle navigation"
-msgstr ""
+msgstr "Afficher ou non la navigation"
 
 msgid "Total hourly volume"
 msgstr "Volume horaire total"
