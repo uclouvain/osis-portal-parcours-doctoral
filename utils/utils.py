@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -28,8 +28,8 @@ from typing import Union
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
 from osis_organisation_sdk.model.entite import Entite
-from osis_parcours_doctoral_sdk.model.scholarship import Scholarship
 from osis_reference_sdk.model.high_school import HighSchool
+from osis_reference_sdk.model.scholarship import Scholarship
 from osis_reference_sdk.model.superior_non_university import SuperiorNonUniversity
 from osis_reference_sdk.model.university import University
 
