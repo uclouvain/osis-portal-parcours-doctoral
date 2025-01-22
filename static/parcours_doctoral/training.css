@@ -74,15 +74,25 @@
 }
 
 .card-header .card-title > a:after {
-    font-family: 'Font Awesome 5 Pro';
+    font-family: 'Font Awesome 6 Pro';
     font-weight: 900;
     content: "\f078";
+    font-size: 1.5em;
+    color: #337ab7;
 }
 
 .card-header .card-title > a.collapsed:after {
     content: "\f054";
 }
 
+.subpanel {
+    margin-bottom: 0;
+}
+
 .subpanel > * {
     padding-left: 3em;
+}
+
+label.input-group-text {
+    margin-bottom: 0;
 }
