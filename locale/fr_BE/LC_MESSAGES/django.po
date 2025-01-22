@@ -868,7 +868,7 @@ msgid ""
 "No later than 24 months after the CDD grants PhD admission, the candidate "
 "must take a confirmation exam."
 msgstr ""
-"Dans un délai maximum de 24 mois à compter de la date d'admission au "
+"Dans un délai de maximum 24 mois à compter de la date d'admission au "
 "doctorat par la CDD, le ou la candidate présente une épreuve de confirmation."
 
 msgid "No one invited"
