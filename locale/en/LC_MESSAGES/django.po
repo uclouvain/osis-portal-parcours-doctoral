@@ -344,7 +344,7 @@ msgstr ""
 msgid "Course units"
 msgstr ""
 
-msgid "Course units and courses"
+msgid "Courses and trainings"
 msgstr ""
 
 msgctxt "a doctorate"
@@ -904,6 +904,9 @@ msgstr ""
 msgid "Participation certification"
 msgstr ""
 
+msgid "Participations"
+msgstr ""
+
 msgid "Partner institution"
 msgstr ""
 
@@ -1059,9 +1062,6 @@ msgstr ""
 msgid "Proximity commission for public health, health and society (SPSS)"
 msgstr ""
 
-msgid "Publication"
-msgstr ""
-
 msgid "Publication date"
 msgstr ""
 
@@ -1072,6 +1072,9 @@ msgid "Publication title"
 msgstr ""
 
 msgid "Publication type"
+msgstr ""
+
+msgid "Publications"
 msgstr ""
 
 msgid "Published"
@@ -1170,7 +1173,7 @@ msgstr ""
 msgid "Scholarship start date"
 msgstr ""
 
-msgid "Scientific communication"
+msgid "Scientific communications"
 msgstr ""
 
 msgid "Scientific residencies"
@@ -1381,6 +1384,9 @@ msgstr ""
 "grant. The canvas for this opinion is provided by your research fund."
 
 msgid "Toggle navigation"
+msgstr ""
+
+msgid "Total"
 msgstr ""
 
 msgid "Total hourly volume"

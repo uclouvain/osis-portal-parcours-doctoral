@@ -355,7 +355,7 @@ msgstr "Cours avec évaluation"
 msgid "Course units"
 msgstr "Cours"
 
-msgid "Course units and courses"
+msgid "Courses and trainings"
 msgstr "Cours et formation"
 
 msgctxt "a doctorate"
@@ -947,6 +947,9 @@ msgstr "Participation"
 msgid "Participation certification"
 msgstr "Certificat de participation"
 
+msgid "Participations"
+msgstr "Participations"
+
 msgid "Partner institution"
 msgstr "Institution partenaire"
 
@@ -1113,9 +1116,6 @@ msgstr "Commission de proximité de recherche expérimentale et clinique (ECLI)"
 msgid "Proximity commission for public health, health and society (SPSS)"
 msgstr "Commission de proximité de santé publique, santé et société (SPSS)"
 
-msgid "Publication"
-msgstr "Publication"
-
 msgid "Publication date"
 msgstr "Date de publication"
 
@@ -1127,6 +1127,9 @@ msgstr "Intitulé de la publication"
 
 msgid "Publication type"
 msgstr "Type de publication"
+
+msgid "Publications"
+msgstr "Publications"
 
 msgid "Published"
 msgstr "Publié"
@@ -1226,7 +1229,7 @@ msgstr "Date de fin de la bourse avant tout renouvellement éventuel."
 msgid "Scholarship start date"
 msgstr "Date de démarrage de la bourse"
 
-msgid "Scientific communication"
+msgid "Scientific communications"
 msgstr "Communication scientifique"
 
 msgid "Scientific residencies"
@@ -1465,6 +1468,9 @@ msgstr ""
 
 msgid "Toggle navigation"
 msgstr "Afficher ou non la navigation"
+
+msgid "Total"
+msgstr "Total"
 
 msgid "Total hourly volume"
 msgstr "Volume horaire total"
