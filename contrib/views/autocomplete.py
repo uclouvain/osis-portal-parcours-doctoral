@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -30,9 +30,10 @@ from dal import autocomplete
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from django.utils.translation import get_language, gettext_lazy as _
+from django.utils.translation import get_language
+from django.utils.translation import gettext_lazy as _
 from osis_organisation_sdk.model.entite_type_enum import EntiteTypeEnum
-from osis_parcours_doctoral_sdk.model.scholarship import Scholarship
+from osis_reference_sdk.model.scholarship import Scholarship
 from osis_reference_sdk.model.university import University
 
 from base.models.enums.entity_type import INSTITUTE
@@ -43,8 +44,8 @@ from parcours_doctoral.services.organisation import EntitiesService
 from parcours_doctoral.services.reference import (
     CountriesService,
     LanguageService,
-    UniversityService,
     SuperiorNonUniversityService,
+    UniversityService,
 )
 from parcours_doctoral.utils import (
     format_entity_title,
