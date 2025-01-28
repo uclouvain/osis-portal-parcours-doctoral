@@ -24,6 +24,7 @@
 #
 # ##############################################################################
 import datetime
+import uuid
 from unittest.mock import ANY, MagicMock, patch
 from uuid import uuid4
 
@@ -54,11 +55,11 @@ from osis_parcours_doctoral_sdk.model.parcours_doctoral_recherche_dto_formation_
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_recherche_dto_formation_entite_gestion import (
     ParcoursDoctoralRechercheDTOFormationEntiteGestion,
 )
-from osis_parcours_doctoral_sdk.model.scholarship import Scholarship
+from osis_reference_sdk.model.scholarship import Scholarship
 from osis_reference_sdk.model.language import Language
 
 from base.tests.factories.person import PersonFactory
-from parcours_doctoral.contrib.enums import ChoixStatutDoctorat
+from parcours_doctoral.contrib.enums import ChoixStatutDoctorat, TypeBourse
 from parcours_doctoral.contrib.enums.financement import (
     ChoixTypeContratTravail,
     ChoixTypeFinancement,
@@ -99,6 +100,8 @@ class BaseDoctorateTestCase(TestCase):
             statut=ChoixStatutDoctorat.ADMIS.name,
             date_changement_statut=datetime.datetime(2024, 1, 3),
             cree_le=datetime.datetime(2024, 1, 1),
+            uuid_admission=str(uuid.uuid4()),
+            intitule_secteur_formation='First sector',
             formation=ParcoursDoctoralRechercheDTOFormation._from_openapi_data(
                 sigle='SC3DP',
                 code='DKOE',
@@ -116,6 +119,7 @@ class BaseDoctorateTestCase(TestCase):
                     numero_telephone='',
                     code_secteur='S1',
                     intitule_secteur='First sector',
+                    nom_pays='Belgique',
                 ),
                 campus=ParcoursDoctoralRechercheDTOFormationCampus._from_openapi_data(
                     uuid='',
@@ -212,6 +216,7 @@ class BaseDoctorateTestCase(TestCase):
                     uuid=self.scholarship_uuid,
                     nom_long='DS1',
                     nom_court='Doctorate scholarship 1',
+                    type=TypeBourse.BOURSE_INTERNATIONALE_DOCTORAT.name,
                 ),
                 autre_bourse_recherche='Other scholarship',
                 bourse_date_debut=datetime.date(2022, 1, 1),
@@ -229,20 +234,9 @@ class BaseDoctorateTestCase(TestCase):
             prenom_doctorant='John',
             nom_doctorant='Doe',
             commission_proximite=ChoixCommissionProximiteCDSS.ECLI.name,
+            justification='Justification',
         )
         self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.return_value = self.mock_doctorate_object
-
-    def _mock_doctorate_reference_api(self):
-        doctorate_reference_api_patcher = patch('osis_parcours_doctoral_sdk.api.references_api.ReferencesApi')
-        self.mock_doctorate_reference_api = doctorate_reference_api_patcher.start()
-        self.addCleanup(doctorate_reference_api_patcher.stop)
-
-        self.mock_scholarship_object = Scholarship._from_openapi_data(
-            uuid=self.scholarship_uuid,
-            short_name='DS1',
-            long_name='Doctorate Scholarship 1',
-        )
-        self.mock_doctorate_reference_api.return_value.retrieve_scholarship.return_value = self.mock_scholarship_object
 
     def _mock_document_api(self):
         document_api_patcher = patch('osis_document.api.utils.get_remote_token', return_value='foobar')
@@ -283,10 +277,21 @@ class BaseDoctorateTestCase(TestCase):
             city='foo',
         )
 
+        scholarship_patcher = patch('osis_reference_sdk.api.scholarship_api.ScholarshipApi')
+        self.mock_scholarship_api = scholarship_patcher.start()
+        self.addCleanup(scholarship_patcher.stop)
+
+        self.mock_scholarship_object = Scholarship._from_openapi_data(
+            uuid=self.scholarship_uuid,
+            short_name='DS1',
+            long_name='Doctorate Scholarship 1',
+            type=TypeBourse.BOURSE_INTERNATIONALE_DOCTORAT.name,
+        )
+        self.mock_scholarship_api.return_value.retrieve_scholarship.return_value = self.mock_scholarship_object
+
     def setUp(self):
         super().setUp()
 
         self._mock_doctorate_api()
-        self._mock_doctorate_reference_api()
         self._mock_document_api()
         self._mock_reference_api()
