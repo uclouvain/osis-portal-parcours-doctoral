@@ -38,6 +38,7 @@ from osis_reference_sdk.model.university import University
 
 from base.models.enums.entity_type import INSTITUTE
 from parcours_doctoral.constants import BE_ISO_CODE
+from parcours_doctoral.contrib.enums import TypeBourse
 from parcours_doctoral.contrib.enums.diploma import StudyType
 from parcours_doctoral.services.autocomplete import DoctorateAutocompleteService
 from parcours_doctoral.services.organisation import EntitiesService
@@ -52,6 +53,7 @@ from parcours_doctoral.utils import (
     format_scholarship,
     format_school_title,
 )
+from reference.services.scholarship import ScholarshipService
 
 __all__ = [
     "CountryAutocomplete",
@@ -105,10 +107,10 @@ class ScholarshipAutocomplete(LoginRequiredMixin, PaginatedAutocompleteMixin, au
     urlpatterns = 'scholarship'
 
     def get_list(self):
-        # TODO to replace by the reference service
-        return DoctorateAutocompleteService.get_scholarships(
+        return ScholarshipService.get_scholarships(
             person=self.request.user.person,
             search=self.q,
+            scholarship_type=TypeBourse.BOURSE_INTERNATIONALE_DOCTORAT.name,
             **self.get_webservice_pagination_kwargs(),
         ).get('results')
 

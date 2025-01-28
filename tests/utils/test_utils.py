@@ -27,7 +27,7 @@
 from django.test import TestCase
 from osis_organisation_sdk.model.address import Address
 from osis_organisation_sdk.model.entite import Entite
-from osis_parcours_doctoral_sdk.model.scholarship import Scholarship
+from osis_reference_sdk.model.scholarship import Scholarship
 
 from parcours_doctoral.contrib.enums.scholarship import TypeBourse
 from parcours_doctoral.utils import *
