@@ -8,7 +8,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,19 @@
   {% url "parcours_doctoral:course-enrollment:add" pk=view.kwargs.pk category='UCL_COURSE' as add_url %}
   <h3>{% trans "Course unit enrolment" %}</h3>
 
-  <p>{% lorem %}</p>
+  <p>
+    {% blocktranslate trimmed %}
+      This tool allows you to register to a course of the UCLouvain catalogue
+      only, before taking part in it and while respecting the academic calendar
+      which determine the limit dates for the inscription to courses and exams.
+      If a mark is given after the exam, the course will be automatically
+      submitted to the doctoral commission to value it into your doctoral
+      training. The courses in the UCLouvain catalogue in which you are not
+      taking part to the exam or all courses (in the UCLouvain or elsewhere)
+      must be inputted in the doctoral training tab if you want to value
+      them.
+    {% endblocktranslate %}
+  </p>
 
   {% if doctorate|can_make_action:'add_training' %}
     <a href="{{ add_url }}" class="btn btn-light border border-dark-subtle mb-3">

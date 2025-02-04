@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -52,19 +52,34 @@
   >
     <div>
       <strong class="d-block">{% trans "Description" %}</strong>
-      {{ activity.subtitle|linebreaks }}
-      <p>
-        {% display period %}
-        <br />
-        {% display activity.organizing_institution "," activity.city "," country %}
-      </p>
+      {{ activity.type }}, {{ period }}
+      {% if activity.subtitle %}
+        <p class="col-md-4">
+          <strong class="d-block">{% trans "Activity description" %}</strong>
+          {{ activity.subtitle|linebreaksbr }}
+        </p>
+      {% endif %}
       <div class="row">
-        {% if activity.participating_days %}
+        {% if activity.organizing_institution %}
           <p class="col-md-4">
-            <strong class="d-block">{% trans "Number of days participating" %}</strong>
-            {{ activity.participating_days|floatformat }}
+            <strong class="d-block">{% trans "Organising institution" %}</strong>
+            {{ activity.organizing_institution }}
           </p>
         {% endif %}
+        {% if activity.country %}
+          <p class="col-md-4">
+            <strong class="d-block">{% trans "Country" %}</strong>
+            {% get_country_name activity.country %}
+          </p>
+        {% endif %}
+        {% if activity.city %}
+          <p class="col-md-4">
+            <strong class="d-block">{% trans "City" %}</strong>
+            {{ activity.city }}
+          </p>
+        {% endif %}
+      </div>
+      <div class="row">
         {% if activity.ects %}
           <p class="col-md-4">
             <strong class="d-block">{% trans "ECTS" %}</strong>
@@ -74,7 +89,7 @@
       </div>
       {% if activity.participating_proof %}
         <div class="mb-3">
-          <strong class="d-block">{% trans "Participating proof" %}</strong>
+          <strong class="d-block">{% trans "Attestation" %}</strong>
           {% document_visualizer activity.participating_proof %}
         </div>
       {% endif %}
@@ -84,7 +99,7 @@
       {% endif %}
     </div>
   </div>
-  {% for activity in activity.children %}
-    {% include "parcours_doctoral/details/training/residency_"|add:activity.category|lower|add:'.html' %}
+  {% for child_activity in activity.children %}
+    {% include "parcours_doctoral/details/training/residency_"|add:child_activity.category|lower|add:'.html' with activity=child_activity parent=activity %}
   {% endfor %}
 </div>

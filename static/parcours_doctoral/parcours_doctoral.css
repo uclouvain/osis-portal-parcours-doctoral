@@ -236,6 +236,10 @@ select.select2-hidden-accessible + span {
   display: block;
 }
 
+.form-no-label {
+  margin-top: 1.8rem;
+}
+
 /*
   TOGGLE SWITCH
 */

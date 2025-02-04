@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -23,7 +23,8 @@
 #    see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from django.utils.translation import gettext_lazy as _, pgettext_lazy
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 
 from base.models.utils.utils import ChoiceEnum
 
@@ -58,8 +59,23 @@ class ChoixStatutPublication(ChoiceEnum):
     UNSUBMITTED = _("Unsubmitted")
     SUBMITTED = pgettext_lazy("publication-status", "Submitted")
     IN_REVIEW = _("Awaiting approval")
+    DEPOSITED = _("Deposited")
     ACCEPTED = pgettext_lazy("publication-status", "Accepted")
     PUBLISHED = _("Published")
+
+
+class ChoixTypeVolume(ChoiceEnum):
+    HEURES = _("hours")
+    JOURS = _("days")
+
+
+class ChoixRolePublication(ChoiceEnum):
+    AUTERTRICE_UNIQUE = _("Only author")
+    COAUTEURTRICE = _("Co-author")
+    PREMIER_AUTEURTRICE = _("First author")
+    DEUXIEME_AUTEURTRICE = _("Second author")
+    EDITEURTRICE = _("Editor")
+    COEDITEURTRICE = _("Co-editor")
 
 
 class ChoixTypeEpreuve(ChoiceEnum):

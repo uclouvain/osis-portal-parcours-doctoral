@@ -41,14 +41,16 @@ msgid ""
 "valodoc/confirmation-eligibility-doctoral-programme.html</a>"
 msgstr ""
 
+msgid ""
+"A document proving that the communication was done (i.e. communication "
+"certificate)"
+msgstr ""
+
 msgid "ACCEPTEE"
 msgstr "Accepted"
 
 msgid "ADMIS"
 msgstr "Admitted"
-
-msgid "Academic year"
-msgstr ""
 
 msgctxt "publication-status"
 msgid "Accepted"
@@ -84,6 +86,9 @@ msgstr ""
 msgid "Add a conference"
 msgstr ""
 
+msgid "Add a conference, a symposium"
+msgstr ""
+
 msgid "Add a course unit"
 msgstr ""
 
@@ -102,9 +107,6 @@ msgstr ""
 msgid "Add a paper/presentation for this residency"
 msgstr ""
 
-msgid "Add a paper/presentation for this seminar"
-msgstr ""
-
 msgid "Add a promoter or a CA member"
 msgstr "Add a promoter or a supervision member"
 
@@ -114,13 +116,19 @@ msgstr ""
 msgid "Add a publication to this conference"
 msgstr ""
 
-msgid "Add a residency"
+msgid "Add a research residency"
 msgstr ""
 
 msgid "Add a seminar"
 msgstr ""
 
 msgid "Add a service"
+msgstr ""
+
+msgid "Add a session"
+msgstr ""
+
+msgid "Add a session for this seminar"
 msgstr ""
 
 msgid "Add an activity"
@@ -169,6 +177,12 @@ msgstr ""
 msgid "Are you sure you want to request signatures for this PhD?"
 msgstr ""
 
+msgid "As it appears in an official course catalogue"
+msgstr ""
+
+msgid "Attestation"
+msgstr ""
+
 msgid "Attestation of the communication"
 msgstr ""
 
@@ -183,6 +197,11 @@ msgstr "Biology"
 
 msgctxt "doctorate"
 msgid "Back to page"
+msgstr ""
+
+msgid ""
+"Be careful, some doctorales commissions require an activity proof in their "
+"specifics dispositions. Refer to your commission specifics dispositions."
 msgstr ""
 
 msgid "Belgium"
@@ -236,10 +255,10 @@ msgstr ""
 msgid "Change the paper for this residency"
 msgstr ""
 
-msgid "Change the paper for this seminar"
+msgid "Change the publication for this conference"
 msgstr ""
 
-msgid "Change the publication for this conference"
+msgid "Change the session for this seminar"
 msgstr ""
 
 msgid "China Scholarship Council (CSC)"
@@ -255,6 +274,12 @@ msgid "Clinical Research Fund (FRC)"
 msgstr ""
 
 msgid "Close"
+msgstr ""
+
+msgid "Co-author"
+msgstr ""
+
+msgid "Co-editor"
 msgstr ""
 
 msgid "Coming implementation."
@@ -276,6 +301,12 @@ msgid "Comments"
 msgstr ""
 
 msgid "Communication attestation"
+msgstr ""
+
+msgid "Communication date"
+msgstr ""
+
+msgid "Communication title (in the activity language)"
 msgstr ""
 
 msgid "Complementary training"
@@ -329,13 +360,14 @@ msgstr ""
 msgid "Course owner"
 msgstr ""
 
+msgctxt "parcours_doctoral course"
+msgid "Course type"
+msgstr ""
+
 msgid "Course unit code (if applicable)"
 msgstr ""
 
 msgid "Course unit enrolment"
-msgstr ""
-
-msgid "Course unit instructor (if applicable)"
 msgstr ""
 
 msgid "Course unit with evaluation"
@@ -356,6 +388,9 @@ msgstr ""
 
 msgid "DOCTORAL_TRAINING"
 msgstr "PhD training"
+
+msgid "Date"
+msgstr ""
 
 msgid "Decision"
 msgstr ""
@@ -390,10 +425,22 @@ msgctxt "doctorate decision"
 msgid "Denied"
 msgstr ""
 
+msgid "Deposited"
+msgstr ""
+
+msgid ""
+"Describe on this screen the conference you have participated in. You will be "
+"able to specify the title of the communication(s) and/or publication(s) "
+"associated to this conference in a second screen."
+msgstr ""
+
 msgid "Description"
 msgstr ""
 
 msgid "Description of your communication"
+msgstr ""
+
+msgid "Description of your paper/presentation"
 msgstr ""
 
 msgid "Designate as lead supervisor"
@@ -461,6 +508,9 @@ msgstr ""
 msgid "Edit the communication of this conference"
 msgstr ""
 
+msgid "Editor"
+msgstr ""
+
 msgctxt "doctorate"
 msgid "Email"
 msgstr ""
@@ -514,7 +564,18 @@ msgctxt "female gender"
 msgid "Female"
 msgstr ""
 
+msgid "First author"
+msgstr ""
+
 msgid "First name"
+msgstr ""
+
+msgid "First name and last name of the speaker"
+msgstr ""
+
+msgid ""
+"Following the specifics of your domain doctoral commission, specify the "
+"total time dedicated to this activity"
 msgstr ""
 
 msgid "Fondation Mont-Godinne"
@@ -525,6 +586,11 @@ msgstr ""
 
 msgid "Fonds Speciaux de Recherche (FSR)"
 msgstr "Fonds Spéciaux de Recherche (FSR)"
+
+msgid ""
+"For a released text, specify the month and year of publication. Else, "
+"specify the month and year of the manuscript."
+msgstr ""
 
 msgid ""
 "For courses in the UCLouvain catalogue, the academic year begins on 14 "
@@ -577,6 +643,9 @@ msgstr ""
 msgid "Holder of a PhD with thesis"
 msgstr ""
 
+msgid "Hourly volume"
+msgstr ""
+
 msgid "INVITED"
 msgstr "Invited to sign"
 
@@ -588,6 +657,11 @@ msgstr ""
 msgid ""
 "If necessary, please finish inputting doctoral activities and complete the "
 "defense preparation below before submitting the jury proposition."
+msgstr ""
+
+msgid ""
+"If necessary, specify the date of publication, delivery, acceptation or of "
+"the manuscript"
 msgstr ""
 
 msgid "If other scholarship, specify"
@@ -602,6 +676,9 @@ msgid ""
 "deadline may also be shortened due to constraints imposed by the funder, e."
 "g. in the context of the renewal of the mandate or the doctoral scholarship "
 "(e.g. the renewal of the mandate of the F.R.S.-FNRS candidates)."
+msgstr ""
+
+msgid "If the seminar takes place in several places, leave this field empty."
 msgstr ""
 
 msgid ""
@@ -621,6 +698,9 @@ msgid "Important information:"
 msgstr ""
 
 msgid "In person"
+msgstr ""
+
+msgid "In the context of a course, specify the name of the professor"
 msgstr ""
 
 msgid "Incomplete field"
@@ -658,7 +738,13 @@ msgstr ""
 msgid "International for general education"
 msgstr ""
 
+msgid "International publication"
+msgstr ""
+
 msgid "Is it a Wallonia-Brussels Federation institution?"
+msgstr ""
+
+msgid "Is publication national"
 msgstr ""
 
 msgid ""
@@ -692,7 +778,7 @@ msgstr ""
 msgid "Joint supervision request"
 msgstr ""
 
-msgid "Journal or publishing house name"
+msgid "Journal, publishing house or depository institution"
 msgstr ""
 
 msgid "Jury composition"
@@ -753,6 +839,9 @@ msgstr ""
 msgid "Management of PhDs"
 msgstr ""
 
+msgid "Mark or honours obtained"
+msgstr ""
+
 msgid "Member not found"
 msgstr ""
 
@@ -774,6 +863,9 @@ msgstr ""
 
 msgctxt "edit"
 msgid "Modify"
+msgstr ""
+
+msgid "Month"
 msgstr ""
 
 msgid "Motivation for joint supervision"
@@ -799,6 +891,12 @@ msgid "NOT_INVITED"
 msgstr "Not invited to sign"
 
 msgid "Name in the language of the manifestation"
+msgstr ""
+
+msgid "Name or brief description"
+msgstr ""
+
+msgid "National publication"
 msgstr ""
 
 msgid "Negative assessment by lead supervisor"
@@ -850,10 +948,16 @@ msgstr ""
 msgid "Online or in person"
 msgstr ""
 
+msgid "Only author"
+msgstr ""
+
 msgid "Opinion on research mandate renewal"
 msgstr ""
 
 msgid "Oral presentation"
+msgstr ""
+
+msgid "Organisers or academic responsibles"
 msgstr ""
 
 msgid "Organising institution"
@@ -894,9 +998,6 @@ msgstr "Publication"
 
 msgid "PUBLIC_DEFENSE"
 msgstr "Public defence"
-
-msgid "Participating proof"
-msgstr ""
 
 msgid "Participation"
 msgstr ""
@@ -968,6 +1069,9 @@ msgstr ""
 msgid "Please select a member"
 msgstr ""
 
+msgid "Please specify either a hourly volume or a number of participating days"
+msgstr ""
+
 msgid "Poster"
 msgstr ""
 
@@ -998,9 +1102,6 @@ msgstr ""
 msgid "Proof"
 msgstr ""
 
-msgid "Proof (if applicable)"
-msgstr ""
-
 msgid "Proof of acceptance or publication"
 msgstr ""
 
@@ -1011,9 +1112,6 @@ msgid "Proof of participation for the whole activity"
 msgstr ""
 
 msgid "Proof of participation or success"
-msgstr ""
-
-msgid "Proof of publication"
 msgstr ""
 
 msgid "Proof of scholarship"
@@ -1062,13 +1160,10 @@ msgstr ""
 msgid "Publication"
 msgstr ""
 
-msgid "Publication date"
-msgstr ""
-
 msgid "Publication status"
 msgstr ""
 
-msgid "Publication title"
+msgid "Publication title (in the publication language)"
 msgstr ""
 
 msgid "Publication type"
@@ -1086,6 +1181,12 @@ msgstr "Advanced research residency"
 msgid ""
 "Refer to the specific measures of your doctoral commission to know if one of "
 "these method is mandatory to you."
+msgstr ""
+
+msgid "Refer to the website of your commission for more details."
+msgstr ""
+
+msgid "Refer to your commission website for more detail."
 msgstr ""
 
 msgid "Reference DIAL.Pr"
@@ -1112,6 +1213,16 @@ msgid "Request a new confirmation exam deadline"
 msgstr ""
 
 msgid "Request signatures"
+msgstr ""
+
+msgid ""
+"Required field for some of the doctoral commissions. Refer to the website of "
+"your commission for more detail."
+msgstr ""
+
+msgid ""
+"Required field if some doctorals commissions, refer to your commission "
+"specifics dispositions."
 msgstr ""
 
 msgid "Research institute"
@@ -1185,6 +1296,9 @@ msgstr ""
 msgid "Search for an EU code (outside the EU of the form)"
 msgstr ""
 
+msgid "Second author"
+msgstr ""
+
 msgid "Secretary"
 msgstr ""
 
@@ -1195,6 +1309,9 @@ msgid "Select for batch action"
 msgstr ""
 
 msgid "Selection committee"
+msgstr ""
+
+msgid "Service type"
 msgstr ""
 
 msgid "Services"
@@ -1215,13 +1332,28 @@ msgstr ""
 msgid "Signature requests sent"
 msgstr ""
 
-msgid "Speaker"
+msgid "Specify a scientific communication you made."
 msgstr ""
 
 msgid "Specify employer and function"
 msgstr ""
 
 msgid "Specify if other"
+msgstr ""
+
+msgid "Specify the name of the event in which the communicate took place"
+msgstr ""
+
+msgid ""
+"Specify the status of the publication or of the patent. Consult the website "
+"of your commission for more detail."
+msgstr ""
+
+msgid ""
+"Specify your participation in a course in the context of your doctoral "
+"training, excepting courses from the catalog of the UCLouvain in which you "
+"are registered to the exam. In this last case, this course will be "
+"automatically added when you succeed it."
 msgstr ""
 
 msgid "Start date"
@@ -1234,6 +1366,11 @@ msgid "Status:"
 msgstr ""
 
 msgid "Submit"
+msgstr ""
+
+msgid ""
+"Submit a proof, for example a letter from the editor, a delivery "
+"attestation, the first page of the publication, ..."
 msgstr ""
 
 msgid "Submit and notify CDD"
@@ -1296,11 +1433,21 @@ msgid ""
 "submission of a PhD thesis (Art. 2.3.1. of the PhD Regulations)."
 msgstr ""
 
+msgid ""
+"The authorized publications and their valuation in credits are specified on "
+"the website of you domain doctoral commission. If the publication must be "
+"associated to a conference, first input the conference and use the menu "
+"action \"Add a publication to this conference\""
+msgstr ""
+
 #, python-format
 msgid ""
 "The canvas of the supervisory panel report must be sent to the accompanying "
 "committee during the test. It can be downloaded <a href=\"%(canvas_url)s\" "
 "target=\"_blank\">here</a>."
+msgstr ""
+
+msgid "The date cannot be in the future."
 msgstr ""
 
 msgid ""
@@ -1340,6 +1487,11 @@ msgstr ""
 msgid "This activity and its potential subactivities will be discontinued"
 msgstr ""
 
+msgid ""
+"This activity is about an oral communication which is not organized in the "
+"context of a conference."
+msgstr ""
+
 msgid "This comment will be visible only to administrators."
 msgstr ""
 
@@ -1358,8 +1510,27 @@ msgid ""
 "jury analysis."
 msgstr ""
 
+msgid ""
+"This part is about seminars you went to and which can be valued in your "
+"doctoral training depending on your domain commission."
+msgstr ""
+
+msgid ""
+"This tool allows you to register to a course of the UCLouvain catalogue "
+"only, before taking part in it and while respecting the academic calendar "
+"which determine the limit dates for the inscription to courses and exams. If "
+"a mark is given after the exam, the course will be automatically submitted "
+"to the doctoral commission to value it into your doctoral training. The "
+"courses in the UCLouvain catalogue in which you are not taking part to the "
+"exam or all courses (in the UCLouvain or elsewhere) must be inputted in the "
+"doctoral training tab if you want to value them."
+msgstr ""
+
 #, no-python-format
 msgid "Time allocated for thesis (in %)"
+msgstr ""
+
+msgid "Title"
 msgstr ""
 
 msgctxt "doctorate"
@@ -1370,7 +1541,17 @@ msgctxt "jury"
 msgid "Title"
 msgstr ""
 
+msgctxt "parcours_doctoral course"
+msgid "Title"
+msgstr ""
+
+msgid "Title (in the publication language)"
+msgstr ""
+
 msgid "Title of the communication"
+msgstr ""
+
+msgid "Title of the paper in the language of the activity"
 msgstr ""
 
 msgid ""
@@ -1408,6 +1589,16 @@ msgstr ""
 msgid "Undecided"
 msgstr ""
 
+msgid ""
+"Under somer conditions specified in the specifics dispositions of your "
+"doctoral commission, you can ask the validation of a prior experience done "
+"after your second cycle and before your admission in the doctoral training "
+"programme. This experience must have a direct link with your research "
+"subject. Following these specifics dispositions, the acquisition of a master "
+"with a deepened aim can be validated as a prior experience (art. 2.2.4 of "
+"the PhD Regulations)."
+msgstr ""
+
 msgid "University"
 msgstr ""
 
@@ -1438,6 +1629,12 @@ msgstr ""
 msgid "Website"
 msgstr ""
 
+msgid "With reading committee"
+msgstr ""
+
+msgid "Without reading committee"
+msgstr ""
+
 msgid "Work contract"
 msgstr ""
 
@@ -1454,6 +1651,9 @@ msgstr ""
 
 msgid "YES"
 msgstr "Yes"
+
+msgid "Year"
+msgstr ""
 
 msgid "Yes"
 msgstr ""
@@ -1484,7 +1684,16 @@ msgid ""
 "\"No\" if you don't have information yet."
 msgstr ""
 
+msgid "Your participation"
+msgstr ""
+
 msgid "Your participation in the event"
+msgstr ""
+
+msgid "city"
+msgstr ""
+
+msgid "days"
 msgstr ""
 
 msgid "dd/mm/yyyy"
@@ -1492,4 +1701,7 @@ msgstr ""
 
 #, python-format
 msgid "from %(start)s to %(end)s"
+msgstr ""
+
+msgid "hours"
 msgstr ""

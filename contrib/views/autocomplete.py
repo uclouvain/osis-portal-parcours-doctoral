@@ -258,8 +258,7 @@ class LearningUnitYearsAutocomplete(LoginRequiredMixin, PaginatedAutocompleteMix
     def get_list(self):
         return DoctorateAutocompleteService.autocomplete_learning_unit_years(
             person=self.request.user.person,
-            year=self.forwarded['academic_year'],
-            acronym_search=self.q,
+            search_term=self.q,
         )
 
     def results(self, results):
