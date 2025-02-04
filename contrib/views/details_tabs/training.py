@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,10 @@ from django.utils.translation import get_language
 from django.views.generic import FormView
 from django.views.generic.edit import FormMixin
 
-from parcours_doctoral.contrib.enums.training import CategorieActivite, ContexteFormation
+from parcours_doctoral.contrib.enums.training import (
+    CategorieActivite,
+    ContexteFormation,
+)
 from parcours_doctoral.contrib.forms.training import *
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.mixins import WebServiceFormMixin
@@ -71,7 +74,6 @@ class TrainingActivityFormMixin(LoadViewMixin, WebServiceFormMixin, FormMixin, A
             (CategorieActivite.SEMINAR, CategorieActivite.COMMUNICATION): SeminarCommunicationForm,
             CategorieActivite.VAE: ValorisationForm,
             CategorieActivite.COURSE: CourseForm,
-            CategorieActivite.PAPER: PaperForm,
         },
         "complementary-training": {
             CategorieActivite.COURSE: ComplementaryCourseForm,
@@ -125,8 +127,12 @@ class TrainingActivityFormMixin(LoadViewMixin, WebServiceFormMixin, FormMixin, A
         data['object_type'] = self.get_form_class().object_type
 
         # Get category from edited object or view kwargs
-        from osis_parcours_doctoral_sdk.model.categorie_activite import CategorieActivite
-        from osis_parcours_doctoral_sdk.model.contexte_formation import ContexteFormation as ContexteFormationModel
+        from osis_parcours_doctoral_sdk.model.categorie_activite import (
+            CategorieActivite,
+        )
+        from osis_parcours_doctoral_sdk.model.contexte_formation import (
+            ContexteFormation as ContexteFormationModel,
+        )
 
         data['category'] = CategorieActivite(self.category)
 
