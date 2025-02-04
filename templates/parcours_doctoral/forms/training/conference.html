@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
 
 <h2>
   {% if not view.kwargs.activity_id %}
-    {% trans "Add a conference" %}
+    {% trans "Add a conference, a symposium" %}
   {% else %}
     {% blocktrans with category=categories|get_item:view.activity.category trimmed %}
       Edit <em>{{ category }}</em> activity.
@@ -34,7 +34,12 @@
   {% endif %}
 </h2>
 
-<p>{% lorem %}</p>
+<p>
+  {% blocktranslate trimmed %}
+    Describe on this screen the conference you have participated in. You will be able to specify
+    the title of the communication(s) and/or publication(s) associated to this conference in a second screen.
+  {% endblocktranslate %}
+</p>
 
 <h3>{% trans "Context" %}</h3>
 <div class="row">
@@ -45,7 +50,7 @@
   {% bootstrap_field form.start_date wrapper_class="mb-3 col-md-4 required_field" %}
   {% bootstrap_field form.end_date wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
-{% bootstrap_field form.title wrapper_class="mb-3 required_field" placeholder="" %}
+{% bootstrap_field_with_tooltip form.title wrapper_class="mb-3 required_field" placeholder="" %}
 {% bootstrap_field form.organizing_institution wrapper_class="mb-3 required_field" placeholder="" %}
 <div class="row">
   {% bootstrap_field form.country wrapper_class="mb-3 col-md-4 required_field" %}
@@ -55,7 +60,8 @@
 
 <h3>{% trans "Your participation in the event" %}</h3>
 <div class="row">
-  {% bootstrap_field form.participating_days wrapper_class="mb-3 col-md-4 required_field" placeholder="" %}
+  {% bootstrap_field_with_tooltip form.participating_days wrapper_class="form-group col-md-4" %}
+  {% bootstrap_field_with_tooltip form.hour_volume wrapper_class="form-group col-md-4" %}
   {% bootstrap_field_with_tooltip form.ects wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
 {% bootstrap_field form.participating_proof  wrapper_class="mb-3"  %}

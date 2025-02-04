@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -32,28 +32,28 @@
   {% endif %}
 </h2>
 
-<p>{% lorem %}</p>
+<p>{% translate "Specify a scientific communication you made." %}</p>
 
-<h3>{% trans "Description" %}</h3>
+<h3>{% trans "Context" %}</h3>
 <div class="row">
   {% bootstrap_field form.type wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
 <div class="row">
   {% bootstrap_field form.subtype wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
-{% bootstrap_field form.title wrapper_class="mb-3 required_field" placeholder="" %}
+{% bootstrap_field_with_tooltip form.title wrapper_class="mb-3 required_field" placeholder="" %}
+{% bootstrap_field form.subtitle wrapper_class="mb-3 required_field" placeholder="" %}
 <div class="row">
   {% bootstrap_field form.start_date wrapper_class="mb-3 col-md-4 required_field" %}
   {% bootstrap_field form.is_online wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
 {% bootstrap_field form.organizing_institution wrapper_class="mb-3 required_field" placeholder="" %}
 {% bootstrap_field form.website placeholder="https://" %}
-{% bootstrap_field form.subtitle wrapper_class="mb-3 required_field" placeholder="" %}
-{% bootstrap_field form.summary %}
+{% bootstrap_field_with_tooltip form.summary %}
 
-<h3>{% trans "Participation" %}</h3>
+<h3>{% trans "Description of your paper/presentation" %}</h3>
 <div class="row">
   {% bootstrap_field_with_tooltip form.ects wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
-{% bootstrap_field form.participating_proof %}
+{% bootstrap_field form.participating_proof wrapper_class="required_field" %}
 {% bootstrap_field form.comment placeholder="" %}
