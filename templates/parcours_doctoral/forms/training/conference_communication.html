@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -32,13 +32,11 @@
   {% endif %}
 </h2>
 
-<p>{% lorem %}</p>
-
 <div class="row">
   {% bootstrap_field form.type wrapper_class="mb-3 col-md-4" %}
   {% bootstrap_field form.committee wrapper_class="mb-3 required_field col-md-4" %}
 </div>
-{% bootstrap_field form.title wrapper_class="mb-3 required_field" placeholder="" %}
+{% bootstrap_field_with_tooltip form.title wrapper_class="mb-3 required_field" placeholder="" %}
 {% bootstrap_field form.summary %}
 
 <div class="row">
@@ -46,5 +44,5 @@
   {% bootstrap_field form.dial_reference wrapper_class="mb-3 col-md-4" placeholder="" %}
 </div>
 {% bootstrap_field form.acceptation_proof wrapper_class="mb-3 required_field acceptation-proof" %}
-{% bootstrap_field form.participating_proof wrapper_class="mb-3 required_field" %}
+{% bootstrap_field_with_tooltip form.participating_proof wrapper_class="mb-3 required_field" %}
 {% bootstrap_field form.comment placeholder="" %}

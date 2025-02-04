@@ -47,14 +47,18 @@ msgstr ""
 "doctorat.html' target='_blank'>https://uclouvain.be/fr/chercher/valodoc/"
 "attestation-acces-au-doctorat.html</a>"
 
+msgid ""
+"A document proving that the communication was done (i.e. communication "
+"certificate)"
+msgstr ""
+"Un document prouvant que la communication a eu lieu (i.e. certificat de "
+"communication)"
+
 msgid "ACCEPTEE"
 msgstr "Acceptée"
 
 msgid "ADMIS"
 msgstr "Admis"
-
-msgid "Academic year"
-msgstr "Année académique"
 
 msgctxt "publication-status"
 msgid "Accepted"
@@ -90,6 +94,9 @@ msgstr "Ajouter"
 msgid "Add a conference"
 msgstr "Ajouter une conférence"
 
+msgid "Add a conference, a symposium"
+msgstr "Ajouter une conférence, un colloque"
+
 msgid "Add a course unit"
 msgstr "Ajouter un cours"
 
@@ -108,9 +115,6 @@ msgstr "Ajouter une communication à cette conférence"
 msgid "Add a paper/presentation for this residency"
 msgstr "Ajouter une communication à ce séjour"
 
-msgid "Add a paper/presentation for this seminar"
-msgstr "Ajouter une communication à ce séminaire"
-
 msgid "Add a promoter or a CA member"
 msgstr "Ajouter un.e promoteur.trice ou un.e membre du comité d'accompagnement"
 
@@ -120,8 +124,8 @@ msgstr "Ajouter une publication"
 msgid "Add a publication to this conference"
 msgstr "Ajouter une publication à cette conférence"
 
-msgid "Add a residency"
-msgstr "Ajouter un séjour"
+msgid "Add a research residency"
+msgstr "Ajouter un séjour de recherche"
 
 msgid "Add a seminar"
 msgstr "Ajouter un séminaire"
@@ -129,11 +133,17 @@ msgstr "Ajouter un séminaire"
 msgid "Add a service"
 msgstr "Ajouter un service"
 
+msgid "Add a session"
+msgstr "Ajouter une séance"
+
+msgid "Add a session for this seminar"
+msgstr "Ajouter une séance à ce séminaire"
+
 msgid "Add an activity"
 msgstr "Ajouter une activité"
 
 msgid "Add validation of prior experience (VAE)"
-msgstr "Ajouter une valorisation des acquis d'expérience"
+msgstr "Ajouter une valorisation des acquis de l'expérience"
 
 msgid "Admission"
 msgstr "Admission"
@@ -177,6 +187,12 @@ msgstr "Êtes-vous sûr de vouloir retirer \"%(prenom)s %(nom)s\" du jury ?"
 msgid "Are you sure you want to request signatures for this PhD?"
 msgstr "Êtes-vous sûr de vouloir requérir les signatures pour ce doctorat ?"
 
+msgid "As it appears in an official course catalogue"
+msgstr "Tel qu’il apparait dans un catalogue officiel de formation"
+
+msgid "Attestation"
+msgstr "Attestation"
+
 msgid "Attestation of the communication"
 msgstr "Attestation de communication"
 
@@ -192,6 +208,14 @@ msgstr "Biologie"
 msgctxt "doctorate"
 msgid "Back to page"
 msgstr "Revenir à la page"
+
+msgid ""
+"Be careful, some doctorales commissions require an activity proof in their "
+"specifics dispositions. Refer to your commission specifics dispositions."
+msgstr ""
+"Attention, certaines commissions doctorales exigent une preuve de l’activité "
+"dans leurs dispositions particulières. Référez-vous aux dispositions "
+"particulières de votre commission"
 
 msgid "Belgium"
 msgstr "Belgique"
@@ -244,11 +268,11 @@ msgstr "Attestation de participation à l'exposé"
 msgid "Change the paper for this residency"
 msgstr "Modifier la communication de ce séjour"
 
-msgid "Change the paper for this seminar"
-msgstr "Modifier la communication de ce séminaire"
-
 msgid "Change the publication for this conference"
 msgstr "Modifier la publication de cette conférence"
+
+msgid "Change the session for this seminar"
+msgstr "Modifier la séance de ce séminaire"
 
 msgid "China Scholarship Council (CSC)"
 msgstr "China Scholarship Council (CSC)"
@@ -264,6 +288,12 @@ msgstr "FRC - Fonds de recherche clinique"
 
 msgid "Close"
 msgstr "Fermer"
+
+msgid "Co-author"
+msgstr "Coauteur.trice"
+
+msgid "Co-editor"
+msgstr "Coéditeur.trice"
 
 msgid "Coming implementation."
 msgstr "Développement à venir."
@@ -285,6 +315,12 @@ msgstr "Commentaires"
 
 msgid "Communication attestation"
 msgstr "Attestation de communication"
+
+msgid "Communication date"
+msgstr "Date de la communication"
+
+msgid "Communication title (in the activity language)"
+msgstr "Titre de la communication (dans la langue de l’activité)"
 
 msgid "Complementary training"
 msgstr "Formation complémentaire"
@@ -340,14 +376,15 @@ msgstr "Choix de formation"
 msgid "Course owner"
 msgstr "Titulaire du cours"
 
+msgctxt "parcours_doctoral course"
+msgid "Course type"
+msgstr "Type de cours"
+
 msgid "Course unit code (if applicable)"
 msgstr "Code du cours (le cas échéant)"
 
 msgid "Course unit enrolment"
 msgstr "Inscription à un cours"
-
-msgid "Course unit instructor (if applicable)"
-msgstr "Titulaire du cours (le cas échéant)"
 
 msgid "Course unit with evaluation"
 msgstr "Cours avec évaluation"
@@ -367,6 +404,9 @@ msgstr "Financement actuel"
 
 msgid "DOCTORAL_TRAINING"
 msgstr "Formation doctorale"
+
+msgid "Date"
+msgstr "Date"
 
 msgid "Decision"
 msgstr "Décision"
@@ -401,10 +441,25 @@ msgctxt "doctorate decision"
 msgid "Denied"
 msgstr "Rejetée"
 
+msgid "Deposited"
+msgstr "Déposé"
+
+msgid ""
+"Describe on this screen the conference you have participated in. You will be "
+"able to specify the title of the communication(s) and/or publication(s) "
+"associated to this conference in a second screen."
+msgstr ""
+"Décrivez sur cet écran la conférence à laquelle vous avez participé. Dans un "
+"second écran, si vous le désirez, vous pourrez indiquer le titre de "
+"communication(s) et/ou publication(s) associée(s) à la conférence."
+
 msgid "Description"
 msgstr "Description"
 
 msgid "Description of your communication"
+msgstr "Description de votre communication"
+
+msgid "Description of your paper/presentation"
 msgstr "Description de votre communication"
 
 msgid "Designate as lead supervisor"
@@ -472,6 +527,9 @@ msgstr "Modifier l'activité de type <em>%(category)s</em>"
 msgid "Edit the communication of this conference"
 msgstr "Modifier la communication de cette conférence"
 
+msgid "Editor"
+msgstr "Editeur.trice"
+
 msgctxt "doctorate"
 msgid "Email"
 msgstr "E-mail"
@@ -525,8 +583,21 @@ msgctxt "female gender"
 msgid "Female"
 msgstr "Féminin"
 
+msgid "First author"
+msgstr "Premier auteur.trice"
+
 msgid "First name"
 msgstr "Prénom"
+
+msgid "First name and last name of the speaker"
+msgstr "Nom et prénom de l’orateur.trice"
+
+msgid ""
+"Following the specifics of your domain doctoral commission, specify the "
+"total time dedicated to this activity"
+msgstr ""
+"En suivant les dispositions particulières de votre commission doctorale de "
+"domaine, indiquer ici la durée totale consacrée à cette activité"
 
 msgid "Fondation Mont-Godinne"
 msgstr "Fondation Mont Godinne"
@@ -536,6 +607,13 @@ msgstr "Fondation Saint-Luc"
 
 msgid "Fonds Speciaux de Recherche (FSR)"
 msgstr "FSR - Fonds Spéciaux de Recherche"
+
+msgid ""
+"For a released text, specify the month and year of publication. Else, "
+"specify the month and year of the manuscript."
+msgstr ""
+"Pour un texte publié, indiquer le mois et l'année de publication. Sinon, "
+"indiquer le mois et l'année du manuscrit."
 
 msgid ""
 "For courses in the UCLouvain catalogue, the academic year begins on 14 "
@@ -593,6 +671,9 @@ msgstr ""
 msgid "Holder of a PhD with thesis"
 msgstr "Titulaire d'un doctorat avec thèse"
 
+msgid "Hourly volume"
+msgstr "Volume d’heures"
+
 msgid "INVITED"
 msgstr "Invité"
 
@@ -610,6 +691,13 @@ msgstr ""
 "Le cas échéant, veuillez terminer l’encodage des activités de formation "
 "doctorale et compléter les modalités de défenses ci-dessous avant de "
 "soumettre la proposition de jury"
+
+msgid ""
+"If necessary, specify the date of publication, delivery, acceptation or of "
+"the manuscript"
+msgstr ""
+"Le cas échéant indiquer la date de publication, de dépôt, d’acceptation ou "
+"la date du manuscrit"
 
 msgid "If other scholarship, specify"
 msgstr "Si autre bourse, spécifier"
@@ -630,6 +718,9 @@ msgstr ""
 "bailleur de fonds, par exemple dans le cadre du renouvellement du mandat ou "
 "de la bourse de doctorat (exemple : le renouvellement du mandat des "
 "aspirant·es du F.R.S.-FNRS)."
+
+msgid "If the seminar takes place in several places, leave this field empty."
+msgstr "Si le séminaire se déroule en plusieurs lieux, laisser le champ vide."
 
 msgid ""
 "If you don't have any funding yet, please choose \"Self-funding\" and "
@@ -653,6 +744,9 @@ msgstr "Informations importantes :"
 
 msgid "In person"
 msgstr "En présentiel"
+
+msgid "In the context of a course, specify the name of the professor"
+msgstr "Dans le cadre d’un cours, indiquez ici le nom du ou de la professeure"
 
 msgid "Incomplete field"
 msgstr "Non renseigné(e)"
@@ -691,8 +785,14 @@ msgstr "Internationale pour les doctorats"
 msgid "International for general education"
 msgstr "Internationale pour la formation générale"
 
+msgid "International publication"
+msgstr "Publication internationale"
+
 msgid "Is it a Wallonia-Brussels Federation institution?"
 msgstr "S'agit-il d'une institution de la Fédération Wallonie-Bruxelles ?"
+
+msgid "Is publication national"
+msgstr "Est une publication nationale"
 
 msgid ""
 "Is your admission request linked with a FNRS, FRIA, FRESH or CSC application?"
@@ -727,8 +827,8 @@ msgstr "Convention de cotutelle"
 msgid "Joint supervision request"
 msgstr "Demande d'ouverture de cotutelle"
 
-msgid "Journal or publishing house name"
-msgstr "Nom de la revue ou de la maison d'édition"
+msgid "Journal, publishing house or depository institution"
+msgstr "Revue, maison d’édition ou institution de dépôt"
 
 msgid "Jury composition"
 msgstr "Composition du jury"
@@ -788,6 +888,9 @@ msgstr "Gérer mon projet de recherche"
 msgid "Management of PhDs"
 msgstr "Gestion des doctorats"
 
+msgid "Mark or honours obtained"
+msgstr "Note ou mention obtenue obtenue"
+
 msgid "Member not found"
 msgstr "Membre non trouvé"
 
@@ -815,6 +918,9 @@ msgctxt "edit"
 msgid "Modify"
 msgstr "Modifier"
 
+msgid "Month"
+msgstr "Mois"
+
 msgid "Motivation for joint supervision"
 msgstr "Motivation de la cotutelle"
 
@@ -839,6 +945,12 @@ msgstr "Pas encore invité à signer"
 
 msgid "Name in the language of the manifestation"
 msgstr "Nom dans la langue de la manifestation"
+
+msgid "Name or brief description"
+msgstr "Nom ou description brève"
+
+msgid "National publication"
+msgstr "Publication nationale"
 
 msgid "Negative assessment by lead supervisor"
 msgstr "Avis négatif du promoteur de référence"
@@ -893,11 +1005,17 @@ msgstr "En ligne"
 msgid "Online or in person"
 msgstr "En ligne ou en présentiel"
 
+msgid "Only author"
+msgstr "Auteur.trice unique"
+
 msgid "Opinion on research mandate renewal"
 msgstr "Avis sur le renouvellement du mandat de recherche"
 
 msgid "Oral presentation"
 msgstr "Exposé oral"
+
+msgid "Organisers or academic responsibles"
+msgstr "Organisateurs.trices ou responsables académiques"
 
 msgid "Organising institution"
 msgstr "Institution organisatrice"
@@ -937,9 +1055,6 @@ msgstr "Publication"
 
 msgid "PUBLIC_DEFENSE"
 msgstr "Soutenance publique"
-
-msgid "Participating proof"
-msgstr "Preuve de participation"
 
 msgid "Participation"
 msgstr "Participation"
@@ -1020,6 +1135,11 @@ msgstr ""
 msgid "Please select a member"
 msgstr "Merci de sélectionner un membre"
 
+msgid "Please specify either a hourly volume or a number of participating days"
+msgstr ""
+"Veuillez indiquer obligatoirement un volume horaire ou un nombre de jours de "
+"participation"
+
 msgid "Poster"
 msgstr "Poster"
 
@@ -1050,9 +1170,6 @@ msgstr "Promotion"
 msgid "Proof"
 msgstr "Preuve"
 
-msgid "Proof (if applicable)"
-msgstr "Preuve (le cas échéant)"
-
 msgid "Proof of acceptance or publication"
 msgstr "Preuve d'acceptation ou de publication"
 
@@ -1064,9 +1181,6 @@ msgstr "Attestation de participation pour l'ensemble de l'activité"
 
 msgid "Proof of participation or success"
 msgstr "Certification de participation ou de succès"
-
-msgid "Proof of publication"
-msgstr "Preuve de publication"
 
 msgid "Proof of scholarship"
 msgstr "Preuve d'octroi de la bourse"
@@ -1116,14 +1230,11 @@ msgstr "Commission de proximité de santé publique, santé et société (SPSS)"
 msgid "Publication"
 msgstr "Publication"
 
-msgid "Publication date"
-msgstr "Date de publication"
-
 msgid "Publication status"
 msgstr "Statut de publication"
 
-msgid "Publication title"
-msgstr "Intitulé de la publication"
+msgid "Publication title (in the publication language)"
+msgstr "Intitulé de la publication (dans la langue de la publication)"
 
 msgid "Publication type"
 msgstr "Type de publication"
@@ -1143,6 +1254,12 @@ msgid ""
 msgstr ""
 "Référez-vous aux dispositions particulières de votre commission doctorale "
 "afin de savoir si l'une de ces formules vous est imposée"
+
+msgid "Refer to the website of your commission for more details."
+msgstr "Consultez le site web de votre commission pour plus de détail."
+
+msgid "Refer to your commission website for more detail."
+msgstr "Consultez le site web de votre commission pour plus de détail."
 
 msgid "Reference DIAL.Pr"
 msgstr "Référence DIAL.Pr"
@@ -1169,6 +1286,20 @@ msgstr "Demander une nouvelle échéance pour l'épreuve de confirmation"
 
 msgid "Request signatures"
 msgstr "Demander les signatures"
+
+msgid ""
+"Required field for some of the doctoral commissions. Refer to the website of "
+"your commission for more detail."
+msgstr ""
+"Champ obligatoire pour certaines commissions doctorales. Consultez le site "
+"web de votre commission pour plus de détail."
+
+msgid ""
+"Required field if some doctorals commissions, refer to your commission "
+"specifics dispositions."
+msgstr ""
+"Champ obligatoire dans certaines commissions doctorales, référez-vous aux "
+"dispositions particulières de votre commission."
 
 msgid "Research institute"
 msgstr "Institut de recherche"
@@ -1241,6 +1372,9 @@ msgstr "Rechercher un tuteur par son nom"
 msgid "Search for an EU code (outside the EU of the form)"
 msgstr "Rechercher un code UE (hors UE du formulaire)"
 
+msgid "Second author"
+msgstr "Deuxième auteur.trice"
+
 msgid "Secretary"
 msgstr "Secrétaire"
 
@@ -1252,6 +1386,9 @@ msgstr "Sélectionner pour action en masse"
 
 msgid "Selection committee"
 msgstr "Comité de sélection"
+
+msgid "Service type"
+msgstr "Type de service"
 
 msgid "Services"
 msgstr "Services"
@@ -1271,14 +1408,37 @@ msgstr "Voir le détail"
 msgid "Signature requests sent"
 msgstr "Demandes de signature envoyées"
 
-msgid "Speaker"
-msgstr "Orateur ou oratrice"
+msgid "Specify a scientific communication you made."
+msgstr "Indiquer ici une communication scientifique que vous avez réalisée."
 
 msgid "Specify employer and function"
 msgstr "Indiquer l'employeur et votre fonction"
 
 msgid "Specify if other"
 msgstr "Si autre, précisez"
+
+msgid "Specify the name of the event in which the communicate took place"
+msgstr ""
+"Indiquer ici le nom de l’événement au sein duquel votre communication a pris "
+"place"
+
+msgid ""
+"Specify the status of the publication or of the patent. Consult the website "
+"of your commission for more detail."
+msgstr ""
+"Indiquer le statut de la publication ou du brevet. Consultez le site web de "
+"votre commission pour plus de détail."
+
+msgid ""
+"Specify your participation in a course in the context of your doctoral "
+"training, excepting courses from the catalog of the UCLouvain in which you "
+"are registered to the exam. In this last case, this course will be "
+"automatically added when you succeed it."
+msgstr ""
+"Indiquer ici votre participation à un cours dans le cadre de votre formation "
+"doctorale, à l’exception des cours du catalogue de l’UCLouvain auxquels vous "
+"êtes inscrit ou inscrite à l’examen. Dans ce dernier cas, ce cours sera "
+"ajouté automatiquement en cas de réussite de l’examen."
 
 msgid "Start date"
 msgstr "Date de début"
@@ -1291,6 +1451,13 @@ msgstr "Statut :"
 
 msgid "Submit"
 msgstr "Soumettre"
+
+msgid ""
+"Submit a proof, for example a letter from the editor, a delivery "
+"attestation, the first page of the publication, ..."
+msgstr ""
+"Déposer ici une preuve, par exemple une lettre de l’éditeur, une attestation "
+"de dépôt, la première page de la publication, ..."
 
 msgid "Submit and notify CDD"
 msgstr "Soumettre et avertir la CDD"
@@ -1363,6 +1530,18 @@ msgstr ""
 "nature à aboutir à la présentation d'une thèse de doctorat (art. 2.3.1. du "
 "règlement doctoral)."
 
+msgid ""
+"The authorized publications and their valuation in credits are specified on "
+"the website of you domain doctoral commission. If the publication must be "
+"associated to a conference, first input the conference and use the menu "
+"action \"Add a publication to this conference\""
+msgstr ""
+"Les publications autorisées et leur valorisation en crédits sont indiquées "
+"sur le site web de votreCommission doctorale de domaine. Si la publication "
+"doit être associée à une conférence, encoder d'abord la conférence et "
+"utiliser ensuite l'action du menu \"Ajouter une publication à cette "
+"conférence\""
+
 #, python-format
 msgid ""
 "The canvas of the supervisory panel report must be sent to the accompanying "
@@ -1372,6 +1551,9 @@ msgstr ""
 "Le canevas de procès-verbal doit être transmis au comité d'accompagnement "
 "durant l'épreuve. Il est téléchargeable <a href=\"%(canvas_url)s\" "
 "target=\"_blank\">ici</a>."
+
+msgid "The date cannot be in the future."
+msgstr "La date ne peut pas être dans le futur."
 
 msgid ""
 "The declaration of you doctoral training activities must be consistent with "
@@ -1418,6 +1600,13 @@ msgstr "Lieu de la thèse"
 msgid "This activity and its potential subactivities will be discontinued"
 msgstr "Cette activité et ses potentielles sous-activités seront supprimées"
 
+msgid ""
+"This activity is about an oral communication which is not organized in the "
+"context of a conference."
+msgstr ""
+"Cette activité concerne une communication orale qui n’est pas organisée dans "
+"le cadre d’une conférence."
+
 msgid "This comment will be visible only to administrators."
 msgstr "Ce commentaire ne sera visible que par les gestionnaires."
 
@@ -1440,9 +1629,39 @@ msgstr ""
 "Ce titre est provisoire et pourra être modifié ultérieurement en fonction de "
 "l’analyse du jury."
 
+msgid ""
+"This part is about seminars you went to and which can be valued in your "
+"doctoral training depending on your domain commission."
+msgstr ""
+"Cette section concerne les séminaires auxquels vous avez assisté et que les "
+"dispositions particulières de votre commission de domaine permettent de "
+"valoriser dans votre formation doctorale."
+
+msgid ""
+"This tool allows you to register to a course of the UCLouvain catalogue "
+"only, before taking part in it and while respecting the academic calendar "
+"which determine the limit dates for the inscription to courses and exams. If "
+"a mark is given after the exam, the course will be automatically submitted "
+"to the doctoral commission to value it into your doctoral training. The "
+"courses in the UCLouvain catalogue in which you are not taking part to the "
+"exam or all courses (in the UCLouvain or elsewhere) must be inputted in the "
+"doctoral training tab if you want to value them."
+msgstr ""
+"Cet outil vous permet de s’inscrire à un cours du catalogue de l’UCLouvain "
+"uniquement, avant d’y participer et dans le respect du calendrier académique "
+"qui détermine les dates limites d’inscription aux cours et aux examens. Si "
+"une note est fournie après l’examen, le cours sera automatiquement soumis à "
+"la commission doctorale pour le valoriser dans votre formation doctorale.Les "
+"cours du catalogue UCLouvain pour lequel vous ne participez pas à l’examen "
+"et tous les autres cours (à l’UCLouvain ou ailleurs) doivent être encodés "
+"dans l’onglet « formation doctorale » si vous souhaitez les valoriser."
+
 #, no-python-format
 msgid "Time allocated for thesis (in %)"
 msgstr "Temps consacré à la thèse (en %)"
+
+msgid "Title"
+msgstr "Titre"
 
 msgctxt "doctorate"
 msgid "Title"
@@ -1452,8 +1671,18 @@ msgctxt "jury"
 msgid "Title"
 msgstr "Titre"
 
+msgctxt "parcours_doctoral course"
+msgid "Title"
+msgstr "Intitulé"
+
+msgid "Title (in the publication language)"
+msgstr "Intitulé (dans la langue de la publication)"
+
 msgid "Title of the communication"
 msgstr "Titre de la communication"
+
+msgid "Title of the paper in the language of the activity"
+msgstr "Titre de l’exposé dans la langue de l’activité"
 
 msgid ""
 "To be uploaded if you have a F.R.S.-FNRS (including Televie), FRIA or FRESH "
@@ -1491,6 +1720,24 @@ msgstr "UCLouvain"
 msgid "Undecided"
 msgstr "Non décidé"
 
+msgid ""
+"Under somer conditions specified in the specifics dispositions of your "
+"doctoral commission, you can ask the validation of a prior experience done "
+"after your second cycle and before your admission in the doctoral training "
+"programme. This experience must have a direct link with your research "
+"subject. Following these specifics dispositions, the acquisition of a master "
+"with a deepened aim can be validated as a prior experience (art. 2.2.4 of "
+"the PhD Regulations)."
+msgstr ""
+"Sous certaines conditions indiquées dans les dispositions particulières de "
+"votre commission doctorale, vous pouvez demander la valorisation des acquis "
+"d’une expérience réalisée après votre deuxième cycle et avant votre entrée "
+"dans le programme de formation doctorale. Cette expérience doit être en lien "
+"direct avec votre sujet de recherche.Suivant ces dispositions particulières, "
+"l’obtention d’un master à finalité approfondie peut également faire l’objet "
+"d’une valorisation des acquis de l’expérience (art. 2.2.4 du règlement "
+"doctoral)."
+
 msgid "University"
 msgstr "Université"
 
@@ -1521,6 +1768,12 @@ msgstr "Wallonie Bruxelles International (WBI)"
 msgid "Website"
 msgstr "Site web"
 
+msgid "With reading committee"
+msgstr "Avec comité de lecture"
+
+msgid "Without reading committee"
+msgstr "Sans comité de lecture"
+
 msgid "Work contract"
 msgstr "Contrat de travail"
 
@@ -1538,6 +1791,9 @@ msgstr ""
 
 msgid "YES"
 msgstr "Oui"
+
+msgid "Year"
+msgstr "Année"
 
 msgid "Yes"
 msgstr "Oui"
@@ -1574,8 +1830,17 @@ msgstr ""
 "Vos informations de cotutelle pourront être complétées ultérieurement; "
 "veuillez indiquer \"non\" si vous ne disposez pas encore des informations"
 
+msgid "Your participation"
+msgstr "Votre participation"
+
 msgid "Your participation in the event"
 msgstr "Votre participation à l'événement"
+
+msgid "city"
+msgstr "ville"
+
+msgid "days"
+msgstr "jours"
 
 msgid "dd/mm/yyyy"
 msgstr "jj/mm/aaaa"
@@ -1583,3 +1848,12 @@ msgstr "jj/mm/aaaa"
 #, python-format
 msgid "from %(start)s to %(end)s"
 msgstr "du %(start)s au %(end)s"
+
+msgid "hours"
+msgstr "heures"
+
+#~ msgid "Academic year"
+#~ msgstr "Année académique"
+
+#~ msgid "Course unit instructor (if applicable)"
+#~ msgstr "Titulaire du cours (le cas échéant)"
