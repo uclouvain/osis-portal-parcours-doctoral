@@ -457,6 +457,9 @@ msgstr ""
 msgid "Doctor"
 msgstr ""
 
+msgid "Doctorate thesis field"
+msgstr ""
+
 msgid "Does not have a doctor title"
 msgstr ""
 
@@ -709,8 +712,8 @@ msgid "Incomplete field"
 msgstr ""
 
 msgid ""
-"Information about a potential cotutelle are to be inputted in the \"Doctoral "
-"project\" part."
+"Information about a potential cotutelle are to be inputted in the "
+"\"Research\" part."
 msgstr ""
 
 msgid "Institute"
@@ -723,6 +726,9 @@ msgid "Institute name"
 msgstr ""
 
 msgid "Institution"
+msgstr ""
+
+msgid "Institution in which the PhD thesis has been realised / started"
 msgstr ""
 
 msgid "Internal"
@@ -980,9 +986,6 @@ msgstr ""
 msgid "PAPER"
 msgstr "Paper"
 
-msgid "PARTIAL"
-msgstr "Partially"
-
 msgid "PDF file"
 msgstr ""
 
@@ -1134,9 +1137,6 @@ msgstr ""
 msgid "Proximity Commission for Dental Sciences (DENT)"
 msgstr ""
 
-msgid "Proximity Commission for Genetics and Immunology (GIM)"
-msgstr ""
-
 msgid "Proximity Commission for Motricity Sciences (MOTR)"
 msgstr ""
 
@@ -1150,7 +1150,8 @@ msgid "Proximity commission / Subdomain"
 msgstr ""
 
 msgid ""
-"Proximity commission for cellular and molecular biology, biochemistry (BCM)"
+"Proximity commission for biochemistry, cellular and molecular biology, "
+"genetics, immunology (BCGIM)"
 msgstr ""
 
 msgid "Proximity commission for experimental and clinical research (ECLI)"
@@ -1228,11 +1229,11 @@ msgid ""
 "specifics dispositions."
 msgstr ""
 
-msgid "Research institute"
+msgctxt "tab name"
+msgid "Research"
 msgstr ""
 
-msgctxt "tab name"
-msgid "Research project"
+msgid "Research institute"
 msgstr ""
 
 msgid "Research report"
@@ -1291,9 +1292,6 @@ msgid "Scientific residencies"
 msgstr ""
 
 msgid "Search a person by surname"
-msgstr ""
-
-msgid "Search a tutor by name"
 msgstr ""
 
 msgid "Search for an EU code (outside the EU of the form)"
@@ -1479,9 +1477,6 @@ msgid "There is no request for a new deadline."
 msgstr ""
 
 msgid "Thesis defense"
-msgstr ""
-
-msgid "Thesis field"
 msgstr ""
 
 msgid "Thesis language"

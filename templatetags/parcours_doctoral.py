@@ -125,8 +125,8 @@ class Tab:
 
 
 TAB_TREE = {
-    Tab('doctorate', pgettext('tab name', 'Research project'), 'person-chalkboard'): [
-        Tab('project', pgettext('tab name', 'Research project')),
+    Tab('doctorate', pgettext('tab name', 'Research'), 'person-chalkboard'): [
+        Tab('project', pgettext('tab name', 'Research')),
         Tab('cotutelle', _('Cotutelle')),
         Tab('funding', _('Funding')),
         Tab('supervision', _('Support committee')),
