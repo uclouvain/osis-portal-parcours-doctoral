@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -151,7 +151,18 @@
         <div class="">
           <div class="card col-md-6">
             <div class="card-body">
-              {% bootstrap_form edit_external_member_form %}
+              {% csrf_token %}
+              {% bootstrap_form_errors edit_external_member_form %}
+
+              {% bootstrap_field edit_external_member_form.prenom wrapper_class="mb-3 required_field" %}
+              {% bootstrap_field edit_external_member_form.nom wrapper_class="mb-3 required_field" %}
+              {% bootstrap_field edit_external_member_form.email wrapper_class="mb-3 required_field" %}
+              {% bootstrap_field edit_external_member_form.est_docteur %}
+              {% bootstrap_field edit_external_member_form.institution wrapper_class="mb-3 required_field" %}
+              {% bootstrap_field edit_external_member_form.ville wrapper_class="mb-3 required_field" %}
+              {% bootstrap_field edit_external_member_form.pays wrapper_class="mb-3 required_field" %}
+              {% bootstrap_field edit_external_member_form.langue wrapper_class="mb-3 required_field" %}
+
               <button type="submit" class="btn btn-primary float-end" name="edit_external_member_form">
                 {% trans "Save" context 'doctorate' %}
               </button>
