@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -30,15 +30,18 @@ from base.models.utils.utils import ChoiceEnum
 
 
 class ChoixStatutDoctorat(ChoiceEnum):
-    # Before enrolment
-    ADMISSION_IN_PROGRESS = _('ADMISSION_IN_PROGRESS')
-    # After enrolment
-    ADMITTED = _('ADMITTED')
+    # Creation in progress
+    EN_ATTENTE_INJECTION_EPC = _('EN_ATTENTE_INJECTION_EPC')
+    EN_COURS_DE_CREATION_PAR_GESTIONNAIRE = _('EN_COURS_DE_CREATION_PAR_GESTIONNAIRE')
+    # After creation
+    ADMIS = _('ADMIS')
+    # Groupe de supervision
+    EN_ATTENTE_DE_SIGNATURE = _('EN_ATTENTE_DE_SIGNATURE')
     # Confirmation paper
-    SUBMITTED_CONFIRMATION = _('SUBMITTED_CONFIRMATION')
-    PASSED_CONFIRMATION = _('PASSED_CONFIRMATION')
-    NOT_ALLOWED_TO_CONTINUE = _('NOT_ALLOWED_TO_CONTINUE')
-    CONFIRMATION_TO_BE_REPEATED = _('CONFIRMATION_TO_BE_REPEATED')
+    CONFIRMATION_SOUMISE = _('CONFIRMATION_SOUMISE')
+    CONFIRMATION_REUSSIE = _('CONFIRMATION_REUSSIE')
+    NON_AUTORISE_A_POURSUIVRE = _('NON_AUTORISE_A_POURSUIVRE')
+    CONFIRMATION_A_REPRESENTER = _('CONFIRMATION_A_REPRESENTER')
     # Jury
     JURY_SOUMIS = _('JURY_SOUMIS')
     JURY_APPROUVE_CA = _('JURY_APPROUVE_CA')

@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ from typing import List
 import osis_parcours_doctoral_sdk
 from django.http import Http404
 from osis_parcours_doctoral_sdk import ApiClient, ApiException
-from osis_parcours_doctoral_sdk.api import references_api as doctorate_references_api
 from osis_reference_sdk import ApiClient
 from osis_reference_sdk.api import (
     academic_years_api,
@@ -40,28 +39,10 @@ from osis_reference_sdk.api import (
 )
 from osis_reference_sdk.model.academic_year import AcademicYear
 
-from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk
 from frontoffice.settings.osis_sdk import reference as reference_sdk
 from frontoffice.settings.osis_sdk.utils import build_mandatory_auth_headers
 from parcours_doctoral.contrib.enums.diploma import StudyType
 from parcours_doctoral.services.mixins import ServiceMeta
-
-
-class DoctorateReferencesAPIClient:
-    def __new__(cls):
-        api_config = parcours_doctoral_sdk.build_configuration()
-        return doctorate_references_api.ReferencesApi(osis_parcours_doctoral_sdk.ApiClient(configuration=api_config))
-
-
-class DoctorateReferencesService(metaclass=ServiceMeta):
-    api_exception_cls = osis_parcours_doctoral_sdk.ApiException
-
-    @classmethod
-    def get_scholarship(cls, person, scholarship_uuid):
-        return DoctorateReferencesAPIClient().retrieve_scholarship(
-            uuid=scholarship_uuid,
-            **build_mandatory_auth_headers(person),
-        )
 
 
 class CountriesAPIClient:
