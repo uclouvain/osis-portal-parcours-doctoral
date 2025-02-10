@@ -50,10 +50,7 @@ msgstr ""
 msgid "ACCEPTEE"
 msgstr "Acceptée"
 
-msgid "ADMISSION_IN_PROGRESS"
-msgstr "Admission en cours"
-
-msgid "ADMITTED"
+msgid "ADMIS"
 msgstr "Admis"
 
 msgid "Academic year"
@@ -220,11 +217,17 @@ msgstr "Formation complémentaire"
 msgid "CONFERENCE"
 msgstr "Conférences, colloques"
 
+msgid "CONFIRMATION_A_REPRESENTER"
+msgstr "Confirmation à représenter"
+
 msgid "CONFIRMATION_PAPER"
 msgstr "Épreuve de confirmation"
 
-msgid "CONFIRMATION_TO_BE_REPEATED"
-msgstr "Confirmation à représenter"
+msgid "CONFIRMATION_REUSSIE"
+msgstr "Épreuve de confirmation réussie"
+
+msgid "CONFIRMATION_SOUMISE"
+msgstr "Confirmation soumise"
 
 msgid "COURSE"
 msgstr "Cours, formation et écoles"
@@ -422,6 +425,9 @@ msgstr "N'est pas porteur du titre de docteur"
 msgid "Download as PDF"
 msgstr "Télécharger en tant que PDF"
 
+msgid "Download the request to modify the supervisory panel"
+msgstr "Télécharger la demande de modification du comité d'accompagnement"
+
 msgid "Dr"
 msgstr "Dr."
 
@@ -446,6 +452,15 @@ msgstr "ECTS pour la participation"
 
 msgid "ECTS for the participation"
 msgstr "ECTS pour la participation"
+
+msgid "EN_ATTENTE_DE_SIGNATURE"
+msgstr "En attente de signature"
+
+msgid "EN_ATTENTE_INJECTION_EPC"
+msgstr "En attente d'injection EPC"
+
+msgid "EN_COURS_DE_CREATION_PAR_GESTIONNAIRE"
+msgstr "En cours de création par un gestionnaire"
 
 msgid "Edit"
 msgstr "Modifier"
@@ -793,6 +808,9 @@ msgstr ""
 "Formule 2 (La défense et la soutenance sont organisées le même jour, et "
 "soumises à une condition de recevabilité)"
 
+msgid "Modification of the supervisory panel"
+msgstr "Modification du comité d'accompagnement"
+
 msgctxt "edit"
 msgid "Modify"
 msgstr "Modifier"
@@ -810,11 +828,11 @@ msgstr "Sans objet"
 msgid "NO"
 msgstr "Non"
 
+msgid "NON_AUTORISE_A_POURSUIVRE"
+msgstr "Non autorisé à poursuivre"
+
 msgid "NON_SOUMISE"
 msgstr "Non soumise"
-
-msgid "NOT_ALLOWED_TO_CONTINUE"
-msgstr "Non autorisé à poursuivre"
 
 msgid "NOT_INVITED"
 msgstr "Pas encore invité à signer"
@@ -850,7 +868,7 @@ msgid ""
 "No later than 24 months after the CDD grants PhD admission, the candidate "
 "must take a confirmation exam."
 msgstr ""
-"Dans un délai maximum de 24 mois à compter de la date d'admission au "
+"Dans un délai de maximum 24 mois à compter de la date d'admission au "
 "doctorat par la CDD, le ou la candidate présente une épreuve de confirmation."
 
 msgid "No one invited"
@@ -901,9 +919,6 @@ msgstr "Épreuve"
 
 msgid "PARTIAL"
 msgstr "En partie"
-
-msgid "PASSED_CONFIRMATION"
-msgstr "Épreuve de confirmation réussie"
 
 msgid "PDF file"
 msgstr "Fichier PDF"
@@ -1197,9 +1212,6 @@ msgstr "Soumise"
 
 msgid "STATISTICS"
 msgstr "Statistiques"
-
-msgid "SUBMITTED_CONFIRMATION"
-msgstr "Confirmation soumise"
 
 msgctxt "doctorate"
 msgid "Save"

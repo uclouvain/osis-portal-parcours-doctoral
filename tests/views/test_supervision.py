@@ -25,10 +25,18 @@
 # ##############################################################################
 
 from django.shortcuts import resolve_url
+from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
 from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
-from osis_parcours_doctoral_sdk.model.supervision_dto_promoteur import SupervisionDTOPromoteur
-from osis_parcours_doctoral_sdk.model.supervision_dto_signatures_membres_ca import SupervisionDTOSignaturesMembresCA
-from osis_parcours_doctoral_sdk.model.supervision_dto_signatures_promoteurs import SupervisionDTOSignaturesPromoteurs
+from osis_parcours_doctoral_sdk.model.supervision_dto_promoteur import (
+    SupervisionDTOPromoteur,
+)
+from osis_parcours_doctoral_sdk.model.supervision_dto_signatures_membres_ca import (
+    SupervisionDTOSignaturesMembresCA,
+)
+from osis_parcours_doctoral_sdk.model.supervision_dto_signatures_promoteurs import (
+    SupervisionDTOSignaturesPromoteurs,
+)
 
 from parcours_doctoral.contrib.enums.actor import ChoixEtatSignature
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
@@ -119,6 +127,15 @@ class SupervisionTestCase(BaseDoctorateTestCase):
             promoteur_reference="uuid-0123456978",
         )
 
+    def test_should_return_permission_denied_if_no_access(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.links['retrieve_supervision'] = ActionLink._from_openapi_data(error='access error')
+
+        response = self.client.get(self.detail_url)
+
+        self.assertEqual(response.status_code, 403)
+
     def test_should_detail_supervision_member(self):
         self.client.force_login(self.person.user)
 
@@ -130,3 +147,53 @@ class SupervisionTestCase(BaseDoctorateTestCase):
         self.assertContains(response, "A public comment to display")
         self.assertContains(response, ChoixEtatSignature.DECLINED.value)
         self.mock_doctorate_api.return_value.retrieve_supervision.assert_called()
+
+        # Display the link to download the supervision canvas
+        canvas_url = resolve_url('parcours_doctoral:supervision-canvas', pk=self.doctorate_uuid)
+        self.assertContains(response, canvas_url)
+
+    def test_should_not_display_supervision_canvas_link_if_forbidden(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.links['retrieve_supervision_canvas'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+
+        response = self.client.get(self.detail_url)
+
+        # Hide the link to download the supervision canvas
+        canvas_url = resolve_url('parcours_doctoral:supervision-canvas', pk=self.doctorate_uuid)
+        self.assertNotContains(response, canvas_url)
+
+
+class SupervisionCanvasTestCase(BaseDoctorateTestCase):
+    def setUp(self):
+        super().setUp()
+
+        self.canvas_view_url = resolve_url('parcours_doctoral:supervision-canvas', pk=self.doctorate_uuid)
+        self.canvas_file_url = resolve_url('parcours_doctoral:project', pk=self.doctorate_uuid)
+
+        self.retrieve_supervision_canvas = self.mock_doctorate_api.return_value.retrieve_supervision_canvas
+        self.retrieve_supervision_canvas.return_value = SupervisionCanvas._from_openapi_data(url=self.canvas_file_url)
+
+    def test_should_return_permission_denied_if_no_access(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.links['retrieve_supervision_canvas'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+
+        response = self.client.get(self.canvas_view_url)
+
+        self.assertEqual(response.status_code, 403)
+
+    def test_should_redirect_to_canvas_file_url(self):
+        self.client.force_login(self.person.user)
+
+        response = self.client.get(self.canvas_view_url)
+
+        self.assertRedirects(
+            response,
+            self.canvas_file_url,
+            fetch_redirect_response=False,
+        )

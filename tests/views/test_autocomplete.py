@@ -32,7 +32,7 @@ from django.test import TestCase
 from django.urls import reverse
 from osis_organisation_sdk.model.entite import Entite
 from osis_organisation_sdk.model.paginated_entites import PaginatedEntites
-from osis_parcours_doctoral_sdk.model.scholarship import Scholarship
+from osis_reference_sdk.model.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
 from parcours_doctoral.contrib.enums.scholarship import TypeBourse
@@ -247,7 +247,7 @@ class AutocompleteTestCase(TestCase):
         ]
         self.assertDictEqual(response.json(), {'pagination': {'more': False}, 'results': expected})
 
-    @patch('osis_parcours_doctoral_sdk.api.autocomplete_api.AutocompleteApi')
+    @patch('osis_reference_sdk.api.scholarship_api.ScholarshipApi')
     def test_autocomplete_scholarship(self, api):
         first_scholarship_uuid = str(uuid.uuid4())
         second_scholarship_uuid = str(uuid.uuid4())

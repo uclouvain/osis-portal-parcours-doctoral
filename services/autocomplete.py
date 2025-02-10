@@ -43,14 +43,6 @@ class DoctorateAutocompleteService(metaclass=ServiceMeta):
     api_exception_cls = ApiException
 
     @classmethod
-    def get_scholarships(cls, person, search='', **kwargs):
-        return DoctorateAutocompleteAPIClient().list_scholarships(
-            search=search,
-            **kwargs,
-            **build_mandatory_auth_headers(person),
-        )
-
-    @classmethod
     def autocomplete_tutors(cls, person, **kwargs):
         return DoctorateAutocompleteAPIClient().list_tutors(
             **kwargs,
