@@ -408,6 +408,9 @@ msgstr ""
 msgid "Doctor"
 msgstr ""
 
+msgid "Doctorate thesis field"
+msgstr ""
+
 msgid "Does not have a doctor title"
 msgstr ""
 
@@ -627,8 +630,8 @@ msgid "Incomplete field"
 msgstr ""
 
 msgid ""
-"Information about a potential cotutelle are to be inputted in the \"Doctoral "
-"project\" part."
+"Information about a potential cotutelle are to be inputted in the "
+"\"Research\" part."
 msgstr ""
 
 msgid "Institute"
@@ -641,6 +644,9 @@ msgid "Institute name"
 msgstr ""
 
 msgid "Institution"
+msgstr ""
+
+msgid "Institution in which the PhD thesis has been realised / started"
 msgstr ""
 
 msgid "Internal"
@@ -1109,11 +1115,11 @@ msgstr ""
 msgid "Request signatures"
 msgstr ""
 
-msgid "Research institute"
+msgctxt "tab name"
+msgid "Research"
 msgstr ""
 
-msgctxt "tab name"
-msgid "Research project"
+msgid "Research institute"
 msgstr ""
 
 msgid "Research report"
@@ -1172,9 +1178,6 @@ msgid "Scientific residencies"
 msgstr ""
 
 msgid "Search a person by surname"
-msgstr ""
-
-msgid "Search a tutor by name"
 msgstr ""
 
 msgid "Search for an EU code (outside the EU of the form)"
@@ -1321,9 +1324,6 @@ msgid "There is no request for a new deadline."
 msgstr ""
 
 msgid "Thesis defense"
-msgstr ""
-
-msgid "Thesis field"
 msgstr ""
 
 msgid "Thesis language"
