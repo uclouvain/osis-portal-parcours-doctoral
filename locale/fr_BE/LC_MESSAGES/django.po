@@ -419,6 +419,9 @@ msgstr "ARES - Coopération au développement"
 msgid "Doctor"
 msgstr "Docteur"
 
+msgid "Doctorate thesis field"
+msgstr "Domaine de la thèse de doctorat"
+
 msgid "Does not have a doctor title"
 msgstr "N'est pas porteur du titre de docteur"
 
@@ -658,11 +661,11 @@ msgid "Incomplete field"
 msgstr "Non renseigné(e)"
 
 msgid ""
-"Information about a potential cotutelle are to be inputted in the \"Doctoral "
-"project\" part."
+"Information about a potential cotutelle are to be inputted in the "
+"\"Research\" part."
 msgstr ""
 "Les informations concernant une éventuelle cotutelle sont à indiquer dans la "
-"partie « Projet doctoral »."
+"partie « Recherche »."
 
 msgid "Institute"
 msgstr "Établissement"
@@ -675,6 +678,9 @@ msgstr "Nom de l'établissement"
 
 msgid "Institution"
 msgstr "Institution"
+
+msgid "Institution in which the PhD thesis has been realised / started"
+msgstr "Institution où la thèse de doctorat a été réalisée/entamée"
 
 msgid "Internal"
 msgstr "Interne"
@@ -1165,12 +1171,12 @@ msgstr "Demander une nouvelle échéance pour l'épreuve de confirmation"
 msgid "Request signatures"
 msgstr "Demander les signatures"
 
+msgctxt "tab name"
+msgid "Research"
+msgstr "Recherche"
+
 msgid "Research institute"
 msgstr "Institut de recherche"
-
-msgctxt "tab name"
-msgid "Research project"
-msgstr "Projet de recherche"
 
 msgid "Research report"
 msgstr "Rapport de recherche"
@@ -1229,9 +1235,6 @@ msgstr "Séjours scientifiques"
 
 msgid "Search a person by surname"
 msgstr "Rechercher une personne par son nom"
-
-msgid "Search a tutor by name"
-msgstr "Rechercher un tuteur par son nom"
 
 msgid "Search for an EU code (outside the EU of the form)"
 msgstr "Rechercher un code UE (hors UE du formulaire)"
@@ -1400,9 +1403,6 @@ msgstr "Il n'y a pas de demande de nouvelle échéance."
 
 msgid "Thesis defense"
 msgstr "Défense et soutenance"
-
-msgid "Thesis field"
-msgstr "Domaine de la thèse"
 
 msgid "Thesis language"
 msgstr "Langue de rédaction de la thèse"
