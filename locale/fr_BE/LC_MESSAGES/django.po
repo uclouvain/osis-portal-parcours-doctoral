@@ -497,6 +497,9 @@ msgstr "N'est pas porteur du titre de docteur"
 msgid "Download as PDF"
 msgstr "Télécharger en tant que PDF"
 
+msgid "Download the PDF recap"
+msgstr "Télécharger le PDF récapitulatif"
+
 msgid "Download the request to modify the supervisory panel"
 msgstr "Télécharger la demande de modification du comité d'accompagnement"
 

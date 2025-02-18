@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -118,6 +118,13 @@ class DoctorateService(metaclass=ServiceMeta):
     @classmethod
     def get_supervision_canvas(cls, person, uuid_doctorate) -> SupervisionCanvas:
         return DoctorateAPIClient().retrieve_supervision_canvas(
+            uuid=uuid_doctorate,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_training_recap_pdf(cls, person, uuid_doctorate) -> SupervisionCanvas:
+        return DoctorateAPIClient().training_recap_pdf(
             uuid=uuid_doctorate,
             **build_mandatory_auth_headers(person),
         )
