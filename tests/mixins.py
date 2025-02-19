@@ -190,6 +190,7 @@ class BaseDoctorateTestCase(TestCase):
                         'retrieve_doctorate_training',
                         'retrieve_complementary_training',
                         'retrieve_course_enrollment',
+                        'retrieve_assessment_enrollment',
                         'add_training',
                         'submit_training',
                         'assent_training',

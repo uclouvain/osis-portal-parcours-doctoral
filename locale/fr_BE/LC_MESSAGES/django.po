@@ -60,6 +60,9 @@ msgstr "Acceptée"
 msgid "ADMIS"
 msgstr "Admis"
 
+msgid "Academic year"
+msgstr "Année académique"
+
 msgctxt "publication-status"
 msgid "Accepted"
 msgstr "Acceptée"
@@ -189,6 +192,9 @@ msgstr "Êtes-vous sûr de vouloir requérir les signatures pour ce doctorat ?"
 
 msgid "As it appears in an official course catalogue"
 msgstr "Tel qu’il apparait dans un catalogue officiel de formation"
+
+msgid "Assessment enrollments"
+msgstr "Inscriptions aux évaluations"
 
 msgid "Attestation"
 msgstr "Attestation"
@@ -403,6 +409,9 @@ msgstr "Créé le :"
 msgid "Current funding"
 msgstr "Financement actuel"
 
+msgid "DESINSCRITE"
+msgstr "Désinscrite"
+
 msgid "DOCTORAL_TRAINING"
 msgstr "Formation doctorale"
 
@@ -469,6 +478,9 @@ msgstr "Désigner comme promoteur de référence"
 
 msgid "Detailed curriculum vitae"
 msgstr "Curriculum vitae détaillé"
+
+msgid "Details"
+msgstr "Détails"
 
 msgid "Development cooperation (ARES)"
 msgstr "ARES - Coopération au développement"
@@ -547,6 +559,9 @@ msgstr "Anglais"
 
 msgid "Enroll in a course"
 msgstr "S'inscrire à un cours"
+
+msgid "Enroll in an assessment"
+msgstr "S'inscrire à une évaluation"
 
 msgid "Erasmus Mundus"
 msgstr "Erasmus Mundus"
@@ -826,6 +841,10 @@ msgstr "Jury refusé par CDD"
 msgid "JURY_SOUMIS"
 msgstr "Jury soumis"
 
+msgctxt "session"
+msgid "January"
+msgstr "Janvier"
+
 msgid "Joint research project (ARC)"
 msgstr "ARC - Action de Recherche Concertée"
 
@@ -838,6 +857,10 @@ msgstr "Demande d'ouverture de cotutelle"
 msgid "Journal, publishing house or depository institution"
 msgstr "Revue, maison d’édition ou institution de dépôt"
 
+msgctxt "session"
+msgid "June"
+msgstr "Juin"
+
 msgid "Jury composition"
 msgstr "Composition du jury"
 
@@ -849,6 +872,9 @@ msgstr "Mots-clés"
 
 msgid "Last name / First name / Global id"
 msgstr "Nom / Prénom / ID Global"
+
+msgid "Late enrollment"
+msgstr "Inscription tardive"
 
 msgid "Later > blocking"
 msgstr "Ultérieurement > bloquant"
@@ -1388,11 +1414,18 @@ msgstr "Sélectionner pour action en masse"
 msgid "Selection committee"
 msgstr "Comité de sélection"
 
+msgctxt "session"
+msgid "September"
+msgstr "Septembre"
+
 msgid "Service type"
 msgstr "Type de service"
 
 msgid "Services"
 msgstr "Services"
+
+msgid "Session"
+msgstr "Session"
 
 msgid "Set as member"
 msgstr "Désigner comme membre"
@@ -1805,6 +1838,12 @@ msgid "You appear to have unsaved changes, which will be lost."
 msgstr ""
 "Vous semblez avoir des modifications non enregistrées, celles-ci seront "
 "perdues."
+
+msgid "You have been withdrawn from this assessment."
+msgstr "Vous avez été désinscrit·e de cette évaluation"
+
+msgid "You have not been enrolled in any assessment yet."
+msgstr "Vous n'avez pas encore été inscrit·e à une évaluation."
 
 msgid "You must correct your application before you can request signatures."
 msgstr ""

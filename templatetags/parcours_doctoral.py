@@ -141,6 +141,7 @@ TAB_TREE = {
     ],
     Tab('course-enrollment', _('Course unit enrolment'), 'book-open-reader'): [
         Tab('course-enrollment', _('Course unit enrolment')),
+        Tab('assessment-enrollment', _('Assessment enrollments')),
     ],
     Tab('defense', pgettext('doctorate tab', 'Defense'), 'person-chalkboard'): [
         Tab('jury-preparation', pgettext('doctorate tab', 'Defense method')),
