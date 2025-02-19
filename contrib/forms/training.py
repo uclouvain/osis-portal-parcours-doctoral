@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,23 +28,24 @@ from functools import partial
 
 from django import forms
 from django.core import validators
-from django.utils.translation import get_language, gettext_lazy as _, pgettext_lazy
+from django.utils.translation import get_language
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 
+from base.models.academic_year import current_academic_year
 from parcours_doctoral.contrib.enums.training import (
     ChoixComiteSelection,
     ChoixStatutPublication,
     ChoixTypeEpreuve,
     ContexteFormation,
 )
+from parcours_doctoral.contrib.forms import BooleanRadioSelect, CustomDateInput
+from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUploadField
 from parcours_doctoral.contrib.forms import (
-    BooleanRadioSelect,
-    CustomDateInput,
     SelectOrOtherField,
-    get_academic_years_choices,
-    get_country_initial_choices,
-    DoctorateFileUploadField as FileUploadField,
     autocomplete,
+    get_country_initial_choices,
 )
 
 __all__ = [
@@ -602,6 +603,7 @@ class UclCourseForm(ActivityFormMixin, forms.Form):
         empty_value=None,
         label=_("Academic year"),
         widget=autocomplete.ListSelect2(),
+        disabled=True,
     )
     learning_unit_year = forms.CharField(
         label=_("Learning unit"),
@@ -609,7 +611,7 @@ class UclCourseForm(ActivityFormMixin, forms.Form):
             url='parcours_doctoral:autocomplete:learning-unit-years',
             attrs={
                 'data-html': True,
-                'data-placeholder': _('Search for an EU code (outside the EU of the form)'),
+                'data-placeholder': _('Search for an EU code'),
             },
             forward=["academic_year"],
         ),
@@ -617,11 +619,9 @@ class UclCourseForm(ActivityFormMixin, forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['academic_year'].choices = [
-            choice
-            for choice in get_academic_years_choices(self.person)
-            if not choice[0] or choice[0] >= datetime.date.today().year
-        ]
+        academic_year = current_academic_year()
+        self.fields['academic_year'].choices = [(academic_year.year, f"{academic_year.year}-{academic_year.year + 1}")]
+        self.fields['academic_year'].initial = academic_year.year
         self.fields['learning_unit_year'].required = True
 
         # Filter out disabled contexts

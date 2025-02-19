@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ from unittest.mock import Mock, patch
 from django.shortcuts import resolve_url
 from django.test import override_settings
 from django.utils.translation import gettext_lazy as _
+
+from base.tests.factories.academic_year import get_current_year
 from osis_parcours_doctoral_sdk import ApiException
 from osis_parcours_doctoral_sdk.model.seminar_communication import SeminarCommunication
 
@@ -339,12 +341,12 @@ class TrainingTestCase(BaseDoctorateTestCase):
     @patch('osis_learning_unit_sdk.api.learning_units_api.LearningUnitsApi')
     def test_update_course_enrollment(self, learning_unit_api, acad_api):
         learning_unit_api.return_value.learningunitstitle_read.return_value = {'title': "dumb text"}
-        current_year = datetime.date.today().year
+        current_year = get_current_year()
         acad_api.return_value.get_academic_years.return_value = Mock(
             results=[
                 Mock(
-                    start_date=datetime.date(current_year, 9, 2),
-                    end_date=datetime.date(current_year + 1, 9, 1),
+                    start_date=datetime.date(current_year, 9, 15),
+                    end_date=datetime.date(current_year + 1, 9, 30),
                     year=current_year,
                 )
             ]
@@ -367,8 +369,7 @@ class TrainingTestCase(BaseDoctorateTestCase):
         response = self.client.post(
             url,
             data={
-                'context': ContexteFormation.FREE_COURSE.name,
-                'academic_year': current_year,
+                'context': ContexteFormation.DOCTORAL_TRAINING.name,
                 'learning_unit_year': 'ESA2004',
             },
         )

@@ -512,9 +512,6 @@ msgstr "Externe"
 msgid "FNRS"
 msgstr "FNRS"
 
-msgid "FREE_COURSE"
-msgstr "Cours libre"
-
 msgid "FRESH"
 msgstr "FRESH"
 
@@ -1238,8 +1235,8 @@ msgstr "Rechercher une personne par son nom"
 msgid "Search a tutor by name"
 msgstr "Rechercher un tuteur par son nom"
 
-msgid "Search for an EU code (outside the EU of the form)"
-msgstr "Rechercher un code UE (hors UE du formulaire)"
+msgid "Search for an EU code"
+msgstr "Rechercher un code UE"
 
 msgid "Secretary"
 msgstr "Secrétaire"

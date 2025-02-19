@@ -29,6 +29,8 @@ from unittest.mock import ANY, MagicMock, patch
 from uuid import uuid4
 
 from django.test import TestCase, override_settings
+
+from base.tests.factories.academic_year import create_current_academic_year
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_cotutelle import (
@@ -78,6 +80,7 @@ class BaseDoctorateTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
+        create_current_academic_year()
         cls.person = PersonFactory()
         cls.doctorate_uuid = str(uuid4())
         cls.scholarship_uuid = str(uuid4())
