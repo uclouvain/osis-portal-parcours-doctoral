@@ -590,9 +590,6 @@ msgstr "Externe"
 msgid "FNRS"
 msgstr "FNRS"
 
-msgid "FREE_COURSE"
-msgstr "Cours libre"
-
 msgid "FRESH"
 msgstr "FRESH"
 
@@ -1399,8 +1396,8 @@ msgstr "Séjours scientifiques"
 msgid "Search a person by surname"
 msgstr "Rechercher une personne par son nom"
 
-msgid "Search for an EU code (outside the EU of the form)"
-msgstr "Rechercher un code UE (hors UE du formulaire)"
+msgid "Search for an EU code"
+msgstr "Rechercher un code UE"
 
 msgid "Second author"
 msgstr "Deuxième auteur.trice"
@@ -1899,3 +1896,9 @@ msgstr "du %(start)s au %(end)s"
 
 msgid "hours"
 msgstr "heures"
+
+#~ msgid "Search for an EU code (outside the EU of the form)"
+#~ msgstr "Rechercher un code UE (hors UE du formulaire)"
+
+#~ msgid "Search a tutor by name"
+#~ msgstr "Rechercher un tuteur par son nom"

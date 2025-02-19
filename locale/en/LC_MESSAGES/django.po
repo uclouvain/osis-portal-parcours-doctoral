@@ -571,9 +571,6 @@ msgstr ""
 msgid "FNRS"
 msgstr ""
 
-msgid "FREE_COURSE"
-msgstr "Open course"
-
 msgid "FRESH"
 msgstr ""
 
@@ -1323,7 +1320,7 @@ msgstr ""
 msgid "Search a person by surname"
 msgstr ""
 
-msgid "Search for an EU code (outside the EU of the form)"
+msgid "Search for an EU code"
 msgstr ""
 
 msgid "Second author"
