@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2022 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -79,6 +79,21 @@ class DoctorateTrainingService(metaclass=ServiceMeta):
     def list_course_enrollment(cls, person, uuid):
         return APIClient().list_course_enrollment(
             uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def list_assessment_enrollment(cls, person, uuid):
+        return APIClient().list_inscription_evaluation_dtos(
+            uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def retrieve_assessment_enrollment(cls, person, uuid, enrollment_uuid):
+        return APIClient().retrieve_inscription_evaluation_dto(
+            uuid=uuid,
+            enrollment_uuid=enrollment_uuid,
             **build_mandatory_auth_headers(person),
         )
 
