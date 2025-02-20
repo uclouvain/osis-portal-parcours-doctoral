@@ -307,7 +307,7 @@ class ConferenceCommunicationForm(ActivityFormMixin, forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['title'].help_text = _("Name in the language of the manifestation")
+        self.fields['title'].help_text = _("Specify the title in the language of the activity")
         self.fields['participating_proof'].help_text = _(
             "A document proving that the communication was done (i.e. communication certificate)"
         )
@@ -499,10 +499,7 @@ class PublicationForm(ActivityFormMixin, forms.Form):
         widget=autocomplete.Select2(),
         required=True,
         coerce=int,
-        help_text=_(
-            "For a released text, specify the month and year of publication."
-            " Else, specify the month and year of the manuscript."
-        ),
+        help_text=_("If necessary, specify the date of publication, delivery, acceptation or of the manuscript"),
     )
 
     class Meta:
@@ -543,9 +540,6 @@ class PublicationForm(ActivityFormMixin, forms.Form):
 
         super().__init__(*args, **kwargs)
 
-        self.fields['start_date'].help_text = _(
-            "If necessary, specify the date of publication, delivery, acceptation or of the manuscript"
-        )
         self.fields['publication_status'].help_text = _(
             "Specify the status of the publication or of the patent. Consult the website of your commission for "
             "more detail."
@@ -761,6 +755,7 @@ class CourseForm(ActivityFormMixin, forms.Form):
     type = ConfigurableActivityTypeField("course_types", label=_("Activity type"))
     subtitle = forms.CharField(
         label=_("Course unit code (if applicable)"),
+        help_text=_("As it appears in an official course catalogue"),
         max_length=200,
         required=False,
     )

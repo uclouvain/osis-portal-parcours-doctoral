@@ -104,7 +104,7 @@ msgstr ""
 msgid "Add a paper/presentation for this conference"
 msgstr ""
 
-msgid "Add a paper/presentation for this residency"
+msgid "Add a paper/presentation for this research residency"
 msgstr ""
 
 msgid "Add a promoter or a CA member"
@@ -189,6 +189,7 @@ msgstr ""
 msgid "Authors"
 msgstr ""
 
+msgctxt "publication-status"
 msgid "Awaiting approval"
 msgstr ""
 
@@ -220,7 +221,7 @@ msgid "CHEMISTRY"
 msgstr "Chemistry"
 
 msgid "COMMUNICATION"
-msgstr ""
+msgstr "Oral communication (excluding conference)"
 
 msgid "COMPLEMENTARY_TRAINING"
 msgstr "Further training"
@@ -252,7 +253,7 @@ msgstr ""
 msgid "Certificate of participation in the presentation"
 msgstr ""
 
-msgid "Change the paper for this residency"
+msgid "Change the paper for this research residency"
 msgstr ""
 
 msgid "Change the publication for this conference"
@@ -425,6 +426,7 @@ msgctxt "doctorate decision"
 msgid "Denied"
 msgstr ""
 
+msgctxt "publication-status"
 msgid "Deposited"
 msgstr ""
 
@@ -994,7 +996,7 @@ msgid "PRIVATE_DEFENSE"
 msgstr "Private defence"
 
 msgid "PUBLICATION"
-msgstr "Publication"
+msgstr "Publications"
 
 msgid "PUBLIC_DEFENSE"
 msgstr "Public defence"
@@ -1169,6 +1171,7 @@ msgstr ""
 msgid "Publication type"
 msgstr ""
 
+msgctxt "publication-status"
 msgid "Published"
 msgstr ""
 
@@ -1347,6 +1350,9 @@ msgstr ""
 msgid ""
 "Specify the status of the publication or of the patent. Consult the website "
 "of your commission for more detail."
+msgstr ""
+
+msgid "Specify the title in the language of the activity"
 msgstr ""
 
 msgid ""
@@ -1602,6 +1608,7 @@ msgstr ""
 msgid "University"
 msgstr ""
 
+msgctxt "publication-status"
 msgid "Unsubmitted"
 msgstr ""
 
