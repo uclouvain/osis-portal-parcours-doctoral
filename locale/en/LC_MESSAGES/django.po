@@ -1329,7 +1329,7 @@ msgstr ""
 msgid "Thesis language"
 msgstr ""
 
-msgid "Thesis location in UCLouvain"
+msgid "Thesis location"
 msgstr ""
 
 msgid "This activity and its potential subactivities will be discontinued"

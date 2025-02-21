@@ -1407,8 +1407,8 @@ msgstr "Défense et soutenance"
 msgid "Thesis language"
 msgstr "Langue de rédaction de la thèse"
 
-msgid "Thesis location in UCLouvain"
-msgstr "Lieu de la thèse à l'UCLouvain"
+msgid "Thesis location"
+msgstr "Lieu de la thèse"
 
 msgid "This activity and its potential subactivities will be discontinued"
 msgstr "Cette activité et ses potentielles sous-activités seront supprimées"
