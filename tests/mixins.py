@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -55,11 +55,15 @@ from osis_parcours_doctoral_sdk.model.parcours_doctoral_recherche_dto_formation_
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_recherche_dto_formation_entite_gestion import (
     ParcoursDoctoralRechercheDTOFormationEntiteGestion,
 )
-from osis_reference_sdk.model.scholarship import Scholarship
 from osis_reference_sdk.model.language import Language
+from osis_reference_sdk.model.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
-from parcours_doctoral.contrib.enums import ChoixStatutDoctorat, TypeBourse
+from parcours_doctoral.contrib.enums import (
+    AdmissionType,
+    ChoixStatutDoctorat,
+    TypeBourse,
+)
 from parcours_doctoral.contrib.enums.financement import (
     ChoixTypeContratTravail,
     ChoixTypeFinancement,
@@ -101,6 +105,7 @@ class BaseDoctorateTestCase(TestCase):
             date_changement_statut=datetime.datetime(2024, 1, 3),
             cree_le=datetime.datetime(2024, 1, 1),
             uuid_admission=str(uuid.uuid4()),
+            type_admission=AdmissionType.ADMISSION.name,
             intitule_secteur_formation='First sector',
             formation=ParcoursDoctoralRechercheDTOFormation._from_openapi_data(
                 sigle='SC3DP',

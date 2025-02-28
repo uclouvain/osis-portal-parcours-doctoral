@@ -34,23 +34,27 @@
 }
 
 .card-success > .card-header {
-    color: white;
-    background-color: var(--bs-success);
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
 }
 
 .card-info > .card-header {
-    color: black;
-    background-color: var(--bs-info);
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
 }
 
 .card-warning > .card-header {
-    color: black;
-    background-color: var(--bs-warning);
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
 }
 
 .card-danger > .card-header {
-    color: white;
-    background-color: var(--bs-danger);
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }
 
 .card-light > .card-header {
@@ -66,7 +70,7 @@
 #activity-list .card-header .card-title > a {
     text-decoration: none;
     width: 20px;
-    color: white;
+    color: inherit;
 }
 
 .card-header .card-title > a:after {

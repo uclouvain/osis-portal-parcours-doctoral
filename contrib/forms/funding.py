@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,18 +27,19 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from parcours_doctoral.constants import FIELD_REQUIRED_MESSAGE
+from parcours_doctoral.contrib.enums import AdmissionType
 from parcours_doctoral.contrib.enums.financement import (
     ChoixTypeContratTravail,
     ChoixTypeFinancement,
 )
+from parcours_doctoral.contrib.forms import EMPTY_CHOICE, CustomDateInput
+from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUploadField
 from parcours_doctoral.contrib.forms import (
-    autocomplete,
-    CustomDateInput,
-    EMPTY_CHOICE,
-    SelectOrOtherField,
-    get_scholarship_choices,
-    DoctorateFileUploadField as FileUploadField,
     RadioBooleanField,
+    SelectOrOtherField,
+    autocomplete,
+    get_scholarship_choices,
 )
 from parcours_doctoral.utils import mark_safe_lazy
 
@@ -47,6 +48,7 @@ class FundingForm(forms.Form):
     type = forms.ChoiceField(
         label=_("Current funding"),
         choices=EMPTY_CHOICE + ChoixTypeFinancement.choices(),
+        required=False,
         help_text=_(
             "If you don't have any funding yet, please choose \"Self-funding\" and explain the"
             " considered funding in the \"Comment\" area."
@@ -131,10 +133,13 @@ class FundingForm(forms.Form):
     class Media:
         js = ('js/dependsOn.min.js',)
 
-    def __init__(self, *args, **kwargs):
-        self.person = getattr(self, 'person', kwargs.pop('person', None))
+    def __init__(self, person, admission_type, *args, **kwargs):
+        self.person = person
+        self.is_admission = admission_type == AdmissionType.ADMISSION.name
 
         super().__init__(*args, **kwargs)
+
+        self.label_classes = self.get_field_label_classes()
 
         scholarship_uuid = self.data.get(self.add_prefix('bourse_recherche'), self.initial.get('bourse_recherche'))
         if scholarship_uuid:
@@ -150,24 +155,80 @@ class FundingForm(forms.Form):
             if self.initial.get(field) in {None, ''}:
                 self.initial[field] = self.fields[field].initial
 
+        if self.is_admission:
+            self.fields['type'].required = True
+            self.fields['duree_prevue'].required = True
+            self.fields['temps_consacre'].required = True
+            self.fields['est_lie_fnrs_fria_fresh_csc'].required = True
+
     def clean(self):
-        data = super().clean()
+        cleaned_data = super().clean()
 
-        # Some consistency checks
-        if data.get('type') == ChoixTypeFinancement.WORK_CONTRACT.name:
-            if not data.get('type_contrat_travail'):
-                self.add_error('type_contrat_travail', _("This field is required."))
+        # Some consistency checks and cleaning
+        funding_type = cleaned_data.get('type')
 
-            if not data.get('eft'):
-                self.add_error('eft', _("This field is required."))
+        if not funding_type:
+            cleaned_data['duree_prevue'] = None
+            cleaned_data['temps_consacre'] = None
+            cleaned_data['est_lie_fnrs_fria_fresh_csc'] = None
+            cleaned_data['commentaire'] = ''
 
-        elif data.get('type') == ChoixTypeFinancement.SEARCH_SCHOLARSHIP.name:
-            if data.get('bourse_recherche'):
-                data['autre_bourse_recherche'] = ''
-            elif data.get('autre_bourse_recherche'):
-                data['bourse_recherche'] = ''
+        if funding_type == ChoixTypeFinancement.WORK_CONTRACT.name:
+            if not cleaned_data.get('type_contrat_travail'):
+                self.add_error('type_contrat_travail', FIELD_REQUIRED_MESSAGE)
+
+            if not cleaned_data.get('eft'):
+                self.add_error('eft', FIELD_REQUIRED_MESSAGE)
+
+        else:
+            cleaned_data['type_contrat_travail'] = ''
+            cleaned_data['eft'] = None
+
+        if funding_type == ChoixTypeFinancement.SEARCH_SCHOLARSHIP.name:
+            if cleaned_data.get('bourse_recherche'):
+                cleaned_data['autre_bourse_recherche'] = ''
+            elif cleaned_data.get('autre_bourse_recherche'):
+                cleaned_data['bourse_recherche'] = ''
             else:
-                self.add_error('bourse_recherche', _('This field is required.'))
+                self.add_error('bourse_recherche', FIELD_REQUIRED_MESSAGE)
                 self.add_error('autre_bourse_recherche', '')
 
-        return data
+            if self.is_admission:
+                if not cleaned_data.get('bourse_date_debut'):
+                    self.add_error('bourse_date_debut', FIELD_REQUIRED_MESSAGE)
+                if not cleaned_data.get('bourse_date_fin'):
+                    self.add_error('bourse_date_fin', FIELD_REQUIRED_MESSAGE)
+                if not cleaned_data.get('bourse_preuve'):
+                    self.add_error('bourse_preuve', FIELD_REQUIRED_MESSAGE)
+
+        else:
+            cleaned_data['bourse_recherche'] = ''
+            cleaned_data['autre_bourse_recherche'] = ''
+            cleaned_data['bourse_date_debut'] = None
+            cleaned_data['bourse_date_fin'] = None
+            cleaned_data['bourse_preuve'] = []
+
+        return cleaned_data
+
+    def get_field_label_classes(self):
+        """Returns the classes that should be applied to the label of the form fields."""
+
+        possible_mandatory_fields = [
+            'type_contrat_travail',
+            'eft',
+            'bourse_recherche',
+            'autre_bourse_recherche',
+        ]
+
+        if self.is_admission:
+            possible_mandatory_fields += [
+                'type',
+                'duree_prevue',
+                'temps_consacre',
+                'est_lie_fnrs_fria_fresh_csc',
+                'bourse_date_debut',
+                'bourse_date_fin',
+                'bourse_preuve',
+            ]
+
+        return {field_name: 'required_text' for field_name in possible_mandatory_fields}
