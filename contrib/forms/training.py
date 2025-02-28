@@ -32,6 +32,9 @@ from django.utils.dates import MONTHS_ALT
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext_lazy
+from osis_parcours_doctoral_sdk.model.choix_type_epreuve import (
+    ChoixTypeEpreuve as ChoixTypeEpreuveModel,
+)
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 
 from parcours_doctoral.contrib.enums.training import (
@@ -51,7 +54,6 @@ from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUplo
 from parcours_doctoral.contrib.forms import (
     SelectOrOtherField,
     autocomplete,
-    get_academic_years_choices,
     get_country_initial_choices,
 )
 
@@ -816,7 +818,7 @@ class ComplementaryCourseForm(CourseForm):
 class PaperForm(ActivityFormMixin, forms.Form):
     object_type = "Paper"
     template_name = "parcours_doctoral/forms/training/paper.html"
-    type = forms.ChoiceField(label=_("Type of paper"), choices=ChoixTypeEpreuve.choices())
+    type = forms.ChoiceField(label=_("Type of paper"))
 
     class Meta:
         fields = [
@@ -824,6 +826,27 @@ class PaperForm(ActivityFormMixin, forms.Form):
             'ects',
             'comment',
         ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Only one paper by type can be created
+        creatable_papers_types = self.config_types.creatable_papers_types
+
+        if self.initial and self.initial.get('type'):
+            creatable_papers_types.append(self.initial['type'])
+
+        self.fields['type'].choices = (
+            (enum.name, enum.value) for enum in ChoixTypeEpreuve if enum.name in creatable_papers_types
+        )
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if cleaned_data.get('type'):
+            cleaned_data['type'] = ChoixTypeEpreuveModel(cleaned_data['type'])
+
+        return cleaned_data
 
 
 class UclCourseForm(ActivityFormMixin, forms.Form):

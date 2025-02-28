@@ -46,6 +46,9 @@ msgid ""
 "certificate)"
 msgstr ""
 
+msgid "A paper of each type has already been created."
+msgstr ""
+
 msgid "ACCEPTEE"
 msgstr "Accepted"
 

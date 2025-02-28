@@ -54,6 +54,9 @@ msgstr ""
 "Un document prouvant que la communication a eu lieu (i.e. certificat de "
 "communication)"
 
+msgid "A paper of each type has already been created."
+msgstr "Une épreuve de chaque type a déjà été créée."
+
 msgid "ACCEPTEE"
 msgstr "Acceptée"
 

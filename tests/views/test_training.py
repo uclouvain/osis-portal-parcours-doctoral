@@ -24,15 +24,29 @@
 #
 # ##############################################################################
 import datetime
-from unittest.mock import Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 from django.shortcuts import resolve_url
 from django.test import override_settings
 from django.utils.translation import gettext_lazy as _
 from osis_parcours_doctoral_sdk import ApiException
+from osis_parcours_doctoral_sdk.model.categorie_activite import (
+    CategorieActivite as CategorieActiviteModel,
+)
+from osis_parcours_doctoral_sdk.model.choix_type_epreuve import (
+    ChoixTypeEpreuve as ChoixTypeEpreuveModel,
+)
+from osis_parcours_doctoral_sdk.model.contexte_formation import (
+    ContexteFormation as ContexteFormationModel,
+)
+from osis_parcours_doctoral_sdk.model.paper import Paper
 from osis_parcours_doctoral_sdk.model.seminar_communication import SeminarCommunication
 
-from parcours_doctoral.contrib.enums import CategorieActivite, ContexteFormation
+from parcours_doctoral.contrib.enums import (
+    CategorieActivite,
+    ChoixTypeEpreuve,
+    ContexteFormation,
+)
 from parcours_doctoral.contrib.enums.training import StatutActivite
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
@@ -196,6 +210,132 @@ class TrainingTestCase(BaseDoctorateTestCase):
         }
         response = self.client.post(url, data, follow=True)
         self.assertRedirects(response, f'{self.url}#uuid-created')
+
+    def test_create_paper(self):
+        url = resolve_url(
+            "parcours_doctoral:doctoral-training:add",
+            pk=self.doctorate_uuid,
+            category=CategorieActivite.PAPER.name,
+        )
+
+        available_papers = [
+            ChoixTypeEpreuve.CONFIRMATION_PAPER.name,
+            ChoixTypeEpreuve.PUBLIC_DEFENSE.name,
+            ChoixTypeEpreuve.PRIVATE_DEFENSE.name,
+        ]
+
+        self.mock_doctorate_api.return_value.retrieve_doctoral_training_config.return_value = MagicMock(
+            creatable_papers_types=available_papers,
+        )
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+
+        form = response.context['form']
+
+        self.assertCountEqual(
+            form.fields['type'].choices,
+            ((enum_value, ChoixTypeEpreuve[enum_value].value) for enum_value in available_papers),
+        )
+
+        self.assertNotIn(
+            str(_('A paper of each type has already been created.')),
+            response.rendered_content,
+        )
+
+        while available_papers:
+            available_papers.pop()
+
+            response = self.client.get(url)
+
+            self.assertEqual(response.status_code, 200)
+
+            form = response.context['form']
+
+            self.assertCountEqual(
+                form.fields['type'].choices,
+                ((enum_value, ChoixTypeEpreuve[enum_value].value) for enum_value in available_papers),
+            )
+
+        self.assertIn(
+            str(_('A paper of each type has already been created.')),
+            response.rendered_content,
+        )
+
+    def test_update_paper(self):
+        self.mock_doctorate_api.return_value.retrieve_training.return_value = Mock(
+            category=CategorieActivite.PAPER.name,
+            title="Paper",
+            ects=10,
+            comment='C1',
+            type=ChoixTypeEpreuve.CONFIRMATION_PAPER.name,
+            to_dict=Mock(
+                return_value=dict(
+                    category=CategorieActivite.PAPER.name,
+                    title="Paper",
+                    ects=10,
+                    comment='C2',
+                    type=ChoixTypeEpreuve.CONFIRMATION_PAPER.name,
+                )
+            ),
+        )
+
+        url = resolve_url(
+            "parcours_doctoral:doctoral-training:edit",
+            pk=self.doctorate_uuid,
+            activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
+        )
+
+        available_papers = []
+
+        self.mock_doctorate_api.return_value.retrieve_doctoral_training_config.return_value = MagicMock(
+            creatable_papers_types=available_papers,
+        )
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+
+        form = response.context['form']
+
+        self.assertCountEqual(
+            form.fields['type'].choices,
+            (
+                (enum_value, ChoixTypeEpreuve[enum_value].value)
+                for enum_value in [
+                    ChoixTypeEpreuve.CONFIRMATION_PAPER.name,
+                ]
+            ),
+        )
+
+        response = self.client.post(
+            url,
+            data={
+                'ects': 20,
+                'type': ChoixTypeEpreuve.CONFIRMATION_PAPER.name,
+                'comment': 'c1',
+            },
+        )
+
+        self.assertEqual(response.status_code, 302)
+
+        # Call the API with the right data
+        self.mock_doctorate_api.return_value.update_training.assert_called()
+        self.mock_doctorate_api.return_value.update_training.assert_called_with(
+            uuid=self.doctorate_uuid,
+            activity_id='64d2e9e3-2537-4a12-a396-48763c5cdc60',
+            doctoral_training_activity=Paper(
+                object_type='Paper',
+                category=CategorieActiviteModel(CategorieActivite.PAPER.name),
+                context=ContexteFormationModel(ContexteFormation.DOCTORAL_TRAINING.name),
+                type=ChoixTypeEpreuveModel(ChoixTypeEpreuve.CONFIRMATION_PAPER.name),
+                ects=20.0,
+                comment='c1',
+                parent=None,
+            ),
+            **self.api_default_params,
+        )
 
     def test_create_wrong_dates(self):
         url = resolve_url(
