@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,13 @@
   {% endif %}
 </h2>
 
-<p>{% lorem %}</p>
+<p>
+  {% blocktranslate trimmed %}
+  	Under somer conditions specified in the specifics dispositions of your doctoral commission, you can ask the validation of a prior experience done after your second cycle and before
+    your admission in the doctoral training programme. This experience must have a direct link with your research subject. Following these specifics dispositions,
+    the acquisition of a master with a deepened aim can be validated as a prior experience (art. 2.2.4 of the PhD Regulations).
+  {% endblocktranslate %}
+</p>
 
 {% bootstrap_field form.title wrapper_class="mb-3 required_field" placeholder="" %}
 {% bootstrap_field form.subtitle wrapper_class="mb-3 required_field" placeholder="" %}
