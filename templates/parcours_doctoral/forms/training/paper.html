@@ -34,8 +34,14 @@
   {% endif %}
 </h2>
 
-<div class="row">
-  {% bootstrap_field form.type wrapper_class="mb-3 col-md-4 required_field" %}
-  {% bootstrap_field_with_tooltip form.ects wrapper_class="mb-3 col-md-4 required_field" %}
-</div>
-{% bootstrap_field form.comment placeholder="" %}
+{% if form.fields.type.choices %}
+  <div class="row">
+    {% bootstrap_field form.type wrapper_class="mb-3 col-md-4 required_field" %}
+    {% bootstrap_field_with_tooltip form.ects wrapper_class="mb-3 col-md-4 required_field" %}
+  </div>
+  {% bootstrap_field form.comment placeholder="" %}
+{% else %}
+  <div class="alert alert-danger">
+    {% translate 'A paper of each type has already been created.' %}
+  </div>
+{% endif %}
