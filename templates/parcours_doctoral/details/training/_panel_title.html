@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -100,11 +100,11 @@
             {% if activity.category|safe == "SEMINAR" and activity.status|safe == "NON_SOUMISE" and add_communication_url %}
               <li>
                 <a href="{{ add_communication_url }}?parent={{ activity.uuid }}" class="dropdown-item">
-                  {% trans "Add a paper/presentation" %}
+                  {% trans "Add a session" %}
                 </a>
               </li>
               {# Can add a communication to others once submitted #}
-              {% elif activity.category|safe != "SEMINAR" and add_communication_url %}
+            {% elif activity.category|safe != "SEMINAR" and add_communication_url %}
               <li>
                 <a href="{{ add_communication_url }}?parent={{ activity.uuid }}" class="dropdown-item">
                   {% trans "Add a paper/presentation" %}

@@ -26,10 +26,8 @@
 from functools import lru_cache
 from typing import List
 
-import osis_parcours_doctoral_sdk
 from django.http import Http404
-from osis_parcours_doctoral_sdk import ApiClient, ApiException
-from osis_reference_sdk import ApiClient
+from osis_reference_sdk import ApiClient, ApiException
 from osis_reference_sdk.api import (
     academic_years_api,
     countries_api,

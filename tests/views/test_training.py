@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -187,7 +187,8 @@ class TrainingTestCase(BaseDoctorateTestCase):
             'title': '',
             'participating_proof': [],
             'comment': '',
-            'participating_days': 0.0,
+            'participating_days': 2.0,
+            'hour_volume': '3',
             'city': '',
             'organizing_institution': '',
             'website': '',
@@ -242,7 +243,8 @@ class TrainingTestCase(BaseDoctorateTestCase):
             'title': '',
             'participating_proof': [],
             'comment': '',
-            'participating_days': 0.0,
+            'participating_days': 2.0,
+            'hour_volume': '3',
             'city': '',
             'organizing_institution': '',
             'website': '',

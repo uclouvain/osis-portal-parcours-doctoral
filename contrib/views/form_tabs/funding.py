@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,12 +25,12 @@
 # ##############################################################################
 from django.views.generic import FormView
 
-from parcours_doctoral.contrib.enums.financement import ChoixTypeFinancement
-from parcours_doctoral.contrib.forms.funding import (
-    FundingForm,
-)
+from parcours_doctoral.contrib.forms.funding import FundingForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
-from parcours_doctoral.services.doctorate import DoctorateService, ParcoursDoctoralBusinessException
+from parcours_doctoral.services.doctorate import (
+    DoctorateService,
+    ParcoursDoctoralBusinessException,
+)
 from parcours_doctoral.services.mixins import WebServiceFormMixin
 
 __all__ = ['FundingFormView']
@@ -47,6 +47,7 @@ class FundingFormView(LoadViewMixin, WebServiceFormMixin, FormView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['person'] = self.person
+        kwargs['admission_type'] = self.doctorate.type_admission
         return kwargs
 
     def get_initial(self):
@@ -55,25 +56,6 @@ class FundingFormView(LoadViewMixin, WebServiceFormMixin, FormView):
             'bourse_recherche': self.doctorate.financement.bourse_recherche
             and self.doctorate.financement.bourse_recherche.uuid,
         }
-
-    def prepare_data(self, data):
-        # Process the form data to match API
-        if data['type'] != ChoixTypeFinancement.WORK_CONTRACT.name:
-            data['type_contrat_travail'] = ''
-            data['eft'] = None
-
-        if data['type'] != ChoixTypeFinancement.SEARCH_SCHOLARSHIP.name:
-            data['bourse_recherche'] = ''
-            data['autre_bourse_recherche'] = ''
-            data['bourse_date_debut'] = None
-            data['bourse_date_fin'] = None
-            data['bourse_preuve'] = []
-
-        if not data['type']:
-            data['duree_prevue'] = None
-            data['temps_consacre'] = None
-
-        return data
 
     def call_webservice(self, data):
         DoctorateService.update_funding(

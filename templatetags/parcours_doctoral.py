@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-
+import datetime
 import functools
 import re
 from contextlib import suppress
@@ -36,16 +36,32 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.validators import EMPTY_VALUES
 from django.template.defaultfilters import force_escape
 from django.utils.safestring import SafeString, mark_safe
-from django.utils.translation import get_language, gettext_lazy as _, pgettext, pgettext_lazy
+from django.utils.translation import get_language
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext, pgettext_lazy
 from django_bootstrap5.templatetags.django_bootstrap5 import bootstrap_field
-from osis_parcours_doctoral_sdk.exceptions import ForbiddenException, NotFoundException, UnauthorizedException
-from osis_parcours_doctoral_sdk.model.supervision_dto_promoteur import SupervisionDTOPromoteur
+from osis_parcours_doctoral_sdk.exceptions import (
+    ForbiddenException,
+    NotFoundException,
+    UnauthorizedException,
+)
+from osis_parcours_doctoral_sdk.model.supervision_dto_promoteur import (
+    SupervisionDTOPromoteur,
+)
 
 from parcours_doctoral.constants import READ_ACTIONS_BY_TAB, UPDATE_ACTIONS_BY_TAB
-from parcours_doctoral.contrib.enums.training import CategorieActivite, ChoixTypeEpreuve, StatutActivite
+from parcours_doctoral.contrib.enums.training import (
+    CategorieActivite,
+    ChoixTypeEpreuve,
+    StatutActivite,
+)
 from parcours_doctoral.contrib.forms.supervision import DoctorateMemberSupervisionForm
-from parcours_doctoral.services.reference import CountriesService, LanguageService, SuperiorInstituteService
-from parcours_doctoral.utils import to_snake_case, format_school_title
+from parcours_doctoral.services.reference import (
+    CountriesService,
+    LanguageService,
+    SuperiorInstituteService,
+)
+from parcours_doctoral.utils import format_school_title, to_snake_case
 
 register = template.Library()
 
@@ -122,6 +138,8 @@ TAB_TREE = {
     Tab('training', pgettext_lazy('doctorate', 'Course'), 'book-open-reader'): [
         Tab('doctoral-training', _('PhD training')),
         Tab('complementary-training', _('Complementary training')),
+    ],
+    Tab('course-enrollment', _('Course unit enrolment'), 'book-open-reader'): [
         Tab('course-enrollment', _('Course unit enrolment')),
     ],
     Tab('defense', pgettext('doctorate tab', 'Defense'), 'person-chalkboard'): [
@@ -616,3 +634,15 @@ def get_superior_institute_name(context, organisation_uuid):
         uuid=organisation_uuid,
     )
     return mark_safe(format_school_title(institute))
+
+
+@register.filter
+def convert_date_string(date):
+    """
+    There is a bug in the SDK where the date is not converted to a datetime.date object if it is part of a sublist.
+    """
+    if isinstance(date, datetime.date):
+        return date
+    if not date:
+        return None
+    return datetime.date.fromisoformat(date)
