@@ -52,6 +52,9 @@ msgstr "Accepted"
 msgid "ADMIS"
 msgstr "Admitted"
 
+msgid "Academic year"
+msgstr ""
+
 msgctxt "publication-status"
 msgid "Accepted"
 msgstr ""
@@ -178,6 +181,9 @@ msgid "Are you sure you want to request signatures for this PhD?"
 msgstr ""
 
 msgid "As it appears in an official course catalogue"
+msgstr ""
+
+msgid "Assessment enrollments"
 msgstr ""
 
 msgid "Attestation"
@@ -387,6 +393,9 @@ msgstr ""
 msgid "Current funding"
 msgstr ""
 
+msgid "DESINSCRITE"
+msgstr "Withdrawn"
+
 msgid "DOCTORAL_TRAINING"
 msgstr "PhD training"
 
@@ -449,6 +458,9 @@ msgid "Designate as lead supervisor"
 msgstr ""
 
 msgid "Detailed curriculum vitae"
+msgstr ""
+
+msgid "Details"
 msgstr ""
 
 msgid "Development cooperation (ARES)"
@@ -527,6 +539,9 @@ msgid "English"
 msgstr ""
 
 msgid "Enroll in a course"
+msgstr ""
+
+msgid "Enroll in an assessment"
 msgstr ""
 
 msgid "Erasmus Mundus"
@@ -777,6 +792,10 @@ msgstr "Jury declined by CDD"
 msgid "JURY_SOUMIS"
 msgstr "Jury submitted"
 
+msgctxt "session"
+msgid "January"
+msgstr ""
+
 msgid "Joint research project (ARC)"
 msgstr "ARC - Action de Recherche Concertée"
 
@@ -789,6 +808,10 @@ msgstr ""
 msgid "Journal, publishing house or depository institution"
 msgstr ""
 
+msgctxt "session"
+msgid "June"
+msgstr ""
+
 msgid "Jury composition"
 msgstr ""
 
@@ -799,6 +822,9 @@ msgid "Keywords"
 msgstr ""
 
 msgid "Last name / First name / Global id"
+msgstr ""
+
+msgid "Late enrollment"
 msgstr ""
 
 msgid "Later > blocking"
@@ -1312,10 +1338,17 @@ msgstr ""
 msgid "Selection committee"
 msgstr ""
 
+msgctxt "session"
+msgid "September"
+msgstr ""
+
 msgid "Service type"
 msgstr ""
 
 msgid "Services"
+msgstr ""
+
+msgid "Session"
 msgstr ""
 
 msgid "Set as member"
@@ -1661,6 +1694,12 @@ msgid "Yes"
 msgstr ""
 
 msgid "You appear to have unsaved changes, which will be lost."
+msgstr ""
+
+msgid "You have been withdrawn from this assessment."
+msgstr ""
+
+msgid "You have not been enrolled in any assessment yet."
 msgstr ""
 
 msgid "You must correct your application before you can request signatures."
