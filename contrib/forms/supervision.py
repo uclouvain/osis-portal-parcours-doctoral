@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,15 +25,16 @@
 # ##############################################################################
 from django import forms
 from django.conf import settings
-from django.utils.translation import gettext_lazy as _, pgettext_lazy
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 
 from parcours_doctoral.constants import BE_ISO_CODE
 from parcours_doctoral.contrib.enums.actor import ActorType
 from parcours_doctoral.contrib.enums.supervision import DecisionApprovalEnum
+from parcours_doctoral.contrib.forms import EMPTY_CHOICE
+from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUploadField
 from parcours_doctoral.contrib.forms import (
     autocomplete,
-    DoctorateFileUploadField as FileUploadField,
-    EMPTY_CHOICE,
     get_country_initial_choices,
     get_thesis_institute_initial_choices,
 )
@@ -135,13 +136,6 @@ class DoctorateSupervisionForm(DoctorateMemberSupervisionForm):
         initial="INTERNAL",
         widget=forms.RadioSelect(),
     )
-    tutor = forms.CharField(
-        label=_("Search a tutor by name"),
-        widget=autocomplete.ListSelect2(
-            url="parcours_doctoral:autocomplete:tutor",
-        ),
-        required=False,
-    )
     person = forms.CharField(
         label=_("Search a person by surname"),
         widget=autocomplete.ListSelect2(
@@ -153,12 +147,7 @@ class DoctorateSupervisionForm(DoctorateMemberSupervisionForm):
     def clean(self):
         data = self.cleaned_data
         is_external = data.get('internal_external') == ACTOR_EXTERNAL
-        if not is_external and (
-            data.get('type') == ActorType.CA_MEMBER.name
-            and not data.get('person')
-            or data.get('type') == ActorType.PROMOTER.name
-            and not data.get('tutor')
-        ):
+        if not is_external and not data.get('person'):
             self.add_error(None, _("You must reference a person in UCLouvain."))
         elif is_external:
             self.clean_external_fields(data)

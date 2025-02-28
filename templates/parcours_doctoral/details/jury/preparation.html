@@ -8,7 +8,7 @@
 * The core business involves the administration of students, teachers,
 * courses, programs and so on.
 *
-* Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
     {% field_data _("Proposed thesis title") jury.titre_propose %}
     <div class="row">
       <div class="col-md-4">
-        {% trans 'Information about a potential cotutelle are to be inputted in the "Doctoral project" part.' as cotutelle_tooltip %}
+        {% trans 'Information about a potential cotutelle are to be inputted in the "Research" part.' as cotutelle_tooltip %}
         {% field_data _("Cotutelle thesis") doctorate.cotutelle.cotutelle tooltip=cotutelle_tooltip %}
       </div>
       {% if doctorate.cotutelle.cotutelle %}

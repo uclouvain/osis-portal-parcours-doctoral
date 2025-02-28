@@ -476,6 +476,9 @@ msgstr "ARES - Coopération au développement"
 msgid "Doctor"
 msgstr "Docteur"
 
+msgid "Doctorate thesis field"
+msgstr "Domaine de la thèse de doctorat"
+
 msgid "Does not have a doctor title"
 msgstr "N'est pas porteur du titre de docteur"
 
@@ -754,11 +757,11 @@ msgid "Incomplete field"
 msgstr "Non renseigné(e)"
 
 msgid ""
-"Information about a potential cotutelle are to be inputted in the \"Doctoral "
-"project\" part."
+"Information about a potential cotutelle are to be inputted in the "
+"\"Research\" part."
 msgstr ""
 "Les informations concernant une éventuelle cotutelle sont à indiquer dans la "
-"partie « Projet doctoral »."
+"partie « Recherche »."
 
 msgid "Institute"
 msgstr "Établissement"
@@ -771,6 +774,9 @@ msgstr "Nom de l'établissement"
 
 msgid "Institution"
 msgstr "Institution"
+
+msgid "Institution in which the PhD thesis has been realised / started"
+msgstr "Institution où la thèse de doctorat a été réalisée/entamée"
 
 msgid "Internal"
 msgstr "Interne"
@@ -1037,9 +1043,6 @@ msgstr "Autre institution (le cas échéant)"
 msgid "PAPER"
 msgstr "Épreuve"
 
-msgid "PARTIAL"
-msgstr "En partie"
-
 msgid "PDF file"
 msgstr "Fichier PDF"
 
@@ -1089,7 +1092,7 @@ msgid "PhD research experience"
 msgstr "Expérience de recherche doctorale"
 
 msgid "PhD research project"
-msgstr "Projet de recherche doctoral"
+msgstr "Projet de recherche doctorale"
 
 msgid "PhD training"
 msgstr "Formation doctorale"
@@ -1202,9 +1205,6 @@ msgstr "Titre proposé pour la thèse"
 msgid "Proximity Commission for Dental Sciences (DENT)"
 msgstr "Commission de proximité de sciences dentaires (DENT)"
 
-msgid "Proximity Commission for Genetics and Immunology (GIM)"
-msgstr "Commission de proximité de génétique et immunologie (GIM)"
-
 msgid "Proximity Commission for Motricity Sciences (MOTR)"
 msgstr "Commission de proximité de sciences de la motricité (MOTR)"
 
@@ -1218,10 +1218,11 @@ msgid "Proximity commission / Subdomain"
 msgstr "Commission de proximité"
 
 msgid ""
-"Proximity commission for cellular and molecular biology, biochemistry (BCM)"
+"Proximity commission for biochemistry, cellular and molecular biology, "
+"genetics, immunology (BCGIM)"
 msgstr ""
-"Commission de proximité de biologie cellulaire et moléculaire, biochimie "
-"(BCM)"
+"Commission de proximité de biochimie, biologie cellulaire et moléculaire, "
+"génétique, immunologie (BCGIM)"
 
 msgid "Proximity commission for experimental and clinical research (ECLI)"
 msgstr "Commission de proximité de recherche expérimentale et clinique (ECLI)"
@@ -1304,12 +1305,12 @@ msgstr ""
 "Champ obligatoire dans certaines commissions doctorales, référez-vous aux "
 "dispositions particulières de votre commission."
 
+msgctxt "tab name"
+msgid "Research"
+msgstr "Recherche"
+
 msgid "Research institute"
 msgstr "Institut de recherche"
-
-msgctxt "tab name"
-msgid "Research project"
-msgstr "Projet de recherche"
 
 msgid "Research report"
 msgstr "Rapport de recherche"
@@ -1368,9 +1369,6 @@ msgstr "Séjours scientifiques"
 
 msgid "Search a person by surname"
 msgstr "Rechercher une personne par son nom"
-
-msgid "Search a tutor by name"
-msgstr "Rechercher un tuteur par son nom"
 
 msgid "Search for an EU code (outside the EU of the form)"
 msgstr "Rechercher un code UE (hors UE du formulaire)"
@@ -1593,9 +1591,6 @@ msgstr "Il n'y a pas de demande de nouvelle échéance."
 
 msgid "Thesis defense"
 msgstr "Défense et soutenance"
-
-msgid "Thesis field"
-msgstr "Domaine de la thèse"
 
 msgid "Thesis language"
 msgstr "Langue de rédaction de la thèse"
@@ -1859,9 +1854,3 @@ msgstr "du %(start)s au %(end)s"
 
 msgid "hours"
 msgstr "heures"
-
-#~ msgid "Add a paper/presentation for this residency"
-#~ msgstr "Ajouter une communication à ce séjour"
-
-#~ msgid "Change the paper for this residency"
-#~ msgstr "Modifier la communication de ce séjour"
