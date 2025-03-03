@@ -326,4 +326,4 @@ class DoctorateConfirmationPaperCanvasExportViewTestCase(BaseDoctorateTestCase):
 
         # Check the redirection
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, 'http://dummyurl/file/foobar')
+        self.assertEqual(response.url, 'http://dummyurl.com/document/file/foobar')

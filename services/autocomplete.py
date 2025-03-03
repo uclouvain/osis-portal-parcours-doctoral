@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -28,7 +28,9 @@ from osis_learning_unit_sdk.api import learning_units_api
 from osis_parcours_doctoral_sdk import ApiClient, ApiException
 from osis_parcours_doctoral_sdk.api import autocomplete_api
 
-from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk, learning_unit as learning_unit_sdk
+from base.models.academic_year import current_academic_year
+from frontoffice.settings.osis_sdk import learning_unit as learning_unit_sdk
+from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk
 from frontoffice.settings.osis_sdk.utils import build_mandatory_auth_headers
 from parcours_doctoral.services.mixins import ServiceMeta
 
@@ -41,14 +43,6 @@ class DoctorateAutocompleteAPIClient:
 
 class DoctorateAutocompleteService(metaclass=ServiceMeta):
     api_exception_cls = ApiException
-
-    @classmethod
-    def get_scholarships(cls, person, search='', **kwargs):
-        return DoctorateAutocompleteAPIClient().list_scholarships(
-            search=search,
-            **kwargs,
-            **build_mandatory_auth_headers(person),
-        )
 
     @classmethod
     def autocomplete_tutors(cls, person, **kwargs):
@@ -65,12 +59,12 @@ class DoctorateAutocompleteService(metaclass=ServiceMeta):
         )['results']
 
     @classmethod
-    def autocomplete_learning_unit_years(cls, year, acronym_search, person):
+    def autocomplete_learning_unit_years(cls, search_term, person):
         configuration = learning_unit_sdk.build_configuration()
         with osis_learning_unit_sdk.ApiClient(configuration) as api_client:
             api_instance = learning_units_api.LearningUnitsApi(api_client)
         return api_instance.learningunits_list(
-            year=int(year),
-            acronym_like=acronym_search,
+            year=current_academic_year().year,
+            search_term=search_term,
             **build_mandatory_auth_headers(person),
         )['results']

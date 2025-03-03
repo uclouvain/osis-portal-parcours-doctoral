@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,11 +27,18 @@ import datetime
 from uuid import uuid4
 
 from django.shortcuts import resolve_url
-from django.utils.translation import gettext_lazy as _
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 
-from frontoffice.settings.osis_sdk.utils import MultipleApiBusinessException, ApiBusinessException
-from parcours_doctoral.contrib.enums.financement import ChoixTypeContratTravail, ChoixTypeFinancement
+from admission.constants import FIELD_REQUIRED_MESSAGE
+from frontoffice.settings.osis_sdk.utils import (
+    ApiBusinessException,
+    MultipleApiBusinessException,
+)
+from parcours_doctoral.contrib.enums import AdmissionType
+from parcours_doctoral.contrib.enums.financement import (
+    ChoixTypeContratTravail,
+    ChoixTypeFinancement,
+)
 from parcours_doctoral.services.doctorate import ParcoursDoctoralBusinessException
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
@@ -134,13 +141,88 @@ class FundingFormViewTestCase(BaseDoctorateTestCase):
             [],
         )
 
-    def test_update_consistency_errors(self):
+    def test_form_initialization_for_an_admission(self):
         self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.type_admission = AdmissionType.ADMISSION.name
+
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+        form = response.context['form']
+
+        for field in [
+            'type',
+            'type_contrat_travail',
+            'eft',
+            'bourse_recherche',
+            'autre_bourse_recherche',
+            'bourse_date_debut',
+            'bourse_date_fin',
+            'bourse_preuve',
+            'duree_prevue',
+            'temps_consacre',
+            'est_lie_fnrs_fria_fresh_csc',
+        ]:
+            self.assertEqual(form.label_classes.get(field), 'required_text', field)
+
+        for field in [
+            'commentaire',
+        ]:
+            self.assertEqual(form.label_classes.get(field), None, field)
+
+    def test_form_initialization_for_a_pre_admission(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.type_admission = AdmissionType.PRE_ADMISSION.name
+
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+
+        form = response.context['form']
+
+        for field in [
+            'type_contrat_travail',
+            'eft',
+            'bourse_recherche',
+            'autre_bourse_recherche',
+        ]:
+            self.assertEqual(form.label_classes.get(field), 'required_text', field)
+
+        for field in [
+            'commentaire',
+            'type',
+            'bourse_date_debut',
+            'bourse_date_fin',
+            'bourse_preuve',
+            'duree_prevue',
+            'temps_consacre',
+            'est_lie_fnrs_fria_fresh_csc',
+        ]:
+            self.assertEqual(form.label_classes.get(field), None, field)
+
+    def test_post_invalid_form_for_an_admission_without_data(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.type_admission = AdmissionType.ADMISSION.name
 
         response = self.client.post(self.url, {})
 
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'type', _('This field is required.'))
+
+        form = response.context['form']
+
+        self.assertEqual(len(form.errors), 4)
+
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('type', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('duree_prevue', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('temps_consacre', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('est_lie_fnrs_fria_fresh_csc', []))
+
+    def test_post_invalid_form_for_an_admission_and_a_work_contract(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.type_admission = AdmissionType.ADMISSION.name
 
         response = self.client.post(
             self.url,
@@ -150,8 +232,21 @@ class FundingFormViewTestCase(BaseDoctorateTestCase):
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'type_contrat_travail', _('This field is required.'))
-        self.assertFormError(response, 'form', 'eft', _('This field is required.'))
+
+        form = response.context['form']
+
+        self.assertEqual(len(form.errors), 5)
+
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('duree_prevue', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('temps_consacre', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('est_lie_fnrs_fria_fresh_csc', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('type_contrat_travail', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('eft', []))
+
+    def test_post_invalid_form_for_an_admission_and_a_scholarship(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.type_admission = AdmissionType.ADMISSION.name
 
         response = self.client.post(
             self.url,
@@ -159,9 +254,62 @@ class FundingFormViewTestCase(BaseDoctorateTestCase):
                 'type': ChoixTypeFinancement.SEARCH_SCHOLARSHIP.name,
             },
         )
+
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'bourse_recherche', _('This field is required.'))
-        self.assertFormError(response, 'form', 'autre_bourse_recherche', '')
+
+        form = response.context['form']
+
+        self.assertEqual(len(form.errors), 8)
+
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('duree_prevue', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('temps_consacre', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('est_lie_fnrs_fria_fresh_csc', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('bourse_recherche', []))
+        self.assertIn('', form.errors.get('autre_bourse_recherche', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('bourse_date_debut', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('bourse_date_fin', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('bourse_preuve', []))
+
+    def test_post_invalid_form_for_an_admission_and_a_self_funding(self):
+        self.client.force_login(self.person.user)
+
+        response = self.client.post(
+            self.url,
+            {
+                'type': ChoixTypeFinancement.SELF_FUNDING.name,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        form = response.context['form']
+
+        self.assertEqual(len(form.errors), 3)
+
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('duree_prevue', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('temps_consacre', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('est_lie_fnrs_fria_fresh_csc', []))
+
+    def test_post_invalid_form_for_a_pre_admission_and_a_work_contract(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.type_admission = AdmissionType.PRE_ADMISSION.name
+
+        response = self.client.post(
+            self.url,
+            {
+                'type': ChoixTypeFinancement.WORK_CONTRACT.name,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        form = response.context['form']
+
+        self.assertEqual(len(form.errors), 2)
+
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('type_contrat_travail', []))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('eft', []))
 
         self.mock_doctorate_api.return_value.update_funding.side_effect = MultipleApiBusinessException(
             exceptions={
@@ -172,14 +320,40 @@ class FundingFormViewTestCase(BaseDoctorateTestCase):
             }
         )
 
-        self.assertEqual(response.status_code, 200)
         response = self.client.post(
             self.url,
             data={
                 'type': ChoixTypeFinancement.SELF_FUNDING.name,
+                'type_contrat_travail': 'Custom error',
             },
         )
-        self.assertFormError(response, 'form', 'type_contrat_travail', 'Custom error')
+
+        self.assertEqual(response.status_code, 200)
+
+        form = response.context['form']
+
+        self.assertIn('Custom error', form.errors.get('type_contrat_travail', []))
+
+    def test_post_invalid_form_for_a_pre_admission_and_a_scholarship(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.type_admission = AdmissionType.PRE_ADMISSION.name
+
+        response = self.client.post(
+            self.url,
+            {
+                'type': ChoixTypeFinancement.SEARCH_SCHOLARSHIP.name,
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+
+        form = response.context['form']
+
+        self.assertEqual(len(form.errors), 2)
+
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('bourse_recherche', []))
+        self.assertIn('', form.errors.get('autre_bourse_recherche', []))
 
     def test_valid_update_for_self_funding(self):
         self.client.force_login(self.person.user)
@@ -263,6 +437,34 @@ class FundingFormViewTestCase(BaseDoctorateTestCase):
                 'eft': None,
                 'bourse_recherche': self.default_data['bourse_recherche'],
                 'autre_bourse_recherche': '',
+                'bourse_date_debut': self.default_data['bourse_date_debut'],
+                'bourse_date_fin': self.default_data['bourse_date_fin'],
+                'bourse_preuve': [self.default_data['bourse_preuve_0']],
+                'duree_prevue': self.default_data['duree_prevue'],
+                'temps_consacre': self.default_data['temps_consacre'],
+                'est_lie_fnrs_fria_fresh_csc': self.default_data['est_lie_fnrs_fria_fresh_csc'],
+                'commentaire': self.default_data['commentaire'],
+            },
+            **self.api_default_params,
+        )
+        response = self.client.post(
+            self.url,
+            {
+                **self.default_data,
+                'type': ChoixTypeFinancement.SEARCH_SCHOLARSHIP.name,
+                'bourse_recherche': '',
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+
+        self.mock_doctorate_api.return_value.update_funding.assert_called_with(
+            uuid=self.doctorate_uuid,
+            modifier_financement_command={
+                'type': ChoixTypeFinancement.SEARCH_SCHOLARSHIP.name,
+                'type_contrat_travail': '',
+                'eft': None,
+                'bourse_recherche': '',
+                'autre_bourse_recherche': self.default_data['autre_bourse_recherche'],
                 'bourse_date_debut': self.default_data['bourse_date_debut'],
                 'bourse_date_fin': self.default_data['bourse_date_fin'],
                 'bourse_preuve': [self.default_data['bourse_preuve_0']],

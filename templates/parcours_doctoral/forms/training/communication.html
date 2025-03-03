@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
   {% endif %}
 </h2>
 
-<p>{% lorem %}</p>
+<p>{% translate "This activity is about an oral communication which is not organized in the context of a conference." %}</p>
 
 <h3>{% trans "Context" %}</h3>
 <div class="row">
@@ -43,7 +43,7 @@
 <div class="row">
   {% bootstrap_field form.subtype wrapper_class="mb-3 col-md-4 required_field" %}
 </div>
-{% bootstrap_field form.title wrapper_class="mb-3 required_field" placeholder="" %}
+{% bootstrap_field_with_tooltip form.title wrapper_class="mb-3 required_field" placeholder="" %}
 <div class="row">
   {% bootstrap_field form.start_date wrapper_class="mb-3 col-md-4 required_field" %}
   {% bootstrap_field form.is_online wrapper_class="mb-3 col-md-4 required_field" %}
@@ -59,7 +59,7 @@
 <h3>{% trans "Description of your communication" %}</h3>
 
 {% bootstrap_field form.subtitle wrapper_class="mb-3 required_field" placeholder="" %}
-{% bootstrap_field form.summary %}
+{% bootstrap_field_with_tooltip form.summary %}
 {% bootstrap_field form.acceptation_proof wrapper_class="mb-3 required_field acceptation-proof" %}
 <div class="row">
   {% bootstrap_field form.dial_reference wrapper_class="mb-3 col-md-4" placeholder="" %}

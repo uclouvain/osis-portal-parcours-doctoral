@@ -31,22 +31,26 @@ from django.http import Http404
 from django.shortcuts import redirect, resolve_url
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import FormView
+from django.views.generic import FormView, RedirectView
 from django.views.generic.edit import BaseFormView
 from osis_parcours_doctoral_sdk import ApiException
 
 from parcours_doctoral.contrib.enums import ActorType, DecisionApprovalEnum
-from parcours_doctoral.contrib.forms.supervision import DoctorateApprovalForm, DoctorateApprovalByPdfForm
 from parcours_doctoral.contrib.forms.supervision import (
+    DoctorateApprovalByPdfForm,
+    DoctorateApprovalForm,
     DoctorateMemberSupervisionForm,
 )
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
-from parcours_doctoral.services.doctorate import DoctorateService
-from parcours_doctoral.services.doctorate import DoctorateSupervisionService
+from parcours_doctoral.services.doctorate import (
+    DoctorateService,
+    DoctorateSupervisionService,
+)
 from parcours_doctoral.services.mixins import WebServiceFormMixin
 
 __all__ = [
     'SupervisionDetailView',
+    'SupervisionCanvasView',
 ]
 __namespace__ = False
 
@@ -142,6 +146,17 @@ class SupervisionDetailView(LoadViewMixin, WebServiceFormMixin, FormView):
             # Redirect on list
             return resolve_url('parcours_doctoral:supervised-list')
         return self.request.POST.get('redirect_to') or self.request.get_full_path()
+
+
+class SupervisionCanvasView(LoadViewMixin, RedirectView):
+    urlpatterns = 'supervision-canvas'
+    permission_link_to_check = 'retrieve_supervision_canvas'
+
+    def get_redirect_url(self, *args, **kwargs):
+        return DoctorateService.get_supervision_canvas(
+            person=self.person,
+            uuid_doctorate=self.doctorate_uuid,
+        ).url
 
 
 class DoctorateRemoveActorView(LoadViewMixin, WebServiceFormMixin, FormView):

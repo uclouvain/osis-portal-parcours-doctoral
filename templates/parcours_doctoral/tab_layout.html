@@ -147,8 +147,13 @@
             {% get_current_tab as current_tab %}
             <div class="text-end mb-3">
               {% block submit_button %}
+                {% if cancel_url and cancel_url != request.path and doctorate|can_read_tab:current_tab %}
+                  <a href="{{ cancel_url }}" class="btn btn-light border border-dark-subtle">
+                    {% trans 'Cancel' %}
+                  </a>
+                {% endif %}
                 <button
-                  type="submit" class="{{ submit_class|default:'btn btn-light border border-dark-subtle' }}"
+                  type="submit" class="{{ submit_class|default:'btn btn-primary border border-dark-subtle' }}"
                   {% if cancel_url and not doctorate|can_update_tab:current_tab %}
                   disabled
                   {% endif %}

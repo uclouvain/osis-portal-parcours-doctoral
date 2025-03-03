@@ -28,18 +28,23 @@ from typing import List, Mapping, Optional, Union
 
 from django import forms
 from django.conf import settings
-from django.utils.translation import get_language, gettext_lazy as _
-
+from django.utils.translation import get_language
+from django.utils.translation import gettext_lazy as _
 from osis_document.contrib import FileUploadField
+
 from parcours_doctoral.services.organisation import EntitiesService
 from parcours_doctoral.services.reference import (
+    AcademicYearService,
     CountriesService,
     LanguageService,
-    AcademicYearService,
     SuperiorInstituteService,
-    DoctorateReferencesService,
 )
-from parcours_doctoral.utils import format_entity_title, format_school_title, format_scholarship
+from parcours_doctoral.utils import (
+    format_entity_title,
+    format_scholarship,
+    format_school_title,
+)
+from reference.services.scholarship import ScholarshipService
 
 EMPTY_CHOICE = (('', ' - '),)
 EMPTY_VALUE = '__all__'
@@ -107,7 +112,7 @@ def get_scholarship_choices(uuid, person):
     """Return the unique initial choice for the campus."""
     if not uuid:
         return EMPTY_CHOICE
-    scholarship = DoctorateReferencesService.get_scholarship(
+    scholarship = ScholarshipService.get_scholarship(
         person=person,
         scholarship_uuid=uuid,
     )

@@ -33,6 +33,7 @@
   {% doctorate_subtabs doctorate %} for other displays.
 {% endcomment %}
 {% trans "Save" context 'doctorate' as save_label %}
+{% url "parcours_doctoral:"|add:request.resolver_match.url_name view.kwargs.pk as cancel_url %}
 
 <div class="mb-3">
   {# Nav for mobile display #}
@@ -87,10 +88,15 @@
       {% endif %}
     {% endfor %}
 
-    {# Submit button if needed (mobile display) #}
+    {# Submit button if needed (desktop display) #}
     {% get_current_tab as current_tab %}
     {% if with_submit %}
       <div class="ms-auto">
+        {% if cancel_url and cancel_url != request.path and doctorate|can_read_tab:current_tab %}
+          <a href="{{ cancel_url }}" class="btn btn-light border border-dark-subtle">
+            {% trans 'Cancel' %}
+          </a>
+        {% endif %}
         <button
           type="submit"
           class="btn btn-primary"
@@ -120,6 +126,11 @@
   {# Submit button if needed (mobile display) #}
   {% if with_submit %}
     <div class="text-end d-md-none">
+      {% if cancel_url and cancel_url != request.path and doctorate|can_read_tab:current_tab %}
+        <a href="{{ cancel_url }}" class="btn btn-light border border-dark-subtle">
+          {% trans 'Cancel' %}
+        </a>
+      {% endif %}
       <button
         type="submit"
         class="btn btn-primary"
