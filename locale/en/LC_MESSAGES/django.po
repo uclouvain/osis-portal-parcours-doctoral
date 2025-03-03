@@ -478,6 +478,9 @@ msgstr ""
 msgid "Download as PDF"
 msgstr ""
 
+msgid "Download the PDF recap"
+msgstr ""
+
 msgid "Download the request to modify the supervisory panel"
 msgstr ""
 
