@@ -172,6 +172,9 @@ class BaseDoctorateTestCase(TestCase):
             proposition_programme_doctoral=[],
             projet_formation_complementaire=[],
             lettres_recommandation=[],
+            date_naissance_doctorant=datetime.date(2000, 1, 1),
+            lieu_naissance_doctorant='Bruxelles',
+            pays_naissance_doctorant='Belgique',
             links=ParcoursDoctoralDTOLinks._from_openapi_data(
                 **{
                     action: ActionLink._from_openapi_data(
