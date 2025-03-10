@@ -125,8 +125,8 @@ class Tab:
 
 
 TAB_TREE = {
-    Tab('doctorate', pgettext('tab name', 'Research project'), 'person-chalkboard'): [
-        Tab('project', pgettext('tab name', 'Research project')),
+    Tab('doctorate', pgettext('tab name', 'Research'), 'person-chalkboard'): [
+        Tab('project', pgettext('tab name', 'Research')),
         Tab('cotutelle', _('Cotutelle')),
         Tab('funding', _('Funding')),
         Tab('supervision', _('Support committee')),
@@ -141,6 +141,7 @@ TAB_TREE = {
     ],
     Tab('course-enrollment', _('Course unit enrolment'), 'book-open-reader'): [
         Tab('course-enrollment', _('Course unit enrolment')),
+        Tab('assessment-enrollment', _('Assessment enrollments')),
     ],
     Tab('defense', pgettext('doctorate tab', 'Defense'), 'person-chalkboard'): [
         Tab('jury-preparation', pgettext('doctorate tab', 'Defense method')),
@@ -459,17 +460,17 @@ def report_ects(activity, categories, added, validated, parent_category=None):
     if status == StatutActivite.ACCEPTEE.name:
         validated += activity.ects
     elif category == CategorieActivite.CONFERENCE.name or category == CategorieActivite.SEMINAR.name:
-        categories[_("Participation")][index] += activity.ects
+        categories[_("Participations")][index] += activity.ects
     elif category == CategorieActivite.COMMUNICATION.name and (
         activity.get('parent') is None or parent_category == CategorieActivite.CONFERENCE.name
     ):
-        categories[_("Scientific communication")][index] += activity.ects
+        categories[_("Scientific communications")][index] += activity.ects
     elif category == CategorieActivite.PUBLICATION.name and (
         activity.get('parent') is None or parent_category == CategorieActivite.CONFERENCE.name
     ):
-        categories[_("Publication")][index] += activity.ects
+        categories[_("Publications")][index] += activity.ects
     elif category == CategorieActivite.COURSE.name:
-        categories[_("Course units and courses")][index] += activity.ects
+        categories[_("Courses and trainings")][index] += activity.ects
     elif category == CategorieActivite.SERVICE.name:
         categories[_("Services")][index] += activity.ects
     elif (
@@ -488,37 +489,40 @@ def training_categories(activities):
     added, validated = 0, 0
 
     categories = {
-        _("Participation"): [0, 0],
-        _("Scientific communication"): [0, 0],
-        _("Publication"): [0, 0],
-        _("Course units and courses"): [0, 0],
+        _("Participations"): [0, 0],
+        _("Scientific communications"): [0, 0],
+        _("Publications"): [0, 0],
+        _("Courses and trainings"): [0, 0],
         _("Services"): [0, 0],
         _("VAE"): [0, 0],
         _("Scientific residencies"): [0, 0],
         _("Confirmation exam"): [0, 0],
         _("Thesis defense"): [0, 0],
+        _("Total"): [0, 0],
     }
     for activity in activities:
         if not hasattr(activity, 'ects'):
             continue
-        # Increment global counts
         status = str(activity.status)
-        if status != StatutActivite.REFUSEE.name:
-            added += activity.ects
-        if status == StatutActivite.ACCEPTEE.name:
-            validated += activity.ects
         if status not in [StatutActivite.SOUMISE.name, StatutActivite.ACCEPTEE.name]:
             continue
 
+        # Increment global counts
+        added += activity.ects
+        if status == StatutActivite.ACCEPTEE.name:
+            validated += activity.ects
+
         # Increment category counts
         index = int(status == StatutActivite.ACCEPTEE.name)
+        categories[_("Total")][index] += activity.ects
+
         category = str(activity.category)
         if category == CategorieActivite.CONFERENCE.name or category == CategorieActivite.SEMINAR.name:
-            categories[_("Participation")][index] += activity.ects
+            categories[_("Participations")][index] += activity.ects
         elif activity.object_type == "Communication" or activity.object_type == "ConferenceCommunication":
-            categories[_("Scientific communication")][index] += activity.ects
+            categories[_("Scientific communications")][index] += activity.ects
         elif activity.object_type == "Publication" or activity.object_type == "ConferencePublication":
-            categories[_("Publication")][index] += activity.ects
+            categories[_("Publications")][index] += activity.ects
         elif category == CategorieActivite.SERVICE.name:
             categories[_("Services")][index] += activity.ects
         elif "Residency" in activity.object_type:
@@ -526,7 +530,7 @@ def training_categories(activities):
         elif category == CategorieActivite.VAE.name:
             categories[_("VAE")][index] += activity.ects
         elif category in [CategorieActivite.COURSE.name, CategorieActivite.UCL_COURSE.name]:
-            categories[_("Course units and courses")][index] += activity.ects
+            categories[_("Courses and trainings")][index] += activity.ects
         elif category == CategorieActivite.PAPER.name and activity.type == ChoixTypeEpreuve.CONFIRMATION_PAPER.name:
             categories[_("Confirmation exam")][index] += activity.ects
         elif category == CategorieActivite.PAPER.name:

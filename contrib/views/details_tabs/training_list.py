@@ -28,12 +28,13 @@ from copy import copy
 
 from django.utils.functional import cached_property
 from django.utils.translation import get_language
-from django.views.generic import FormView
+from django.views.generic import FormView, RedirectView, TemplateView
 
 from frontoffice.settings.osis_sdk.utils import MultipleApiBusinessException
 from parcours_doctoral.contrib.enums import CategorieActivite, StatutActivite
 from parcours_doctoral.contrib.forms.training import BatchActivityForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
+from parcours_doctoral.services.doctorate import DoctorateService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
 from parcours_doctoral.services.training import DoctorateTrainingService
 
@@ -41,6 +42,8 @@ __all__ = [
     'DoctoralTrainingListView',
     'ComplementaryTrainingListView',
     'CourseEnrollmentListView',
+    'AssessmentEnrollmentListView',
+    'TrainingRecapPdfView',
 ]
 __namespace__ = False
 
@@ -122,3 +125,43 @@ class CourseEnrollmentListView(DoctoralTrainingListView):
             person=self.person,
             uuid=self.doctorate_uuid,
         )
+
+
+class AssessmentEnrollmentListView(LoadViewMixin, TemplateView):
+    urlpatterns = 'assessment-enrollment'
+    template_name = "parcours_doctoral/assessment_enrollment.html"
+    permission_link_to_check = 'retrieve_assessment_enrollment'
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        assessment_enrollments = DoctorateTrainingService.list_assessment_enrollment(
+            person=self.person,
+            uuid=self.doctorate_uuid,
+        )
+
+        assessment_enrollments_by_session_and_year = {}
+
+        for assessment_enrollment in assessment_enrollments:
+            year = assessment_enrollment.annee_unite_enseignement
+            session = assessment_enrollment.session
+
+            assessment_enrollments_by_session_and_year.setdefault(year, {})
+
+            assessment_enrollments_by_session_and_year[year].setdefault(session, [])
+            assessment_enrollments_by_session_and_year[year][session].append(assessment_enrollment)
+
+        context_data['assessment_enrollments'] = assessment_enrollments_by_session_and_year
+
+        return context_data
+
+
+class TrainingRecapPdfView(LoadViewMixin, RedirectView):
+    urlpatterns = 'training-recap-pdf'
+    permission_link_to_check = 'retrieve_doctorate_training'
+
+    def get_redirect_url(self, *args, **kwargs):
+        return DoctorateService.get_training_recap_pdf(
+            person=self.person,
+            uuid_doctorate=self.doctorate_uuid,
+        ).url
