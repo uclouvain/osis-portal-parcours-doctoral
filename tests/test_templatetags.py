@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,11 +31,14 @@ from django.core.exceptions import ImproperlyConfigured
 from django.template import Context, Template
 from django.test import RequestFactory, TestCase
 from django.urls import resolve
-from django.utils.translation import gettext_lazy as _, pgettext
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext
 from django.views.generic import FormView
 from osis_parcours_doctoral_sdk.exceptions import UnauthorizedException
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import ParcoursDoctoralDTOLinks
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import (
+    ParcoursDoctoralDTOLinks,
+)
 
 from base.models.utils.utils import ChoiceEnum
 from base.tests.factories.person import PersonFactory
@@ -47,11 +50,11 @@ from parcours_doctoral.templatetags.parcours_doctoral import (
     can_read_tab,
     can_update_tab,
     display,
+    form_fields_are_empty,
     get_valid_tab_tree,
     strip,
     value_if_all,
     value_if_any,
-    form_fields_are_empty,
 )
 
 
@@ -170,7 +173,7 @@ class TemplateTagsTestCase(TestCase):
                     class="nav-link active"
                     >
                     <span class="fa fa-person-chalkboard"></span>
-                    Projet de recherche
+                    Recherche
                 </a>
             </li>
             """,
@@ -188,7 +191,7 @@ class TemplateTagsTestCase(TestCase):
             <li role="presentation" class="nav-item">
                 <a href="/parcours_doctoral/55375049-9d61-4c11-9f41-7460463a5ae3/project" class="nav-link">
                     <span class="fa fa-person-chalkboard"></span>
-                    Projet de recherche
+                    Recherche
                 </a>
             </li>
             """,
@@ -240,7 +243,7 @@ class TemplateTagsTestCase(TestCase):
 
         # Check parent tabs
         self.assertEqual(len(parent_tabs), 1)
-        self.assertEqual(parent_tabs[0].label, pgettext('tab name', 'Research project'))
+        self.assertEqual(parent_tabs[0].label, pgettext('tab name', 'Research'))
 
         # Check children tabs
         self.assertIn('funding', valid_tab_tree[parent_tabs[0]])
@@ -255,7 +258,7 @@ class TemplateTagsTestCase(TestCase):
 
         # Check parent tabs
         self.assertEqual(len(parent_tabs), 1)
-        self.assertEqual(parent_tabs[0].label, pgettext('tab name', 'Research project'))
+        self.assertEqual(parent_tabs[0].label, pgettext('tab name', 'Research'))
 
         # Check children tabs
         self.assertIn('funding', valid_tab_tree[parent_tabs[0]])

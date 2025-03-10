@@ -1,4 +1,4 @@
-{% load i18n osis_document parcours_doctoral doctorate_enums %}
+{% load i18n osis_document parcours_doctoral doctorate_enums academic_year_display %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -47,7 +47,7 @@
         {{ activity.context|enum_display:'ContexteFormation' }}
         <strong class="d-block">{% trans "Learning unit" %}</strong>
         {{ activity.learning_unit_title }} -
-        {{ activity.academic_year_title }}
+        {{ activity.academic_year|display_as_academic_year }}
         {% if activity.ects %}
           <p>
             <strong class="d-block">{% trans "ECTS" %}</strong>

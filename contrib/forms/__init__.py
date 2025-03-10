@@ -119,14 +119,6 @@ def get_scholarship_choices(uuid, person):
     return EMPTY_CHOICE + ((uuid, format_scholarship(scholarship)),)
 
 
-def get_academic_years_choices(person):
-    """Return a list of choices of academic years."""
-    return EMPTY_CHOICE + tuple(
-        (academic_year.year, f"{academic_year.year}-{academic_year.year + 1}")
-        for academic_year in AcademicYearService.get_academic_years(person)
-    )
-
-
 class CustomDateInput(forms.DateInput):
     def __init__(self, attrs=None, format='%d/%m/%Y'):
         if attrs is None:

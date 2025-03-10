@@ -52,6 +52,9 @@ msgstr "Accepted"
 msgid "ADMIS"
 msgstr "Admitted"
 
+msgid "Academic year"
+msgstr ""
+
 msgctxt "publication-status"
 msgid "Accepted"
 msgstr ""
@@ -178,6 +181,9 @@ msgid "Are you sure you want to request signatures for this PhD?"
 msgstr ""
 
 msgid "As it appears in an official course catalogue"
+msgstr ""
+
+msgid "Assessment enrollments"
 msgstr ""
 
 msgid "Attestation"
@@ -377,7 +383,7 @@ msgstr ""
 msgid "Course units"
 msgstr ""
 
-msgid "Course units and courses"
+msgid "Courses and trainings"
 msgstr ""
 
 msgctxt "a doctorate"
@@ -386,6 +392,9 @@ msgstr ""
 
 msgid "Current funding"
 msgstr ""
+
+msgid "DESINSCRITE"
+msgstr "Withdrawn"
 
 msgid "DOCTORAL_TRAINING"
 msgstr "PhD training"
@@ -451,16 +460,25 @@ msgstr ""
 msgid "Detailed curriculum vitae"
 msgstr ""
 
+msgid "Details"
+msgstr ""
+
 msgid "Development cooperation (ARES)"
 msgstr ""
 
 msgid "Doctor"
 msgstr ""
 
+msgid "Doctorate thesis field"
+msgstr ""
+
 msgid "Does not have a doctor title"
 msgstr ""
 
 msgid "Download as PDF"
+msgstr ""
+
+msgid "Download the PDF recap"
 msgstr ""
 
 msgid "Download the request to modify the supervisory panel"
@@ -526,6 +544,9 @@ msgstr ""
 msgid "Enroll in a course"
 msgstr ""
 
+msgid "Enroll in an assessment"
+msgstr ""
+
 msgid "Erasmus Mundus"
 msgstr ""
 
@@ -552,9 +573,6 @@ msgstr ""
 
 msgid "FNRS"
 msgstr ""
-
-msgid "FREE_COURSE"
-msgstr "Open course"
 
 msgid "FRESH"
 msgstr ""
@@ -709,8 +727,8 @@ msgid "Incomplete field"
 msgstr ""
 
 msgid ""
-"Information about a potential cotutelle are to be inputted in the \"Doctoral "
-"project\" part."
+"Information about a potential cotutelle are to be inputted in the "
+"\"Research\" part."
 msgstr ""
 
 msgid "Institute"
@@ -723,6 +741,9 @@ msgid "Institute name"
 msgstr ""
 
 msgid "Institution"
+msgstr ""
+
+msgid "Institution in which the PhD thesis has been realised / started"
 msgstr ""
 
 msgid "Internal"
@@ -771,6 +792,10 @@ msgstr "Jury declined by CDD"
 msgid "JURY_SOUMIS"
 msgstr "Jury submitted"
 
+msgctxt "session"
+msgid "January"
+msgstr ""
+
 msgid "Joint research project (ARC)"
 msgstr "ARC - Action de Recherche Concertée"
 
@@ -783,6 +808,10 @@ msgstr ""
 msgid "Journal, publishing house or depository institution"
 msgstr ""
 
+msgctxt "session"
+msgid "June"
+msgstr ""
+
 msgid "Jury composition"
 msgstr ""
 
@@ -793,6 +822,9 @@ msgid "Keywords"
 msgstr ""
 
 msgid "Last name / First name / Global id"
+msgstr ""
+
+msgid "Late enrollment"
 msgstr ""
 
 msgid "Later > blocking"
@@ -980,9 +1012,6 @@ msgstr ""
 msgid "PAPER"
 msgstr "Paper"
 
-msgid "PARTIAL"
-msgstr "Partially"
-
 msgid "PDF file"
 msgstr ""
 
@@ -1005,6 +1034,9 @@ msgid "Participation"
 msgstr ""
 
 msgid "Participation certification"
+msgstr ""
+
+msgid "Participations"
 msgstr ""
 
 msgid "Partner institution"
@@ -1134,9 +1166,6 @@ msgstr ""
 msgid "Proximity Commission for Dental Sciences (DENT)"
 msgstr ""
 
-msgid "Proximity Commission for Genetics and Immunology (GIM)"
-msgstr ""
-
 msgid "Proximity Commission for Motricity Sciences (MOTR)"
 msgstr ""
 
@@ -1150,16 +1179,14 @@ msgid "Proximity commission / Subdomain"
 msgstr ""
 
 msgid ""
-"Proximity commission for cellular and molecular biology, biochemistry (BCM)"
+"Proximity commission for biochemistry, cellular and molecular biology, "
+"genetics, immunology (BCGIM)"
 msgstr ""
 
 msgid "Proximity commission for experimental and clinical research (ECLI)"
 msgstr ""
 
 msgid "Proximity commission for public health, health and society (SPSS)"
-msgstr ""
-
-msgid "Publication"
 msgstr ""
 
 msgid "Publication status"
@@ -1169,6 +1196,9 @@ msgid "Publication title (in the publication language)"
 msgstr ""
 
 msgid "Publication type"
+msgstr ""
+
+msgid "Publications"
 msgstr ""
 
 msgctxt "publication-status"
@@ -1228,11 +1258,11 @@ msgid ""
 "specifics dispositions."
 msgstr ""
 
-msgid "Research institute"
+msgctxt "tab name"
+msgid "Research"
 msgstr ""
 
-msgctxt "tab name"
-msgid "Research project"
+msgid "Research institute"
 msgstr ""
 
 msgid "Research report"
@@ -1284,7 +1314,7 @@ msgstr ""
 msgid "Scholarship start date"
 msgstr ""
 
-msgid "Scientific communication"
+msgid "Scientific communications"
 msgstr ""
 
 msgid "Scientific residencies"
@@ -1293,10 +1323,7 @@ msgstr ""
 msgid "Search a person by surname"
 msgstr ""
 
-msgid "Search a tutor by name"
-msgstr ""
-
-msgid "Search for an EU code (outside the EU of the form)"
+msgid "Search for an EU code"
 msgstr ""
 
 msgid "Second author"
@@ -1314,10 +1341,17 @@ msgstr ""
 msgid "Selection committee"
 msgstr ""
 
+msgctxt "session"
+msgid "September"
+msgstr ""
+
 msgid "Service type"
 msgstr ""
 
 msgid "Services"
+msgstr ""
+
+msgid "Session"
 msgstr ""
 
 msgid "Set as member"
@@ -1481,9 +1515,6 @@ msgstr ""
 msgid "Thesis defense"
 msgstr ""
 
-msgid "Thesis field"
-msgstr ""
-
 msgid "Thesis language"
 msgstr ""
 
@@ -1568,6 +1599,9 @@ msgstr ""
 "grant. The canvas for this opinion is provided by your research fund."
 
 msgid "Toggle navigation"
+msgstr ""
+
+msgid "Total"
 msgstr ""
 
 msgid "Total hourly volume"
@@ -1666,6 +1700,12 @@ msgid "Yes"
 msgstr ""
 
 msgid "You appear to have unsaved changes, which will be lost."
+msgstr ""
+
+msgid "You have been withdrawn from this assessment."
+msgstr ""
+
+msgid "You have not been enrolled in any assessment yet."
 msgstr ""
 
 msgid "You must correct your application before you can request signatures."

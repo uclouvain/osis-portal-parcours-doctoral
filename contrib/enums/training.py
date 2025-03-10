@@ -87,4 +87,14 @@ class ChoixTypeEpreuve(ChoiceEnum):
 class ContexteFormation(ChoiceEnum):
     DOCTORAL_TRAINING = _("DOCTORAL_TRAINING")
     COMPLEMENTARY_TRAINING = _("COMPLEMENTARY_TRAINING")
-    FREE_COURSE = _("FREE_COURSE")
+
+
+class Session(ChoiceEnum):
+    JANUARY = pgettext_lazy("session", "January")
+    JUNE = pgettext_lazy("session", "June")
+    SEPTEMBER = pgettext_lazy("session", "September")
+
+
+class StatutInscriptionEvaluation(ChoiceEnum):
+    ACCEPTEE = _("ACCEPTEE")
+    DESINSCRITE = _("DESINSCRITE")
