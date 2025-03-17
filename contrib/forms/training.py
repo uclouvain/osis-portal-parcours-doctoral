@@ -32,8 +32,9 @@ from django.utils.dates import MONTHS_ALT
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext_lazy
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 
+from base.models.academic_year import current_academic_year
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 from parcours_doctoral.contrib.enums.training import (
     ChoixComiteSelection,
     ChoixRolePublication,
@@ -42,17 +43,13 @@ from parcours_doctoral.contrib.enums.training import (
     ChoixTypeVolume,
     ContexteFormation,
 )
+from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUploadField, get_country_initial_choices
 from parcours_doctoral.contrib.forms import (
     EMPTY_CHOICE,
     BooleanRadioSelect,
     CustomDateInput,
-)
-from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUploadField
-from parcours_doctoral.contrib.forms import (
     SelectOrOtherField,
     autocomplete,
-    get_academic_years_choices,
-    get_country_initial_choices,
 )
 
 __all__ = [
@@ -829,19 +826,29 @@ class PaperForm(ActivityFormMixin, forms.Form):
 class UclCourseForm(ActivityFormMixin, forms.Form):
     object_type = "UclCourse"
     template_name = "parcours_doctoral/forms/training/ucl_course.html"
+    academic_year = forms.TypedChoiceField(
+        coerce=int,
+        empty_value=None,
+        label=_("Academic year"),
+        widget=autocomplete.ListSelect2(),
+        disabled=True,
+    )
     learning_unit_year = forms.CharField(
         label=_("Learning unit"),
         widget=autocomplete.ListSelect2(
             url='parcours_doctoral:autocomplete:learning-unit-years',
             attrs={
                 'data-html': True,
-                'data-placeholder': _('Search for an EU code (outside the EU of the form)'),
+                'data-placeholder': _('Search for an EU code'),
             },
         ),
     )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        academic_year = current_academic_year()
+        self.fields['academic_year'].choices = [(academic_year.year, f"{academic_year.year}-{academic_year.year + 1}")]
+        self.fields['academic_year'].initial = academic_year.year
         self.fields['learning_unit_year'].required = True
 
         # Filter out disabled contexts
@@ -860,6 +867,7 @@ class UclCourseForm(ActivityFormMixin, forms.Form):
     class Meta:
         fields = [
             'context',
+            'academic_year',
             'learning_unit_year',
         ]
 

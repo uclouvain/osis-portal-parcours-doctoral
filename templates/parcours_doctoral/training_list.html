@@ -8,7 +8,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,9 @@
   <h4 class="clearfix">
     {% trans "Activities" %}
     {% if doctorate|can_make_action:'add_training' %}
+      <div class="float-end">
+        <a href="{% url "parcours_doctoral:training-recap-pdf" doctorate.uuid %}" class="btn btn-light border border-dark-subtle">{% translate "Download the PDF recap" %}</a>
+      </div>
       <div class="btn-group float-end">
         <button
           type="button"

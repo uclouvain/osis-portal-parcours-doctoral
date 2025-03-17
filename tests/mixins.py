@@ -29,6 +29,8 @@ from unittest.mock import ANY, MagicMock, patch
 from uuid import uuid4
 
 from django.test import TestCase, override_settings
+
+from base.tests.factories.academic_year import create_current_academic_year
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_cotutelle import (
@@ -82,6 +84,7 @@ class BaseDoctorateTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
+        create_current_academic_year()
         cls.person = PersonFactory()
         cls.doctorate_uuid = str(uuid4())
         cls.scholarship_uuid = str(uuid4())
@@ -169,6 +172,9 @@ class BaseDoctorateTestCase(TestCase):
             proposition_programme_doctoral=[],
             projet_formation_complementaire=[],
             lettres_recommandation=[],
+            date_naissance_doctorant=datetime.date(2000, 1, 1),
+            lieu_naissance_doctorant='Bruxelles',
+            pays_naissance_doctorant='Belgique',
             links=ParcoursDoctoralDTOLinks._from_openapi_data(
                 **{
                     action: ActionLink._from_openapi_data(
@@ -190,6 +196,7 @@ class BaseDoctorateTestCase(TestCase):
                         'retrieve_doctorate_training',
                         'retrieve_complementary_training',
                         'retrieve_course_enrollment',
+                        'retrieve_assessment_enrollment',
                         'add_training',
                         'submit_training',
                         'assent_training',
