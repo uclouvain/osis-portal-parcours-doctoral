@@ -74,6 +74,7 @@ class TrainingActivityFormMixin(LoadViewMixin, WebServiceFormMixin, FormMixin, A
             (CategorieActivite.SEMINAR, CategorieActivite.COMMUNICATION): SeminarCommunicationForm,
             CategorieActivite.VAE: ValorisationForm,
             CategorieActivite.COURSE: CourseForm,
+            CategorieActivite.PAPER: PaperForm,
         },
         "complementary-training": {
             CategorieActivite.COURSE: ComplementaryCourseForm,
