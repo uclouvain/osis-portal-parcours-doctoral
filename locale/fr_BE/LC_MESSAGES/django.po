@@ -1783,7 +1783,7 @@ msgstr ""
 "votre commission doctorale, vous pouvez demander la valorisation des acquis "
 "d’une expérience réalisée après votre deuxième cycle et avant votre entrée "
 "dans le programme de formation doctorale. Cette expérience doit être en lien "
-"direct avec votre sujet de recherche.Suivant ces dispositions particulières, "
+"direct avec votre sujet de recherche. Suivant ces dispositions particulières, "
 "l’obtention d’un master à finalité approfondie peut également faire l’objet "
 "d’une valorisation des acquis de l’expérience (art. 2.2.4 du règlement "
 "doctoral)."
@@ -1797,6 +1797,9 @@ msgstr "Non soumise"
 
 msgid "Update"
 msgstr "Modifier"
+
+msgid "Organisers"
+msgstr "Organisateurs.trice.s"
 
 msgid "Update member"
 msgstr "Modifier le membre"
