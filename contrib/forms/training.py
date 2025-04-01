@@ -273,7 +273,7 @@ class ConferenceForm(ActivityFormMixin, forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['title'].help_text = _("Name in the language of the manifestation")
+        self.fields['title'].help_text = _("Please specify the title in the language of the manifestation")
         self.fields['participating_days'].help_text = _(
             "Please specify either a hourly volume or a number of participating days"
         )
@@ -404,6 +404,9 @@ class ConferencePublicationForm(ActivityFormMixin, forms.Form):
 
         super().__init__(*args, **kwargs)
 
+        self.fields['authors'].help_text = _(
+            'Please use the following format for inputting the first and last name: "Monteiro, M. et Martí, A. C."'
+        )
         self.fields['publication_status'].help_text = _("Refer to the website of your commission for more details.")
         self.fields['acceptation_proof'].help_text = _(
             "Submit a proof, for example a letter from the editor,"
@@ -429,7 +432,7 @@ class CommunicationForm(ActivityFormMixin, forms.Form):
         ],
     )
     subtitle = forms.CharField(
-        label=_("Title of the communication"),
+        label=_("Communication title (in the activity language)"),
         max_length=200,
         required=False,
     )
@@ -463,7 +466,6 @@ class CommunicationForm(ActivityFormMixin, forms.Form):
         ]
         labels = {
             'title': _("Event name"),
-            'subtitle': _("Communication title (in the activity language)"),
             'start_date': _("Activity date"),
             'website': _("Event website"),
             'acceptation_proof': _("Proof of acceptation by the committee"),
@@ -541,6 +543,9 @@ class PublicationForm(ActivityFormMixin, forms.Form):
 
         super().__init__(*args, **kwargs)
 
+        self.fields['authors'].help_text = _(
+            'Please use the following format for inputting the first and last name: "Monteiro, M. et Martí, A. C."'
+        )
         self.fields['publication_status'].help_text = _(
             "Specify the status of the publication or of the patent. Consult the website of your commission for "
             "more detail."

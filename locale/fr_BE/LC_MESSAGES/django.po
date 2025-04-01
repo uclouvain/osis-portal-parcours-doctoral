@@ -980,8 +980,8 @@ msgstr "Non soumise"
 msgid "NOT_INVITED"
 msgstr "Pas encore invité à signer"
 
-msgid "Name in the language of the manifestation"
-msgstr "Nom dans la langue de la manifestation"
+msgid "Please specify the title in the language of the manifestation"
+msgstr "Veuillez indiquer le nom dans la langue de l’événement"
 
 msgid "Name or brief description"
 msgstr "Nom ou description brève"
@@ -1721,6 +1721,12 @@ msgstr "Intitulé (dans la langue de la publication)"
 
 msgid "Title of the communication"
 msgstr "Titre de la communication"
+
+msgid "Please use the following format for inputting the first and last name: \"Monteiro, M. et Martí, A. C.\""
+msgstr "Veuillez utiliser le format suivant pour l’encodage du nom et du prénom : \"Monteiro, M. et Martí, A. C.\""
+
+msgid "Communication title (in the activity language)"
+msgstr "Titre de la communication (dans la langue de l’activité)"
 
 msgid "Title of the paper in the language of the activity"
 msgstr "Titre de l’exposé dans la langue de l’activité"
