@@ -35,7 +35,7 @@
 
       {% bootstrap_form_errors form type='non_fields' %}
 
-      {% field_data _("Definitive admission date") doctorate.cree_le|date inline=True %}
+      {% field_data _("Definitive admission date") doctorate.date_admission_par_cdd|date inline=True %}
       {% field_data _("Confirmation deadline") confirmation_paper.date_limite inline=True %}
 
       {% csrf_token %}
