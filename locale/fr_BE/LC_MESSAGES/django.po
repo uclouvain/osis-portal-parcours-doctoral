@@ -402,8 +402,8 @@ msgstr "Cours avec évaluation"
 msgid "Course units"
 msgstr "Cours"
 
-msgid "Courses and trainings"
-msgstr "Cours et formation"
+msgid "Followed courses"
+msgstr "Cours suivis"
 
 msgctxt "a doctorate"
 msgid "Created on:"
@@ -1394,7 +1394,7 @@ msgid "Scholarship start date"
 msgstr "Date de démarrage de la bourse"
 
 msgid "Scientific communications"
-msgstr "Communication scientifique"
+msgstr "Communications scientifiques"
 
 msgid "Scientific residencies"
 msgstr "Séjours scientifiques"
@@ -1798,8 +1798,8 @@ msgstr "Non soumise"
 msgid "Update"
 msgstr "Modifier"
 
-msgid "Organisers"
-msgstr "Organisateurs.trice.s"
+msgid "Organisers or academic responsibles"
+msgstr "Organisateur.trice.s ou responsables académiques"
 
 msgid "Update member"
 msgstr "Modifier le membre"

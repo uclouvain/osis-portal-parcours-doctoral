@@ -24,6 +24,13 @@
 * at the root of the source code of this program.  If not,
 * see http://www.gnu.org/licenses/.
 {% endcomment %}
+
+{% block actions-group %}
+  {% if parcours_doctoral.statut == 'ADMIS' or parcours_doctoral.statut == 'CONFIRMATION_SOUMISE' %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}
+
 {% block tab_content %}
   <div class="card mb-3">
     <div class="card-header">

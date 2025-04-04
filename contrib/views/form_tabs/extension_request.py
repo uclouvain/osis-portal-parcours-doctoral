@@ -23,10 +23,12 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
+from django.shortcuts import redirect
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
+from parcours_doctoral.contrib.enums import ChoixStatutDoctorat
 
 from parcours_doctoral.contrib.forms.extension_request import ExtensionRequestForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
@@ -41,6 +43,11 @@ class ExtensionRequestFormView(LoadViewMixin, WebServiceFormMixin, FormView):
     form_class = ExtensionRequestForm
     extra_context = {'submit_label': _('Submit my new deadline')}
     permission_link_to_check = 'update_confirmation_extension'
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.doctorate.status != ChoixStatutDoctorat.ADMIS.name and self.doctorate.status != ChoixStatutDoctorat.CONFIRMATION_SOUMISE.name:
+            return redirect("parcours_doctoral:extension-request", uuid=self.doctorate_uuid)
+        return super().dispatch(request, *args, **kwargs)
 
     @cached_property
     def confirmation_paper(self) -> ConfirmationPaperDTO:

@@ -110,16 +110,18 @@
   {% block tabs_content %}
     {% get_current_tab as current_tab %}
 
-    {% if form.visible_fields %}
-    {% elif change_url and change_url != request.path and doctorate|can_update_tab:current_tab %}
-      {# Display the edit button if accessible #}
-      <div class="text-end d-md-none">
-        <a href="{{ change_url }}" class="btn btn-primary">
-          <span class="fa-solid fa-floppy-disk" aria-hidden="true"></span>
-          {% trans 'Edit' %}
-        </a>
-      </div>
-    {% endif %}
+    {% block actions-group %}
+      {% if form.visible_fields %}
+      {% elif change_url and change_url != request.path and doctorate|can_update_tab:current_tab %}
+        {# Display the edit button if accessible #}
+        <div class="text-end d-md-none">
+          <a href="{{ change_url }}" class="btn btn-primary">
+            <span class="fa-solid fa-floppy-disk" aria-hidden="true"></span>
+            {% trans 'Edit' %}
+          </a>
+        </div>
+      {% endif %}
+    {% endblock %}
 
     {% current_subtabs as subtabs %}
 
