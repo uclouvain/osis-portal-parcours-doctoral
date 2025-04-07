@@ -8,7 +8,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -110,16 +110,18 @@
   {% block tabs_content %}
     {% get_current_tab as current_tab %}
 
-    {% if form.visible_fields %}
-    {% elif change_url and change_url != request.path and doctorate|can_update_tab:current_tab %}
-      {# Display the edit button if accessible #}
-      <div class="text-end d-md-none">
-        <a href="{{ change_url }}" class="btn btn-primary">
-          <span class="fa-solid fa-floppy-disk" aria-hidden="true"></span>
-          {% trans 'Edit' %}
-        </a>
-      </div>
-    {% endif %}
+    {% block actions-group %}
+      {% if form.visible_fields %}
+      {% elif change_url and change_url != request.path and doctorate|can_update_tab:current_tab %}
+        {# Display the edit button if accessible #}
+        <div class="text-end d-md-none">
+          <a href="{{ change_url }}" class="btn btn-primary">
+            <span class="fa-solid fa-floppy-disk" aria-hidden="true"></span>
+            {% trans 'Edit' %}
+          </a>
+        </div>
+      {% endif %}
+    {% endblock %}
 
     {% current_subtabs as subtabs %}
 
