@@ -85,8 +85,8 @@
                   <a
                     href="#"
                     {% if activity.can_be_submitted %}
-                    class="dropdown-item"
-                    onclick="$('[name=activity_ids]').val(['{{ activity.uuid }}']);$('form#activities').submit();return false;"
+                    class="dropdown-item submit-activity-btn"
+                    data-uuid="{{ activity.uuid }}"
                     {% else %}
                     class="dropdown-item disabled"
                     {% endif %}

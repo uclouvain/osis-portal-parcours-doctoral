@@ -161,6 +161,12 @@
   {{ block.super }}
   <script>
   $(function () {
+      $('.submit-activity-btn').on('click', function (event) {
+          event.preventDefault();
+          $('[name=activity_ids]').val([$(this).attr('data-uuid')]);
+          $('form#activities').submit();
+      });
+
     // User must confirm submission of seminars
     let confirmed = false;
     $('form#activities').on('submit', function (e) {
@@ -209,7 +215,10 @@
         $(this).show();
         if ((current_filter_type !== ALL_VALUES && $(this).data('type') !== current_filter_type)
           || (current_filter_status !== ALL_VALUES && !$(this).data('status').match(reStatus))) {
-          $(this).hide();
+            if (current_filter_type === 'COURSE' && $(this).data('type') === 'UCL_COURSE') {
+              return ;
+            }
+            $(this).hide();
         }
       });
     }
