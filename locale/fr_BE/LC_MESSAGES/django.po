@@ -402,9 +402,6 @@ msgstr "Cours avec évaluation"
 msgid "Course units"
 msgstr "Cours"
 
-msgid "Courses and trainings"
-msgstr "Cours et formation"
-
 msgctxt "a doctorate"
 msgid "Created on:"
 msgstr "Créé le :"
@@ -614,6 +611,9 @@ msgstr "Prénom"
 
 msgid "First name and last name of the speaker"
 msgstr "Nom et prénom de l’orateur.trice"
+
+msgid "Followed courses"
+msgstr "Cours suivis"
 
 msgid ""
 "Following the specifics of your domain doctoral commission, specify the "
@@ -980,9 +980,6 @@ msgstr "Non soumise"
 msgid "NOT_INVITED"
 msgstr "Pas encore invité à signer"
 
-msgid "Name in the language of the manifestation"
-msgstr "Nom dans la langue de la manifestation"
-
 msgid "Name or brief description"
 msgstr "Nom ou description brève"
 
@@ -1176,6 +1173,16 @@ msgid "Please specify either a hourly volume or a number of participating days"
 msgstr ""
 "Veuillez indiquer obligatoirement un volume horaire ou un nombre de jours de "
 "participation"
+
+msgid "Please specify the title in the language of the manifestation"
+msgstr "Veuillez indiquer le nom dans la langue de l’événement"
+
+msgid ""
+"Please use the following format for inputting the first and last name: "
+"\"Monteiro, M. et Marti, A. C.\""
+msgstr ""
+"Veuillez utiliser le format suivant pour l’encodage du nom et du prénom : "
+"\"Monteiro, M. et Martí, A. C.\""
 
 msgid "Poster"
 msgstr "Poster"
@@ -1394,7 +1401,7 @@ msgid "Scholarship start date"
 msgstr "Date de démarrage de la bourse"
 
 msgid "Scientific communications"
-msgstr "Communication scientifique"
+msgstr "Communications scientifiques"
 
 msgid "Scientific residencies"
 msgstr "Séjours scientifiques"
@@ -1777,10 +1784,10 @@ msgstr ""
 "votre commission doctorale, vous pouvez demander la valorisation des acquis "
 "d’une expérience réalisée après votre deuxième cycle et avant votre entrée "
 "dans le programme de formation doctorale. Cette expérience doit être en lien "
-"direct avec votre sujet de recherche.Suivant ces dispositions particulières, "
-"l’obtention d’un master à finalité approfondie peut également faire l’objet "
-"d’une valorisation des acquis de l’expérience (art. 2.2.4 du règlement "
-"doctoral)."
+"direct avec votre sujet de recherche. Suivant ces dispositions "
+"particulières, l’obtention d’un master à finalité approfondie peut également "
+"faire l’objet d’une valorisation des acquis de l’expérience (art. 2.2.4 du "
+"règlement doctoral)."
 
 msgid "University"
 msgstr "Université"
