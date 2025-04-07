@@ -392,9 +392,6 @@ msgstr ""
 msgid "Course units"
 msgstr ""
 
-msgid "Courses and trainings"
-msgstr ""
-
 msgctxt "a doctorate"
 msgid "Created on:"
 msgstr ""
@@ -609,6 +606,9 @@ msgid "First name / Last name"
 msgstr ""
 
 msgid "First name and last name of the speaker"
+msgstr ""
+
+msgid "Followed courses"
 msgstr ""
 
 msgid ""
@@ -939,9 +939,6 @@ msgstr ""
 msgid "NOT_INVITED"
 msgstr "Not invited to sign"
 
-msgid "Name in the language of the manifestation"
-msgstr ""
-
 msgid "Name or brief description"
 msgstr ""
 
@@ -1113,6 +1110,14 @@ msgid "Please select a member"
 msgstr ""
 
 msgid "Please specify either a hourly volume or a number of participating days"
+msgstr ""
+
+msgid "Please specify the title in the language of the manifestation"
+msgstr ""
+
+msgid ""
+"Please use the following format for inputting the first and last name: "
+"\"Monteiro, M. et Marti, A. C.\""
 msgstr ""
 
 msgid "Poster"
