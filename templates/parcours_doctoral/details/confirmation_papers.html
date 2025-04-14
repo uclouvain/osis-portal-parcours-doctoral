@@ -32,7 +32,7 @@
     <div class="card-body">
       {% include 'parcours_doctoral/includes/confirmation_papers_description.html' %}
       <div>
-        {% field_data _("Definitive admission date") doctorate.cree_le|date inline=True %}
+        {% field_data _("Definitive admission date") doctorate.date_admission_par_cdd|date inline=True %}
         {% field_data _("Confirmation deadline") current_confirmation_paper.date_limite inline=True %}
         {% field_data _("Confirmation exam date") current_confirmation_paper.date inline=True %}
         {% field_data _("Research report") current_confirmation_paper.rapport_recherche %}
