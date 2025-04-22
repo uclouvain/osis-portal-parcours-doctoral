@@ -45,9 +45,8 @@ from osis_parcours_doctoral_sdk.exceptions import (
     NotFoundException,
     UnauthorizedException,
 )
-from osis_parcours_doctoral_sdk.model.supervision_dto_promoteur import (
-    SupervisionDTOPromoteur,
-)
+from osis_parcours_doctoral_sdk.model.membre_cadto_nested import MembreCADTONested
+from osis_parcours_doctoral_sdk.model.promoteur_dto_nested import PromoteurDTONested
 
 from parcours_doctoral.constants import READ_ACTIONS_BY_TAB, UPDATE_ACTIONS_BY_TAB
 from parcours_doctoral.contrib.enums.training import (
@@ -581,7 +580,7 @@ def interpolate(string, **kwargs):
 
 
 @register.simple_tag(takes_context=True)
-def edit_external_member_form(context, membre: 'SupervisionDTOPromoteur'):
+def edit_external_member_form(context, membre: ['PromoteurDTONested', 'MembreCADTONested']):
     """Get an edit form"""
     initial = membre.to_dict()
     initial['pays'] = initial['code_pays']

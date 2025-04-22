@@ -26,11 +26,10 @@
 
 from django.shortcuts import resolve_url
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.model.membre_cadto_nested import MembreCADTONested
+from osis_parcours_doctoral_sdk.model.promoteur_dto_nested import PromoteurDTONested
 from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
 from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
-from osis_parcours_doctoral_sdk.model.supervision_dto_promoteur import (
-    SupervisionDTOPromoteur,
-)
 from osis_parcours_doctoral_sdk.model.supervision_dto_signatures_membres_ca import (
     SupervisionDTOSignaturesMembresCA,
 )
@@ -51,7 +50,7 @@ class SupervisionTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.retrieve_supervision.return_value = SupervisionDTO._from_openapi_data(
             signatures_promoteurs=[
                 SupervisionDTOSignaturesPromoteurs._from_openapi_data(
-                    promoteur=SupervisionDTOPromoteur._from_openapi_data(
+                    promoteur=PromoteurDTONested._from_openapi_data(
                         uuid="uuid-0123456978",
                         matricule="0123456978",
                         prenom="Marie-Odile",
@@ -69,7 +68,7 @@ class SupervisionTestCase(BaseDoctorateTestCase):
                     commentaire_externe="A public comment to display",
                 ),
                 SupervisionDTOSignaturesPromoteurs._from_openapi_data(
-                    promoteur=SupervisionDTOPromoteur._from_openapi_data(
+                    promoteur=PromoteurDTONested._from_openapi_data(
                         uuid="uuid-9876543210",
                         matricule="9876543210",
                         prenom="John",
@@ -87,7 +86,7 @@ class SupervisionTestCase(BaseDoctorateTestCase):
                     commentaire_externe="A public comment to display",
                 ),
                 SupervisionDTOSignaturesPromoteurs._from_openapi_data(
-                    promoteur=SupervisionDTOPromoteur._from_openapi_data(
+                    promoteur=MembreCADTONested._from_openapi_data(
                         uuid="uuid-externe",
                         matricule="",
                         prenom="Marcel",
@@ -107,7 +106,7 @@ class SupervisionTestCase(BaseDoctorateTestCase):
             ],
             signatures_membres_ca=[
                 SupervisionDTOSignaturesMembresCA._from_openapi_data(
-                    membre_ca=SupervisionDTOPromoteur._from_openapi_data(
+                    membre_ca=MembreCADTONested._from_openapi_data(
                         uuid=f"uuid-{self.person.global_id}",
                         matricule=self.person.global_id,
                         prenom="Jacques-Eudes",
