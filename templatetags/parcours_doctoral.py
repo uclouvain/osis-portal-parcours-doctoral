@@ -45,9 +45,8 @@ from osis_parcours_doctoral_sdk.exceptions import (
     NotFoundException,
     UnauthorizedException,
 )
-from osis_parcours_doctoral_sdk.model.supervision_dto_promoteur import (
-    SupervisionDTOPromoteur,
-)
+from osis_parcours_doctoral_sdk.model.membre_cadto_nested import MembreCADTONested
+from osis_parcours_doctoral_sdk.model.promoteur_dto_nested import PromoteurDTONested
 
 from parcours_doctoral.constants import READ_ACTIONS_BY_TAB, UPDATE_ACTIONS_BY_TAB
 from parcours_doctoral.contrib.enums.training import (
@@ -470,7 +469,7 @@ def report_ects(activity, categories, added, validated, parent_category=None):
     ):
         categories[_("Publications")][index] += activity.ects
     elif category == CategorieActivite.COURSE.name:
-        categories[_("Courses and trainings")][index] += activity.ects
+        categories[_("Followed courses")][index] += activity.ects
     elif category == CategorieActivite.SERVICE.name:
         categories[_("Services")][index] += activity.ects
     elif (
@@ -492,7 +491,7 @@ def training_categories(activities):
         _("Participations"): [0, 0],
         _("Scientific communications"): [0, 0],
         _("Publications"): [0, 0],
-        _("Courses and trainings"): [0, 0],
+        _("Followed courses"): [0, 0],
         _("Services"): [0, 0],
         _("VAE"): [0, 0],
         _("Scientific residencies"): [0, 0],
@@ -530,7 +529,7 @@ def training_categories(activities):
         elif category == CategorieActivite.VAE.name:
             categories[_("VAE")][index] += activity.ects
         elif category in [CategorieActivite.COURSE.name, CategorieActivite.UCL_COURSE.name]:
-            categories[_("Courses and trainings")][index] += activity.ects
+            categories[_("Followed courses")][index] += activity.ects
         elif category == CategorieActivite.PAPER.name and activity.type == ChoixTypeEpreuve.CONFIRMATION_PAPER.name:
             categories[_("Confirmation exam")][index] += activity.ects
         elif category == CategorieActivite.PAPER.name:
@@ -581,7 +580,7 @@ def interpolate(string, **kwargs):
 
 
 @register.simple_tag(takes_context=True)
-def edit_external_member_form(context, membre: 'SupervisionDTOPromoteur'):
+def edit_external_member_form(context, membre: ['PromoteurDTONested', 'MembreCADTONested']):
     """Get an edit form"""
     initial = membre.to_dict()
     initial['pays'] = initial['code_pays']

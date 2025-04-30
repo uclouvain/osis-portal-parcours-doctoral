@@ -35,6 +35,7 @@ from frontoffice.settings.osis_sdk.utils import (
     MultipleApiBusinessException,
     build_mandatory_auth_headers,
 )
+from osis_parcours_doctoral_sdk.model.type_enum import TypeEnum
 from parcours_doctoral.services.mixins import ServiceMeta
 from parcours_doctoral.utils.utils import to_snake_case
 
@@ -127,6 +128,8 @@ class DoctorateTrainingService(metaclass=ServiceMeta):
         class_name = kwargs["object_type"]
         module = import_module(f'osis_parcours_doctoral_sdk.model.{to_snake_case(class_name)}')
         activity_class = getattr(module, class_name)
+        if 'type' in kwargs:
+            kwargs['type'] = TypeEnum(kwargs['type'])
         return activity_class(**kwargs)
 
     @classmethod
