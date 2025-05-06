@@ -33,29 +33,29 @@ from django.test import TestCase, override_settings
 from base.tests.factories.academic_year import create_current_academic_year
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_cotutelle import (
-    ParcoursDoctoralDTOCotutelle,
+from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import (
+    CotutelleDTONested,
 )
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_financement import (
-    ParcoursDoctoralDTOFinancement,
+from osis_parcours_doctoral_sdk.model.financement_dto_nested import (
+    FinancementDTONested,
 )
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_financement_bourse_recherche import (
-    ParcoursDoctoralDTOFinancementBourseRecherche,
+from osis_parcours_doctoral_sdk.model.bourse_dto_nested import (
+    BourseDTONested,
 )
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import (
     ParcoursDoctoralDTOLinks,
 )
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_projet import (
-    ParcoursDoctoralDTOProjet,
+from osis_parcours_doctoral_sdk.model.projet_dto_nested import (
+    ProjetDTONested,
 )
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_recherche_dto_formation import (
-    ParcoursDoctoralRechercheDTOFormation,
+from osis_parcours_doctoral_sdk.model.formation_dto_nested import (
+    FormationDTONested,
 )
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_recherche_dto_formation_campus import (
-    ParcoursDoctoralRechercheDTOFormationCampus,
+from osis_parcours_doctoral_sdk.model.campus_dto_nested import (
+    CampusDTONested,
 )
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_recherche_dto_formation_entite_gestion import (
-    ParcoursDoctoralRechercheDTOFormationEntiteGestion,
+from osis_parcours_doctoral_sdk.model.entite_gestion_dto_nested import (
+    EntiteGestionDTONested,
 )
 from osis_reference_sdk.model.language import Language
 from osis_reference_sdk.model.scholarship import Scholarship
@@ -110,14 +110,14 @@ class BaseDoctorateTestCase(TestCase):
             uuid_admission=str(uuid.uuid4()),
             type_admission=AdmissionType.ADMISSION.name,
             intitule_secteur_formation='First sector',
-            formation=ParcoursDoctoralRechercheDTOFormation._from_openapi_data(
+            formation=FormationDTONested._from_openapi_data(
                 sigle='SC3DP',
                 code='DKOE',
                 annee=2024,
                 intitule='Doctorate',
                 intitule_fr='Doctorat',
                 intitule_en='Doctorate',
-                entite_gestion=ParcoursDoctoralRechercheDTOFormationEntiteGestion._from_openapi_data(
+                entite_gestion=EntiteGestionDTONested._from_openapi_data(
                     sigle='CDAR',
                     intitule='First commission',
                     lieu='Place de l\'université',
@@ -129,7 +129,7 @@ class BaseDoctorateTestCase(TestCase):
                     intitule_secteur='First sector',
                     nom_pays='Belgique',
                 ),
-                campus=ParcoursDoctoralRechercheDTOFormationCampus._from_openapi_data(
+                campus=CampusDTONested._from_openapi_data(
                     uuid='',
                     nom='Louvain-La-Neuve',
                     code_postal='1348',
@@ -143,7 +143,7 @@ class BaseDoctorateTestCase(TestCase):
                 ),
                 type='PHD',
             ),
-            projet=ParcoursDoctoralDTOProjet._from_openapi_data(
+            projet=ProjetDTONested._from_openapi_data(
                 titre='Title',
                 resume='Summary',
                 langue_redaction_these='FR-BE',
@@ -208,7 +208,7 @@ class BaseDoctorateTestCase(TestCase):
                     ]
                 }
             ),
-            cotutelle=ParcoursDoctoralDTOCotutelle._from_openapi_data(
+            cotutelle=CotutelleDTONested._from_openapi_data(
                 cotutelle=True,
                 motivation='Cotutelle reason',
                 institution_fwb=True,
@@ -220,11 +220,11 @@ class BaseDoctorateTestCase(TestCase):
                 convention=[],
                 autres_documents=[],
             ),
-            financement=ParcoursDoctoralDTOFinancement._from_openapi_data(
+            financement=FinancementDTONested._from_openapi_data(
                 type=ChoixTypeFinancement.WORK_CONTRACT.name,
                 type_contrat_travail=ChoixTypeContratTravail.UCLOUVAIN_SCIENTIFIC_STAFF.name,
                 eft=10,
-                bourse_recherche=ParcoursDoctoralDTOFinancementBourseRecherche._from_openapi_data(
+                bourse_recherche=BourseDTONested._from_openapi_data(
                     uuid=self.scholarship_uuid,
                     nom_long='DS1',
                     nom_court='Doctorate scholarship 1',
@@ -248,7 +248,7 @@ class BaseDoctorateTestCase(TestCase):
             commission_proximite=ChoixCommissionProximiteCDSS.ECLI.name,
             justification='Justification',
         )
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.return_value = self.mock_doctorate_object
+        self.mock_doctorate_api.return_value.doctorate_retrieve.return_value = self.mock_doctorate_object
 
     def _mock_document_api(self):
         document_api_patcher = patch('osis_document.api.utils.get_remote_token', return_value='foobar')
