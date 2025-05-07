@@ -131,7 +131,7 @@ class DoctorateService(metaclass=ServiceMeta):
 
     @classmethod
     def get_doctorate(cls, person, uuid) -> ParcoursDoctoralDTO:
-        return DoctorateAPIClient().retrieve_parcours_doctoral_dto(
+        return DoctorateAPIClient().doctorate_retrieve(
             uuid=uuid,
             **build_mandatory_auth_headers(person),
         )
