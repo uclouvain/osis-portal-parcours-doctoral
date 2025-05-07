@@ -121,7 +121,7 @@ class ExtensionRequestFormViewTestCase(BaseDoctorateTestCase):
                 attestation_reussite=[],
                 attestation_echec=[],
                 canevas_proces_verbal_ca=[],
-                demande_prolongation=DemandeProlongationDTONested._from_openapi_data(
+                demande_prolongation=dict(
                     nouvelle_echeance=datetime.date(2023, 1, 1),
                     justification_succincte='My reason',
                     lettre_justification=['f2'],
