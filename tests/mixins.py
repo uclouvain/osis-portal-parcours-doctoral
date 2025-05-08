@@ -129,7 +129,7 @@ class BaseDoctorateTestCase(TestCase):
                     intitule_secteur='First sector',
                     nom_pays='Belgique',
                 ),
-                campus=CampusDTONested._from_openapi_data(
+                campus=dict(
                     uuid='',
                     nom='Louvain-La-Neuve',
                     code_postal='1348',
@@ -224,7 +224,7 @@ class BaseDoctorateTestCase(TestCase):
                 type=ChoixTypeFinancement.WORK_CONTRACT.name,
                 type_contrat_travail=ChoixTypeContratTravail.UCLOUVAIN_SCIENTIFIC_STAFF.name,
                 eft=10,
-                bourse_recherche=BourseDTONested._from_openapi_data(
+                bourse_recherche=dict(
                     uuid=self.scholarship_uuid,
                     nom_long='DS1',
                     nom_court='Doctorate scholarship 1',
