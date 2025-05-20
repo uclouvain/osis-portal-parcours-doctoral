@@ -54,7 +54,7 @@ class FundingFormView(LoadViewMixin, WebServiceFormMixin, FormView):
         return {
             **self.doctorate.financement.to_dict(),
             'bourse_recherche': self.doctorate.financement.bourse_recherche
-            and self.doctorate.financement.bourse_recherche.uuid,
+            and self.doctorate.financement.bourse_recherche['uuid'],
         }
 
     def call_webservice(self, data):

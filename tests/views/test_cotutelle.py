@@ -29,7 +29,7 @@ from unittest.mock import patch, MagicMock
 from django.shortcuts import resolve_url
 from django.utils.translation import gettext_lazy as _
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_cotutelle import ParcoursDoctoralDTOCotutelle
+from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import CotutelleDTONested
 
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
@@ -99,7 +99,7 @@ class CotutelleFormViewTestCase(BaseCotutelleTestCase):
     def test_cotutelle_get_form_no_cotutelle(self):
         self.client.force_login(self.person.user)
 
-        self.mock_doctorate_object.cotutelle = ParcoursDoctoralDTOCotutelle._from_openapi_data(
+        self.mock_doctorate_object.cotutelle = CotutelleDTONested._from_openapi_data(
             cotutelle=False,
             motivation='',
             institution='',

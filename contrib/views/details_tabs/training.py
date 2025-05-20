@@ -35,6 +35,8 @@ from django.utils.functional import cached_property
 from django.utils.translation import get_language
 from django.views.generic import FormView
 from django.views.generic.edit import FormMixin
+from osis_parcours_doctoral_sdk.model.category_enum import CategoryEnum
+from osis_parcours_doctoral_sdk.model.context_enum import ContextEnum
 
 from parcours_doctoral.contrib.enums.training import (
     CategorieActivite,
@@ -126,27 +128,18 @@ class TrainingActivityFormMixin(LoadViewMixin, WebServiceFormMixin, FormMixin, A
     def prepare_data(self, data):
         data = super().prepare_data(data)
         data['object_type'] = self.get_form_class().object_type
-
-        # Get category from edited object or view kwargs
-        from osis_parcours_doctoral_sdk.model.categorie_activite import (
-            CategorieActivite,
-        )
-        from osis_parcours_doctoral_sdk.model.contexte_formation import (
-            ContexteFormation as ContexteFormationModel,
-        )
-
-        data['category'] = CategorieActivite(self.category)
+        data['category'] = CategoryEnum(self.category)
 
         if 'context' not in data:
             # When on a non-UCLCourseForm, context is not passed, give it current context
-            data['context'] = ContexteFormationModel(
+            data['context'] = ContextEnum(
                 ContexteFormation.COMPLEMENTARY_TRAINING.name
                 if self.namespace == "complementary-training"
                 else ContexteFormation.DOCTORAL_TRAINING.name
             )
         else:
             # When on an UCLCourseForm, context is passed, convert context
-            data['context'] = ContexteFormationModel(data['context'])
+            data['context'] = ContextEnum(data['context'])
 
         # Data cleanup and coercion
         if 'parent' not in data:
