@@ -32,17 +32,11 @@ from django.utils.translation import gettext_lazy as _
 
 from base.tests.factories.academic_year import get_current_year
 from osis_parcours_doctoral_sdk import ApiException
-from osis_parcours_doctoral_sdk.model.categorie_activite import (
-    CategorieActivite as CategorieActiviteModel,
-)
-from osis_parcours_doctoral_sdk.model.choix_type_epreuve import (
-    ChoixTypeEpreuve as ChoixTypeEpreuveModel,
-)
-from osis_parcours_doctoral_sdk.model.contexte_formation import (
-    ContexteFormation as ContexteFormationModel,
-)
 from osis_parcours_doctoral_sdk.model.paper import Paper
 from osis_parcours_doctoral_sdk.model.seminar_communication import SeminarCommunication
+from osis_parcours_doctoral_sdk.model.category_enum import CategoryEnum
+from osis_parcours_doctoral_sdk.model.context_enum import ContextEnum
+from osis_parcours_doctoral_sdk.model.type_enum import TypeEnum
 
 from parcours_doctoral.contrib.enums import (
     CategorieActivite,
@@ -329,9 +323,9 @@ class TrainingTestCase(BaseDoctorateTestCase):
             activity_id='64d2e9e3-2537-4a12-a396-48763c5cdc60',
             doctoral_training_activity=Paper(
                 object_type='Paper',
-                category=CategorieActiviteModel(CategorieActivite.PAPER.name),
-                context=ContexteFormationModel(ContexteFormation.DOCTORAL_TRAINING.name),
-                type=ChoixTypeEpreuveModel(ChoixTypeEpreuve.CONFIRMATION_PAPER.name),
+                category=CategoryEnum('PAPER'),
+                context=ContextEnum('DOCTORAL_TRAINING'),
+                type=TypeEnum('CONFIRMATION_PAPER'),
                 ects=20.0,
                 comment='c1',
                 parent=None,

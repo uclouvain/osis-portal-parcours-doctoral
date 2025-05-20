@@ -159,7 +159,7 @@ class AutocompleteTestCase(TestCase):
 
     @patch('osis_parcours_doctoral_sdk.api.autocomplete_api.AutocompleteApi')
     def test_autocomplete_tutors(self, api):
-        api.return_value.list_tutors.return_value = {
+        api.return_value.autocomplete_tutor_list.return_value = {
             'results': [
                 Mock(first_name='Michel', last_name='Screugnette', global_id="0123456987"),
                 Mock(first_name='Marie-Odile', last_name='Troufignon', global_id="789654213"),
@@ -181,7 +181,7 @@ class AutocompleteTestCase(TestCase):
 
     @patch('osis_parcours_doctoral_sdk.api.autocomplete_api.AutocompleteApi')
     def test_autocomplete_persons(self, api):
-        api.return_value.list_people.return_value = {
+        api.return_value.autocomplete_person_list.return_value = {
             'results': [
                 Mock(first_name='Ripolin', last_name='Trolapois', global_id="0123456987"),
                 Mock(first_name='Marie-Odile', last_name='Troufignon', global_id="789654213"),
