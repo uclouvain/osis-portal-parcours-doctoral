@@ -34,10 +34,10 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext_lazy
 
 from base.models.academic_year import current_academic_year
-from osis_parcours_doctoral_sdk.model.choix_type_epreuve import (
-    ChoixTypeEpreuve as ChoixTypeEpreuveModel,
-)
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
+from osis_parcours_doctoral_sdk.model.type_enum import (
+    TypeEnum as PaperTypeEnum,
+)
 from parcours_doctoral.contrib.enums.training import (
     ChoixComiteSelection,
     ChoixRolePublication,
@@ -843,7 +843,7 @@ class PaperForm(ActivityFormMixin, forms.Form):
         cleaned_data = super().clean()
 
         if cleaned_data.get('type'):
-            cleaned_data['type'] = ChoixTypeEpreuveModel(cleaned_data['type'])
+            cleaned_data['type'] = PaperTypeEnum(cleaned_data['type'])
 
         return cleaned_data
 

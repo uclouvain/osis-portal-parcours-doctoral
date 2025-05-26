@@ -79,7 +79,7 @@ class ConfirmationPaperDetailViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
@@ -101,7 +101,7 @@ class ConfirmationPaperDetailViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
@@ -160,7 +160,7 @@ class ConfirmationPaperFormViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
@@ -184,7 +184,7 @@ class ConfirmationPaperFormViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
@@ -224,7 +224,7 @@ class ConfirmationPaperFormViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
@@ -245,7 +245,7 @@ class ConfirmationPaperFormViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information

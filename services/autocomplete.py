@@ -46,14 +46,14 @@ class DoctorateAutocompleteService(metaclass=ServiceMeta):
 
     @classmethod
     def autocomplete_tutors(cls, person, **kwargs):
-        return DoctorateAutocompleteAPIClient().list_tutors(
+        return DoctorateAutocompleteAPIClient().autocomplete_tutor_list(
             **kwargs,
             **build_mandatory_auth_headers(person),
         )['results']
 
     @classmethod
     def autocomplete_persons(cls, person, **kwargs):
-        return DoctorateAutocompleteAPIClient().list_people(
+        return DoctorateAutocompleteAPIClient().autocomplete_person_list(
             **kwargs,
             **build_mandatory_auth_headers(person),
         )['results']

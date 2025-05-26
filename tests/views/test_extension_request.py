@@ -28,6 +28,8 @@ from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.model.demande_prolongation_dto_nested import DemandeProlongationDTONested
+from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
 
 from base.tests.factories.person import PersonFactory
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
@@ -44,21 +46,18 @@ class ExtensionRequestDetailViewTestCase(BaseDoctorateTestCase):
     def setUp(self):
         super().setUp()
 
-        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.return_value = Mock(
-            uuid='c1',
-            date_limite='2022-06-10',
-            date='2022-04-03',
-            rapport_recherche=['f1'],
-            avis_renouvellement_mandat_recherche=['f2'],
-            proces_verbal_ca=['f3'],
-            to_dict=dict(
+        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.return_value = (
+            ConfirmationPaperDTO._from_openapi_data(
                 uuid='c1',
-                date_limite='2022-06-10',
-                date='2022-04-03',
+                date_limite=datetime.date(2022, 6, 10),
+                date=datetime.date(2022, 4, 3),
                 rapport_recherche=['f1'],
                 avis_renouvellement_mandat_recherche=['f2'],
                 proces_verbal_ca=['f3'],
-            ),
+                attestation_reussite=[],
+                attestation_echec=[],
+                canevas_proces_verbal_ca=[],
+            )
         )
 
     def test_get_no_permission(self):
@@ -74,7 +73,7 @@ class ExtensionRequestDetailViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
@@ -91,7 +90,7 @@ class ExtensionRequestDetailViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
@@ -111,31 +110,23 @@ class ExtensionRequestFormViewTestCase(BaseDoctorateTestCase):
     def setUp(self):
         super().setUp()
 
-        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.return_value = Mock(
-            uuid='c1',
-            date_limite='2022-06-10',
-            date='2022-04-03',
-            rapport_recherche=['f1'],
-            avis_renouvellement_mandat_recherche=['f2'],
-            proces_verbal_ca=['f3'],
-            demande_prolongation=Mock(
-                nouvelle_echeance='2023-01-01',
-                justification_succincte='My reason',
-                lettre_justification=['f2'],
-            ),
-            to_dict=dict(
+        self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.return_value = (
+            ConfirmationPaperDTO._from_openapi_data(
                 uuid='c1',
-                date_limite='2022-06-10',
-                date='2022-04-03',
+                date_limite=datetime.date(2022, 6, 10),
+                date=datetime.date(2022, 4, 3),
                 rapport_recherche=['f1'],
                 avis_renouvellement_mandat_recherche=['f2'],
                 proces_verbal_ca=['f3'],
+                attestation_reussite=[],
+                attestation_echec=[],
+                canevas_proces_verbal_ca=[],
                 demande_prolongation=dict(
-                    nouvelle_echeance='2023-01-01',
+                    nouvelle_echeance=datetime.date(2023, 1, 1),
                     justification_succincte='My reason',
                     lettre_justification=['f2'],
                 ),
-            ),
+            )
         )
 
     def test_get_no_permission(self):
@@ -153,14 +144,14 @@ class ExtensionRequestFormViewTestCase(BaseDoctorateTestCase):
         self.assertContains(response, "osis-document.umd.min.js")
 
         # Load the doctorate information
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
         self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.assert_called()
 
         # Initialize the form
-        self.assertEqual(response.context.get('form').initial['nouvelle_echeance'], '2023-01-01')
+        self.assertEqual(response.context.get('form').initial['nouvelle_echeance'], datetime.date(2023, 1, 1))
         self.assertEqual(response.context.get('form').initial['justification_succincte'], 'My reason')
         self.assertEqual(response.context.get('form').initial['lettre_justification'], ['f2'])
 
@@ -172,7 +163,7 @@ class ExtensionRequestFormViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         # Load the doctorate information
-        self.mock_doctorate_api.return_value.retrieve_parcours_doctoral_dto.assert_called()
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
         # Load the confirmation papers information
