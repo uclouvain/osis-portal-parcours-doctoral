@@ -29,7 +29,9 @@
   {% trans "Defense method" context "doctorate tab" as panel_title %}
   {% panel panel_title %}
     {% include 'parcours_doctoral/includes/jury_description.html' %}
-    {% field_data _("Proposed thesis title") jury.titre_propose %}
+
+    {% trans 'This is a temporary title and it will be modifiable later depending on the jury analysis.' as titre_propose_tooltip %}
+    {% field_data _("Proposed thesis title") jury.titre_propose tooltip=titre_propose_tooltip %}
     <div class="row">
       <div class="col-md-4">
         {% trans 'Information about a potential cotutelle are to be inputted in the "Research" part.' as cotutelle_tooltip %}
