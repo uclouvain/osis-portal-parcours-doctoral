@@ -52,9 +52,9 @@
     <div>
       <p>
         <strong class="d-block">{% trans "Description" %}</strong>
-        {{ doctorate.nom_doctorant }}, {{ doctorate.prenom_doctorant.0 }}. ({{ parent.start_date|date:'Y, m' }}).
-        <em>{{ activity.title }}</em> {{ activity.type }}. {{ parent.title }}, {{ parent.city }}, {% get_country_name parent.country %}.
-        {% if parent.website %}<a href="{{ parent.website }}" target="_blank">{{ parent.website }}</a>{% endif %}
+        {{ doctorate.nom_doctorant }} {{ doctorate.prenom_doctorant.0 }}, ({{ parent.start_date|date:'Y, m' }}),
+        <em>{{ activity.title }}</em>, {{ activity.type }}, {{ parent.title }}, {{ parent.city }}, {% get_country_name parent.country %}
+        {% if parent.website %}, <a href="{{ parent.website }}" target="_blank">{{ parent.website }}</a>{% endif %}
       </p>
       {% if activity.summary %}
         <div class="mb-3">
