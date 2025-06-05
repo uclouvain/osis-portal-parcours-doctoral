@@ -30,7 +30,11 @@
 
   {% if assessment_enrollment.statut == 'DESINSCRITE' %}
     <p class="alert alert-warning">
-      {% translate 'You have been withdrawn from this assessment.' %}
+      {% if assessment_enrollment.desinscription_tardive %}
+        {% translate 'You have been withdrawn lately from this assessment.' %}
+      {% else %}
+        {% translate 'You have been withdrawn from this assessment.' %}
+      {% endif %}
     </p>
   {% endif %}
 
