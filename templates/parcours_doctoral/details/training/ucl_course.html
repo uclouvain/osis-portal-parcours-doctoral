@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -42,19 +42,41 @@
     aria-labelledby="h-{{ activity.uuid }}"
   >
     <div>
-      <div class="mb-3">
-        <strong class="d-block">{% trans "Context" %}</strong>
-        {{ activity.context|enum_display:'ContexteFormation' }}
-        <strong class="d-block">{% trans "Learning unit" %}</strong>
-        {{ activity.learning_unit_title }} -
-        {{ activity.academic_year|display_as_academic_year }}
-        {% if activity.ects %}
-          <p>
-            <strong class="d-block">{% trans "ECTS" %}</strong>
-            {{ activity.ects|floatformat:"-1" }}
-          </p>
-        {% endif %}
-      </div>
+      {% if request.resolver_match.url_name == 'course-enrollment' %}
+        <div class="mb-3">
+          <strong class="d-block">{% trans "Context" %}</strong>
+          {{ activity.context|enum_display:'ContexteFormation' }}
+          <strong class="d-block">{% trans "Learning unit" %}</strong>
+          {{ activity.learning_unit_year }} - {{ activity.learning_unit_title }} -
+          {{ activity.academic_year|display_as_academic_year }}
+          {% if activity.ects %}
+            <p>
+              <strong class="d-block">{% trans "ECTS" %}</strong>
+              {{ activity.ects|floatformat:"-1" }}
+            </p>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="mb-3">
+          {{ activity.learning_unit_year }} - {{ activity.learning_unit_title }} - {{ activity.academic_year|display_as_academic_year }}
+        </div>
+
+        <div class="row">
+          {% field_data _('Organising institution') 'UCLouvain' css_class='col-md-4' hide_empty=True %}
+          {% field_data _('Course owner') activity.authors css_class='col-md-4' hide_empty=True %}
+        </div>
+
+        <div class="row">
+          {% field_data _('ECTS') activity.ects|floatformat:"-1" css_class="col-md-4" hide_empty=True %}
+        </div>
+
+        <div class="row">
+          {% field_data _('Hourly volume') activity.hour_volume css_class='col-md-4' hide_empty=True %}
+          {% field_data _('Course unit with evaluation') _('Yes') css_class='col-md-4' hide_empty=True %}
+        </div>
+
+        {% field_data _('Proof of participation or success') activity.participating_proof hide_empty=True %}
+      {% endif %}
     </div>
   </div>
 </div>
