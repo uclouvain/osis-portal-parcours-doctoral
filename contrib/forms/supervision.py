@@ -140,6 +140,10 @@ class DoctorateSupervisionForm(DoctorateMemberSupervisionForm):
         label=_("Search a person by surname"),
         widget=autocomplete.ListSelect2(
             url="parcours_doctoral:autocomplete:person",
+            attrs={
+                'data-minimum-input-length': 3,
+                'data-placeholder': _('First name / Last name'),
+            },
         ),
         required=False,
     )
