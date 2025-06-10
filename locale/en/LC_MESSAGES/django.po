@@ -513,7 +513,7 @@ msgid "ECTS for the participation"
 msgstr ""
 
 msgid "EN_ATTENTE_DE_SIGNATURE"
-msgstr "Waiting for signature"
+msgstr "In the process of signing"
 
 msgid "EN_ATTENTE_INJECTION_EPC"
 msgstr "Waiting for EPC injection"
@@ -591,6 +591,9 @@ msgid "First author"
 msgstr ""
 
 msgid "First name"
+msgstr ""
+
+msgid "First name / Last name"
 msgstr ""
 
 msgid "First name and last name of the speaker"

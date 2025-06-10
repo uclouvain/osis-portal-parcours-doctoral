@@ -532,7 +532,7 @@ msgid "ECTS for the participation"
 msgstr "ECTS pour la participation"
 
 msgid "EN_ATTENTE_DE_SIGNATURE"
-msgstr "En attente de signature"
+msgstr "En cours de signature"
 
 msgid "EN_ATTENTE_INJECTION_EPC"
 msgstr "En attente d'injection EPC"
@@ -611,6 +611,9 @@ msgstr "Premier auteur.trice"
 
 msgid "First name"
 msgstr "Prénom"
+
+msgid "First name / Last name"
+msgstr "Prénom / Nom"
 
 msgid "First name and last name of the speaker"
 msgstr "Nom et prénom de l’orateur.trice"
