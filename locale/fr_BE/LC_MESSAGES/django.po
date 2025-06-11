@@ -441,6 +441,18 @@ msgstr "Créé le :"
 msgid "Current funding"
 msgstr "Financement actuel"
 
+msgid "DEFENSE_PRIVEE_AUTORISEE"
+msgstr "Défense privée autorisée"
+
+msgid "DEFENSE_PRIVEE_A_RECOMMENCER"
+msgstr "Défense privée à recommencer"
+
+msgid "DEFENSE_PRIVEE_REUSSIE"
+msgstr "Défense privée réussie"
+
+msgid "DEFENSE_PRIVEE_SOUMISE"
+msgstr "Défense privée soumise"
+
 msgid "DESINSCRITE"
 msgstr "Désinscrite"
 
@@ -449,6 +461,9 @@ msgstr "Formation doctorale"
 
 msgid "Date"
 msgstr "Date"
+
+msgid "Date of manuscript submission to the thesis exam board"
+msgstr "Date d'envoi du manuscrit au jury"
 
 msgid "Decision"
 msgstr "Décision"
@@ -747,6 +762,11 @@ msgid ""
 msgstr ""
 "Le cas échéant, veuillez téléverser ici l’avis de votre comité "
 "d’accompagnement sur la demande de prolongation."
+
+msgid "If necessary, contact your administrator for practical arrangements."
+msgstr ""
+"Si nécessaire, prenez contact avec votre gestionnaire pour les modalités "
+"pratiques."
 
 msgid ""
 "If necessary, please finish inputting doctoral activities and complete the "
@@ -1235,6 +1255,21 @@ msgstr "Président"
 msgid "Previous confirmation exams"
 msgstr "Épreuves de confirmation passées"
 
+msgid "Previous private defenses"
+msgstr "Défenses privées passées"
+
+msgid "Private defence date and time"
+msgstr "Date et heure de la défense privée"
+
+msgid "Private defence location"
+msgstr "Lieu de la défense privée"
+
+msgid "Private defence minutes"
+msgstr "Procès verbal de la défense privée"
+
+msgid "Private defense"
+msgstr "Défense privée"
+
 msgid "Professor"
 msgstr "Professeur.e"
 
@@ -1578,6 +1613,9 @@ msgstr "Promoteur·trice"
 msgid "Supervisors"
 msgstr "Promoteurs·trices"
 
+msgid "Supervisory panel"
+msgstr "Promoteurs"
+
 msgid "Support Committee minutes"
 msgstr "Procès-verbal du comité d'accompagnement"
 
@@ -1668,6 +1706,37 @@ msgstr ""
 "votre gestionnaire de dossier et respecter l'usage prévu par votre "
 "commission doctorale de domaine."
 
+msgid ""
+"The minutes will be uploaded by the thesis exam board secretary or chair."
+msgstr ""
+"Le procès verbal sera téléversé par le·la secrétaire du jury ou le·la "
+"président·e du jury."
+
+msgid ""
+"The private defence date is chosen collectively by the jury and in agreement "
+"with the PhD student"
+msgstr ""
+"La date de la défense privée est choisie collégialement par le jury, en "
+"accord avec le doctorant ou la doctorante."
+
+msgid ""
+"The provisional text of your thesis must be sent to thesis exam board "
+"members no later than one month before the date set for the private defence. "
+"The manuscript format may vary from one Subject-specific PhD Committee (CDD) "
+"to another; please ask your administrator for details. The submission method "
+"(paper and/or digital) must be agreed with each thesis exam board member. "
+"The thesis exam board must be present in full at the private defence. The "
+"date must therefore be chosen collectively by the board in agreement with "
+"the PhD student."
+msgstr ""
+"Le texte provisoire de votre thèse doit parvenir aux membres du jury au plus "
+"tard un mois avant la date fixée pour la défense privée. Le format du "
+"manuscrit peut varier d’une CDD à l’autre ; veuillez-vous informer auprès de "
+"votre gestionnaire. Les modalités d’envoi (papier et/ou électronique) sont à "
+"convenir avec chaque membre du jury. Le jury doit être présent au complet "
+"lors de la défense privée. La date doit donc être choisie collégialement par "
+"le jury, en accord avec le doctorant ou la doctorante."
+
 msgid "The start date must be earlier than or the same as the end date."
 msgstr "La date de début doit être antérieure ou égale à la date de fin."
 
@@ -1697,6 +1766,9 @@ msgstr "Langue de rédaction de la thèse"
 
 msgid "Thesis location"
 msgstr "Lieu de la thèse"
+
+msgid "Thesis title"
+msgstr "Titre de la thèse"
 
 msgid "This activity and its potential subactivities will be discontinued"
 msgstr "Cette activité et ses potentielles sous-activités seront supprimées"
@@ -1976,6 +2048,9 @@ msgstr "jj/mm/aaaa"
 #, python-format
 msgid "from %(start)s to %(end)s"
 msgstr "du %(start)s au %(end)s"
+
+msgid "hh:mm"
+msgstr "hh:mm"
 
 msgid "hours"
 msgstr "heures"

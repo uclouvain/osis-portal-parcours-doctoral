@@ -52,6 +52,8 @@ from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCom
 from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe import (
     RenvoyerInvitationSignatureExterne,
 )
+from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
+from osis_parcours_doctoral_sdk.model.submit_private_defense import SubmitPrivateDefense
 from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
 from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
 
@@ -186,6 +188,30 @@ class DoctorateService(metaclass=ServiceMeta):
         return DoctorateAPIClient().submit_confirmation_paper_extension_request(
             uuid=uuid,
             submit_confirmation_paper_extension_request_command=kwargs,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_private_defenses(cls, person, doctorate_uuid) -> List[PrivateDefenseDTO]:
+        return DoctorateAPIClient().retrieve_private_defenses(
+            uuid=doctorate_uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_private_defense(cls, person, doctorate_uuid, private_defense_uuid) -> PrivateDefenseDTO:
+        return DoctorateAPIClient().retrieve_private_defense(
+            uuid=doctorate_uuid,
+            private_defense_uuid=private_defense_uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_private_defense(cls, person, doctorate_uuid, private_defense_uuid, data) -> ParcoursDoctoralIdentityDTO:
+        return DoctorateAPIClient().submit_private_defense(
+            uuid=doctorate_uuid,
+            private_defense_uuid=private_defense_uuid,
+            submit_private_defense=SubmitPrivateDefense(**data),
             **build_mandatory_auth_headers(person),
         )
 
