@@ -34,7 +34,6 @@ from .experience_precedente import *
 from .financement import *
 from .jury import *
 from .person import *
-from .projet import *
 from .proximity_commission import *
 from .scholarship import *
 from .supervision import *

@@ -53,10 +53,10 @@
     {% field_data _("Defense indicative date") jury.date_indicative %}
     <div class="row">
       <div class="col-md-4">
-        {% field_data _("Thesis language") doctorate.projet.nom_langue_redaction_these %}
+        {% field_data _("Thesis language") jury.nom_langue_redaction %}
       </div>
       <div class="col-md-4">
-        {% field_data _("Defense language") jury.langue_soutenance|enum_display:'ChoixLangueRedactionThese' %}
+        {% field_data _("Defense language") jury.nom_langue_soutenance %}
       </div>
     </div>
     {% if jury.commentaire %}{% field_data _("Comment") jury.commentaire|linebreaks %}{% endif %}

@@ -31,7 +31,6 @@ from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 
 from parcours_doctoral.contrib.enums import (
     FormuleDefense,
-    ChoixLangueRedactionThese,
     RoleJury,
     TitreMembre,
     GenreMembre,
@@ -57,8 +56,8 @@ class JuryPreparationTestCase(BaseDoctorateTestCase):
             titre_propose="titre",
             formule_defense=FormuleDefense.FORMULE_1.name,
             date_indicative=datetime.date(2023, 4, 19),
-            langue_redaction=ChoixLangueRedactionThese.FRENCH.name,
-            langue_soutenance=ChoixLangueRedactionThese.FRENCH.name,
+            langue_redaction='FR',
+            langue_soutenance='FR',
             commentaire="Foobar",
         )
 
@@ -94,7 +93,7 @@ class JuryPreparationTestCase(BaseDoctorateTestCase):
                 "formule_defense": FormuleDefense.FORMULE_1.name,
                 "date_indicative": '2023-04-01',
                 "langue_redaction": 'FR',
-                "langue_soutenance": ChoixLangueRedactionThese.FRENCH.name,
+                "langue_soutenance": 'FR',
                 "commentaire": "Foobar bis",
             },
         )
