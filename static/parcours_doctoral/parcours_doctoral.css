@@ -424,6 +424,18 @@ body, html {
   background: white;
 }
 
+.items-with-separator:after {
+  content: '';
+  border-bottom: 1px solid #ddd;
+  display: block;
+  width: 80%;
+  margin: 2em auto;
+}
+
+.items-with-separator:last-child:after {
+  border: none;
+}
+
 /* The following code related to the bootstrap migration will be moved in the base css files in the future. */
 .hide-bs3-element {
   display: none;

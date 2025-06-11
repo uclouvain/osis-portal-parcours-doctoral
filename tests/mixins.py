@@ -29,6 +29,8 @@ from unittest.mock import ANY, MagicMock, patch
 from uuid import uuid4
 
 from django.test import override_settings
+from osis_reference_sdk.model.language import Language
+from osis_reference_sdk.model.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
 from base.tests.test_case import OsisPortalTestCase
@@ -49,8 +51,6 @@ from osis_parcours_doctoral_sdk.model.projet_dto_nested import ProjetDTONested
 from osis_parcours_doctoral_sdk.model.signature_membre_jury_dto_nested import (
     SignatureMembreJuryDTONested,
 )
-from osis_reference_sdk.model.language import Language
-from osis_reference_sdk.model.scholarship import Scholarship
 from parcours_doctoral.contrib.enums import (
     AdmissionType,
     ChoixStatutDoctorat,
@@ -188,6 +188,8 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'retrieve_complementary_training',
                         'retrieve_course_enrollment',
                         'retrieve_assessment_enrollment',
+                        'retrieve_private_defense',
+                        'update_private_defense',
                         'add_training',
                         'submit_training',
                         'assent_training',
