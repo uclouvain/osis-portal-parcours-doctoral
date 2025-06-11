@@ -26,6 +26,7 @@
 {% endcomment %}
 
 {% block tab_content %}
+  {{ doctorate }}
   {% trans "Defense method" context "doctorate tab" as panel_title %}
   {% panel panel_title %}
     {% include 'parcours_doctoral/includes/jury_description.html' %}

@@ -58,6 +58,7 @@
     </em>
   </div>
 
+  {% if not readonly %}
   {% if user.is_authenticated and doctorate|can_make_action:'set_reference_promoter' and type == 'PROMOTER' and member.matricule and member.uuid != supervision.promoteur_reference %}
     <form method="post" action="{{ set_reference_promoter_url }}">
       {% csrf_token %}
@@ -170,6 +171,7 @@
           </div>
         </div>
       </form>
+    {% endif %}
     {% endif %}
 
     {% if signature.motif_refus and signature.statut == 'DECLINED' %}
