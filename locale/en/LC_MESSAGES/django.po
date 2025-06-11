@@ -402,6 +402,18 @@ msgstr ""
 msgid "Current funding"
 msgstr ""
 
+msgid "DEFENSE_PRIVEE_AUTORISEE"
+msgstr "Authorized private defense"
+
+msgid "DEFENSE_PRIVEE_A_RECOMMENCER"
+msgstr "Private defense to be repeated"
+
+msgid "DEFENSE_PRIVEE_REUSSIE"
+msgstr "Passed private defense"
+
+msgid "DEFENSE_PRIVEE_SOUMISE"
+msgstr "Submitted private defense"
+
 msgid "DESINSCRITE"
 msgstr "Withdrawn"
 
@@ -409,6 +421,9 @@ msgid "DOCTORAL_TRAINING"
 msgstr "PhD training"
 
 msgid "Date"
+msgstr ""
+
+msgid "Date of manuscript submission to the thesis exam board"
 msgstr ""
 
 msgid "Decision"
@@ -690,6 +705,9 @@ msgstr "Invited to sign"
 msgid ""
 "If applicable, please upload here the opinion of your support committee on "
 "the extension request."
+msgstr ""
+
+msgid "If necessary, contact your administrator for practical arrangements."
 msgstr ""
 
 msgid ""
@@ -1130,6 +1148,21 @@ msgstr ""
 msgid "Previous confirmation exams"
 msgstr ""
 
+msgid "Previous private defenses"
+msgstr ""
+
+msgid "Private defence date and time"
+msgstr ""
+
+msgid "Private defence location"
+msgstr ""
+
+msgid "Private defence minutes"
+msgstr ""
+
+msgid "Private defense"
+msgstr ""
+
 msgid "Professor"
 msgstr ""
 
@@ -1455,6 +1488,9 @@ msgstr ""
 msgid "Supervisors"
 msgstr ""
 
+msgid "Supervisory panel"
+msgstr ""
+
 msgid "Support Committee minutes"
 msgstr ""
 
@@ -1518,6 +1554,26 @@ msgid ""
 "committee."
 msgstr ""
 
+msgid ""
+"The minutes will be uploaded by the thesis exam board secretary or chair."
+msgstr ""
+
+msgid ""
+"The private defence date is chosen collectively by the jury and in agreement "
+"with the PhD student"
+msgstr ""
+
+msgid ""
+"The provisional text of your thesis must be sent to thesis exam board "
+"members no later than one month before the date set for the private defence. "
+"The manuscript format may vary from one Subject-specific PhD Committee (CDD) "
+"to another; please ask your administrator for details. The submission method "
+"(paper and/or digital) must be agreed with each thesis exam board member. "
+"The thesis exam board must be present in full at the private defence. The "
+"date must therefore be chosen collectively by the board in agreement with "
+"the PhD student."
+msgstr ""
+
 msgid "The start date must be earlier than or the same as the end date."
 msgstr ""
 
@@ -1534,6 +1590,9 @@ msgid "Thesis language"
 msgstr ""
 
 msgid "Thesis location"
+msgstr ""
+
+msgid "Thesis title"
 msgstr ""
 
 msgid "This activity and its potential subactivities will be discontinued"
@@ -1763,6 +1822,9 @@ msgstr ""
 
 #, python-format
 msgid "from %(start)s to %(end)s"
+msgstr ""
+
+msgid "hh:mm"
 msgstr ""
 
 msgid "hours"

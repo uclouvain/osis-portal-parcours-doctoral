@@ -29,37 +29,24 @@ from unittest.mock import ANY, MagicMock, patch
 from uuid import uuid4
 
 from django.test import TestCase, override_settings
-
-from base.tests.factories.academic_year import create_current_academic_year
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
-from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import (
-    CotutelleDTONested,
-)
-from osis_parcours_doctoral_sdk.model.financement_dto_nested import (
-    FinancementDTONested,
-)
-from osis_parcours_doctoral_sdk.model.bourse_dto_nested import (
-    BourseDTONested,
-)
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import (
-    ParcoursDoctoralDTOLinks,
-)
-from osis_parcours_doctoral_sdk.model.projet_dto_nested import (
-    ProjetDTONested,
-)
-from osis_parcours_doctoral_sdk.model.formation_dto_nested import (
-    FormationDTONested,
-)
-from osis_parcours_doctoral_sdk.model.campus_dto_nested import (
-    CampusDTONested,
-)
+from osis_parcours_doctoral_sdk.model.bourse_dto_nested import BourseDTONested
+from osis_parcours_doctoral_sdk.model.campus_dto_nested import CampusDTONested
+from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import CotutelleDTONested
 from osis_parcours_doctoral_sdk.model.entite_gestion_dto_nested import (
     EntiteGestionDTONested,
 )
+from osis_parcours_doctoral_sdk.model.financement_dto_nested import FinancementDTONested
+from osis_parcours_doctoral_sdk.model.formation_dto_nested import FormationDTONested
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import (
+    ParcoursDoctoralDTOLinks,
+)
+from osis_parcours_doctoral_sdk.model.projet_dto_nested import ProjetDTONested
 from osis_reference_sdk.model.language import Language
 from osis_reference_sdk.model.scholarship import Scholarship
 
+from base.tests.factories.academic_year import create_current_academic_year
 from base.tests.factories.person import PersonFactory
 from base.tests.test_case import OsisPortalTestCase
 from parcours_doctoral.contrib.enums import (
@@ -198,6 +185,8 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'retrieve_complementary_training',
                         'retrieve_course_enrollment',
                         'retrieve_assessment_enrollment',
+                        'retrieve_private_defense',
+                        'update_private_defense',
                         'add_training',
                         'submit_training',
                         'assent_training',
