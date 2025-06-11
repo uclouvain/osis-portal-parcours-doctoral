@@ -8,7 +8,7 @@
 * The core business involves the administration of students, teachers,
 * courses, programs and so on.
 *
-* Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@
       </div>
       <div class="card-body">
         {% for confirmation_paper in previous_confirmation_papers %}
-          <div class="past-confirmation-paper">
+          <div class="items-with-separator">
             {% field_data _("Confirmation exam date") confirmation_paper.date inline=True %}
             {% field_data _("Research report") confirmation_paper.rapport_recherche %}
             {% field_data _("Support Committee minutes") confirmation_paper.proces_verbal_ca %}
@@ -63,21 +63,4 @@
       </div>
     </div>
   {% endif %}
-{% endblock %}
-
-{% block style %}
-  {{ block.super }}
-  <style>
-    .past-confirmation-paper:after {
-      content: '';
-      border-bottom: 1px solid #ddd;
-      display: block;
-      width: 80%;
-      margin: 2em auto;
-    }
-    .past-confirmation-paper:last-child:after {
-      border: none;
-    }
-  </style>
-
 {% endblock %}

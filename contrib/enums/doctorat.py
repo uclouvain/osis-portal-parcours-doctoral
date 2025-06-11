@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -49,3 +49,8 @@ class ChoixStatutDoctorat(ChoiceEnum):
     JURY_REFUSE_CDD = _('JURY_REFUSE_CDD')
     JURY_APPROUVE_ADRE = _('JURY_APPROUVE_ADRE')
     JURY_REFUSE_ADRE = _('JURY_REFUSE_ADRE')
+    # Défense privée
+    DEFENSE_PRIVEE_SOUMISE = _('DEFENSE_PRIVEE_SOUMISE')
+    DEFENSE_PRIVEE_AUTORISEE = _('DEFENSE_PRIVEE_AUTORISEE')
+    DEFENSE_PRIVEE_A_RECOMMENCER = _('DEFENSE_PRIVEE_A_RECOMMENCER')
+    DEFENSE_PRIVEE_REUSSIE = _('DEFENSE_PRIVEE_REUSSIE')

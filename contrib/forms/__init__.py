@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -58,6 +58,8 @@ PNG_MIME_TYPE = 'image/png'
 IMAGE_MIME_TYPES = [JPEG_MIME_TYPE, PNG_MIME_TYPE]
 DEFAULT_MIME_TYPES = [PDF_MIME_TYPE] + IMAGE_MIME_TYPES
 MAX_FILE_UPLOAD_SIZE = 1024 * 1024 * 10
+DATE_FORMAT = '%d/%m/%Y'
+TIME_FORMAT = '%H:%M'
 
 
 def get_country_initial_choices(iso_code=None, person=None, loaded_country=None):
@@ -120,7 +122,7 @@ def get_scholarship_choices(uuid, person):
 
 
 class CustomDateInput(forms.DateInput):
-    def __init__(self, attrs=None, format='%d/%m/%Y'):
+    def __init__(self, attrs=None, format=DATE_FORMAT):
         if attrs is None:
             attrs = {
                 'placeholder': _("dd/mm/yyyy"),
@@ -240,3 +242,31 @@ class BooleanRadioSelect(forms.RadioSelect):
             context['widget']['optgroups'][0][1][0]['selected'] = True
             context['widget']['optgroups'][0][1][0]['attrs']['checked'] = True
         return context
+
+
+class DoctorateDateTimeWidget(forms.SplitDateTimeWidget):
+    def __init__(self):
+        super().__init__(
+            date_format=DATE_FORMAT,
+            date_attrs={
+                'placeholder': _("dd/mm/yyyy"),
+                'data-mask': '00/00/0000',
+                'autocomplete': 'off',
+            },
+            time_format=TIME_FORMAT,
+            time_attrs={
+                'placeholder': _("hh:mm"),
+                'data-mask': '00:00',
+                'autocomplete': 'off',
+            },
+        )
+
+    class Media:
+        js = ('jquery.mask.min.js',)
+
+
+class DoctorateDateTimeField(forms.SplitDateTimeField):
+    widget = DoctorateDateTimeWidget
+
+    def __init__(self, **kwargs):
+        super().__init__(input_date_formats=[DATE_FORMAT], input_time_formats=[TIME_FORMAT], **kwargs)
