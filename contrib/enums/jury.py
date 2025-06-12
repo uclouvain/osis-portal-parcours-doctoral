@@ -45,7 +45,7 @@ class RoleJury(ChoiceEnum):
 class TitreMembre(ChoiceEnum):
     DOCTEUR = _('Doctor')
     PROFESSEUR = _('Professor')
-    NON_DOCTEUR = _('Does not have a doctor title')
+    NON_DOCTEUR = _('Without PhD degree')
 
 
 class GenreMembre(ChoiceEnum):

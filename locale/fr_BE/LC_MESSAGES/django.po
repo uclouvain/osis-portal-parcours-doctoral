@@ -489,13 +489,13 @@ msgid "Development cooperation (ARES)"
 msgstr "ARES - Coopération au développement"
 
 msgid "Doctor"
-msgstr "Docteur"
+msgstr "Docteur.e"
 
 msgid "Doctorate thesis field"
 msgstr "Domaine de la thèse de doctorat"
 
-msgid "Does not have a doctor title"
-msgstr "N'est pas porteur du titre de docteur"
+msgid "Without PhD degree"
+msgstr "Sans grade de doctorat"
 
 msgid "Download as PDF"
 msgstr "Télécharger en tant que PDF"
@@ -1196,7 +1196,7 @@ msgid "Previous confirmation exams"
 msgstr "Épreuves de confirmation passées"
 
 msgid "Professor"
-msgstr "Professeur"
+msgstr "Professeur.e"
 
 msgid "Project resume"
 msgstr "Résumé"

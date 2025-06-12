@@ -50,10 +50,9 @@ class JuryPreparationForm(forms.Form):
         initial=FormuleDefense.FORMULE_1.name,
         required=False,
     )
-    date_indicative = forms.DateField(
+    date_indicative = forms.CharField(
         label=_("Anticipated date or period for private defence (Format 1) or admissibility (Format 2)"),
         required=False,
-        widget=CustomDateInput(),
     )
     langue_redaction = forms.ChoiceField(
         label=_("Thesis language"),

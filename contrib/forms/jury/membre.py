@@ -95,7 +95,7 @@ class JuryMembreForm(forms.Form):
     )
 
     justification_non_docteur = forms.CharField(
-        label=_("Please justify why the member does not have a doctor title"),
+        label=_("Justification"),
         widget=forms.Textarea(),
         required=False,
     )
