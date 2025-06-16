@@ -38,7 +38,7 @@ from django.template.defaultfilters import force_escape
 from django.utils.safestring import SafeString, mark_safe
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import pgettext, pgettext_lazy
+from django.utils.translation import pgettext_lazy
 from django_bootstrap5.templatetags.django_bootstrap5 import bootstrap_field
 from osis_parcours_doctoral_sdk.exceptions import (
     ForbiddenException,
@@ -124,8 +124,8 @@ class Tab:
 
 
 TAB_TREE = {
-    Tab('doctorate', pgettext('tab name', 'Research'), 'person-chalkboard'): [
-        Tab('project', pgettext('tab name', 'Research')),
+    Tab('doctorate', pgettext_lazy('tab name', 'Research'), 'person-chalkboard'): [
+        Tab('project', pgettext_lazy('tab name', 'Research')),
         Tab('cotutelle', _('Cotutelle')),
         Tab('funding', _('Funding')),
         Tab('supervision', _('Support committee')),
@@ -142,8 +142,8 @@ TAB_TREE = {
         Tab('course-enrollment', _('Course unit enrolment')),
         Tab('assessment-enrollment', _('Assessment enrollments')),
     ],
-    Tab('defense', pgettext('doctorate tab', 'Defense'), 'person-chalkboard'): [
-        Tab('jury-preparation', pgettext('doctorate tab', 'Defense method')),
+    Tab('defense', pgettext_lazy('doctorate tab', 'Defense'), 'person-chalkboard'): [
+        Tab('jury-preparation', pgettext_lazy('doctorate tab', 'Defense method')),
         Tab('jury', _('Jury composition')),
         # Tab('jury-supervision', _('Jury supervision')),
         # Tab('private-defense', _('Private defense')),
