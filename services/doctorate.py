@@ -405,7 +405,7 @@ class DoctorateJuryService(metaclass=ServiceMeta):
         return DoctorateAPIClient().update_role_jury_member(
             uuid=uuid,
             member_uuid=member_uuid,
-            modifier_role_membre_command=kwargs,
+            patched_modifier_role_membre_command=kwargs,
             **build_mandatory_auth_headers(person),
         )
 
