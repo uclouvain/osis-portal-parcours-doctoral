@@ -161,6 +161,11 @@ msgstr "Tout"
 msgid "An invitation has been sent again."
 msgstr "Une invitation a été envoyée de nouveau."
 
+msgid ""
+"Anticipated date or period for private defence (Format 1) or admissibility "
+"(Format 2)"
+msgstr "Date ou période envisagée de la défense privée (formule 1) ou de la recevabilité (formule 2)"
+
 msgid "Approval"
 msgstr "Approbation"
 
@@ -489,13 +494,10 @@ msgid "Development cooperation (ARES)"
 msgstr "ARES - Coopération au développement"
 
 msgid "Doctor"
-msgstr "Docteur"
+msgstr "Docteur.e"
 
 msgid "Doctorate thesis field"
 msgstr "Domaine de la thèse de doctorat"
-
-msgid "Does not have a doctor title"
-msgstr "N'est pas porteur du titre de docteur"
 
 msgid "Download as PDF"
 msgstr "Télécharger en tant que PDF"
@@ -870,6 +872,9 @@ msgstr "Juin"
 msgid "Jury composition"
 msgstr "Composition du jury"
 
+msgid "Justification"
+msgstr "Justification"
+
 msgid "Justification letter"
 msgstr "Lettre de justification"
 
@@ -1154,10 +1159,6 @@ msgstr "Veuillez corriger les erreurs ci-dessous"
 msgid "Please first correct the erros"
 msgstr "Veuillez d'abord corriger les erreurs"
 
-msgid "Please justify why the member does not have a doctor title"
-msgstr ""
-"Merci de justifier pourquoi le membre n'est pas porteur du titre de docteur"
-
 msgid ""
 "Please look up the website of your domain doctoral committee on how to "
 "download the document."
@@ -1196,7 +1197,7 @@ msgid "Previous confirmation exams"
 msgstr "Épreuves de confirmation passées"
 
 msgid "Professor"
-msgstr "Professeur"
+msgstr "Professeur.e"
 
 msgid "Project resume"
 msgstr "Résumé"
@@ -1819,6 +1820,9 @@ msgstr "Site web"
 msgid "With reading committee"
 msgstr "Avec comité de lecture"
 
+msgid "Without PhD degree"
+msgstr "Sans grade de doctorat"
+
 msgid "Without reading committee"
 msgstr "Sans comité de lecture"
 
@@ -1905,9 +1909,3 @@ msgstr "du %(start)s au %(end)s"
 
 msgid "hours"
 msgstr "heures"
-
-#~ msgid "Search for an EU code (outside the EU of the form)"
-#~ msgstr "Rechercher un code UE (hors UE du formulaire)"
-
-#~ msgid "Search a tutor by name"
-#~ msgstr "Rechercher un tuteur par son nom"

@@ -153,6 +153,11 @@ msgstr ""
 msgid "An invitation has been sent again."
 msgstr ""
 
+msgid ""
+"Anticipated date or period for private defence (Format 1) or admissibility "
+"(Format 2)"
+msgstr ""
+
 msgid "Approval"
 msgstr ""
 
@@ -473,9 +478,6 @@ msgid "Doctor"
 msgstr ""
 
 msgid "Doctorate thesis field"
-msgstr ""
-
-msgid "Does not have a doctor title"
 msgstr ""
 
 msgid "Download as PDF"
@@ -821,6 +823,9 @@ msgstr ""
 msgid "Jury composition"
 msgstr ""
 
+msgid "Justification"
+msgstr ""
+
 msgid "Justification letter"
 msgstr ""
 
@@ -1091,9 +1096,6 @@ msgid "Please correct the errors below"
 msgstr ""
 
 msgid "Please first correct the erros"
-msgstr ""
-
-msgid "Please justify why the member does not have a doctor title"
 msgstr ""
 
 msgid ""
@@ -1677,6 +1679,9 @@ msgid "Website"
 msgstr ""
 
 msgid "With reading committee"
+msgstr ""
+
+msgid "Without PhD degree"
 msgstr ""
 
 msgid "Without reading committee"
