@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -24,13 +24,13 @@
 #
 # ##############################################################################
 from django import forms
-from django.utils.translation import gettext_lazy as _, pgettext_lazy
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 
 from base.models.person import Person
 from base.models.utils.utils import ChoiceEnum
-from parcours_doctoral.contrib.enums import TitreMembre, GenreMembre
-from parcours_doctoral.contrib.forms import EMPTY_CHOICE
-from parcours_doctoral.contrib.forms import autocomplete
+from parcours_doctoral.contrib.enums import GenreMembre, TitreMembre
+from parcours_doctoral.contrib.forms import EMPTY_CHOICE, autocomplete
 
 
 class JuryMembreForm(forms.Form):
@@ -95,7 +95,7 @@ class JuryMembreForm(forms.Form):
     )
 
     justification_non_docteur = forms.CharField(
-        label=_("Please justify why the member does not have a doctor title"),
+        label=_("Justification"),
         widget=forms.Textarea(),
         required=False,
     )
