@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,11 +29,7 @@ from django.shortcuts import resolve_url
 from mock import patch
 from osis_reference_sdk.model.country import Country
 
-from parcours_doctoral.contrib.enums import (
-    RoleJury,
-    TitreMembre,
-    GenreMembre,
-)
+from parcours_doctoral.contrib.enums import GenreMembre, RoleJury, TitreMembre
 from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
@@ -183,5 +179,5 @@ class JuryMemberChangeRoleTestCase(BaseDoctorateTestCase):
         self.assertEqual(response.status_code, 302)
         self.mock_doctorate_api.return_value.update_role_jury_member.assert_called()
         last_call_kwargs = self.mock_doctorate_api.return_value.update_role_jury_member.call_args[1]
-        self.assertIn("role", last_call_kwargs['modifier_role_membre_command'])
-        self.assertEqual(last_call_kwargs['modifier_role_membre_command']['role'], RoleJury.PRESIDENT.name)
+        self.assertIn("role", last_call_kwargs['patched_modifier_role_membre_command'])
+        self.assertEqual(last_call_kwargs['patched_modifier_role_membre_command']['role'], RoleJury.PRESIDENT.name)
