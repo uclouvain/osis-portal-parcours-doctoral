@@ -491,6 +491,12 @@ msgstr "ARES - Coopération au développement"
 msgid "Doctor"
 msgstr "Docteur"
 
+msgid "Doctoral research project"
+msgstr "Projet de recherche doctorale"
+
+msgid "Doctoral training proposal"
+msgstr "Projet de formation doctorale"
+
 msgid "Doctorate thesis field"
 msgstr "Domaine de la thèse de doctorat"
 
@@ -1120,14 +1126,8 @@ msgstr "Doctorat"
 msgid "PhD Committee opinion"
 msgstr "Avis de la CDD"
 
-msgid "PhD proposal"
-msgstr "Projet de formation doctorale"
-
 msgid "PhD research experience"
 msgstr "Expérience de recherche doctorale"
-
-msgid "PhD research project"
-msgstr "Projet de recherche doctorale"
 
 msgid "PhD training"
 msgstr "Formation doctorale"
