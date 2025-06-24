@@ -89,6 +89,7 @@
 {% endblock tabs_content %}
 
 {% block script %}
+  {{ block.super }}
   {{ approval_form.media }}
   <script type="application/javascript">
   $(function () {
