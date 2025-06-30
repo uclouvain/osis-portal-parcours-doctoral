@@ -27,7 +27,7 @@
 (<a href="mailto:{{ membre.email }}">{{ membre.email }}</a>) - {{ membre.institution }}{% if membre.autre_institution %}, {{ membre.autre_institution }}{% endif %}
 {% if membre.est_promoteur %} - <strong>{% trans "Supervisor" %}</strong>{% endif %}
 </div>
-{% if form %}
+{% if add_form %}
 <div class="btn-group">
   <button type="button" class="btn btn-light border border-dark-subtle dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <i class="fa fa-cog"></i> {% trans "Actions" %}

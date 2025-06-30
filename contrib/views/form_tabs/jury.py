@@ -32,6 +32,7 @@ from django.shortcuts import resolve_url, redirect
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 
+from parcours_doctoral.contrib.enums import RoleJury
 from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
 from parcours_doctoral.contrib.forms.jury.preparation import JuryPreparationForm
 from parcours_doctoral.contrib.views.details_tabs.jury import LoadJuryViewMixin, JuryDetailView
@@ -43,6 +44,7 @@ __namespace__ = False
 __all__ = [
     'JuryPreparationFormView',
     'JuryFormView',
+    'JuryRequestSignaturesView',
 ]
 
 
@@ -75,7 +77,7 @@ class JuryPreparationFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
         )
 
 
-class JuryFormView(JuryDetailView, WebServiceFormMixin, FormView):
+class JuryFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
     form_class = JuryMembreForm
     error_mapping = {
         JuryBusinessException.NonDocteurSansJustificationException: "justification_non_docteur",
@@ -90,12 +92,25 @@ class JuryFormView(JuryDetailView, WebServiceFormMixin, FormView):
     }
     extra_context = {'submit_label': _('Add')}
     permission_link_to_check = 'create_jury_members'
+    template_name = 'parcours_doctoral/forms/jury/jury.html'
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
         if 'url' not in self.doctorate.links['request_signatures']:
             return redirect('parcours_doctoral:jury', **self.kwargs)
         return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        membres = DoctorateJuryService.list_jury_members(
+            person=self.request.user.person,
+            uuid=self.doctorate_uuid,
+        )
+        context_data['membres'] = (membre for membre in membres if membre.role == RoleJury.MEMBRE.name)
+        context_data['membre_president'] = (membre for membre in membres if membre.role == RoleJury.PRESIDENT.name)
+        context_data['membre_secretaire'] = (membre for membre in membres if membre.role == RoleJury.SECRETAIRE.name)
+        context_data['add_form'] = context_data.pop('form')  # Trick template to remove save button
+        return context_data
 
     def call_webservice(self, data):
         return DoctorateJuryService.create_jury_member(
@@ -109,7 +124,7 @@ class JuryFormView(JuryDetailView, WebServiceFormMixin, FormView):
         return self.request.path
 
 
-class DoctorateAdmissionRequestSignaturesView(LoginRequiredMixin, SuccessMessageMixin, WebServiceFormMixin, FormView):
+class JuryRequestSignaturesView(LoginRequiredMixin, SuccessMessageMixin, WebServiceFormMixin, FormView):
     urlpatterns = 'request-signatures'
     form_class = Form
     success_message = _("Signature requests sent")

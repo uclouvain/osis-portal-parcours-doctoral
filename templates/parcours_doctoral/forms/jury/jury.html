@@ -82,9 +82,9 @@
     </div>
   {% endpanel %}
 
-  {% if form %}
+  {% if add_form %}
   {% panel _("Add a new member") %}
-    {% include "parcours_doctoral/forms/jury/includes/member_form.html" %}
+    {% include "parcours_doctoral/forms/jury/includes/member_form.html" with form=add_form %}
   {% endpanel %}
   {% endif %}
 
@@ -106,9 +106,10 @@
 {% endblock %}
 
 {% block script %}
+  {{ add_form.media.js }}
   {{ block.super }}
 
-  {% if form %}
+  {% if add_form %}
   <script>
     $(function () {
       $('#id_justification_non_docteur').closest('.mb-3').dependsOn({
@@ -135,6 +136,7 @@
 {% endblock %}
 
 {% block style %}
+  {{ add_form.media.css }}
   {{ block.super }}
   <style>
     #id_institution_principale .form-check {
