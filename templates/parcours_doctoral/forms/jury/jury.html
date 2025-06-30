@@ -28,6 +28,32 @@
 {% block tab_content %}
   <h3>{% trans "Jury composition" %}</h3>
 
+{#  {% if admission|can_make_action:'add_approval' and approval_form and approval_form.decision %}#}
+{#    {% include "admission/modal/prevent_quitting_modal.html" %}#}
+{#    {% panel _("Proposal approved") %}#}
+{#      {% bootstrap_form_errors approval_form %}#}
+{#      <form class="osis-form approval-form" method="post" action="">#}
+{#        {% csrf_token %}#}
+{#        {% bootstrap_field approval_form.decision %}#}
+{#        {% bootstrap_field approval_form.motif_refus %}#}
+{#        {% if approval_form.institut_these %}#}
+{#          <div id="institut_these">#}
+{#            {% bootstrap_field approval_form.institut_these %}#}
+{#          </div>#}
+{#        {% endif %}#}
+{#        <div class="row">#}
+{#          <div class="col-md-6">#}
+{#            {% bootstrap_field approval_form.commentaire_interne %}#}
+{#          </div>#}
+{#          <div class="col-md-6">#}
+{#            {% bootstrap_field approval_form.commentaire_externe %}#}
+{#          </div>#}
+{#        </div>#}
+{#        {% bootstrap_button button_type="submit" content=_("Submit my decision") name="approval_submit" button_class="btn btn-primary" %}#}
+{#      </form>#}
+{#    {% endpanel %}#}
+{#  {% endif %}#}
+
   {% panel _("President") %}
     <div class="list-group">
     {% for membre in membre_president %}
@@ -60,6 +86,21 @@
   {% panel _("Add a new member") %}
     {% include "parcours_doctoral/forms/jury/includes/member_form.html" %}
   {% endpanel %}
+  {% endif %}
+
+  {% if doctorate|can_make_action:'request_signatures' %}
+    <div class="text-center">
+      <button
+        type="button"
+        class="btn btn-success btn-lg"
+        data-toggle="modal"
+        data-target="#request-signatures-modal"
+      >
+        {% trans "Request signatures" %}
+      </button>
+    </div>
+
+    {% include "parcours_doctoral/forms/jury/includes/request_signature_modal.html" %}
   {% endif %}
 
 {% endblock %}

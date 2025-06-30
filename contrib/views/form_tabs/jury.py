@@ -23,7 +23,13 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from django.utils.translation import gettext_lazy
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.forms import Form
+from django.http import HttpResponseRedirect
+from django.shortcuts import resolve_url, redirect
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 
 from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
@@ -82,8 +88,14 @@ class JuryFormView(JuryDetailView, WebServiceFormMixin, FormView):
         JuryBusinessException.MembreExterneSansEmailException: "email",
         JuryBusinessException.MembreDejaDansJuryException: "matricule",
     }
-    extra_context = {'submit_label': gettext_lazy('Add')}
+    extra_context = {'submit_label': _('Add')}
     permission_link_to_check = 'create_jury_members'
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        if 'url' not in self.doctorate.links['request_signatures']:
+            return redirect('parcours_doctoral:jury', **self.kwargs)
+        return self.render_to_response(context)
 
     def call_webservice(self, data):
         return DoctorateJuryService.create_jury_member(
@@ -95,3 +107,71 @@ class JuryFormView(JuryDetailView, WebServiceFormMixin, FormView):
     @property
     def success_url(self):
         return self.request.path
+
+
+class DoctorateAdmissionRequestSignaturesView(LoginRequiredMixin, SuccessMessageMixin, WebServiceFormMixin, FormView):
+    urlpatterns = 'request-signatures'
+    form_class = Form
+    success_message = _("Signature requests sent")
+
+    def call_webservice(self, data):
+        DoctorateJuryService.request_signatures(person=self.person, uuid=str(self.kwargs.get('pk')))
+
+    def form_invalid(self, form):
+        messages.error(self.request, _("Please first correct the errors"))
+        return HttpResponseRedirect(resolve_url("parcours_doctoral:update:jury", pk=self.kwargs.get('pk')))
+
+    def get_success_url(self):
+        return resolve_url("parcours_doctoral:jury", pk=self.kwargs.get('pk'))
+
+
+
+
+# class DoctorateAdmissionApprovalByPdfView(LoginRequiredMixin, WebServiceFormMixin, BaseFormView):
+#     urlpatterns = 'approve-by-pdf'
+#     form_class = DoctorateAdmissionApprovalByPdfForm
+#
+#     def call_webservice(self, data):
+#         return AdmissionSupervisionService.approve_by_pdf(
+#             person=self.person,
+#             uuid=str(self.kwargs['pk']),
+#             **data,
+#         )
+#
+#     def get_success_url(self):
+#         return self.request.POST.get('redirect_to') or resolve_url(
+#             'admission:doctorate:supervision',
+#             pk=self.kwargs['pk'],
+#         )
+#
+#     def form_invalid(self, form):
+#         return redirect('admission:doctorate:supervision', pk=self.kwargs['pk'])
+#
+#
+# class DoctorateAdmissionExternalResendView(LoginRequiredMixin, WebServiceFormMixin, BaseFormView):
+#     urlpatterns = {'resend-invite': 'resend-invite/<uuid>'}
+#     template_name = 'admission/doctorate/forms/external_confirm.html'
+#     form_class = forms.Form
+#
+#     def prepare_data(self, data):
+#         return {
+#             'uuid_proposition': str(self.kwargs['pk']),
+#             'uuid_membre': self.kwargs['uuid'],
+#         }
+#
+#     def call_webservice(self, data):
+#         AdmissionSupervisionService.resend_invite(
+#             person=self.person,
+#             uuid=str(self.kwargs['pk']),
+#             **data,
+#         )
+#
+#     def get_success_url(self):
+#         messages.info(self.request, _("An invitation has been sent again."))
+#         return self.request.POST.get('redirect_to') or resolve_url(
+#             'admission:doctorate:supervision',
+#             pk=self.kwargs['pk'],
+#         )
+#
+#     def form_invalid(self, form):
+#         return redirect('admission:doctorate:supervision', pk=self.kwargs['pk'])
