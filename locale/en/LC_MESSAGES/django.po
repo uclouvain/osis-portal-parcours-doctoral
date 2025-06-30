@@ -472,6 +472,12 @@ msgstr ""
 msgid "Doctor"
 msgstr ""
 
+msgid "Doctoral research project"
+msgstr ""
+
+msgid "Doctoral training proposal"
+msgstr ""
+
 msgid "Doctorate thesis field"
 msgstr ""
 
@@ -1063,13 +1069,7 @@ msgstr ""
 msgid "PhD Committee opinion"
 msgstr ""
 
-msgid "PhD proposal"
-msgstr ""
-
 msgid "PhD research experience"
-msgstr ""
-
-msgid "PhD research project"
 msgstr ""
 
 msgid "PhD training"
