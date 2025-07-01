@@ -106,6 +106,12 @@ class JuryFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
             person=self.request.user.person,
             uuid=self.doctorate_uuid,
         )
+        signature_conditions = DoctorateJuryService.get_signature_conditions(
+            person=self.request.user.person,
+            uuid=self.doctorate_uuid,
+        )
+
+        context_data['signature_conditions'] = signature_conditions
         context_data['membres'] = (membre for membre in membres if membre.role == RoleJury.MEMBRE.name)
         context_data['membre_president'] = (membre for membre in membres if membre.role == RoleJury.PRESIDENT.name)
         context_data['membre_secretaire'] = (membre for membre in membres if membre.role == RoleJury.SECRETAIRE.name)
@@ -125,7 +131,7 @@ class JuryFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
 
 
 class JuryRequestSignaturesView(LoginRequiredMixin, SuccessMessageMixin, WebServiceFormMixin, FormView):
-    urlpatterns = 'request-signatures'
+    urlpatterns = 'jury-request-signatures'
     form_class = Form
     success_message = _("Signature requests sent")
 

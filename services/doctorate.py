@@ -409,6 +409,71 @@ class DoctorateJuryService(metaclass=ServiceMeta):
             **build_mandatory_auth_headers(person),
         )
 
+    @classmethod
+    def request_signatures(cls, person: Person, uuid):
+        return DoctorateAPIClient().request_signatures(
+            uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_signature_conditions(cls, person, uuid) -> List:
+        return DoctorateAPIClient().signature_conditions(
+            uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    # @classmethod
+    # def resend_invite(cls, person, uuid, **kwargs):
+    #     return APIClient().update_signatures(
+    #         uuid=uuid,
+    #         renvoyer_invitation_signature_externe=RenvoyerInvitationSignatureExterne(**kwargs),
+    #         **build_mandatory_auth_headers(person),
+    #     )
+    #
+    # @classmethod
+    # def approve_proposition(cls, person, uuid, **kwargs):
+    #     return APIClient().approve_proposition(
+    #         uuid=uuid,
+    #         approuver_proposition_command=ApprouverPropositionCommand(**kwargs),
+    #         **build_mandatory_auth_headers(person),
+    #     )
+    #
+    # @classmethod
+    # def reject_proposition(cls, person, uuid, **kwargs):
+    #     return APIClient().reject_proposition(
+    #         uuid=uuid,
+    #         refuser_proposition_command=RefuserPropositionCommand(**kwargs),
+    #         **build_mandatory_auth_headers(person),
+    #     )
+    #
+    # @classmethod
+    # def approve_external_proposition(cls, uuid, token, **kwargs):
+    #     return APIClient(api_config=cls.build_config()).approve_external_proposition(
+    #         uuid=uuid,
+    #         token=token,
+    #         approuver_proposition_command=ApprouverPropositionCommand(**kwargs),
+    #         **cls.build_mandatory_external_headers(),
+    #     )
+    #
+    # @classmethod
+    # def reject_external_proposition(cls, uuid, token, **kwargs):
+    #     return APIClient(api_config=cls.build_config()).reject_external_proposition(
+    #         uuid=uuid,
+    #         token=token,
+    #         refuser_proposition_command=RefuserPropositionCommand(**kwargs),
+    #         **cls.build_mandatory_external_headers(),
+    #     )
+    #
+    # @classmethod
+    # def approve_by_pdf(cls, person, uuid, **kwargs):
+    #     return APIClient().approve_by_pdf(
+    #         uuid=uuid,
+    #         approuver_proposition_par_pdf_command=ApprouverPropositionParPdfCommand(**kwargs),
+    #         **build_mandatory_auth_headers(person),
+    #     )
+
+
 
 class ParcoursDoctoralBusinessException(Enum):
     ParcoursDoctoralNonTrouveException = "PARCOURS-DOCTORAL-1"
