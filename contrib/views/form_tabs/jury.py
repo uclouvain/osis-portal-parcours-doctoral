@@ -130,16 +130,15 @@ class JuryFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
         return self.request.path
 
 
-class JuryRequestSignaturesView(LoginRequiredMixin, SuccessMessageMixin, WebServiceFormMixin, FormView):
+class JuryRequestSignaturesView(LoginRequiredMixin, WebServiceFormMixin, FormView):
     urlpatterns = 'jury-request-signatures'
     form_class = Form
-    success_message = _("Signature requests sent")
 
     def call_webservice(self, data):
         DoctorateJuryService.request_signatures(person=self.person, uuid=str(self.kwargs.get('pk')))
 
     def form_invalid(self, form):
-        messages.error(self.request, _("Please first correct the errors"))
+        messages.error(self.request, _("There was an error while requesting signatures."))
         return HttpResponseRedirect(resolve_url("parcours_doctoral:update:jury", pk=self.kwargs.get('pk')))
 
     def get_success_url(self):
