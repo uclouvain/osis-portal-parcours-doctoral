@@ -32,6 +32,8 @@ from django.conf import settings
 from django.utils.translation import get_language
 from osis_parcours_doctoral_sdk import ApiException
 from osis_parcours_doctoral_sdk.api import doctorate_api
+from osis_parcours_doctoral_sdk.model.approuver_jury_command import ApprouverJuryCommand
+from osis_parcours_doctoral_sdk.model.approuver_jury_par_pdf_command import ApprouverJuryParPdfCommand
 from osis_parcours_doctoral_sdk.model.confirmation_paper_canvas import (
     ConfirmationPaperCanvas,
 )
@@ -44,6 +46,8 @@ from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDocto
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_identity_dto import (
     ParcoursDoctoralIdentityDTO,
 )
+from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCommand
+from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe import RenvoyerInvitationSignatureExterne
 from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
 from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
 
@@ -423,55 +427,63 @@ class DoctorateJuryService(metaclass=ServiceMeta):
             **build_mandatory_auth_headers(person),
         )
 
-    # @classmethod
-    # def resend_invite(cls, person, uuid, **kwargs):
-    #     return APIClient().update_signatures(
-    #         uuid=uuid,
-    #         renvoyer_invitation_signature_externe=RenvoyerInvitationSignatureExterne(**kwargs),
-    #         **build_mandatory_auth_headers(person),
-    #     )
-    #
-    # @classmethod
-    # def approve_proposition(cls, person, uuid, **kwargs):
-    #     return APIClient().approve_proposition(
-    #         uuid=uuid,
-    #         approuver_proposition_command=ApprouverPropositionCommand(**kwargs),
-    #         **build_mandatory_auth_headers(person),
-    #     )
-    #
-    # @classmethod
-    # def reject_proposition(cls, person, uuid, **kwargs):
-    #     return APIClient().reject_proposition(
-    #         uuid=uuid,
-    #         refuser_proposition_command=RefuserPropositionCommand(**kwargs),
-    #         **build_mandatory_auth_headers(person),
-    #     )
-    #
-    # @classmethod
-    # def approve_external_proposition(cls, uuid, token, **kwargs):
-    #     return APIClient(api_config=cls.build_config()).approve_external_proposition(
-    #         uuid=uuid,
-    #         token=token,
-    #         approuver_proposition_command=ApprouverPropositionCommand(**kwargs),
-    #         **cls.build_mandatory_external_headers(),
-    #     )
-    #
-    # @classmethod
-    # def reject_external_proposition(cls, uuid, token, **kwargs):
-    #     return APIClient(api_config=cls.build_config()).reject_external_proposition(
-    #         uuid=uuid,
-    #         token=token,
-    #         refuser_proposition_command=RefuserPropositionCommand(**kwargs),
-    #         **cls.build_mandatory_external_headers(),
-    #     )
-    #
-    # @classmethod
-    # def approve_by_pdf(cls, person, uuid, **kwargs):
-    #     return APIClient().approve_by_pdf(
-    #         uuid=uuid,
-    #         approuver_proposition_par_pdf_command=ApprouverPropositionParPdfCommand(**kwargs),
-    #         **build_mandatory_auth_headers(person),
-    #     )
+    @classmethod
+    def resend_invite(cls, person, uuid, **kwargs):
+        return DoctorateAPIClient().update_signatures(
+            uuid=uuid,
+            renvoyer_invitation_signature_externe=RenvoyerInvitationSignatureExterne(**kwargs),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def approve_jury(cls, person, uuid, **kwargs):
+        return DoctorateAPIClient().approve_jury(
+            uuid=uuid,
+            approuver_jury_command=ApprouverJuryCommand(**kwargs),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def reject_jury(cls, person, uuid, **kwargs):
+        return DoctorateAPIClient().reject_jury(
+            uuid=uuid,
+            refuser_jury_command=RefuserJuryCommand(**kwargs),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_external_jury(cls, uuid, token, **kwargs):
+        return DoctorateAPIClient(api_config=cls.build_config()).get_external_jury(
+            uuid=uuid,
+            token=token,
+            **cls.build_mandatory_external_headers(),
+        )
+
+    @classmethod
+    def approve_external_jury(cls, uuid, token, **kwargs):
+        return DoctorateAPIClient(api_config=cls.build_config()).approve_external_jury(
+            uuid=uuid,
+            token=token,
+            approuver_jury_command=ApprouverJuryCommand(**kwargs),
+            **cls.build_mandatory_external_headers(),
+        )
+
+    @classmethod
+    def reject_external_jury(cls, uuid, token, **kwargs):
+        return DoctorateAPIClient(api_config=cls.build_config()).reject_external_jury(
+            uuid=uuid,
+            token=token,
+            refuser_jury_command=RefuserJuryCommand(**kwargs),
+            **cls.build_mandatory_external_headers(),
+        )
+
+    @classmethod
+    def approve_by_pdf(cls, person, uuid, **kwargs):
+        return DoctorateAPIClient().approve_by_pdf(
+            uuid=uuid,
+            approuver_jury_par_pdf_command=ApprouverJuryParPdfCommand(**kwargs),
+            **build_mandatory_auth_headers(person),
+        )
 
 
 

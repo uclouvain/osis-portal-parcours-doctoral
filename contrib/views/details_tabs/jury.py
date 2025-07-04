@@ -23,12 +23,17 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from django.shortcuts import redirect
+from django import forms
+from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.shortcuts import redirect, resolve_url
 from django.utils.functional import cached_property
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView, FormView
+from django.views.generic.edit import BaseFormView
 
-from parcours_doctoral.contrib.enums import RoleJury, ChoixEtatSignature, ChoixStatutDoctorat
-from parcours_doctoral.contrib.forms.jury.approvals import JuryApprovalForm
+from parcours_doctoral.contrib.enums import RoleJury, ChoixEtatSignature, ChoixStatutDoctorat, DecisionApprovalEnum
+from parcours_doctoral.contrib.forms.jury.approvals import JuryApprovalForm, JuryApprovalByPdfForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.doctorate import DoctorateJuryService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
@@ -38,6 +43,10 @@ __namespace__ = False
 __all__ = [
     'JuryPreparationDetailView',
     'JuryDetailView',
+    'JuryApprovalByPdfView',
+    'JuryExternalResendView',
+    'JuryExternalApprovalView',
+    'JuryExternalConfirmView',
 ]
 
 
@@ -80,71 +89,160 @@ class JuryDetailView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        membres = DoctorateJuryService.list_jury_members(
-            person=self.request.user.person,
-            uuid=self.doctorate_uuid,
-        )
-        context_data['membres'] = (membre for membre in membres if membre.role == RoleJury.MEMBRE.name)
-        context_data['membre_president'] = (membre for membre in membres if membre.role == RoleJury.PRESIDENT.name)
-        context_data['membre_secretaire'] = (membre for membre in membres if membre.role == RoleJury.SECRETAIRE.name)
+        context_data['membres'] = (membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.MEMBRE.name)
+        context_data['membre_president'] = (membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.PRESIDENT.name)
+        context_data['membre_secretaire'] = (membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.SECRETAIRE.name)
         context_data['approval_form'] = context_data.pop('form')  # Trick template to remove save button
         context_data['all_approved'] = all(
-            signature.get('statut') == ChoixEtatSignature.APPROVED.name
-            for signature in self.jury.get('signatures', [])
+            membre['signature'].get('statut') == ChoixEtatSignature.APPROVED.name
+            for membre in self.jury.get('membres', [])
         )
         return context_data
-    #
-    # def prepare_data(self, data):
-    #     data["uuid_membre"] = self.get_current_member_uuid()
-    #     if data.get('decision') == DecisionApprovalEnum.APPROVED.name:
-    #         # The reason is useful only if the admission is not approved
-    #         data.pop('motif_refus')
-    #     return data
-    #
-    # def get_current_member_uuid(self):
-    #     return next(
-    #         iter(
-    #             [
-    #                 signature['promoteur']['uuid']
-    #                 for signature in self.supervision['signatures_promoteurs']
-    #                 if self.person.global_id == signature['promoteur']['matricule']
-    #             ]
-    #             + [
-    #                 signature['membre_ca']['uuid']
-    #                 for signature in self.supervision['signatures_membres_ca']
-    #                 if self.person.global_id == signature['membre_ca']['matricule']
-    #             ]
-    #         ),
-    #         None,
-    #     )
-    #
-    # def call_webservice(self, data):
-    #     decision = data.pop('decision')
-    #     if decision == DecisionApprovalEnum.APPROVED.name:
-    #         return AdmissionSupervisionService.approve_proposition(
-    #             person=self.person,
-    #             uuid=self.admission_uuid,
-    #             **data,
-    #         )
-    #     self.rejecting = True
-    #     return AdmissionSupervisionService.reject_proposition(
-    #         person=self.person,
-    #         uuid=self.admission_uuid,
-    #         **data,
-    #     )
-    #
-    # def get_success_url(self):
-    #     messages.info(self.request, _("Your decision has been saved."))
-    #     if (
-    #         self.person.global_id
-    #         in [signature['membre_ca']['matricule'] for signature in self.supervision['signatures_membres_ca']]
-    #         and self.rejecting
-    #     ):
-    #         try:
-    #             AdmissionPropositionService().get_supervised_propositions(self.request.user.person)
-    #         except PermissionDenied:
-    #             # That may be the last admission the member has access to, if so, redirect to homepage
-    #             return resolve_url('home')
-    #         # Redirect on list
-    #         return resolve_url('admission:supervised-list')
-    #     return self.request.POST.get('redirect_to') or self.request.get_full_path()
+
+    def prepare_data(self, data):
+        data["uuid_membre"] = self.get_current_member_uuid()
+        if data.get('decision') == DecisionApprovalEnum.APPROVED.name:
+            # The reason is useful only if the admission is not approved
+            data.pop('motif_refus')
+        return data
+
+    def get_current_member_uuid(self):
+        return next(
+            iter(
+                [
+                    membre['uuid']
+                    for membre in self.jury['membre']
+                    if self.person.global_id == membre['matricule']
+                ]
+            ),
+            None,
+        )
+
+    def call_webservice(self, data):
+        decision = data.pop('decision')
+        if decision == DecisionApprovalEnum.APPROVED.name:
+            return DoctorateJuryService.approve_proposition(
+                person=self.person,
+                uuid=self.admission_uuid,
+                **data,
+            )
+        self.rejecting = True
+        return DoctorateJuryService.reject_proposition(
+            person=self.person,
+            uuid=self.admission_uuid,
+            **data,
+        )
+
+    def get_success_url(self):
+        messages.info(self.request, _("Your decision has been saved."))
+        return self.request.POST.get('redirect_to') or self.request.get_full_path()
+
+
+class JuryApprovalByPdfView(LoadJuryViewMixin, WebServiceFormMixin, BaseFormView):
+    urlpatterns = 'approve-by-pdf'
+    form_class = JuryApprovalByPdfForm
+
+    def call_webservice(self, data):
+        return DoctorateJuryService.approve_by_pdf(
+            person=self.person,
+            uuid=str(self.kwargs['pk']),
+            **data,
+        )
+
+    def get_success_url(self):
+        return self.request.POST.get('redirect_to') or resolve_url(
+            'parcours_doctoral:jury',
+            pk=self.kwargs['pk'],
+        )
+
+    def form_invalid(self, form):
+        return redirect('parcours_doctoral:jury', pk=self.kwargs['pk'])
+
+
+class JuryExternalResendView(LoadJuryViewMixin, WebServiceFormMixin, BaseFormView):
+    urlpatterns = {'resend-invite': 'resend-invite/<uuid>'}
+    template_name = 'parcours_doctoral/forms/jury/external_confirm.html'
+    form_class = forms.Form
+
+    def prepare_data(self, data):
+        return {
+            'uuid_proposition': str(self.kwargs['pk']),
+            'uuid_membre': self.kwargs['uuid'],
+        }
+
+    def call_webservice(self, data):
+        DoctorateJuryService.resend_invite(
+            person=self.person,
+            uuid=str(self.kwargs['pk']),
+            **data,
+        )
+
+    def get_success_url(self):
+        messages.info(self.request, _("An invitation has been sent again."))
+        return self.request.POST.get('redirect_to') or resolve_url(
+            'parcours_doctoral:jury',
+            pk=self.kwargs['pk'],
+        )
+
+    def form_invalid(self, form):
+        return redirect('parcours_doctoral:jury', pk=self.kwargs['pk'])
+
+
+class JuryExternalApprovalView(UserPassesTestMixin, WebServiceFormMixin, FormView):
+    urlpatterns = {'jury-external-approval': 'jury/external-approval/<token>'}
+    form_class = JuryApprovalForm
+    template_name = 'parcours_doctoral/forms/jury/external_approval.html'
+
+    def test_func(self):
+        return self.request.user.is_anonymous
+
+    @cached_property
+    def doctorate_uuid(self):
+        return str(self.kwargs.get('pk', ''))
+
+    @cached_property
+    def data(self):
+        return DoctorateJuryService.get_external_jury(
+            uuid=self.doctorate_uuid,
+            token=self.kwargs['token'],
+        ).to_dict()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['doctorate'] = self.data['parcours_doctoral']
+        context['jury'] = self.data['jury']
+        context['approval_form'] = context.pop('form')  # Trick template to remove save button
+        return context
+
+    def prepare_data(self, data):
+        data["uuid_membre"] = self.kwargs.get('token')  # This is not actually used on the other side of API
+        if data.get('decision') == DecisionApprovalEnum.APPROVED.name:
+            # The reason is useful only if the admission is not approved
+            data.pop('motif_refus')
+        return data
+
+    def call_webservice(self, data):
+        decision = data.pop('decision')
+        if decision == DecisionApprovalEnum.APPROVED.name:
+            return DoctorateJuryService.approve_external_jury(
+                uuid=self.doctorate_uuid,
+                token=self.kwargs['token'],
+                **data,
+            )
+        return DoctorateJuryService.reject_external_jury(
+            uuid=self.doctorate_uuid,
+            token=self.kwargs['token'],
+            **data,
+        )
+
+    def get_success_url(self):
+        messages.info(self.request, _("Your decision has been saved."))
+        return self.request.POST.get('redirect_to') or resolve_url(
+            'parcours_doctoral:jury-external-confirm',
+            pk=self.kwargs['pk'],
+        )
+
+
+class JuryExternalConfirmView(TemplateView):
+    urlpatterns = {'jury-external-confirm': 'jury/external-confirm'}
+    template_name = 'parcours_doctoral/forms/jury/external_confirm.html'
