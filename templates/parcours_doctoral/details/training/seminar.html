@@ -43,11 +43,11 @@
   </div>
   <div
     id="a-{{ activity.uuid }}"
-    class="card-body{% if not remove_action %} panel-collapse collapse{% endif %}"
+    class="card-body{% if not remove_action %} panel-collapse collapse{% endif %} p-0"
     role="tabpanel"
     aria-labelledby="h-{{ activity.uuid }}"
   >
-    <div>
+    <div class="p-3">
       <p>
         <strong class="d-block">{% trans "Description" %}</strong>
         {{ activity.title }}, {{ activity.type }}, {{ period }}

@@ -55,6 +55,7 @@ from parcours_doctoral.contrib.forms import (
     get_country_initial_choices,
 )
 from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUploadField
+from reference.services.academic_year import AcademicYearService
 
 __all__ = [
     "BatchActivityForm",
@@ -76,7 +77,6 @@ __all__ = [
     "AssentForm",
 ]
 
-from reference.services.academic_year import AcademicYearService
 
 INSTITUTION_UCL = "UCLouvain"
 MINIMUM_YEAR = 2000
