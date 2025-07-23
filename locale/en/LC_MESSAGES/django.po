@@ -188,6 +188,10 @@ msgstr ""
 msgid "Are you sure you want to request signatures for this PhD?"
 msgstr ""
 
+msgid ""
+"Are you sure you want to request signatures to validate your thesis jury?"
+msgstr ""
+
 msgid "As it appears in an official course catalogue"
 msgstr ""
 
@@ -198,6 +202,9 @@ msgid "Attestation"
 msgstr ""
 
 msgid "Attestation of the communication"
+msgstr ""
+
+msgid "Auditor"
 msgstr ""
 
 msgid "Authors"
@@ -481,6 +488,9 @@ msgid "Doctor"
 msgstr ""
 
 msgid "Doctoral research project"
+msgstr ""
+
+msgid "Doctorate summary"
 msgstr ""
 
 msgid "Doctoral training proposal"
@@ -830,6 +840,9 @@ msgstr ""
 
 msgctxt "session"
 msgid "June"
+msgstr ""
+
+msgid "Jury approval"
 msgstr ""
 
 msgid "Jury composition"
@@ -1528,10 +1541,16 @@ msgstr ""
 msgid "The start date must be earlier than or the same as the end date."
 msgstr ""
 
+msgid "The summary of the doctorate in PDF format is not available."
+msgstr ""
+
 msgid "The summary of the proposal in PDF format cannot be found."
 msgstr ""
 
 msgid "There is no request for a new deadline."
+msgstr ""
+
+msgid "There was an error while requesting signatures."
 msgstr ""
 
 msgid "Thesis defense"
@@ -1677,6 +1696,9 @@ msgstr ""
 msgid "VAE"
 msgstr "Validation of prior experience (VAE)"
 
+msgid "VERIFICATEUR"
+msgstr ""
+
 msgid "Validated"
 msgstr ""
 
@@ -1734,6 +1756,10 @@ msgid "You have not been enrolled in any assessment yet."
 msgstr ""
 
 msgid "You must correct your application before you can request signatures."
+msgstr ""
+
+msgid ""
+"You must correct your jury composition before you can request signatures."
 msgstr ""
 
 msgid "You must reference a person in UCLouvain."
