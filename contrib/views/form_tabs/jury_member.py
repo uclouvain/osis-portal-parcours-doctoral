@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,10 @@ from frontoffice.settings.osis_sdk.utils import MultipleApiBusinessException
 from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
 from parcours_doctoral.contrib.forms.jury.membre_role import JuryMembreRoleForm
 from parcours_doctoral.contrib.views.details_tabs.jury import LoadJuryViewMixin
-from parcours_doctoral.services.doctorate import DoctorateJuryService, JuryBusinessException
+from parcours_doctoral.services.doctorate import (
+    DoctorateJuryService,
+    JuryBusinessException,
+)
 from parcours_doctoral.services.mixins import WebServiceFormMixin
 from reference.services.country import CountryService
 
@@ -113,6 +116,7 @@ class JuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormMixin, For
             'justification_non_docteur': self.membre.justification_non_docteur,
             'genre': self.membre.genre,
             'email': self.membre.email,
+            'langue': self.membre.langue,
         }
 
     def call_webservice(self, data):
