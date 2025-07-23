@@ -76,6 +76,7 @@ __all__ = [
     "AssentForm",
 ]
 
+
 INSTITUTION_UCL = "UCLouvain"
 MINIMUM_YEAR = 2000
 
