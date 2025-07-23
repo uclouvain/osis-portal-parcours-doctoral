@@ -42,7 +42,7 @@
   aria-controls="a-{{ activity.uuid }}"
   class="collapsed activity-collapse-button"
 ></a>
-<span class="badge">{{ activity.status|enum_display:'StatutActivite' }}</span>
+<span class="badge bg-{{ activity|status_as_class }} text-bg-{{ activity|status_as_class }}">{{ activity.status|enum_display:'StatutActivite' }}</span>
 
 {% include "parcours_doctoral/details/training/_activity_title.html" %}
 {% if activity.category|safe == 'UCL_COURSE' %}<br>{{ activity.learning_unit_year }} - {{ activity.learning_unit_title }} - {{ activity.academic_year|display_as_academic_year }}{% endif %}
@@ -172,7 +172,7 @@
           data-bs-content="{{ activity.reference_promoter_comment|linebreaksbr|force_escape }}"
           {% if activity.reference_promoter_assent %}
           title="{% trans "Contact supervisor approval" %}"
-          class="btn btn-md btn-success popover-buttons"
+          class="btn btn-md btn-success popover-buttons unstyled"
         >
             <span class="fa-regular fa-circle-check"></span>
           {% else %}

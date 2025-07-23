@@ -37,15 +37,17 @@
   </div>
   <div
     id="a-{{ activity.uuid }}"
-    class="card-body panel-collapse collapse"
+    class="card-body panel-collapse collapse p-0"
     role="tabpanel"
     aria-labelledby="h-{{ activity.uuid }}"
   >
-    <div>
+    <div class="p-3">
       {% if request.resolver_match.url_name == 'course-enrollment' %}
         <div class="mb-3">
           <strong class="d-block">{% trans "Context" %}</strong>
           {{ activity.context|enum_display:'ContexteFormation' }}
+        </div>
+        <div class="mb-3">
           <strong class="d-block">{% trans "Learning unit" %}</strong>
           {{ activity.course }} - {{ activity.course_title }} -
           {{ activity.academic_year|display_as_academic_year }}

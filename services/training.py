@@ -167,5 +167,6 @@ class DoctorateTrainingService(metaclass=ServiceMeta):
             uuid=doctorate_uuid,
             activity_id=activity_uuid,
             **build_mandatory_auth_headers(person),
+            **kwargs,
             doctoral_training_assent=kwargs,
         )
