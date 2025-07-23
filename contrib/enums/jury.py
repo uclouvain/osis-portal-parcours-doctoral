@@ -41,6 +41,7 @@ class RoleJury(ChoiceEnum):
     PRESIDENT = _('PRESIDENT')
     SECRETAIRE = _('SECRETAIRE')
     MEMBRE = _('MEMBRE')
+    VERIFICATEUR = _('VERIFICATEUR')
 
 
 class TitreMembre(ChoiceEnum):

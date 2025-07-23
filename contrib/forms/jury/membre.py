@@ -24,6 +24,7 @@
 #
 # ##############################################################################
 from django import forms
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext_lazy
 
@@ -109,6 +110,13 @@ class JuryMembreForm(forms.Form):
     email = forms.EmailField(
         label=pgettext_lazy("doctorate", "Email"),
         required=False,
+    )
+
+    langue = forms.ChoiceField(
+        label=_("Contact language"),
+        help_text=_("Language in which the domain doctoral committee can contact this person"),
+        required=False,
+        choices=EMPTY_CHOICE + tuple(settings.LANGUAGES),
     )
 
     class Media:
