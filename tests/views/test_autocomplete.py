@@ -36,6 +36,7 @@ from osis_reference_sdk.model.scholarship import Scholarship
 
 from base.tests.factories.academic_year import create_current_academic_year
 from base.tests.factories.person import PersonFactory
+from base.tests.test_case import OsisPortalTestCase
 from parcours_doctoral.contrib.enums.scholarship import TypeBourse
 from parcours_doctoral.tests.utils import MockCountry, MockLanguage
 
@@ -48,7 +49,7 @@ DEFAULT_API_PARAMS = {
 }
 
 
-class AutocompleteTestCase(TestCase):
+class AutocompleteTestCase(OsisPortalTestCase):
     @classmethod
     def setUpTestData(cls):
         create_current_academic_year()
