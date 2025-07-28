@@ -61,6 +61,7 @@ from osis_reference_sdk.model.language import Language
 from osis_reference_sdk.model.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
+from base.tests.test_case import OsisPortalTestCase
 from parcours_doctoral.contrib.enums import (
     AdmissionType,
     ChoixStatutDoctorat,
@@ -80,7 +81,7 @@ from parcours_doctoral.contrib.forms import PDF_MIME_TYPE
     OSIS_DOCUMENT_BASE_URL='http://dummyurl.com/document/',
     PARCOURS_DOCTORAL_TOKEN_EXTERNAL='api-token-external',
 )
-class BaseDoctorateTestCase(TestCase):
+class BaseDoctorateTestCase(OsisPortalTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
