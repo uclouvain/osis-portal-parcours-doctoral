@@ -161,6 +161,13 @@ msgstr "Tout"
 msgid "An invitation has been sent again."
 msgstr "Une invitation a été envoyée de nouveau."
 
+msgid ""
+"Anticipated date or period for private defence (Format 1) or admissibility "
+"(Format 2)"
+msgstr ""
+"Date ou période envisagée de la défense privée (formule 1) ou de la "
+"recevabilité (formule 2)"
+
 msgid "Approval"
 msgstr "Approbation"
 
@@ -193,6 +200,10 @@ msgstr "Êtes-vous sûr de vouloir retirer \"%(prenom)s %(nom)s\" du jury ?"
 msgid "Are you sure you want to request signatures for this PhD?"
 msgstr "Êtes-vous sûr de vouloir requérir les signatures pour ce doctorat ?"
 
+msgid ""
+"Are you sure you want to request signatures to validate your thesis jury?"
+msgstr "Êtes-vous sûr de vouloir requérir les signatures pour ce jury ?"
+
 msgid "As it appears in an official course catalogue"
 msgstr "Tel qu’il apparait dans un catalogue officiel de formation"
 
@@ -204,6 +215,9 @@ msgstr "Attestation"
 
 msgid "Attestation of the communication"
 msgstr "Attestation de communication"
+
+msgid "Auditor"
+msgstr "Vérificateur.trice"
 
 msgid "Authors"
 msgstr "Auteurs et autrices"
@@ -489,19 +503,19 @@ msgid "Development cooperation (ARES)"
 msgstr "ARES - Coopération au développement"
 
 msgid "Doctor"
-msgstr "Docteur"
+msgstr "Docteur.e"
 
 msgid "Doctoral research project"
 msgstr "Projet de recherche doctorale"
+
+msgid "Doctorate summary"
+msgstr "Résumé du doctorat"
 
 msgid "Doctoral training proposal"
 msgstr "Projet de formation doctorale"
 
 msgid "Doctorate thesis field"
 msgstr "Domaine de la thèse de doctorat"
-
-msgid "Does not have a doctor title"
-msgstr "N'est pas porteur du titre de docteur"
 
 msgid "Download as PDF"
 msgstr "Télécharger en tant que PDF"
@@ -873,14 +887,25 @@ msgctxt "session"
 msgid "June"
 msgstr "Juin"
 
+msgid "Jury approval"
+msgstr "Approbation du jury"
+
 msgid "Jury composition"
 msgstr "Composition du jury"
+
+msgid "Justification"
+msgstr "Justification"
 
 msgid "Justification letter"
 msgstr "Lettre de justification"
 
 msgid "Keywords"
 msgstr "Mots-clés"
+
+msgid "Language in which the domain doctoral committee can contact this person"
+msgstr ""
+"Langue dans laquelle la Commission doctorale de domaine peut contacter cette "
+"person"
 
 msgid "Last name / First name / Global id"
 msgstr "Nom / Prénom / ID Global"
@@ -1154,10 +1179,6 @@ msgstr "Veuillez corriger les erreurs ci-dessous"
 msgid "Please first correct the erros"
 msgstr "Veuillez d'abord corriger les erreurs"
 
-msgid "Please justify why the member does not have a doctor title"
-msgstr ""
-"Merci de justifier pourquoi le membre n'est pas porteur du titre de docteur"
-
 msgid ""
 "Please look up the website of your domain doctoral committee on how to "
 "download the document."
@@ -1196,7 +1217,7 @@ msgid "Previous confirmation exams"
 msgstr "Épreuves de confirmation passées"
 
 msgid "Professor"
-msgstr "Professeur"
+msgstr "Professeur.e"
 
 msgid "Project resume"
 msgstr "Résumé"
@@ -1625,11 +1646,17 @@ msgstr ""
 msgid "The start date must be earlier than or the same as the end date."
 msgstr "La date de début doit être antérieure ou égale à la date de fin."
 
+msgid "The summary of the doctorate in PDF format is not available."
+msgstr "Le résumé du doctorat au format PDF n'a pas été trouvé."
+
 msgid "The summary of the proposal in PDF format cannot be found."
 msgstr "Le résumé de la proposition au format PDF n'a pas été trouvé."
 
 msgid "There is no request for a new deadline."
 msgstr "Il n'y a pas de demande de nouvelle échéance."
+
+msgid "There was an error while requesting signatures."
+msgstr "Erreur lors de la demande de signatures."
 
 msgid "Thesis defense"
 msgstr "Défense et soutenance"
@@ -1801,6 +1828,9 @@ msgstr "Modifier le membre"
 msgid "VAE"
 msgstr "Valorisation des acquis de l'expérience"
 
+msgid "VERIFICATEUR"
+msgstr "Vérificateur.trice"
+
 msgid "Validated"
 msgstr "Validé"
 
@@ -1818,6 +1848,9 @@ msgstr "Site web"
 
 msgid "With reading committee"
 msgstr "Avec comité de lecture"
+
+msgid "Without PhD degree"
+msgstr "Sans grade de doctorat"
 
 msgid "Without reading committee"
 msgstr "Sans comité de lecture"
@@ -1860,6 +1893,12 @@ msgstr "Vous n'avez pas encore été inscrit·e à une évaluation."
 msgid "You must correct your application before you can request signatures."
 msgstr ""
 "Vous devez corriger votre demande d'admission avant de pouvoir réaliser la "
+"demande de signatures."
+
+msgid ""
+"You must correct your jury composition before you can request signatures."
+msgstr ""
+"Vous devez corriger la composition du jury avant de pouvoir réaliser la "
 "demande de signatures."
 
 msgid "You must reference a person in UCLouvain."
@@ -1905,9 +1944,3 @@ msgstr "du %(start)s au %(end)s"
 
 msgid "hours"
 msgstr "heures"
-
-#~ msgid "Search for an EU code (outside the EU of the form)"
-#~ msgstr "Rechercher un code UE (hors UE du formulaire)"
-
-#~ msgid "Search a tutor by name"
-#~ msgstr "Rechercher un tuteur par son nom"
