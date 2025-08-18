@@ -53,7 +53,7 @@
         {{ signature.statut|enum_display:'ChoixEtatSignature' }}
       {% endif %}
       {% if member.uuid == supervision.promoteur_reference %}
-        - {% trans "Lead supervisor" %}
+        - {% trans "Contact supervisor" %}
       {% endif %}
     </em>
   </div>
@@ -63,9 +63,15 @@
       {% csrf_token %}
       <button type="submit" class="btn border border-dark-subtle" name="set_reference_promoter">
         <i class="fas fa-angles-up"></i>
-        {% trans "Designate as lead supervisor" %}
+        {% trans "Designate as contact supervisor" %}
       </button>
     </form>
+    <a
+      tabindex="0"
+      class="fa fa-question-circle popover-buttons"
+      data-bs-content="<p>{% translate 'The contact supervisor must be internal UCLouvain' %}</p>"
+      role="button"
+    ></a>
   {% endif %}
 
   {% if user.is_authenticated and doctorate|can_make_action:'edit_external_member' and member.est_externe %}
@@ -161,7 +167,7 @@
               {% bootstrap_field edit_external_member_form.institution wrapper_class="mb-3 required_field" %}
               {% bootstrap_field edit_external_member_form.ville wrapper_class="mb-3 required_field" %}
               {% bootstrap_field edit_external_member_form.pays wrapper_class="mb-3 required_field" %}
-              {% bootstrap_field edit_external_member_form.langue wrapper_class="mb-3 required_field" %}
+              {% bootstrap_field_with_tooltip edit_external_member_form.langue wrapper_class="mb-3 required_field" %}
 
               <button type="submit" class="btn btn-primary float-end" name="edit_external_member_form">
                 {% trans "Save" context 'doctorate' %}
