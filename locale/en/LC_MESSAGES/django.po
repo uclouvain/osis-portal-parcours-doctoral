@@ -1717,6 +1717,9 @@ msgstr ""
 msgid "You have been withdrawn from this assessment."
 msgstr ""
 
+msgid "You have been withdrawn lately from this assessment."
+msgstr ""
+
 msgid "You have not been enrolled in any assessment yet."
 msgstr ""
 

@@ -408,6 +408,14 @@ body, html {
   width: 0;
 }
 
+.upper-icon {
+  font-size: 0.7em;
+  vertical-align: super;
+  margin-left: -0.9em;
+  border-radius: 50%;
+  background: white;
+}
+
 /* The following code related to the bootstrap migration will be moved in the base css files in the future. */
 .hide-bs3-element {
   display: none;

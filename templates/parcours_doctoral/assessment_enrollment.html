@@ -65,11 +65,21 @@
                 </span>
               {% endif %}
               {% if assessment_enrollment.statut == 'DESINSCRITE' %}
-                <span
-                  class="fa-solid fa-calendar-xmark ms-1"
-                  title="{% translate 'You have been withdrawn from this assessment.' %}"
-                >
-                </span>
+                {% if assessment_enrollment.desinscription_tardive %}
+                  <div
+                    class="ms-1 d-inline-block cursor-default"
+                    title="{% translate 'You have been withdrawn lately from this assessment.' %}"
+                  >
+                    <span class="fa-regular fa-calendar-xmark"></span>
+                    <span class="fa-regular fa-clock upper-icon"></span>
+                  </div>
+                {% else %}
+                  <span
+                    class="fa-regular fa-calendar-xmark ms-1"
+                    title="{% translate 'You have been withdrawn from this assessment.' %}"
+                  >
+                  </span>
+                {% endif %}
               {% endif %}
             </td>
             <td class="width-0" style="white-space: nowrap">
