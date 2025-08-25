@@ -170,12 +170,12 @@
           type="button"
           data-bs-content="{{ activity.reference_promoter_comment|linebreaksbr|force_escape }}"
           {% if activity.reference_promoter_assent %}
-          title="{% trans "Lead supervisor approval" %}"
+          title="{% trans "Contact supervisor approval" %}"
           class="btn btn-md btn-success popover-buttons"
         >
             <span class="fa-regular fa-circle-check"></span>
           {% else %}
-            title="{% trans "Negative assessment by lead supervisor" %}"
+            title="{% trans "Negative assessment by contact supervisor" %}"
             class="btn btn-md btn-danger popover-buttons unstyled"
             >
             <span class="fa-regular fa-circle-xmark"></span>

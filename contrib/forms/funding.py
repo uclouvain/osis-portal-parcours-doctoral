@@ -101,7 +101,7 @@ class FundingForm(forms.Form):
     duree_prevue = forms.IntegerField(
         label=_("Estimated time to complete the PhD (in months)"),
         min_value=0,
-        max_value=100,
+        max_value=200,
         required=False,
     )
     temps_consacre = forms.IntegerField(
