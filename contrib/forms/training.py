@@ -46,17 +46,15 @@ from parcours_doctoral.contrib.enums.training import (
     ChoixTypeVolume,
     ContexteFormation,
 )
-from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUploadField
 from parcours_doctoral.contrib.forms import (
     EMPTY_CHOICE,
     BooleanRadioSelect,
     CustomDateInput,
-)
-from parcours_doctoral.contrib.forms import (
     SelectOrOtherField,
     autocomplete,
     get_country_initial_choices,
 )
+from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUploadField
 
 __all__ = [
     "BatchActivityForm",
@@ -860,14 +858,7 @@ class PaperForm(ActivityFormMixin, forms.Form):
 class UclCourseForm(ActivityFormMixin, forms.Form):
     object_type = "UclCourse"
     template_name = "parcours_doctoral/forms/training/ucl_course.html"
-    academic_year = forms.TypedChoiceField(
-        coerce=int,
-        empty_value=None,
-        label=_("Academic year"),
-        widget=autocomplete.ListSelect2(),
-        disabled=True,
-    )
-    learning_unit_year = forms.CharField(
+    course = forms.CharField(
         label=_("Learning unit"),
         widget=autocomplete.ListSelect2(
             url='parcours_doctoral:autocomplete:learning-unit-years',
@@ -880,10 +871,9 @@ class UclCourseForm(ActivityFormMixin, forms.Form):
 
     def __init__(self, *args, person: Person = None, **kwargs):
         super().__init__(*args, **kwargs)
-        academic_year = AcademicYearService.get_current_academic_year(person=person)
-        self.fields['academic_year'].choices = [(academic_year.year, f"{academic_year.year}-{academic_year.year + 1}")]
-        self.fields['academic_year'].initial = academic_year.year
-        self.fields['learning_unit_year'].required = True
+
+        self.academic_year = AcademicYearService.get_current_academic_year(person=person).year
+        self.fields['course'].required = True
 
         # Filter out disabled contexts
         choices = dict(self.fields['context'].widget.choices)
@@ -891,19 +881,26 @@ class UclCourseForm(ActivityFormMixin, forms.Form):
             del choices[ContexteFormation.COMPLEMENTARY_TRAINING.name]
         self.fields['context'].widget.choices = list(choices.items())
 
-        # Initialize values
-        if self.initial.get('learning_unit_year'):
-            acronym = self.initial['learning_unit_year']
-            self.fields['learning_unit_year'].widget.choices = [
-                (acronym, f"{acronym} - {self.initial['learning_unit_title']}")
+        selected_acronym = self.data.get(self.add_prefix('course'))
+        if selected_acronym:
+            self.fields['course'].widget.choices = [(selected_acronym, selected_acronym)]
+
+        elif self.initial.get('course'):
+            selected_acronym = self.initial['course']
+            self.fields['course'].widget.choices = [
+                (selected_acronym, f"{selected_acronym} - {self.initial['course_title']}")
             ]
 
     class Meta:
         fields = [
             'context',
-            'academic_year',
-            'learning_unit_year',
+            'course',
         ]
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cleaned_data['academic_year'] = self.academic_year
+        return cleaned_data
 
 
 class BatchActivityForm(forms.Form):

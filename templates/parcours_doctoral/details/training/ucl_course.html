@@ -47,7 +47,7 @@
           <strong class="d-block">{% trans "Context" %}</strong>
           {{ activity.context|enum_display:'ContexteFormation' }}
           <strong class="d-block">{% trans "Learning unit" %}</strong>
-          {{ activity.learning_unit_year }} - {{ activity.learning_unit_title }} -
+          {{ activity.course }} - {{ activity.course_title }} -
           {{ activity.academic_year|display_as_academic_year }}
           {% if activity.ects %}
             <p>
@@ -58,7 +58,7 @@
         </div>
       {% else %}
         <div class="mb-3">
-          {{ activity.learning_unit_title }} - {{ activity.academic_year|display_as_academic_year }}
+          {{ activity.course }} - {{ activity.course_title }} - {{ activity.academic_year|display_as_academic_year }}
         </div>
 
         <div class="row">
