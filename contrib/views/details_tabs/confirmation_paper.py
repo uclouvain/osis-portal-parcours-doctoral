@@ -26,7 +26,7 @@
 
 from django.views.generic import TemplateView, RedirectView
 
-from osis_document.utils import get_file_url
+from osis_document_components.utils import get_file_url
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.doctorate import DoctorateService
 
@@ -63,7 +63,7 @@ class ConfirmationPaperCanvasExportView(LoadViewMixin, RedirectView):
     permission_link_to_check = 'retrieve_confirmation'
 
     def get(self, request, *args, **kwargs):
-        from osis_document.api.utils import get_remote_token
+        from osis_document_components.services import get_remote_token
 
         canvas_uuid = DoctorateService.get_last_confirmation_paper_canvas(
             person=self.request.user.person,
