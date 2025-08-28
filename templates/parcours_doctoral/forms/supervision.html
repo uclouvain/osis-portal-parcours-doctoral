@@ -60,7 +60,7 @@
       </form>
     {% endpanel %}
   {% endif %}
-  {% panel _("Promoters") %}
+  {% panel _("Supervisors") %}
     {% for signature in supervision.signatures_promoteurs %}
       {% include "parcours_doctoral/includes/supervision_member_entry.html" with type='PROMOTER' member=signature.promoteur supervision=supervision %}
       {% empty %}
@@ -78,7 +78,7 @@
     <form class="osis-form" method="post" action="">
       {% csrf_token %}
       {% bootstrap_form_errors add_form type='non_fields' %}
-      {% panel _("Add a promoter or a CA member") %}
+      {% panel _("Add a supervisor or a CA member") %}
         <div class="row">
           <div class="col-md-12">
             {% bootstrap_field add_form.type %}
@@ -99,7 +99,7 @@
                 {% bootstrap_field add_form.institution wrapper_class="mb-3 required_field" %}
                 {% bootstrap_field add_form.ville wrapper_class="mb-3 required_field" %}
                 {% bootstrap_field add_form.pays wrapper_class="mb-3 required_field" %}
-                {% bootstrap_field add_form.langue wrapper_class="mb-3 required_field" %}
+                {% bootstrap_field_with_tooltip add_form.langue wrapper_class="mb-3 required_field" %}
               </div>
             </div>
           </div>
