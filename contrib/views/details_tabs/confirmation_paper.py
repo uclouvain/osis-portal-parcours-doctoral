@@ -25,7 +25,7 @@
 # ##############################################################################
 
 from django.views.generic import TemplateView, RedirectView
-from osis_document.enums import PostProcessingWanted
+from osis_document_components.enums import PostProcessingWanted
 
 from osis_document_components.utils import get_file_url
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin

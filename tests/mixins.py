@@ -252,12 +252,12 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
         self.mock_doctorate_api.return_value.doctorate_retrieve.return_value = self.mock_doctorate_object
 
     def _mock_document_api(self):
-        document_api_patcher = patch('osis_document.api.utils.get_remote_token', return_value='foobar')
+        document_api_patcher = patch('osis_document_components.services.get_remote_token', return_value='foobar')
         document_api_patcher.start()
         self.addCleanup(document_api_patcher.stop)
 
         document_api_patcher = patch(
-            'osis_document.api.utils.get_remote_metadata',
+            'osis_document_components.services.get_remote_metadata',
             return_value={'name': 'myfile', 'mimetype': PDF_MIME_TYPE, 'size': 1},
         )
         document_api_patcher.start()
