@@ -25,6 +25,7 @@
 # ##############################################################################
 
 from django.views.generic import TemplateView, RedirectView
+from osis_document.enums import PostProcessingWanted
 
 from osis_document_components.utils import get_file_url
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
@@ -70,7 +71,10 @@ class ConfirmationPaperCanvasExportView(LoadViewMixin, RedirectView):
             uuid=self.doctorate_uuid,
         ).uuid
 
-        reading_token = get_remote_token(canvas_uuid)
+        reading_token = get_remote_token(
+            canvas_uuid,
+            wanted_post_process=PostProcessingWanted.ORIGINAL.name,
+        )
 
         self.url = get_file_url(reading_token)
 
