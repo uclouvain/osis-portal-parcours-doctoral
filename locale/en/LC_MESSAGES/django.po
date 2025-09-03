@@ -490,10 +490,10 @@ msgstr ""
 msgid "Doctoral research project"
 msgstr ""
 
-msgid "Doctorate summary"
+msgid "Doctoral training proposal"
 msgstr ""
 
-msgid "Doctoral training proposal"
+msgid "Doctorate summary"
 msgstr ""
 
 msgid "Doctorate thesis field"
@@ -1547,7 +1547,13 @@ msgstr ""
 msgid "The summary of the proposal in PDF format cannot be found."
 msgstr ""
 
+msgid "There is no president set yet."
+msgstr ""
+
 msgid "There is no request for a new deadline."
+msgstr ""
+
+msgid "There is no secretary set yet."
 msgstr ""
 
 msgid "There was an error while requesting signatures."

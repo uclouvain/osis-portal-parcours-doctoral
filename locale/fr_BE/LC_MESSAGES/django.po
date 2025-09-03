@@ -511,11 +511,11 @@ msgstr "Docteur.e"
 msgid "Doctoral research project"
 msgstr "Projet de recherche doctorale"
 
-msgid "Doctorate summary"
-msgstr "Résumé du doctorat"
-
 msgid "Doctoral training proposal"
 msgstr "Projet de formation doctorale"
+
+msgid "Doctorate summary"
+msgstr "Résumé du doctorat"
 
 msgid "Doctorate thesis field"
 msgstr "Domaine de la thèse de doctorat"
@@ -1665,8 +1665,14 @@ msgstr "Le résumé du doctorat au format PDF n'a pas été trouvé."
 msgid "The summary of the proposal in PDF format cannot be found."
 msgstr "Le résumé de la proposition au format PDF n'a pas été trouvé."
 
+msgid "There is no president set yet."
+msgstr "Il n'y a pas encore de président.e de désigné.e."
+
 msgid "There is no request for a new deadline."
 msgstr "Il n'y a pas de demande de nouvelle échéance."
+
+msgid "There is no secretary set yet."
+msgstr "Il n'y a pas encore de secrétaire de désigné.e."
 
 msgid "There was an error while requesting signatures."
 msgstr "Erreur lors de la demande de signatures."
