@@ -26,6 +26,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import Form
+from django.forms.models import ALL_FIELDS
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, resolve_url
 from django.utils.translation import gettext_lazy as _
@@ -138,6 +139,7 @@ class JuryRequestSignaturesView(LoginRequiredMixin, WebServiceFormMixin, FormVie
 
     def form_invalid(self, form):
         messages.error(self.request, _("There was an error while requesting signatures."))
+        messages.error(self.request, '\n'.join(form.errors.get(ALL_FIELDS, [])))
         return HttpResponseRedirect(resolve_url("parcours_doctoral:update:jury", pk=self.kwargs.get('pk')))
 
     def get_success_url(self):

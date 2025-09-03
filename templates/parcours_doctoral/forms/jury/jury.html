@@ -53,7 +53,11 @@
     {% for membre in membre_president %}
       <div class="list-group-item membre-container flex-wrap">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
     {% empty %}
-      <div class="list-group-item">{% trans "You need to set a member as president." %}</div>
+      {% if can_set_roles %}
+        <div class="list-group-item">{% trans "You need to set a member as president." %}</div>
+      {% else %}
+        <div class="list-group-item">{% trans "There is no president set yet." %}</div>
+      {% endif %}
     {% endfor %}
     </div>
   {% endpanel %}
@@ -63,7 +67,11 @@
     {% for membre in membre_secretaire %}
       <div class="list-group-item membre-container flex-wrap">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
     {% empty %}
-      <div class="list-group-item">{% trans "You need to set a member as secretary." %}</div>
+      {% if can_set_roles %}
+        <div class="list-group-item">{% trans "You need to set a member as secretary." %}</div>
+      {% else %}
+        <div class="list-group-item">{% trans "There is no secretary set yet." %}</div>
+      {% endif %}
     {% endfor %}
     </div>
   {% endpanel %}
@@ -125,15 +133,18 @@
       $('.ucl_hide').dependsOn({
         'input[name=institution_principale]': { values: ['OTHER'] },
       }, { duration: 0, valueOnDisable: '', });
-
-      $('.membre-role-submit').click(function(event) {
-          event.preventDefault();
-          event.stopPropagation();
-          window.preventQuitting = false;
-          const $form = $(this).closest('.btn-group').find('.membre-role-form');
-          $form.find('input[name=role]').val($(this).attr('data-role'));
-          $form.submit();
-      });
+    });
+  </script>
+  {% endif %}
+  {% if can_set_roles %}
+  <script>
+    $('.membre-role-submit').click(function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      window.preventQuitting = false;
+      const $form = $(this).closest('.btn-group').find('.membre-role-form');
+      $form.find('input[name=role]').val($(this).attr('data-role'));
+      $form.submit();
     });
   </script>
   {% endif %}

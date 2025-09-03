@@ -107,6 +107,13 @@ class JuryMembreForm(forms.Form):
         required=False,
     )
 
+    langue = forms.ChoiceField(
+        label=_("Contact language"),
+        required=False,
+        choices=EMPTY_CHOICE + tuple(settings.LANGUAGES),
+        initial=settings.LANGUAGE_CODE,
+    )
+
     email = forms.EmailField(
         label=pgettext_lazy("doctorate", "Email"),
         required=False,

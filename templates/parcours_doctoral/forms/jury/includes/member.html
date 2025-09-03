@@ -38,7 +38,7 @@
     </em>
   </div>
 
-  {% if add_form %}
+  {% if add_form and not membre.est_promoteur or can_set_roles and membre.role != 'VERIFICATEUR' %}
     <div>
       <div class="btn-group">
         <button type="button" class="btn btn-light border border-dark-subtle dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -49,10 +49,12 @@
           <input type="hidden" name="role">
         </form>
         <ul class="dropdown-menu dropdown-menu-end">
-          {% if not membre.est_promoteur and not membre.role == 'PRESIDENT' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="PRESIDENT">{% trans "Set as president" %}</a></li>{% endif %}
-          {% if not membre.role == 'SECRETAIRE' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="SECRETAIRE">{% trans "Set as secretary" %}</a></li>{% endif %}
-          {% if not membre.role == 'MEMBRE' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="MEMBRE">{% trans "Set as member" %}</a></li>{% endif %}
-          {% if not membre.est_promoteur %}
+          {% if can_set_roles %}
+            {% if not membre.est_promoteur and not membre.role == 'PRESIDENT' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="PRESIDENT">{% trans "Set as president" %}</a></li>{% endif %}
+            {% if not membre.role == 'SECRETAIRE' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="SECRETAIRE">{% trans "Set as secretary" %}</a></li>{% endif %}
+            {% if not membre.role == 'MEMBRE' %}<li><a class="dropdown-item membre-role-submit" href="#" data-role="MEMBRE">{% trans "Set as member" %}</a></li>{% endif %}
+          {% endif %}
+          {% if add_form and not membre.est_promoteur %}
           <li><a class="dropdown-item" href="{% url 'parcours_doctoral:update:jury-member:update' pk=jury.uuid member_pk=membre.uuid %}">{% trans "Update" %}</a></li>
           <li><a class="dropdown-item" href="#deleteModal-{{ membre.uuid }}" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ membre.uuid }}">{% trans "Remove" context "jury member" %}</a></li>
           {% endif %}
