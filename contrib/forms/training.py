@@ -38,6 +38,7 @@ from osis_parcours_doctoral_sdk.model.type_enum import (
 )
 
 from base.models.person import Person
+from admission.contrib.forms import get_past_academic_years_choices
 from parcours_doctoral.contrib.enums.training import (
     ChoixComiteSelection,
     ChoixRolePublication,
@@ -782,6 +783,13 @@ class CourseForm(ActivityFormMixin, forms.Form):
         required=False,
         widget=BooleanRadioSelect(choices=((False, _("No")), (True, _("Yes")))),
     )
+    academic_year = forms.TypedChoiceField(
+        coerce=int,
+        empty_value=None,
+        label=_("Academic year"),
+        widget=autocomplete.ListSelect2(),
+        required=False,
+    )
 
     class Meta:
         fields = [
@@ -812,6 +820,28 @@ class CourseForm(ActivityFormMixin, forms.Form):
         super().__init__(*args, **kwargs)
         self.fields['authors'].help_text = _("In the context of a course, specify the name of the professor")
         self.fields['title'].help_text = _("As it appears in an official course catalogue")
+
+        academic_years = AcademicYearService.get_academic_year_list(person=self.person).results
+        self.fields['academic_year'].choices = get_past_academic_years_choices(
+            person=self.person,
+            academic_years=academic_years,
+        )
+
+        # Convert from dates to year if UCLouvain
+        if (
+            self.initial
+            and self.initial.get('organizing_institution') == INSTITUTION_UCL
+            and self.initial.get('start_date')
+            and self.initial.get('end_date')
+        ):
+            self.initial['academic_year'] = next(
+                (
+                    year.year
+                    for year in academic_years
+                    if year.start_date == self.initial['start_date'] and year.end_date == self.initial['end_date']
+                ),
+                None,
+            )
 
 
 class ComplementaryCourseForm(CourseForm):
