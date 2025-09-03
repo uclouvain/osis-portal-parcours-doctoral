@@ -56,6 +56,12 @@ __all__ = [
     'JuryExternalConfirmView',
 ]
 
+from parcours_doctoral.templatetags.parcours_doctoral import can_make_action
+
+SSS_ACRONYM = 'SSS'
+SSH_ACRONYM = 'SSH'
+SST_ACRONYM = 'SST'
+
 
 class LoadJuryViewMixin(LoadViewMixin):
     """Mixin that can be used to load data for tabs used during the enrolment and eventually after it."""
@@ -67,9 +73,30 @@ class LoadJuryViewMixin(LoadViewMixin):
             uuid=self.doctorate_uuid,
         )
 
+    @cached_property
+    def is_doctorate_student(self):
+        return self.doctorate.matricule_doctorant == self.request.user.person.global_id
+
+    @cached_property
+    def is_lead_promoter(self):
+        lead_promoter = next((membre for membre in self.jury.membres if membre.est_promoteur_de_reference), None)
+        return lead_promoter and lead_promoter.matricule == self.request.user.person.global_id
+
+    @cached_property
+    def is_auditor(self):
+        auditor = next((membre for membre in self.jury.membres if membre.role == RoleJury.VERIFICATEUR.name), None)
+        return auditor and auditor.matricule == self.request.user.person.global_id
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['jury'] = self.jury
+
+        context['can_set_roles'] = self.jury.has_change_roles_permission and (
+            (self.doctorate.formation.entite_gestion.code_secteur == SSS_ACRONYM and self.is_doctorate_student)
+            or (self.doctorate.formation.entite_gestion.code_secteur == SSH_ACRONYM and self.is_lead_promoter)
+            or (self.doctorate.formation.entite_gestion.code_secteur == SST_ACRONYM and self.is_auditor)
+        )
+
         return context
 
 
