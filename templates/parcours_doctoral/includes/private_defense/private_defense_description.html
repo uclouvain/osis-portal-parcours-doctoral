@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n parcours_doctoral %}
 
 {% comment "License" %}
 * OSIS stands for Open Student Information System. It's an application
@@ -37,4 +37,12 @@
       The date must therefore be chosen collectively by the board in agreement with the PhD student.
     {% endblocktranslate %}
   </p>
+  {% if doctorate|can_make_action:'retrieve_private_defense_minutes_canvas' %}
+    <p>
+      {% url 'parcours_doctoral:private-defense-minutes-canvas' view.kwargs.pk as canvas_url %}
+      {% blocktranslate trimmed %}
+        The canvas of the private defence minutes can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
+      {% endblocktranslate %}
+    </p>
+  {% endif %}
 </div>
