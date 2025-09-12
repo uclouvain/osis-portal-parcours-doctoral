@@ -120,7 +120,7 @@ class JuryMembreForm(forms.Form):
         super().__init__(*args, **kwargs)
         pays = self.initial.get('pays', None)
         if pays:
-            self.fields['pays'].widget.choices = EMPTY_CHOICE + ((pays, str(pays)),)
+            self.fields['pays'].widget.choices = EMPTY_CHOICE + ((pays, pays.name),)
         matricule = self.initial.get('matricule', None)
         if matricule:
             person = Person.objects.get(global_id=matricule)
