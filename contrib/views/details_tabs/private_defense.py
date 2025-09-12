@@ -26,7 +26,7 @@
 from typing import List
 
 from django.utils.functional import cached_property
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
 
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
@@ -34,6 +34,7 @@ from parcours_doctoral.services.doctorate import DoctorateService
 
 __all__ = [
     'PrivateDefenseDetailView',
+    'PrivateDefenseMinutesCanvasView',
 ]
 __namespace__ = False
 
@@ -71,3 +72,14 @@ class PrivateDefenseDetailView(PrivateDefenseCommonViewMixin, TemplateView):
     urlpatterns = 'private-defense'
     template_name = 'parcours_doctoral/details/private_defenses.html'
     permission_link_to_check = 'retrieve_private_defense'
+
+
+class PrivateDefenseMinutesCanvasView(LoadViewMixin, RedirectView):
+    urlpatterns = 'private-defense-minutes-canvas'
+    permission_link_to_check = 'retrieve_private_defense_minutes_canvas'
+
+    def get_redirect_url(self, *args, **kwargs):
+        return DoctorateService.get_private_defense_minutes_canvas(
+            person=self.request.user.person,
+            uuid=self.doctorate_uuid,
+        ).url

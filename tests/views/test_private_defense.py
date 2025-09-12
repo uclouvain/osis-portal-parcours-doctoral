@@ -28,6 +28,9 @@ import datetime
 from django.shortcuts import resolve_url
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
+from osis_parcours_doctoral_sdk.model.private_defense_minutes_canvas import (
+    PrivateDefenseMinutesCanvas,
+)
 from osis_parcours_doctoral_sdk.model.submit_private_defense import SubmitPrivateDefense
 
 from base.tests.factories.person import PersonFactory
@@ -49,6 +52,7 @@ class PrivateDefenseDetailViewTestCase(BaseDoctorateTestCase):
 
         self.mock_doctorate_api.return_value.retrieve_private_defenses.return_value = [
             PrivateDefenseDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p1',
                 est_active=True,
                 titre_these='Thesis title 1',
@@ -57,6 +61,7 @@ class PrivateDefenseDetailViewTestCase(BaseDoctorateTestCase):
                 canevas_proces_verbal=[],
             ),
             PrivateDefenseDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p2',
                 est_active=False,
                 titre_these='Thesis title 2',
@@ -124,6 +129,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
 
         self.mock_doctorate_api.return_value.retrieve_private_defenses.return_value = [
             PrivateDefenseDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p1',
                 est_active=True,
                 titre_these='Thesis title 1',
@@ -134,6 +140,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
                 date_envoi_manuscrit=datetime.date(2025, 1, 1),
             ),
             PrivateDefenseDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p2',
                 est_active=False,
                 titre_these='Thesis title 2',
@@ -239,6 +246,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
 
         self.mock_doctorate_api.return_value.retrieve_private_defenses.return_value = [
             PrivateDefenseDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p1',
                 est_active=True,
                 titre_these='',
@@ -279,6 +287,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
 
         self.mock_doctorate_api.return_value.retrieve_private_defenses.return_value = [
             PrivateDefenseDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p1',
                 est_active=True,
                 titre_these='',
@@ -304,3 +313,35 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.assertEqual(len(form.errors), 2)
         self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('titre_these'))
         self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('date_heure'))
+
+
+class PrivateDefenseCanvasViewTestCase(BaseDoctorateTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.person = PersonFactory()
+        cls.url = resolve_url("parcours_doctoral:private-defense-minutes-canvas", pk=cls.doctorate_uuid)
+        cls.project_url = resolve_url('parcours_doctoral:project', pk=cls.doctorate_uuid)
+
+    def setUp(self):
+        super().setUp()
+
+        self.mock_doctorate_api.return_value.retrieve_private_defense_minutes_canvas.return_value = (
+            PrivateDefenseMinutesCanvas._from_openapi_data(url=self.project_url)
+        )
+
+    def test_get_no_permission(self):
+        self.client.force_login(self.person.user)
+        self.mock_doctorate_object.links['retrieve_private_defense_minutes_canvas'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_redirect_to_the_specific_url(self):
+        self.client.force_login(self.person.user)
+
+        response = self.client.get(self.url)
+
+        self.assertRedirects(response=response, expected_url=self.project_url, fetch_redirect_response=False)
