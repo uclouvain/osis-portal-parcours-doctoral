@@ -1643,6 +1643,14 @@ msgstr ""
 
 #, python-format
 msgid ""
+"The canvas of the private defence minutes can be downloaded <a "
+"href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
+msgstr ""
+"Le canevas de procès-verbal de la défense privée est téléchargeable "
+"<a href=\"%(canvas_url)s\" target=\"_blank\">ici</a>."
+
+#, python-format
+msgid ""
 "The canvas of the supervisory panel report must be sent to the accompanying "
 "committee during the test. It can be downloaded <a href=\"%(canvas_url)s\" "
 "target=\"_blank\">here</a>."
