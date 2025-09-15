@@ -26,7 +26,11 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from parcours_doctoral.contrib.forms import CustomDateInput, DoctorateDateTimeField
+from parcours_doctoral.contrib.forms import (
+    CustomDateInput,
+    DoctorateDateTimeField,
+    DoctorateFileUploadField,
+)
 
 
 class PrivateDefenseForm(forms.Form):
@@ -53,4 +57,11 @@ class PrivateDefenseForm(forms.Form):
         label=_('Date of manuscript submission to the thesis exam board'),
         widget=CustomDateInput,
         required=False,
+    )
+
+
+class PromoterPrivateDefenseForm(forms.Form):
+    proces_verbal = DoctorateFileUploadField(
+        label=_('Private defence minutes'),
+        help_text=_('The minutes will be uploaded by the thesis exam board secretary or chair.'),
     )
