@@ -32,10 +32,17 @@ from osis_parcours_doctoral_sdk.model.private_defense_minutes_canvas import (
     PrivateDefenseMinutesCanvas,
 )
 from osis_parcours_doctoral_sdk.model.submit_private_defense import SubmitPrivateDefense
+from osis_parcours_doctoral_sdk.model.submit_private_defense_minutes import (
+    SubmitPrivateDefenseMinutes,
+)
 
 from base.tests.factories.person import PersonFactory
 from osis_common.utils.datetime import get_tzinfo
 from parcours_doctoral.constants import FIELD_REQUIRED_MESSAGE
+from parcours_doctoral.contrib.forms.private_defense import (
+    PrivateDefenseForm,
+    PromoterPrivateDefenseForm,
+)
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
 
@@ -120,7 +127,6 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
-        cls.person = PersonFactory()
         cls.url = resolve_url("parcours_doctoral:update:private-defense", pk=cls.doctorate_uuid)
         cls.detail_url = resolve_url("parcours_doctoral:private-defense", pk=cls.doctorate_uuid)
 
@@ -180,6 +186,8 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
 
         # Load the form
         form = response.context['form']
+
+        self.assertIsInstance(PrivateDefenseForm, form)
 
         self.assertEqual(form['titre_these'].value(), 'Thesis title 1')
         self.assertEqual(form['date_heure'].value(), datetime.datetime(2025, 1, 1, 10))
@@ -313,6 +321,120 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.assertEqual(len(form.errors), 2)
         self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('titre_these'))
         self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('date_heure'))
+
+
+class PrivateDefenseFormViewForPromoterTestCase(BaseDoctorateTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.promoter_person = PersonFactory(global_id='12345')
+        cls.url = resolve_url("parcours_doctoral:update:private-defense", pk=cls.doctorate_uuid)
+        cls.detail_url = resolve_url("parcours_doctoral:private-defense", pk=cls.doctorate_uuid)
+
+    def setUp(self):
+        super().setUp()
+
+        self.mock_doctorate_api.return_value.retrieve_private_defenses.return_value = [
+            PrivateDefenseDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
+                uuid='p1',
+                est_active=True,
+                titre_these='Thesis title 1',
+                lieu='Louvain-La-Neuve',
+                proces_verbal=['file-1-uuid'],
+                canevas_proces_verbal=[],
+                date_heure=datetime.datetime(2025, 1, 1, 10),
+                date_envoi_manuscrit=datetime.date(2025, 1, 1),
+            ),
+            PrivateDefenseDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
+                uuid='p2',
+                est_active=False,
+                titre_these='Thesis title 2',
+                lieu='Louvain-La-Neuve',
+                proces_verbal=['file-2-uuid'],
+                canevas_proces_verbal=[],
+                date_heure=datetime.datetime(2024, 1, 1, 10),
+                date_envoi_manuscrit=datetime.date(2024, 1, 1),
+            ),
+        ]
+
+    def test_get_no_permission(self):
+        self.client.force_login(self.promoter_person.user)
+        self.mock_doctorate_object.links['submit_private_defense_minutes'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_get_private_defense(self):
+        self.client.force_login(self.promoter_person.user)
+        response = self.client.get(self.url)
+
+        # Load the doctorate information
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
+        self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
+
+        # Load the private defenses information
+        self.mock_doctorate_api.return_value.retrieve_private_defenses.assert_called()
+
+        self.assertIsNotNone(response.context.get('all_private_defenses'))
+        self.assertEqual(response.context.get('all_private_defenses')[0].uuid, 'p1')
+        self.assertEqual(response.context.get('all_private_defenses')[1].uuid, 'p2')
+
+        self.assertIsNotNone(response.context.get('current_private_defense'))
+        self.assertEqual(response.context.get('current_private_defense').uuid, 'p1')
+
+        # Load the form
+        form = response.context['form']
+
+        self.assertIsInstance(form, PromoterPrivateDefenseForm)
+
+        self.assertEqual(form['proces_verbal'].value(), ['file-1-uuid'])
+
+    def test_get_no_private_defense(self):
+        self.client.force_login(self.promoter_person.user)
+        self.mock_doctorate_api.return_value.retrieve_private_defenses.return_value = []
+
+        response = self.client.get(self.url)
+
+        # Load the doctorate information
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
+        self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
+
+        # Load the private defenses information
+        self.mock_doctorate_api.return_value.retrieve_private_defenses.assert_called()
+
+        self.assertEqual(response.context.get('all_private_defenses'), [])
+
+        self.assertIsNone(response.context.get('current_private_defense'))
+
+        # Load the form
+        form = response.context['form']
+
+        self.assertEqual(form['proces_verbal'].value(), [])
+
+    def test_post_the_private_defense_minutes(self):
+        self.client.force_login(self.promoter_person.user)
+
+        response = self.client.post(
+            self.url,
+            data={'proces_verbal_0': ['file-uuid-3']},
+        )
+
+        self.assertRedirects(response, expected_url=self.detail_url, fetch_redirect_response=False)
+
+        # Call the API with the right data
+        self.mock_doctorate_api.return_value.submit_private_defense_minutes.assert_called()
+        self.mock_doctorate_api.return_value.submit_private_defense_minutes.assert_called_with(
+            uuid=self.doctorate_uuid,
+            submit_private_defense_minutes=SubmitPrivateDefenseMinutes._new_from_openapi_data(
+                uuid='p1',
+                proces_verbal=['file-uuid-3'],
+            ),
+            **self.api_default_params,
+        )
 
 
 class PrivateDefenseCanvasViewTestCase(BaseDoctorateTestCase):
