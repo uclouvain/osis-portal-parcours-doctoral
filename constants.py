@@ -68,7 +68,7 @@ UPDATE_ACTIONS_BY_TAB = {
     'complementary-training': 'retrieve_complementary_training',
     'course-enrollment': 'retrieve_course_enrollment',
     'assessment-enrollment': 'retrieve_assessment_enrollment',
-    'private-defense': 'update_private_defense',
+    'private-defense': ['update_private_defense', 'submit_private_defense_minutes'],
     'public-defense': '',
     'messages': '',
 }
