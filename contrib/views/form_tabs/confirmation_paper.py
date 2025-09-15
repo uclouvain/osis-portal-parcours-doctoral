@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2022 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -28,9 +28,15 @@ from django.utils.translation import gettext as _
 from django.views.generic import FormView
 from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
 
-from parcours_doctoral.contrib.forms.confirmation_paper import ConfirmationPaperForm, PromoterConfirmationPaperForm
+from parcours_doctoral.contrib.forms.confirmation_paper import (
+    ConfirmationPaperForm,
+    PromoterConfirmationPaperForm,
+)
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
-from parcours_doctoral.services.doctorate import DoctorateService, ConfirmationPaperBusinessException
+from parcours_doctoral.services.doctorate import (
+    ConfirmationPaperBusinessException,
+    DoctorateService,
+)
 from parcours_doctoral.services.mixins import WebServiceFormMixin
 
 __all__ = ['ConfirmationPaperFormView']
@@ -52,10 +58,6 @@ class ConfirmationPaperFormView(LoadViewMixin, WebServiceFormMixin, FormView):
             person=self.request.user.person,
             uuid=self.doctorate_uuid,
         )
-
-    @cached_property
-    def is_doctorate_student(self):
-        return self.doctorate.matricule_doctorant == self.request.user.person.global_id
 
     def get_template_names(self):
         if self.is_doctorate_student:

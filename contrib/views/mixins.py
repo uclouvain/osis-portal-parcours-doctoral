@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2024 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -58,6 +58,10 @@ class LoadViewMixin(LoginRequiredMixin, PermissionRequiredMixin, ContextMixin):
     @cached_property
     def doctorate_uuid(self):
         return str(self.kwargs.get('pk', ''))
+
+    @cached_property
+    def is_doctorate_student(self):
+        return self.doctorate.matricule_doctorant == self.request.user.person.global_id
 
     @cached_property
     def person(self):
