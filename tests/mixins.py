@@ -184,6 +184,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'retrieve_private_defense',
                         'retrieve_private_defense_minutes_canvas',
                         'update_private_defense',
+                        'submit_private_defense_minutes',
                         'add_training',
                         'submit_training',
                         'assent_training',
