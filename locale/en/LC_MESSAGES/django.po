@@ -49,6 +49,9 @@ msgstr ""
 msgid "A paper of each type has already been created."
 msgstr ""
 
+msgid "ABANDON"
+msgstr "Withdrawal"
+
 msgid "ACCEPTEE"
 msgstr "Accepted"
 
@@ -407,6 +410,9 @@ msgstr "Authorized private defense"
 
 msgid "DEFENSE_PRIVEE_A_RECOMMENCER"
 msgstr "Private defense to be repeated"
+
+msgid "DEFENSE_PRIVEE_EN_ECHEC"
+msgstr "Private defense in failure"
 
 msgid "DEFENSE_PRIVEE_REUSSIE"
 msgstr "Passed private defense"
