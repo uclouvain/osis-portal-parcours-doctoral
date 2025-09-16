@@ -57,6 +57,9 @@ msgstr ""
 msgid "A paper of each type has already been created."
 msgstr "Une épreuve de chaque type a déjà été créée."
 
+msgid "ABANDON"
+msgstr "Abandon"
+
 msgid "ACCEPTEE"
 msgstr "Acceptée"
 
@@ -420,6 +423,9 @@ msgstr "Défense privée autorisée"
 
 msgid "DEFENSE_PRIVEE_A_RECOMMENCER"
 msgstr "Défense privée à recommencer"
+
+msgid "DEFENSE_PRIVEE_EN_ECHEC"
+msgstr "Défense privée en échec"
 
 msgid "DEFENSE_PRIVEE_REUSSIE"
 msgstr "Défense privée réussie"
@@ -1646,8 +1652,8 @@ msgid ""
 "The canvas of the private defence minutes can be downloaded <a "
 "href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
 msgstr ""
-"Le canevas de procès-verbal de la défense privée est téléchargeable "
-"<a href=\"%(canvas_url)s\" target=\"_blank\">ici</a>."
+"Le canevas de procès-verbal de la défense privée est téléchargeable <a "
+"href=\"%(canvas_url)s\" target=\"_blank\">ici</a>."
 
 #, python-format
 msgid ""
