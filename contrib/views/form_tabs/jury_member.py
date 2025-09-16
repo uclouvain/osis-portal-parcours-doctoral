@@ -104,7 +104,7 @@ class JuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormMixin, For
             'institution': self.membre.institution,
             'autre_institution': self.membre.autre_institution,
             'pays': (
-                CountryService.get_countries(person=self.request.user.person, name=self.membre.pays)
+                CountryService.get_countries(person=self.request.user.person, name=self.membre.pays).results[0]
                 if self.membre.pays else None
             ),
             'nom': self.membre.nom,

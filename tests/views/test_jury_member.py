@@ -26,6 +26,8 @@
 from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
+from mock import patch
+from osis_reference_sdk.model.country import Country
 
 from parcours_doctoral.contrib.enums import (
     RoleJury,
@@ -34,7 +36,6 @@ from parcours_doctoral.contrib.enums import (
 )
 from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
-from reference.tests.factories.country import CountryFactory
 
 
 class JuryMembreUpdateTestCase(BaseDoctorateTestCase):
@@ -42,7 +43,7 @@ class JuryMembreUpdateTestCase(BaseDoctorateTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
-        cls.country = CountryFactory()
+        cls.country = Country(name='CountryName')
 
     def setUp(self):
         super().setUp()
@@ -73,6 +74,9 @@ class JuryMembreUpdateTestCase(BaseDoctorateTestCase):
             genre=GenreMembre.AUTRE.name,
             email='email',
         )
+        api_patcher = patch("osis_reference_sdk.api.countries_api.CountriesApi")
+        self.mock_api = api_patcher.start()
+        self.addCleanup(api_patcher.stop)
 
     def test_jury_membre_change_get_form(self):
         response = self.client.get(self.url)
