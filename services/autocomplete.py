@@ -28,11 +28,11 @@ from osis_learning_unit_sdk.api import learning_units_api
 from osis_parcours_doctoral_sdk import ApiClient, ApiException
 from osis_parcours_doctoral_sdk.api import autocomplete_api
 
-from base.models.academic_year import current_academic_year
 from frontoffice.settings.osis_sdk import learning_unit as learning_unit_sdk
 from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk
 from frontoffice.settings.osis_sdk.utils import build_mandatory_auth_headers
 from parcours_doctoral.services.mixins import ServiceMeta
+from reference.services.academic_year import AcademicYearService
 
 
 class DoctorateAutocompleteAPIClient:
@@ -64,7 +64,7 @@ class DoctorateAutocompleteService(metaclass=ServiceMeta):
         with osis_learning_unit_sdk.ApiClient(configuration) as api_client:
             api_instance = learning_units_api.LearningUnitsApi(api_client)
         return api_instance.learningunits_list(
-            year=current_academic_year().year,
+            year=AcademicYearService.get_current_academic_year(person=person).year,
             search_term=search_term,
             **build_mandatory_auth_headers(person),
         )['results']

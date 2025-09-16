@@ -32,13 +32,12 @@ from django.utils.dates import MONTHS_ALT
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext_lazy
-
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 from osis_parcours_doctoral_sdk.model.type_enum import (
     TypeEnum as PaperTypeEnum,
 )
 
-from base.models.academic_year import current_academic_year
+from base.models.person import Person
 from parcours_doctoral.contrib.enums.training import (
     ChoixComiteSelection,
     ChoixRolePublication,
@@ -47,12 +46,12 @@ from parcours_doctoral.contrib.enums.training import (
     ChoixTypeVolume,
     ContexteFormation,
 )
+from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUploadField
 from parcours_doctoral.contrib.forms import (
     EMPTY_CHOICE,
     BooleanRadioSelect,
     CustomDateInput,
 )
-from parcours_doctoral.contrib.forms import DoctorateFileUploadField as FileUploadField
 from parcours_doctoral.contrib.forms import (
     SelectOrOtherField,
     autocomplete,
@@ -78,6 +77,8 @@ __all__ = [
     "UclCourseForm",
     "AssentForm",
 ]
+
+from reference.services.academic_year import AcademicYearService
 
 INSTITUTION_UCL = "UCLouvain"
 MINIMUM_YEAR = 2000
@@ -877,9 +878,9 @@ class UclCourseForm(ActivityFormMixin, forms.Form):
         ),
     )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, person: Person = None, **kwargs):
         super().__init__(*args, **kwargs)
-        academic_year = current_academic_year()
+        academic_year = AcademicYearService.get_current_academic_year(person=person)
         self.fields['academic_year'].choices = [(academic_year.year, f"{academic_year.year}-{academic_year.year + 1}")]
         self.fields['academic_year'].initial = academic_year.year
         self.fields['learning_unit_year'].required = True
