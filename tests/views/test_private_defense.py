@@ -187,7 +187,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
         # Load the form
         form = response.context['form']
 
-        self.assertIsInstance(PrivateDefenseForm, form)
+        self.assertIsInstance(form, PrivateDefenseForm)
 
         self.assertEqual(form['titre_these'].value(), 'Thesis title 1')
         self.assertEqual(form['date_heure'].value(), datetime.datetime(2025, 1, 1, 10))
@@ -437,7 +437,7 @@ class PrivateDefenseFormViewForPromoterTestCase(BaseDoctorateTestCase):
         )
 
 
-class PrivateDefenseCanvasViewTestCase(BaseDoctorateTestCase):
+class PrivateDefenseMinutesCanvasViewTestCase(BaseDoctorateTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -467,3 +467,69 @@ class PrivateDefenseCanvasViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         self.assertRedirects(response=response, expected_url=self.project_url, fetch_redirect_response=False)
+
+
+class PrivateDefenseMinutesViewTestCase(BaseDoctorateTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.person = PersonFactory()
+        cls.url = resolve_url('parcours_doctoral:private-defense-minutes', pk=cls.doctorate_uuid)
+        cls.private_defense_url = resolve_url('parcours_doctoral:private-defense', pk=cls.doctorate_uuid)
+
+    def setUp(self):
+        super().setUp()
+
+        self.mock_doctorate_api.return_value.retrieve_private_defenses.return_value = [
+            PrivateDefenseDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
+                uuid='p1',
+                est_active=True,
+                titre_these='Thesis title 1',
+                lieu='Louvain-La-Neuve',
+                proces_verbal=['file-1'],
+                canevas_proces_verbal=[],
+            ),
+            PrivateDefenseDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
+                uuid='p2',
+                est_active=False,
+                titre_these='Thesis title 2',
+                lieu='Louvain-La-Neuve',
+                proces_verbal=[],
+                canevas_proces_verbal=[],
+            ),
+        ]
+
+    def test_get_no_permission(self):
+        self.client.force_login(self.person.user)
+        self.mock_doctorate_object.links['retrieve_private_defense'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_redirect_to_the_minutes_url_if_any(self):
+        self.client.force_login(self.person.user)
+
+        response = self.client.get(self.url)
+
+        self.assertRedirects(
+            response=response,
+            expected_url='http://dummyurl.com/document/file/foobar',
+            fetch_redirect_response=False,
+        )
+
+    def test_redirect_to_the_private_defenses_url_if_no_minutes_to_redirect(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_api.return_value.retrieve_private_defenses.return_value[0].proces_verbal = []
+
+        response = self.client.get(self.url)
+
+        self.assertRedirects(
+            response=response,
+            expected_url=self.private_defense_url,
+            fetch_redirect_response=False,
+        )

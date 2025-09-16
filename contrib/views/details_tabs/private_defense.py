@@ -25,8 +25,10 @@
 # ##############################################################################
 from typing import List
 
+from django.shortcuts import resolve_url
 from django.utils.functional import cached_property
 from django.views.generic import RedirectView, TemplateView
+from osis_document.enums import PostProcessingWanted
 from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
 
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
@@ -35,7 +37,9 @@ from parcours_doctoral.services.doctorate import DoctorateService
 __all__ = [
     'PrivateDefenseDetailView',
     'PrivateDefenseMinutesCanvasView',
+    'PrivateDefenseMinutesView',
 ]
+
 __namespace__ = False
 
 
@@ -83,3 +87,24 @@ class PrivateDefenseMinutesCanvasView(LoadViewMixin, RedirectView):
             person=self.request.user.person,
             uuid=self.doctorate_uuid,
         ).url
+
+
+class PrivateDefenseMinutesView(PrivateDefenseCommonViewMixin, RedirectView):
+    urlpatterns = 'private-defense-minutes'
+    permission_link_to_check = 'retrieve_private_defense'
+
+    def get_redirect_url(self, *args, **kwargs):
+        from osis_document.api.utils import get_remote_token
+        from osis_document.utils import get_file_url
+
+        current_private_defense = self.current_private_defense
+
+        if current_private_defense and current_private_defense.proces_verbal:
+            reading_token = get_remote_token(
+                current_private_defense.proces_verbal[0],
+                wanted_post_process=PostProcessingWanted.ORIGINAL.name,
+            )
+
+            return get_file_url(reading_token)
+
+        return resolve_url('parcours_doctoral:private-defense', pk=self.doctorate_uuid)
