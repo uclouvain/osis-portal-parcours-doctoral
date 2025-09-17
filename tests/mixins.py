@@ -29,11 +29,6 @@ from unittest.mock import ANY, MagicMock, patch
 from uuid import uuid4
 
 from django.test import override_settings
-from osis_reference_sdk.model.language import Language
-from osis_reference_sdk.model.scholarship import Scholarship
-
-from base.tests.factories.person import PersonFactory
-from base.tests.test_case import OsisPortalTestCase
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import CotutelleDTONested
 from osis_parcours_doctoral_sdk.model.entite_gestion_dto_nested import (
@@ -51,8 +46,14 @@ from osis_parcours_doctoral_sdk.model.projet_dto_nested import ProjetDTONested
 from osis_parcours_doctoral_sdk.model.signature_membre_jury_dto_nested import (
     SignatureMembreJuryDTONested,
 )
+from osis_reference_sdk.model.language import Language
+from osis_reference_sdk.model.scholarship import Scholarship
+
+from base.tests.factories.person import PersonFactory
+from base.tests.test_case import OsisPortalTestCase
 from parcours_doctoral.contrib.enums import (
     AdmissionType,
+    ChoixLangueDefense,
     ChoixStatutDoctorat,
     TypeBourse,
 )
@@ -71,6 +72,8 @@ from parcours_doctoral.contrib.forms import PDF_MIME_TYPE
     PARCOURS_DOCTORAL_TOKEN_EXTERNAL='api-token-external',
 )
 class BaseDoctorateTestCase(OsisPortalTestCase):
+    mime_type = PDF_MIME_TYPE
+
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -190,8 +193,10 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'retrieve_assessment_enrollment',
                         'retrieve_private_defense',
                         'retrieve_private_defense_minutes_canvas',
+                        'retrieve_public_defense',
                         'update_private_defense',
                         'submit_private_defense_minutes',
+                        'update_public_defense',
                         'add_training',
                         'submit_training',
                         'assent_training',
@@ -243,6 +248,17 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             nom_doctorant='Doe',
             commission_proximite=ChoixCommissionProximiteCDSS.ECLI.name,
             justification='Justification',
+            titre_these_propose='Title',
+            langue_soutenance_publique=ChoixLangueDefense.FRENCH.name,
+            autre_langue_soutenance_publique='Japanese',
+            date_heure_soutenance_publique=datetime.datetime(2024, 2, 2, 11, 30),
+            lieu_soutenance_publique='Louvain-La-Neuve',
+            local_deliberation='D1',
+            informations_complementaires_soutenance_publique='Information',
+            resume_annonce='Announcement summary',
+            photo_annonce=[],
+            proces_verbal_soutenance_publique=[],
+            date_retrait_diplome=datetime.date(2025, 2, 2),
         )
         self.mock_doctorate_api.return_value.doctorate_retrieve.return_value = self.mock_doctorate_object
         self.mock_doctorate_api.return_value.retrieve_jury_preparation.return_value = JuryDTO._from_openapi_data(
@@ -317,7 +333,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
 
         document_api_patcher = patch(
             'osis_document_components.services.get_remote_metadata',
-            return_value={'name': 'myfile', 'mimetype': PDF_MIME_TYPE, 'size': 1},
+            return_value={'name': 'myfile', 'mimetype': self.mime_type, 'size': 1},
         )
         document_api_patcher.start()
 
