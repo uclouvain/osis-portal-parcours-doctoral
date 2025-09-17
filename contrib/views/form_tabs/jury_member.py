@@ -38,7 +38,7 @@ from parcours_doctoral.contrib.forms.jury.membre_role import JuryMembreRoleForm
 from parcours_doctoral.contrib.views.details_tabs.jury import LoadJuryViewMixin
 from parcours_doctoral.services.doctorate import DoctorateJuryService, JuryBusinessException
 from parcours_doctoral.services.mixins import WebServiceFormMixin
-from reference.models.country import Country
+from reference.services.country import CountryService
 
 __all__ = [
     "JuryMemberRemoveView",
@@ -103,7 +103,10 @@ class JuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormMixin, For
             'institution_principale': institution_principale,
             'institution': self.membre.institution,
             'autre_institution': self.membre.autre_institution,
-            'pays': Country.objects.get(name=self.membre.pays) if self.membre.pays else None,
+            'pays': (
+                CountryService.get_countries(person=self.request.user.person, name=self.membre.pays).results[0]
+                if self.membre.pays else None
+            ),
             'nom': self.membre.nom,
             'prenom': self.membre.prenom,
             'titre': self.membre.titre,

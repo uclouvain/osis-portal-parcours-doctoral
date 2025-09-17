@@ -472,7 +472,7 @@ def report_ects(activity, categories, added, validated, parent_category=None):
     ):
         categories[_("Publications")][index] += activity.ects
     elif category == CategorieActivite.COURSE.name:
-        categories[_("Courses and trainings")][index] += activity.ects
+        categories[_("Followed courses")][index] += activity.ects
     elif category == CategorieActivite.SERVICE.name:
         categories[_("Services")][index] += activity.ects
     elif (
@@ -494,7 +494,7 @@ def training_categories(activities):
         _("Participations"): [0, 0],
         _("Scientific communications"): [0, 0],
         _("Publications"): [0, 0],
-        _("Courses and trainings"): [0, 0],
+        _("Followed courses"): [0, 0],
         _("Services"): [0, 0],
         _("VAE"): [0, 0],
         _("Scientific residencies"): [0, 0],
@@ -532,7 +532,7 @@ def training_categories(activities):
         elif category == CategorieActivite.VAE.name:
             categories[_("VAE")][index] += activity.ects
         elif category in [CategorieActivite.COURSE.name, CategorieActivite.UCL_COURSE.name]:
-            categories[_("Courses and trainings")][index] += activity.ects
+            categories[_("Followed courses")][index] += activity.ects
         elif category == CategorieActivite.PAPER.name and activity.type == ChoixTypeEpreuve.CONFIRMATION_PAPER.name:
             categories[_("Confirmation exam")][index] += activity.ects
         elif category == CategorieActivite.PAPER.name:
