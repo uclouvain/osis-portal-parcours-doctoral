@@ -155,6 +155,9 @@ msgstr ""
 msgid "Add validation of prior experience (VAE)"
 msgstr ""
 
+msgid "Additional information"
+msgstr ""
+
 msgid "Admission"
 msgstr ""
 
@@ -447,6 +450,9 @@ msgstr "Submitted private defense"
 msgid "DESINSCRITE"
 msgstr "Withdrawn"
 
+msgid "DIAL link"
+msgstr ""
+
 msgid "DOCTORAL_TRAINING"
 msgstr "PhD training"
 
@@ -485,6 +491,9 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
+msgid "Deliberation room"
+msgstr ""
+
 msgctxt "doctorate decision"
 msgid "Denied"
 msgstr ""
@@ -518,6 +527,9 @@ msgid "Details"
 msgstr ""
 
 msgid "Development cooperation (ARES)"
+msgstr ""
+
+msgid "Diploma collection date"
 msgstr ""
 
 msgid "Doctor"
@@ -1135,6 +1147,9 @@ msgstr ""
 msgid "PhDs"
 msgstr ""
 
+msgid "Photo for announcement"
+msgstr ""
+
 msgid ""
 "Please check the details of the activity (and sub-activities) to fill in all "
 "the mandatory fields"
@@ -1142,6 +1157,9 @@ msgstr ""
 
 msgid ""
 "Please check the details of the activity to fill in all mandatory fields"
+msgstr ""
+
+msgid "Please contact your administrator to draft the announcement."
 msgstr ""
 
 msgid "Please correct the errors below"
@@ -1267,6 +1285,21 @@ msgid "Proximity commission for experimental and clinical research (ECLI)"
 msgstr ""
 
 msgid "Proximity commission for public health, health and society (SPSS)"
+msgstr ""
+
+msgid "Public defence date and time"
+msgstr ""
+
+msgid "Public defence language"
+msgstr ""
+
+msgid "Public defence location"
+msgstr ""
+
+msgid "Public defence minutes"
+msgstr ""
+
+msgid "Public defense"
 msgstr ""
 
 msgid "Publication status"
@@ -1520,6 +1553,9 @@ msgctxt "paper summary"
 msgid "Summary"
 msgstr ""
 
+msgid "Summary for announcement"
+msgstr ""
+
 msgid "Summary of the communication"
 msgstr ""
 
@@ -1592,6 +1628,14 @@ msgid ""
 msgstr ""
 
 msgid ""
+"The final text of your thesis must be submitted to thesis exam board members "
+"no later than two weeks before the public defence date. The submission "
+"format (paper and/or digital) is to be agreed upon with each thesis exam "
+"board member. At least half of the thesis exam board membership takes an "
+"active role in the public defence."
+msgstr ""
+
+msgid ""
 "The format of the documents to be uploaded below as well as the deadlines "
 "for submission may vary from one DDC to another; please check with your "
 "dossier manager and respect the usage foreseen by your domain doctoral "
@@ -1616,6 +1660,10 @@ msgid ""
 "The thesis exam board must be present in full at the private defence. The "
 "date must therefore be chosen collectively by the board in agreement with "
 "the PhD student."
+msgstr ""
+
+msgid ""
+"The public defence takes place at least one month after the private defence."
 msgstr ""
 
 msgid "The start date must be earlier than or the same as the end date."

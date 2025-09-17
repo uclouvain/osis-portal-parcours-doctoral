@@ -56,3 +56,10 @@ class GenreMembre(ChoiceEnum):
     FEMININ = pgettext_lazy("female gender", "Female")
     MASCULIN = pgettext_lazy("gender male", "Male")
     AUTRE = _('Other')
+
+
+class ChoixLangueDefense(ChoiceEnum):
+    FRENCH = _('French')
+    ENGLISH = _('English')
+    OTHER = _('Other')
+    UNDECIDED = _('Undecided')

@@ -163,6 +163,9 @@ msgstr "Ajouter une activité"
 msgid "Add validation of prior experience (VAE)"
 msgstr "Ajouter une valorisation des acquis de l'expérience"
 
+msgid "Additional information"
+msgstr "Informations complémentaires"
+
 msgid "Admission"
 msgstr "Admission"
 
@@ -465,6 +468,9 @@ msgstr "Défense privée soumise"
 msgid "DESINSCRITE"
 msgstr "Désinscrite"
 
+msgid "DIAL link"
+msgstr "Lien DIAL"
+
 msgid "DOCTORAL_TRAINING"
 msgstr "Formation doctorale"
 
@@ -503,6 +509,9 @@ msgstr "Date de l'admission définitive"
 msgid "Delete"
 msgstr "Supprimer"
 
+msgid "Deliberation room"
+msgstr "Local de délibération"
+
 msgctxt "doctorate decision"
 msgid "Denied"
 msgstr "Rejetée"
@@ -540,6 +549,9 @@ msgstr "Détails"
 
 msgid "Development cooperation (ARES)"
 msgstr "ARES - Coopération au développement"
+
+msgid "Diploma collection date"
+msgstr "Date de retrait du diplôme"
 
 msgid "Doctor"
 msgstr "Docteur.e"
@@ -1198,6 +1210,9 @@ msgstr "Formation doctorale"
 msgid "PhDs"
 msgstr "Doctorats"
 
+msgid "Photo for announcement"
+msgstr "Photo pour l’annonce"
+
 msgid ""
 "Please check the details of the activity (and sub-activities) to fill in all "
 "the mandatory fields"
@@ -1210,6 +1225,11 @@ msgid ""
 msgstr ""
 "Veuillez vérifier le détail de l’activité pour renseigner tous les champs "
 "obligatoires"
+
+msgid "Please contact your administrator to draft the announcement."
+msgstr ""
+"Veuiller prendre contact avec votre gestionnaire pour la conception de "
+"l’annonce."
 
 msgid "Please correct the errors below"
 msgstr "Veuillez corriger les erreurs ci-dessous"
@@ -1345,6 +1365,21 @@ msgstr "Commission de proximité de recherche expérimentale et clinique (ECLI)"
 
 msgid "Proximity commission for public health, health and society (SPSS)"
 msgstr "Commission de proximité de santé publique, santé et société (SPSS)"
+
+msgid "Public defence date and time"
+msgstr "Date et heure de la soutenance"
+
+msgid "Public defence language"
+msgstr "Langue de la soutenance de la thèse"
+
+msgid "Public defence location"
+msgstr "Lieu soutenance"
+
+msgid "Public defence minutes"
+msgstr "Procès verbal de soutenance"
+
+msgid "Public defense"
+msgstr "Soutenance publique"
 
 msgid "Publication status"
 msgstr "Statut de publication"
@@ -1613,6 +1648,9 @@ msgctxt "paper summary"
 msgid "Summary"
 msgstr "Résumé"
 
+msgid "Summary for announcement"
+msgstr "Résumé pour l’annonce"
+
 msgid "Summary of the communication"
 msgstr "Résumé de la communication"
 
@@ -1710,6 +1748,19 @@ msgstr ""
 "pour plus d’informations."
 
 msgid ""
+"The final text of your thesis must be submitted to thesis exam board members "
+"no later than two weeks before the public defence date. The submission "
+"format (paper and/or digital) is to be agreed upon with each thesis exam "
+"board member. At least half of the thesis exam board membership takes an "
+"active role in the public defence."
+msgstr ""
+"Le texte définitif de votre thèse doit parvenir aux membres du jury au plus "
+"tard deux semaines avant la date fixée pour la soutenance publique. Les "
+"modalités d’envoi (papier et/ou électronique) sont à convenir avec chaque "
+"membre du jury. La moitié au moins des membres du jury participe activement "
+"à la soutenance publique."
+
+msgid ""
 "The format of the documents to be uploaded below as well as the deadlines "
 "for submission may vary from one DDC to another; please check with your "
 "dossier manager and respect the usage foreseen by your domain doctoral "
@@ -1750,6 +1801,11 @@ msgstr ""
 "convenir avec chaque membre du jury. Le jury doit être présent au complet "
 "lors de la défense privée. La date doit donc être choisie collégialement par "
 "le jury, en accord avec le doctorant ou la doctorante."
+
+msgid ""
+"The public defence takes place at least one month after the private defence."
+msgstr ""
+"La soutenance publique a lieu au moins un mois après la défense privée."
 
 msgid "The start date must be earlier than or the same as the end date."
 msgstr "La date de début doit être antérieure ou égale à la date de fin."

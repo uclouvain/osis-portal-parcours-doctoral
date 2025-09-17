@@ -60,6 +60,7 @@ from osis_parcours_doctoral_sdk.model.submit_private_defense import SubmitPrivat
 from osis_parcours_doctoral_sdk.model.submit_private_defense_minutes import (
     SubmitPrivateDefenseMinutes,
 )
+from osis_parcours_doctoral_sdk.model.submit_public_defense import SubmitPublicDefense
 from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
 from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
 
@@ -236,6 +237,14 @@ class DoctorateService(metaclass=ServiceMeta):
                 uuid=private_defense_uuid,
                 **data,
             ),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_public_defense(cls, person, doctorate_uuid, data):
+        return DoctorateAPIClient().submit_public_defense(
+            uuid=doctorate_uuid,
+            submit_public_defense=SubmitPublicDefense(**data),
             **build_mandatory_auth_headers(person),
         )
 

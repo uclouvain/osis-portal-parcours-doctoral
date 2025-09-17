@@ -148,7 +148,7 @@ TAB_TREE = {
         Tab('jury', _('Jury composition')),
         # Tab('jury-supervision', _('Jury supervision')),
         Tab('private-defense', _('Private defense')),
-        # Tab('public-defense', _('Public defense')),
+        Tab('public-defense', _('Public defense')),
     ],
 }
 
