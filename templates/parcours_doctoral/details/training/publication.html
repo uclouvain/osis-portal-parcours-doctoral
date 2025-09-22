@@ -48,8 +48,8 @@
     <div>
       <p>
         <strong class="d-block">{% trans "Description" %}</strong>
-        {{ activity.type }}&nbsp;: {{ activity.authors }} {{ activity.start_date|date:'Y' }}.
-        {{ activity.title }}. {{ activity.journal }}, {{ activity.publication_status|enum_display:'ChoixStatutPublication' }}.
+        {{ activity.type }}&nbsp;: {{ activity.authors }}, {{ activity.start_date|date:'Y' }},
+        {{ activity.title }}, {{ activity.journal }}, {{ activity.publication_status|enum_display:'ChoixStatutPublication' }}
       </p>
       <div class="row">
           <p class="col-md-4">
@@ -81,7 +81,7 @@
       {% if activity.summary %}
         <div class="mb-3">
           <strong class="d-block">{% trans "Summary" context "paper summary" %}</strong>
-          {% document_visualizer activity.summary %}
+          {% document_visualizer activity.summary wanted_post_process='ORIGINAL' %}
         </div>
       {% endif %}
       <div class="row">
@@ -101,7 +101,7 @@
       {% if activity.acceptation_proof %}
         <div class="mb-3">
           <strong class="d-block">{% trans "Attestation" %}</strong>
-          {% document_visualizer activity.acceptation_proof %}
+          {% document_visualizer activity.acceptation_proof wanted_post_process='ORIGINAL' %}
         </div>
       {% endif %}
       {% if activity.comment %}

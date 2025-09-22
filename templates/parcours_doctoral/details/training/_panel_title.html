@@ -1,4 +1,4 @@
-{% load i18n osis_document parcours_doctoral doctorate_enums %}
+{% load i18n osis_document parcours_doctoral doctorate_enums academic_year_display %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -45,6 +45,7 @@
 <span class="badge">{{ activity.status|enum_display:'StatutActivite' }}</span>
 
 {% include "parcours_doctoral/details/training/_activity_title.html" %}
+{% if activity.category|safe == 'UCL_COURSE' %}<br>{{ activity.learning_unit_year }} - {{ activity.learning_unit_title }} - {{ activity.academic_year|display_as_academic_year }}{% endif %}
 
 {% trans "Please check the details of the activity (and sub-activities) to fill in all the mandatory fields" as not_complete_sub %}
 {% trans "Please check the details of the activity to fill in all mandatory fields" as not_complete %}
@@ -85,8 +86,8 @@
                   <a
                     href="#"
                     {% if activity.can_be_submitted %}
-                    class="dropdown-item"
-                    onclick="$('[name=activity_ids]').val(['{{ activity.uuid }}']);$('form#activities').submit();return false;"
+                    class="dropdown-item submit-activity-btn"
+                    data-uuid="{{ activity.uuid }}"
                     {% else %}
                     class="dropdown-item disabled"
                     {% endif %}

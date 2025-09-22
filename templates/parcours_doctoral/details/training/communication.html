@@ -52,9 +52,9 @@
     <div>
       <p>
         <strong class="d-block">{% trans "Description" %}</strong>
-        {{ doctorate.nom_doctorant }}, {{ doctorate.prenom_doctorant.0 }}. ({{ activity.start_date|date:'Y, m' }}).
-        <em>{{ activity.subtitle }}</em> {{ activity.type }}. {{ activity.title }}, {{ activity.city }}, {% get_country_name activity.country %}.
-        {% if activity.website %}<a href="{{ activity.website }}" target="_blank">{{ activity.website }}</a>{% endif %}
+        {{ doctorate.nom_doctorant }} {{ doctorate.prenom_doctorant.0 }}, ({{ activity.start_date|date:'Y, m' }}),
+        <em>{{ activity.subtitle }}</em>, {{ activity.type }}, {{ activity.title }}, {{ activity.city }}, {% get_country_name activity.country %}
+        {% if activity.website %}, <a href="{{ activity.website }}" target="_blank">{{ activity.website }}</a>{% endif %}
       </p>
       {% if activity.organizing_institution %}
         <div class="mb-3">
@@ -65,7 +65,7 @@
       {% if activity.summary %}
         <div class="mb-3">
           <strong class="d-block">{% trans "Summary of the communication" %}</strong>
-          {% document_visualizer activity.summary %}
+          {% document_visualizer activity.summary wanted_post_process='ORIGINAL' %}
         </div>
       {% endif %}
       {% if activity.committee %}
@@ -77,7 +77,7 @@
       {% if activity.acceptation_proof %}
         <div class="mb-3">
           <strong class="d-block">{% trans "Proof of acceptation by the committee" %}</strong>
-          {% document_visualizer activity.acceptation_proof %}
+          {% document_visualizer activity.acceptation_proof wanted_post_process='ORIGINAL' %}
         </div>
       {% endif %}
       <div class="row">
@@ -97,7 +97,7 @@
       {% if activity.participating_proof %}
         <div class="mb-3">
           <strong class="d-block">{% trans "Communication attestation" %}</strong>
-          {% document_visualizer activity.participating_proof %}
+          {% document_visualizer activity.participating_proof wanted_post_process='ORIGINAL' %}
         </div>
       {% endif %}
       {% if activity.comment %}

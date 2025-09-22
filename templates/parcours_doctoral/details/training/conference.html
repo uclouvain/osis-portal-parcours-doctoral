@@ -56,8 +56,8 @@
     <div>
       <p>
         <strong class="d-block">{% trans "Event description" %}</strong>
-        {{ activity.title }}, {{ activity.type }}, {{ period }}, {{ activity.city }}, {% get_country_name activity.country %}.
-        {% if activity.website %}<a href="{{ activity.website }}" target="_blank">{{ activity.website }}</a>{% endif %}
+        {{ activity.title }}, {{ activity.type }}, {{ period }}, {{ activity.city }}, {% get_country_name activity.country %}
+        {% if activity.website %}, <a href="{{ activity.website }}" target="_blank">{{ activity.website }}</a>{% endif %}
       </p>
       {% if activity.organizing_institution %}
         <div class="row">
@@ -84,7 +84,7 @@
       {% if activity.participating_proof %}
         <div class="mb-3">
           <strong class="d-block">{% trans "Participation certification" %}</strong>
-          {% document_visualizer activity.participating_proof %}
+          {% document_visualizer activity.participating_proof wanted_post_process='ORIGINAL' %}
         </div>
       {% endif %}
       {% if activity.comment %}
