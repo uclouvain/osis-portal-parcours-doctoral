@@ -29,13 +29,11 @@ from unittest.mock import MagicMock, Mock, patch
 from django.shortcuts import resolve_url
 from django.test import override_settings
 from django.utils.translation import gettext_lazy as _
-
-from base.tests.factories.academic_year import get_current_year
 from osis_parcours_doctoral_sdk import ApiException
-from osis_parcours_doctoral_sdk.model.paper import Paper
-from osis_parcours_doctoral_sdk.model.seminar_communication import SeminarCommunication
 from osis_parcours_doctoral_sdk.model.category_enum import CategoryEnum
 from osis_parcours_doctoral_sdk.model.context_enum import ContextEnum
+from osis_parcours_doctoral_sdk.model.paper import Paper
+from osis_parcours_doctoral_sdk.model.seminar_communication import SeminarCommunication
 from osis_parcours_doctoral_sdk.model.type_enum import TypeEnum
 
 from parcours_doctoral.contrib.enums import (
@@ -45,6 +43,7 @@ from parcours_doctoral.contrib.enums import (
 )
 from parcours_doctoral.contrib.enums.training import StatutActivite
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
+from reference.utils import get_current_year
 
 
 @override_settings(OSIS_DOCUMENT_BASE_URL='http://dummyurl')

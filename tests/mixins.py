@@ -28,34 +28,26 @@ import uuid
 from unittest.mock import ANY, MagicMock, patch
 from uuid import uuid4
 
-from django.test import TestCase, override_settings
-
-from base.tests.factories.academic_year import create_current_academic_year
+from django.test import override_settings
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import (
     CotutelleDTONested,
+)
+from osis_parcours_doctoral_sdk.model.entite_gestion_dto_nested import (
+    EntiteGestionDTONested,
 )
 from osis_parcours_doctoral_sdk.model.financement_dto_nested import (
     FinancementDTONested,
 )
-from osis_parcours_doctoral_sdk.model.bourse_dto_nested import (
-    BourseDTONested,
+from osis_parcours_doctoral_sdk.model.formation_dto_nested import (
+    FormationDTONested,
 )
+from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import (
     ParcoursDoctoralDTOLinks,
 )
 from osis_parcours_doctoral_sdk.model.projet_dto_nested import (
     ProjetDTONested,
-)
-from osis_parcours_doctoral_sdk.model.formation_dto_nested import (
-    FormationDTONested,
-)
-from osis_parcours_doctoral_sdk.model.campus_dto_nested import (
-    CampusDTONested,
-)
-from osis_parcours_doctoral_sdk.model.entite_gestion_dto_nested import (
-    EntiteGestionDTONested,
 )
 from osis_reference_sdk.model.language import Language
 from osis_reference_sdk.model.scholarship import Scholarship
@@ -85,7 +77,6 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
-        create_current_academic_year()
         cls.person = PersonFactory()
         cls.doctorate_uuid = str(uuid4())
         cls.scholarship_uuid = str(uuid4())

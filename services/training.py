@@ -35,8 +35,11 @@ from frontoffice.settings.osis_sdk.utils import (
     MultipleApiBusinessException,
     build_mandatory_auth_headers,
 )
+from osis_parcours_doctoral_sdk.model.type_enum import TypeEnum
 from parcours_doctoral.services.mixins import ServiceMeta
 from parcours_doctoral.utils.utils import to_snake_case
+
+OBJECT_TYPE_PAPER = 'Paper'
 
 
 class APIClient:
