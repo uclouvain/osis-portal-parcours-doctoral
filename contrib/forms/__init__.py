@@ -30,7 +30,7 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
-from osis_document.contrib import FileUploadField
+from osis_document_components.fields import FileUploadField
 
 from parcours_doctoral.services.organisation import EntitiesService
 from parcours_doctoral.services.reference import (
