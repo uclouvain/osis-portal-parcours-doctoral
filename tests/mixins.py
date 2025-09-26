@@ -100,6 +100,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             uuid_admission=str(uuid.uuid4()),
             type_admission=AdmissionType.ADMISSION.name,
             intitule_secteur_formation='First sector',
+            sigle_entite_gestion='SSH',
             formation=FormationDTONested._from_openapi_data(
                 sigle='SC3DP',
                 code='DKOE',
@@ -243,11 +244,13 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
         self.mock_doctorate_api.return_value.retrieve_jury_preparation.return_value = JuryDTO._from_openapi_data(
             uuid=self.doctorate_uuid,
             titre_propose='titre propose',
+            has_change_roles_permission=True,
             membres=[
                 MembreJuryDTONested(
                     uuid='7695d217-0a52-46fc-b4a8-3892621025e9',
                     role='MEMBRE',
                     est_promoteur=True,
+                    est_promoteur_de_reference=True,
                     matricule='0123456789',
                     institution='',
                     autre_institution='',
@@ -271,6 +274,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                     uuid='74ca8fbf-4566-437c-b6bb-c0c4780ec046',
                     role='MEMBRE',
                     est_promoteur=True,
+                    est_promoteur_de_reference=False,
                     matricule=self.person.global_id,
                     institution='',
                     autre_institution='',

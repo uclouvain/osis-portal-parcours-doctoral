@@ -46,6 +46,7 @@ from osis_parcours_doctoral_sdk.exceptions import (
     UnauthorizedException,
 )
 from osis_parcours_doctoral_sdk.model.membre_cadto_nested import MembreCADTONested
+from osis_parcours_doctoral_sdk.model.membre_jury_dto_nested import MembreJuryDTONested
 from osis_parcours_doctoral_sdk.model.promoteur_dto_nested import PromoteurDTONested
 
 from parcours_doctoral.constants import READ_ACTIONS_BY_TAB, UPDATE_ACTIONS_BY_TAB
@@ -652,3 +653,22 @@ def convert_date_string(date):
     if not date:
         return None
     return datetime.date.fromisoformat(date)
+
+
+@register.simple_tag(takes_context=True)
+def are_jury_member_actions_available(context, membre: MembreJuryDTONested):
+    return (
+        (
+            context.get('add_form')
+            and not membre.est_promoteur
+            and membre.role != 'VERIFICATEUR'
+            and membre.role != 'CDD'
+            and membre.role != 'ADRE'
+        )
+        or (
+            context['request'].user.is_authenticated
+            and can_make_action(context['doctorate'], 'jury_approve_by_pdf')
+            and membre.signature.etat == 'INVITED'
+        )
+        or context['can_set_roles']
+    )
