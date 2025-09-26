@@ -31,7 +31,11 @@ from django.utils.translation import pgettext_lazy
 from base.models.person import Person
 from base.models.utils.utils import ChoiceEnum
 from parcours_doctoral.contrib.enums import GenreMembre, TitreMembre
-from parcours_doctoral.contrib.forms import EMPTY_CHOICE, autocomplete
+from parcours_doctoral.contrib.forms import (
+    EMPTY_CHOICE,
+    autocomplete,
+    get_country_initial_choices,
+)
 
 
 class JuryMembreForm(forms.Form):
@@ -107,13 +111,6 @@ class JuryMembreForm(forms.Form):
         required=False,
     )
 
-    langue = forms.ChoiceField(
-        label=_("Contact language"),
-        required=False,
-        choices=EMPTY_CHOICE + tuple(settings.LANGUAGES),
-        initial=settings.LANGUAGE_CODE,
-    )
-
     email = forms.EmailField(
         label=pgettext_lazy("doctorate", "Email"),
         required=False,
@@ -124,6 +121,7 @@ class JuryMembreForm(forms.Form):
         help_text=_("Language in which the domain doctoral committee can contact this person"),
         required=False,
         choices=EMPTY_CHOICE + tuple(settings.LANGUAGES),
+        initial=settings.LANGUAGE_CODE,
     )
 
     class Media:
@@ -131,11 +129,11 @@ class JuryMembreForm(forms.Form):
             'js/dependsOn.min.js',
         ]
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, person, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        pays = self.initial.get('pays', None)
+        pays = self.data.get(self.add_prefix("pays"), self.initial.get("pays"))
         if pays:
-            self.fields['pays'].widget.choices = EMPTY_CHOICE + ((pays, pays.name),)
+            self.fields['pays'].widget.choices = get_country_initial_choices(pays, person)
         matricule = self.initial.get('matricule', None)
         if matricule:
             person = Person.objects.get(global_id=matricule)

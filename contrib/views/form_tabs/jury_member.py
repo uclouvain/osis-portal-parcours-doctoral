@@ -41,8 +41,8 @@ from parcours_doctoral.services.doctorate import (
     JuryBusinessException,
 )
 from parcours_doctoral.services.mixins import WebServiceFormMixin
-from reference.services.country import CountryService
 from parcours_doctoral.templatetags.parcours_doctoral import can_make_action
+from reference.services.country import CountryService
 
 __all__ = [
     "JuryMemberRemoveView",
@@ -87,9 +87,15 @@ class JuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormMixin, For
         JuryBusinessException.MembreExterneSansTitreException: "titre",
         JuryBusinessException.MembreExterneSansGenreException: "genre",
         JuryBusinessException.MembreExterneSansEmailException: "email",
+        JuryBusinessException.MembreExterneSansLangueDeContactException: "langue",
         JuryBusinessException.MembreDejaDansJuryException: "matricule",
     }
     extra_context = {'submit_label': gettext_lazy('Update')}
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['person'] = self.request.user.person
+        return kwargs
 
     def get_success_url(self):
         return self.request.POST.get('redirect_to') or reverse(
@@ -108,8 +114,9 @@ class JuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormMixin, For
             'institution': self.membre.institution,
             'autre_institution': self.membre.autre_institution,
             'pays': (
-                CountryService.get_countries(person=self.request.user.person, name=self.membre.pays).results[0]
-                if self.membre.pays else None
+                CountryService.get_countries(person=self.request.user.person, name=self.membre.pays).results[0].iso_code
+                if self.membre.pays
+                else None
             ),
             'nom': self.membre.nom,
             'prenom': self.membre.prenom,

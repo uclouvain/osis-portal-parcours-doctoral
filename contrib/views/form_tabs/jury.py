@@ -91,11 +91,17 @@ class JuryFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
         JuryBusinessException.MembreExterneSansTitreException: "titre",
         JuryBusinessException.MembreExterneSansGenreException: "genre",
         JuryBusinessException.MembreExterneSansEmailException: "email",
+        JuryBusinessException.MembreExterneSansLangueDeContactException: "langue",
         JuryBusinessException.MembreDejaDansJuryException: "matricule",
     }
     extra_context = {'submit_label': _('Add')}
     permission_link_to_check = 'create_jury_members'
     template_name = 'parcours_doctoral/forms/jury/jury.html'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['person'] = self.request.user.person
+        return kwargs
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()

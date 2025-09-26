@@ -33,8 +33,6 @@
     <div class="card-body">
       {% include 'parcours_doctoral/includes/jury_description.html' %}
 
-      {% bootstrap_form_errors form type='non_fields' %}
-
       {% csrf_token %}
 
       {% bootstrap_field_with_tooltip form.titre_propose wrapper_class="mb-3 required_field" %}

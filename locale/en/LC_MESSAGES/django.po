@@ -55,6 +55,12 @@ msgstr "Accepted"
 msgid "ADMIS"
 msgstr "Admitted"
 
+msgid "ADRE"
+msgstr ""
+
+msgid "ADRE Manager"
+msgstr ""
+
 msgid "Academic year"
 msgstr ""
 
@@ -237,6 +243,12 @@ msgstr "Supervision committee member"
 
 msgid "CA members"
 msgstr "Supervision committee members"
+
+msgid "CDD"
+msgstr ""
+
+msgid "CDD Manager"
+msgstr ""
 
 msgid "CHEMISTRY"
 msgstr "Chemistry"
@@ -1257,7 +1269,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-msgctxt "jury member"
+msgctxt "parcours_doctoral"
 msgid "Remove"
 msgstr ""
 
@@ -1693,6 +1705,10 @@ msgctxt "publication-status"
 msgid "Unsubmitted"
 msgstr ""
 
+msgid "Update"
+msgstr ""
+
+msgctxt "verb"
 msgid "Update"
 msgstr ""
 

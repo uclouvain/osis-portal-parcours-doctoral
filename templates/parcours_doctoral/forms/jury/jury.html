@@ -30,7 +30,7 @@
   {% if doctorate|can_make_action:'jury_add_approval' and approval_form and approval_form.decision %}
     {% include "parcours_doctoral/modal/prevent_quitting_modal.html" %}
     {% panel _("Jury approval") %}
-      {% bootstrap_form_errors approval_form %}
+      {% bootstrap_form_errors approval_form type='non_fields' %}
       <form class="osis-form approval-form" method="post" action="">
         {% csrf_token %}
         {% bootstrap_field approval_form.decision %}
@@ -94,6 +94,32 @@
     {% endpanel %}
   {% endif %}
 
+  {% if membre_cdd %}
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{% translate 'CDD Manager' %}</h4>
+        <div class="list-group">
+        {% for membre in membre_cdd %}
+          <div class="list-group-item membre-container flex-wrap">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if membre_adre %}
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{% translate 'ADRE Manager' %}</h4>
+        <div class="list-group">
+        {% for membre in membre_adre %}
+          <div class="list-group-item membre-container flex-wrap">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
   {% if add_form %}
   {% panel _("Add a new member") %}
     {% include "parcours_doctoral/forms/jury/includes/member_form.html" with form=add_form %}
@@ -118,10 +144,23 @@
 {% endblock %}
 
 {% block script %}
-  {{ add_form.media.js }}
   {{ block.super }}
 
+  {% if approve_by_pdf_form %}
+    {{ approve_by_pdf_form.media.js }}
+  {% endif %}
+
+  {% if approval_form %}
+    {{ approval_form.media.js }}
+    <script>
+      $('#id_motif_refus').dependsOn({
+        'input[name=decision]': { values: ['DECLINED'] },
+      }, { duration: 0, valueOnDisable: '', });
+    </script>
+  {% endif %}
+
   {% if add_form %}
+  {{ add_form.media.js }}
   <script>
     $(function () {
       $('#id_justification_non_docteur').closest('.mb-3').dependsOn({
@@ -151,8 +190,20 @@
 {% endblock %}
 
 {% block style %}
-  {{ add_form.media.css }}
   {{ block.super }}
+
+  {% if add_form %}
+    {{ add_form.media.css }}
+  {% endif %}
+
+  {% if approve_by_pdf_form %}
+    {{ approve_by_pdf_form.media.css }}
+  {% endif %}
+
+  {% if approval_form %}
+    {{ approval_form.media.css }}
+  {% endif %}
+
   <style>
     #id_institution_principale .form-check {
      display: inline-block;

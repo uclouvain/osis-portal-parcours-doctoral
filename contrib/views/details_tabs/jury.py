@@ -31,6 +31,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView, TemplateView
 from django.views.generic.edit import BaseFormView
+from osis_parcours_doctoral_sdk.model.jury_dto import JuryDTO
 
 from parcours_doctoral.contrib.enums import (
     ChoixStatutDoctorat,
@@ -67,7 +68,7 @@ class LoadJuryViewMixin(LoadViewMixin):
     """Mixin that can be used to load data for tabs used during the enrolment and eventually after it."""
 
     @cached_property
-    def jury(self):
+    def jury(self) -> JuryDTO:
         return DoctorateJuryService.retrieve_jury(
             person=self.request.user.person,
             uuid=self.doctorate_uuid,
@@ -132,11 +133,24 @@ class JuryDetailView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
         context_data['membre_secretaire'] = (
             membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.SECRETAIRE.name
         )
-        context_data['membre_verificateur'] = (
+        context_data['membre_verificateur'] = [
             membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.VERIFICATEUR.name
-        )
+        ]
+        context_data['membre_cdd'] = [
+            membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.CDD.name
+        ]
+        context_data['membre_adre'] = [
+            membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.ADRE.name
+        ]
         context_data['approve_by_pdf_form'] = JuryApprovalByPdfForm()
         context_data['approval_form'] = context_data.pop('form')  # Trick template to remove save button
+        if any(
+            membre.uuid
+            for membre in self.jury.get('membres', [])
+            if membre.matricule == self.request.user.person.global_id
+            and membre.signature.etat in {DecisionApprovalEnum.APPROVED.name, DecisionApprovalEnum.DECLINED.name}
+        ):
+            context_data.pop('approval_form')
         return context_data
 
     def prepare_data(self, data):
