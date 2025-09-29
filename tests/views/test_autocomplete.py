@@ -23,18 +23,17 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-
+import datetime
 import json
 import uuid
 from unittest.mock import ANY, Mock, patch
 
-from django.test import TestCase
 from django.urls import reverse
 from osis_organisation_sdk.model.entite import Entite
 from osis_organisation_sdk.model.paginated_entites import PaginatedEntites
+from osis_reference_sdk.model.academic_calendar import AcademicCalendar
 from osis_reference_sdk.model.scholarship import Scholarship
 
-from base.tests.factories.academic_year import create_current_academic_year
 from base.tests.factories.person import PersonFactory
 from base.tests.test_case import OsisPortalTestCase
 from parcours_doctoral.contrib.enums.scholarship import TypeBourse
@@ -50,9 +49,6 @@ DEFAULT_API_PARAMS = {
 
 
 class AutocompleteTestCase(OsisPortalTestCase):
-    @classmethod
-    def setUpTestData(cls):
-        create_current_academic_year()
 
     def setUp(self):
         self.client.force_login(PersonFactory().user)
@@ -238,7 +234,18 @@ class AutocompleteTestCase(OsisPortalTestCase):
         self.assertDictEqual(response.json(), {'pagination': {'more': False}, 'results': expected})
 
     @patch('osis_learning_unit_sdk.api.learning_units_api.LearningUnitsApi')
-    def test_autocomplete_learning_unit_year(self, api):
+    @patch("osis_reference_sdk.api.academic_years_api.AcademicYearsApi")
+    def test_autocomplete_learning_unit_year(self, mock_anac, api):
+        today = datetime.date.today()
+        mock_anac.return_value.get_academic_years.return_value = Mock(
+            results=[
+                AcademicCalendar(
+                    year=2019,
+                    start_date=today - datetime.timedelta(days=1),
+                    end_date=today + datetime.timedelta(days=1),
+                )
+            ]
+        )
         api.return_value.learningunits_list.return_value = {
             'results': [
                 dict(acronym="ESA2004", title="dumb text"),
