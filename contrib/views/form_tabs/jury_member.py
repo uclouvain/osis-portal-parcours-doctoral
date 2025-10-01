@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,9 +36,13 @@ from frontoffice.settings.osis_sdk.utils import MultipleApiBusinessException
 from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
 from parcours_doctoral.contrib.forms.jury.membre_role import JuryMembreRoleForm
 from parcours_doctoral.contrib.views.details_tabs.jury import LoadJuryViewMixin
-from parcours_doctoral.services.doctorate import DoctorateJuryService, JuryBusinessException
+from parcours_doctoral.services.doctorate import (
+    DoctorateJuryService,
+    JuryBusinessException,
+)
 from parcours_doctoral.services.mixins import WebServiceFormMixin
 from reference.services.country import CountryService
+from parcours_doctoral.templatetags.parcours_doctoral import can_make_action
 
 __all__ = [
     "JuryMemberRemoveView",
@@ -112,7 +116,9 @@ class JuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormMixin, For
             'titre': self.membre.titre,
             'justification_non_docteur': self.membre.justification_non_docteur,
             'genre': self.membre.genre,
+            'langue': self.membre.langue,
             'email': self.membre.email,
+            'langue': self.membre.langue,
         }
 
     def call_webservice(self, data):
@@ -145,6 +151,9 @@ class JuryMemberRemoveView(LoadJuryMemberViewMixin, WebServiceFormMixin, View):
 class JuryMemberChangeRoleView(LoadJuryMemberViewMixin, WebServiceFormMixin, View):
     urlpatterns = 'change-role'
 
+    def has_permission(self):
+        return self.jury.has_change_roles_permission
+
     def post(self, request, *args, **kwargs):
         form = JuryMembreRoleForm(data=request.POST)
         if form.is_valid():
@@ -162,4 +171,6 @@ class JuryMemberChangeRoleView(LoadJuryMemberViewMixin, WebServiceFormMixin, Vie
                 messages.error(request, str(e))
         else:
             messages.error(self.request, str(form.errors))
-        return redirect('parcours_doctoral:update:jury', pk=self.doctorate_uuid)
+        if can_make_action(self.doctorate, 'update_jury_preparation'):
+            return redirect('parcours_doctoral:update:jury', pk=self.doctorate_uuid)
+        return redirect('parcours_doctoral:jury', pk=self.doctorate_uuid)

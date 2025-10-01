@@ -1,0 +1,136 @@
+{% extends "parcours_doctoral/tab_layout.html" %}
+
+{% load django_bootstrap5 i18n static parcours_doctoral osis_document_components %}
+
+{% comment "License" %}
+  * OSIS stands for Open Student Information System. It's an application
+  * designed to manage the core business of higher education institutions,
+  * such as universities, faculties, institutes and professional schools.
+  * The core business involves the administration of students, teachers,
+  * courses, programs and so on.
+  *
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * A copy of this license - GNU General Public License - is available
+  * at the root of the source code of this program.  If not,
+  * see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+{% block submit_button_affix %}{% endblock %}
+
+{% block tabs_content %}
+  {% panel _("Doctorate summary") %}
+    {% if doctorate.archive %}
+      {% get_file_url doctorate.archive.0 as file_url %}
+      <a href="{{ file_url }}" class="btn btn-default" target="_blank">
+        <span class="fa fa-file-download"></span>
+        {% trans "Download as PDF" %}
+      </a>
+    {% else %}
+      <p>{% trans "The summary of the doctorate in PDF format is not available." %}</p>
+    {% endif %}
+  {% endpanel %}
+
+  {% if approval_form and approval_form.decision %}
+    <form class="osis-form" method="post" action="">
+      {% csrf_token %}
+
+      {% include "parcours_doctoral/modal/prevent_quitting_modal.html" %}
+
+      {% panel _("Proposal approved") %}
+        {% bootstrap_form_errors approval_form %}
+        <form class="osis-form approval-form" method="post" action="">
+          {% csrf_token %}
+          {% bootstrap_field approval_form.decision %}
+          {% bootstrap_field approval_form.motif_refus %}
+          <div class="row">
+            <div class="col-md-6">
+              {% bootstrap_field approval_form.commentaire_interne %}
+            </div>
+            <div class="col-md-6">
+              {% bootstrap_field approval_form.commentaire_externe %}
+            </div>
+          </div>
+          {% bootstrap_button button_type="submit" content=_("Submit my decision") name="approval_submit" button_class="btn btn-primary" %}
+        </form>
+      {% endpanel %}
+    </form>
+  {% endif %}
+
+  {% panel _("President") %}
+    <div class="list-group">
+    {% for membre in membre_president %}
+      <div class="list-group-item membre-container">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+    {% empty %}
+      <div class="list-group-item">{% trans "You need to set a member as president." %}</div>
+    {% endfor %}
+    </div>
+  {% endpanel %}
+
+  {% panel _("Secretary") %}
+    <div class="list-group">
+    {% for membre in membre_secretaire %}
+      <div class="list-group-item membre-container">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+    {% empty %}
+      <div class="list-group-item">{% trans "You need to set a member as secretary." %}</div>
+    {% endfor %}
+    </div>
+  {% endpanel %}
+
+  {% panel _("Members") %}
+    <div class="list-group">
+    {% for membre in membres %}
+      <div class="list-group-item membre-container">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+    {% endfor %}
+    </div>
+  {% endpanel %}
+{% endblock tabs_content %}
+
+{% block script %}
+  {{ block.super }}
+  {{ approval_form.media.js }}
+  <script type="application/javascript">
+  $(function () {
+    // Hide the reason input if the promoter approves the proposition
+    $('#id_motif_refus').length && $('#id_motif_refus').dependsOn({
+      'input[name="decision"]': {
+        values: ['DECLINED'],
+      },
+    }, {
+      duration: 0,
+    });
+
+    document.dispatchEvent(new Event('refreshFormInitial'));
+  });
+  </script>
+{% endblock %}
+
+{% block style %}
+  {{ block.super }}
+  {{ approval_form.media.css }}
+  <style>
+    .approval-form textarea {
+      resize: vertical;
+    }
+
+    .signature-item blockquote {
+      margin: 10px 0 0;
+    }
+
+    .signature-item + .well dl,
+    .signature-item + .well .media-list,
+    .signature-item + .well .media-heading {
+      margin-bottom: 0;
+    }
+  </style>
+{% endblock %}
