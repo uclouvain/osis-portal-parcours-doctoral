@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -37,11 +37,11 @@
   </div>
   <div
     id="a-{{ activity.uuid }}"
-    class="card-body{% if not remove_action %} panel-collapse collapse{% endif %}"
+    class="card-body{% if not remove_action %} panel-collapse collapse{% endif %} p-0"
     role="tabpanel"
     aria-labelledby="h-{{ activity.uuid }}"
   >
-    <div>
+    <div class="p-3">
       <div class="row">
         {% if activity.ects %}
           <p class="col-md-4">

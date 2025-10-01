@@ -28,6 +28,7 @@ from importlib import import_module
 import osis_parcours_doctoral_sdk
 from django.http import HttpResponseBadRequest
 from osis_parcours_doctoral_sdk.api import doctorate_api
+from osis_parcours_doctoral_sdk.model.type_enum import TypeEnum
 
 from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk
 from frontoffice.settings.osis_sdk.utils import (
@@ -35,7 +36,6 @@ from frontoffice.settings.osis_sdk.utils import (
     MultipleApiBusinessException,
     build_mandatory_auth_headers,
 )
-from osis_parcours_doctoral_sdk.model.type_enum import TypeEnum
 from parcours_doctoral.services.mixins import ServiceMeta
 from parcours_doctoral.utils.utils import to_snake_case
 
@@ -167,5 +167,6 @@ class DoctorateTrainingService(metaclass=ServiceMeta):
             uuid=doctorate_uuid,
             activity_id=activity_uuid,
             **build_mandatory_auth_headers(person),
+            **kwargs,
             doctoral_training_assent=kwargs,
         )
