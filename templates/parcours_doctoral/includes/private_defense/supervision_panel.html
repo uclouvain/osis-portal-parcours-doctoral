@@ -24,16 +24,15 @@
 * see http://www.gnu.org/licenses/.
 {% endcomment %}
 
-{% panel _("Supervisory panel") title_level=5 %}
-  {% panel _("Supervisors") title_level=6 %}
-    {% for signature in supervision.signatures_promoteurs %}
-      {% include "parcours_doctoral/includes/supervision_member_entry.html" with readonly=True type='PROMOTER' member=signature.promoteur supervision=supervision %}
+<div class="mb-3">
+  <span class="fw-bold">{% translate 'Supervisors' %}{% translate ':' %}</span>
+  <ul class="list-group p-0">
+    {% for supervisor in supervisors %}
+      <li class="list-group-item">
+        {{ supervisor.prenom }} {{ supervisor.nom }} (<a href="mailto:{{ supervisor.email }}">{{ supervisor.email }}</a>)
+        -
+        {{ supervisor.institution }}{% if supervisor.autre_institution %}, {{ supervisor.autre_institution }}{% endif %}
+      </li>
     {% endfor %}
-  {% endpanel %}
-
-  {% panel _("CA members") title_level=6 %}
-    {% for signature in supervision.signatures_membres_ca %}
-      {% include "parcours_doctoral/includes/supervision_member_entry.html" with readonly=True type='CA_MEMBER' member=signature.membre_ca %}
-    {% endfor %}
-  {% endpanel %}
-{% endpanel %}
+  </ul>
+</div>
