@@ -29,6 +29,9 @@ msgstr ""
 msgid "%(state)s on %(date)s"
 msgstr ""
 
+msgid ":"
+msgstr ""
+
 #, python-format
 msgid ""
 "<a href=\"%(enrollment_url)s\">Go to course enrolment</a> or <a "
@@ -1524,9 +1527,6 @@ msgid "Supervisor"
 msgstr ""
 
 msgid "Supervisors"
-msgstr ""
-
-msgid "Supervisory panel"
 msgstr ""
 
 msgid "Support Committee minutes"
