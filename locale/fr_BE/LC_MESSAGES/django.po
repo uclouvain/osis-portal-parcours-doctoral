@@ -30,6 +30,9 @@ msgstr "%(label)s :"
 msgid "%(state)s on %(date)s"
 msgstr "%(state)s le %(date)s"
 
+msgid ":"
+msgstr " :"
+
 #, python-format
 msgid ""
 "<a href=\"%(enrollment_url)s\">Go to course enrolment</a> or <a "
@@ -1618,9 +1621,6 @@ msgstr "Promoteur·trice"
 
 msgid "Supervisors"
 msgstr "Promoteurs·trices"
-
-msgid "Supervisory panel"
-msgstr "Promoteurs"
 
 msgid "Support Committee minutes"
 msgstr "Procès-verbal du comité d'accompagnement"

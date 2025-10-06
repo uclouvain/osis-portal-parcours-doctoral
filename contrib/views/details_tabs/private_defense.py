@@ -28,11 +28,11 @@ from typing import List
 from django.shortcuts import resolve_url
 from django.utils.functional import cached_property
 from django.views.generic import RedirectView, TemplateView
-from osis_document.enums import PostProcessingWanted
+from osis_document_components.enums import PostProcessingWanted
 from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
 
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
-from parcours_doctoral.services.doctorate import DoctorateService
+from parcours_doctoral.services.doctorate import DoctorateJuryService, DoctorateService
 
 __all__ = [
     'PrivateDefenseDetailView',
@@ -63,11 +63,12 @@ class PrivateDefenseCommonViewMixin(LoadViewMixin):
         context_data['all_private_defenses'] = self.private_defenses
         context_data['current_private_defense'] = self.current_private_defense
 
-        supervision_group = DoctorateService.get_supervision(
+        jury = DoctorateJuryService.retrieve_jury(
             person=self.request.user.person,
-            uuid_doctorate=self.doctorate_uuid,
+            uuid=self.doctorate_uuid,
         )
-        context_data['supervision'] = supervision_group
+
+        context_data['supervisors'] = [member for member in jury.membres if member.est_promoteur]
 
         return context_data
 
@@ -94,8 +95,8 @@ class PrivateDefenseMinutesView(PrivateDefenseCommonViewMixin, RedirectView):
     permission_link_to_check = 'retrieve_private_defense'
 
     def get_redirect_url(self, *args, **kwargs):
-        from osis_document.api.utils import get_remote_token
-        from osis_document.utils import get_file_url
+        from osis_document_components.services import get_remote_token
+        from osis_document_components.utils import get_file_url
 
         current_private_defense = self.current_private_defense
 
