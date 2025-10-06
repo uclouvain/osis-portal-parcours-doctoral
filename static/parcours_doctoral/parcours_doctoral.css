@@ -223,7 +223,15 @@ select.select2-hidden-accessible + span {
   min-width: auto;
 }
 
+.select2-selection--single {
+  height: 100% !important;
+  min-height: 28px !important;
+}
+
 .select2-selection__rendered {
+  word-wrap: break-word !important;
+  text-overflow: inherit !important;
+  white-space: normal !important;
   line-height: 1em !important;
   overflow-y: visible !important;
 }

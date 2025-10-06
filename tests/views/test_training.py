@@ -26,6 +26,7 @@
 import datetime
 from unittest.mock import MagicMock, Mock, patch
 
+import freezegun
 from django.shortcuts import resolve_url
 from django.test import override_settings
 from django.utils.translation import gettext_lazy as _
@@ -35,6 +36,7 @@ from osis_parcours_doctoral_sdk.model.context_enum import ContextEnum
 from osis_parcours_doctoral_sdk.model.paper import Paper
 from osis_parcours_doctoral_sdk.model.seminar_communication import SeminarCommunication
 from osis_parcours_doctoral_sdk.model.type_enum import TypeEnum
+from osis_parcours_doctoral_sdk.model.ucl_course import UclCourse
 
 from parcours_doctoral.contrib.enums import (
     CategorieActivite,
@@ -42,6 +44,9 @@ from parcours_doctoral.contrib.enums import (
     ContexteFormation,
 )
 from parcours_doctoral.contrib.enums.training import StatutActivite
+from parcours_doctoral.contrib.forms import EMPTY_CHOICE
+from parcours_doctoral.contrib.forms.training import INSTITUTION_UCL
+from parcours_doctoral.tests import get_paginated_years
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 from reference.utils import get_current_year
 
@@ -71,6 +76,13 @@ class TrainingTestCase(BaseDoctorateTestCase):
             participating_proof=[],
             parent=None,
         )
+
+        academic_years = get_paginated_years(2018, 2022)
+        self.academic_years = academic_years.results
+        academic_year_api_patcher = patch("osis_reference_sdk.api.academic_years_api.AcademicYearsApi")
+        self.mock_academic_year_api = academic_year_api_patcher.start()
+        self.mock_academic_year_api.return_value.get_academic_years.return_value = academic_years
+        self.addCleanup(academic_year_api_patcher.stop)
 
     def test_doctoral_training_list(self):
         # This is mostly for testing {% training_categories %}
@@ -205,6 +217,70 @@ class TrainingTestCase(BaseDoctorateTestCase):
         }
         response = self.client.post(url, data, follow=True)
         self.assertRedirects(response, f'{self.url}#uuid-created')
+
+    @freezegun.freeze_time('2021-01-01')
+    def test_update_course(self):
+        api_data = dict(
+            category=CategorieActivite.COURSE.name,
+            title="Course",
+            ects=10,
+            comment='C1',
+            subtitle='',
+            organizing_institution=INSTITUTION_UCL,
+            start_date=datetime.date(2020, 1, 1),
+            end_date=datetime.date(2021, 2, 2),
+            hour_volume='',
+            authors='',
+            is_online='',
+            mark='',
+            participating_proof=[],
+            type=ChoixTypeEpreuve.CONFIRMATION_PAPER.name,
+        )
+
+        self.mock_doctorate_api.return_value.retrieve_training.return_value = Mock(
+            **api_data,
+            to_dict=Mock(return_value=api_data),
+        )
+
+        url = resolve_url(
+            "parcours_doctoral:doctoral-training:edit",
+            pk=self.doctorate_uuid,
+            activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
+        )
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+
+        form = response.context['form']
+
+        self.assertCountEqual(
+            form.fields['academic_year'].choices,
+            (
+                EMPTY_CHOICE[0],
+                (2018, '2018-2019'),
+                (2019, '2019-2020'),
+                (2020, '2020-2021'),
+            ),
+        )
+
+        self.assertEqual(form.initial.get('academic_year'), None)
+
+        api_data['start_date'] = self.academic_years[0].start_date
+        api_data['end_date'] = self.academic_years[0].end_date
+
+        url = resolve_url(
+            "parcours_doctoral:doctoral-training:edit",
+            pk=self.doctorate_uuid,
+            activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
+        )
+
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+
+        form = response.context['form']
+        self.assertEqual(form.initial.get('academic_year'), self.academic_years[0].year)
 
     def test_create_paper(self):
         url = resolve_url(
@@ -491,24 +567,49 @@ class TrainingTestCase(BaseDoctorateTestCase):
             pk=self.doctorate_uuid,
             activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
         )
-        self.mock_doctorate_api.return_value.retrieve_training.return_value = Mock(
-            category=CategorieActivite.UCL_COURSE.name,
-        )
-        self.mock_doctorate_api.return_value.retrieve_training.return_value.to_dict.return_value = dict(
-            category=CategorieActivite.UCL_COURSE.name,
-            learning_unit_year='ESA2004',
-            learning_unit_title='Something',
-            academic_year=current_year,
-            academic_year_title="2022-2023",
+        self.mock_doctorate_api.return_value.retrieve_training.return_value = UclCourse._from_openapi_data(
+            object_type='UclCourse',
+            category=CategoryEnum('UCL_COURSE'),
+            context=ContextEnum('DOCTORAL_TRAINING'),
+            course='ESA2003',
+            academic_year=2020,
+            uuid='64d2e9e3-2537-4a12-a396-48763c5cdc60',
+            status='',
+            parcours_doctoral=10,
+            reference_promoter_assent=None,
+            reference_promoter_comment='',
+            cdd_comment='',
+            can_be_submitted=True,
+            course_title='Something',
+            ects=float(0),
+            authors='',
+            hour_volume='',
+            participating_proof=[],
         )
         response = self.client.post(
             url,
             data={
                 'context': ContexteFormation.DOCTORAL_TRAINING.name,
-                'learning_unit_year': 'ESA2004',
+                'course': 'ESA2004',
             },
         )
         self.assertEqual(response.status_code, 302)
+
+        # Call the API with the right data
+        self.mock_doctorate_api.return_value.update_training.assert_called()
+        self.mock_doctorate_api.return_value.update_training.assert_called_with(
+            uuid=self.doctorate_uuid,
+            activity_id='64d2e9e3-2537-4a12-a396-48763c5cdc60',
+            doctoral_training_activity=UclCourse._from_openapi_data(
+                object_type='UclCourse',
+                category=CategoryEnum('UCL_COURSE'),
+                context=ContextEnum('DOCTORAL_TRAINING'),
+                course='ESA2004',
+                academic_year=current_year,
+                parent=None,
+            ),
+            **self.api_default_params,
+        )
 
     def test_assent(self):
         url = resolve_url(
