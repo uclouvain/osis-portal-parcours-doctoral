@@ -1105,6 +1105,9 @@ msgstr ""
 msgid "PRIVATE_DEFENSE"
 msgstr "Private defence"
 
+msgid "PROCLAME"
+msgstr "Proclaimed"
+
 msgid "PUBLICATION"
 msgstr "Publications"
 
@@ -1414,6 +1417,12 @@ msgstr "Institutional, educational and scientific expertise service"
 msgid "SOUMISE"
 msgstr "Submitted"
 
+msgid "SOUTENANCE_PUBLIQUE_AUTORISEE"
+msgstr "Authorized public defense"
+
+msgid "SOUTENANCE_PUBLIQUE_SOUMISE"
+msgstr "Submitted public defense"
+
 msgid "STATISTICS"
 msgstr "Statistics"
 
@@ -1605,6 +1614,12 @@ msgstr ""
 #, python-format
 msgid ""
 "The canvas of the private defence minutes can be downloaded <a "
+"href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
+msgstr ""
+
+#, python-format
+msgid ""
+"The canvas of the public defence minutes can be downloaded <a "
 "href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
 msgstr ""
 

@@ -28,12 +28,14 @@ import uuid
 
 from django.shortcuts import resolve_url
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.model.public_defense_minutes_canvas import (
+    PublicDefenseMinutesCanvas,
+)
 from osis_parcours_doctoral_sdk.model.submit_public_defense import SubmitPublicDefense
 
 from base.tests.factories.person import PersonFactory
 from osis_common.utils.datetime import get_tzinfo
 from parcours_doctoral.constants import FIELD_REQUIRED_MESSAGE
-from parcours_doctoral.contrib.enums import ChoixLangueDefense
 from parcours_doctoral.contrib.forms import PNG_MIME_TYPE
 from parcours_doctoral.contrib.forms.public_defense import PublicDefenseForm
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
@@ -98,8 +100,7 @@ class PublicDefenseFormViewTestCase(BaseDoctorateTestCase):
 
         self.assertIsInstance(form, PublicDefenseForm)
 
-        self.assertEqual(form['langue'].value(), ChoixLangueDefense.FRENCH.name)
-        self.assertEqual(form['autre_langue'].value(), 'Japanese')
+        self.assertEqual(form['langue'].value(), 'FR')
         self.assertEqual(form['date_heure'].value(), datetime.datetime(2024, 2, 2, 11, 30))
         self.assertEqual(form['lieu'].value(), 'Louvain-La-Neuve')
         self.assertEqual(form['local_deliberation'].value(), 'D1')
@@ -114,8 +115,7 @@ class PublicDefenseFormViewTestCase(BaseDoctorateTestCase):
         response = self.client.post(
             self.url,
             data={
-                'langue': ChoixLangueDefense.ENGLISH.name,
-                'autre_langue': 'Chinese',
+                'langue': 'FR',
                 'date_heure_0': '01/01/2026',
                 'date_heure_1': '11:00',
                 'lieu': 'Louvain',
@@ -132,40 +132,7 @@ class PublicDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.submit_public_defense.assert_called_with(
             uuid=self.doctorate_uuid,
             submit_public_defense=SubmitPublicDefense._new_from_openapi_data(
-                langue=ChoixLangueDefense.ENGLISH.name,
-                autre_langue='',
-                date_heure=datetime.datetime(2026, 1, 1, 11, tzinfo=get_tzinfo()),
-                lieu='Louvain',
-                local_deliberation='D2',
-                resume_annonce='New summary',
-                photo_annonce=[file_uuid],
-            ),
-            **self.api_default_params,
-        )
-
-        response = self.client.post(
-            self.url,
-            data={
-                'langue': ChoixLangueDefense.OTHER.name,
-                'autre_langue': 'Chinese',
-                'date_heure_0': '01/01/2026',
-                'date_heure_1': '11:00',
-                'lieu': 'Louvain',
-                'local_deliberation': 'D2',
-                'resume_annonce': 'New summary',
-                'photo_annonce_0': [file_uuid],
-            },
-        )
-
-        self.assertRedirects(response, expected_url=self.detail_url, fetch_redirect_response=False)
-
-        # Call the API with the right data
-        self.mock_doctorate_api.return_value.submit_public_defense.assert_called()
-        self.mock_doctorate_api.return_value.submit_public_defense.assert_called_with(
-            uuid=self.doctorate_uuid,
-            submit_public_defense=SubmitPublicDefense._new_from_openapi_data(
-                langue=ChoixLangueDefense.OTHER.name,
-                autre_langue='Chinese',
+                langue='FR',
                 date_heure=datetime.datetime(2026, 1, 1, 11, tzinfo=get_tzinfo()),
                 lieu='Louvain',
                 local_deliberation='D2',
@@ -194,18 +161,34 @@ class PublicDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('date_heure'))
         self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('photo_annonce'))
 
-        response = self.client.post(
-            self.url,
-            data={'langue': ChoixLangueDefense.OTHER.name},
+
+class PublicDefenseMinutesCanvasViewTestCase(BaseDoctorateTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.person = PersonFactory()
+        cls.url = resolve_url("parcours_doctoral:public-defense-minutes-canvas", pk=cls.doctorate_uuid)
+        cls.project_url = resolve_url('parcours_doctoral:project', pk=cls.doctorate_uuid)
+
+    def setUp(self):
+        super().setUp()
+
+        self.mock_doctorate_api.return_value.retrieve_public_defense_minutes_canvas.return_value = (
+            PublicDefenseMinutesCanvas._from_openapi_data(url=self.project_url)
         )
 
-        self.assertEqual(response.status_code, 200)
+    def test_get_no_permission(self):
+        self.client.force_login(self.person.user)
+        self.mock_doctorate_object.links['retrieve_public_defense_minutes_canvas'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
 
-        form = response.context['form']
+    def test_redirect_to_the_specific_url(self):
+        self.client.force_login(self.person.user)
 
-        self.assertFalse(form.is_valid())
+        response = self.client.get(self.url)
 
-        self.assertEqual(len(form.errors), 3)
-        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('autre_langue'))
-        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('date_heure'))
-        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('photo_annonce'))
+        self.assertRedirects(response=response, expected_url=self.project_url, fetch_redirect_response=False)

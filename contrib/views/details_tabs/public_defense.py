@@ -24,12 +24,14 @@
 #
 # ##############################################################################
 
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
+from parcours_doctoral.services.doctorate import DoctorateService
 
 __all__ = [
     'PublicDefenseDetailView',
+    'PublicDefenseMinutesCanvasView',
 ]
 
 __namespace__ = False
@@ -39,3 +41,14 @@ class PublicDefenseDetailView(LoadViewMixin, TemplateView):
     urlpatterns = 'public-defense'
     template_name = 'parcours_doctoral/details/public_defense.html'
     permission_link_to_check = 'retrieve_public_defense'
+
+
+class PublicDefenseMinutesCanvasView(LoadViewMixin, RedirectView):
+    urlpatterns = 'public-defense-minutes-canvas'
+    permission_link_to_check = 'retrieve_public_defense_minutes_canvas'
+
+    def get_redirect_url(self, *args, **kwargs):
+        return DoctorateService.get_public_defense_minutes_canvas(
+            person=self.request.user.person,
+            uuid=self.doctorate_uuid,
+        ).url

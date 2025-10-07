@@ -40,14 +40,7 @@
 
       {% field_data _("Thesis title") doctorate.titre_these_propose inline=True %}
 
-      <div class="row align-items-end">
-        <div class="col-md-6">
-          {% bootstrap_field form.langue wrapper_class='mb-3 required_field' %}
-        </div>
-        <div class="col-md-6 ">
-          {% bootstrap_field form.autre_langue wrapper_class='mb-3 required_field' %}
-        </div>
-      </div>
+      {% bootstrap_field form.langue wrapper_class='mb-3 required_field' %}
 
       <div id="date-hour-field">
         {% bootstrap_field_with_tooltip form.date_heure wrapper_class='mb-3 required_field' %}
