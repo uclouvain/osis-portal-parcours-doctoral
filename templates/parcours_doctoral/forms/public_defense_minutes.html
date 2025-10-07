@@ -38,40 +38,17 @@
       {% include 'parcours_doctoral/includes/public_defense_description.html' %}
 
       {% field_data _("Thesis title") doctorate.titre_these_propose inline=True %}
-
-      {% bootstrap_field form.langue wrapper_class='mb-3 required_field' %}
-
-      <div id="date-hour-field">
-        {% bootstrap_field_with_tooltip form.date_heure wrapper_class='mb-3 required_field' %}
-      </div>
-
-      {% bootstrap_field_with_tooltip form.lieu %}
-      {% bootstrap_field_with_tooltip form.local_deliberation %}
-      {% field_data _("Additional information") doctorate.informations_complementaires_soutenance_publique %}
-      {% bootstrap_field_with_tooltip form.resume_annonce html_tag="blockquote" %}
-      {% bootstrap_field form.photo_annonce wrapper_class='mb-3 required_field' %}
-
-      {% field_data _("Public defence minutes") doctorate.proces_verbal_soutenance_publique %}
+      {% field_data _("Public defence language") doctorate.nom_langue_soutenance_publique inline=True %}
+      {% field_data _("Public defence date and time") doctorate.date_heure_soutenance_publique inline=True %}
+      {% field_data _("Public defence location") doctorate.lieu_soutenance_publique inline=True %}
+      {% field_data _("Deliberation room") doctorate.local_deliberation inline=True %}
+      {% field_data _("Additional information") doctorate.informations_complementaires_soutenance_publique html_tag="blockquote" %}
+      {% field_data _("Summary for announcement") doctorate.resume_annonce html_tag="blockquote" %}
+      {% field_data _("Photo for announcement") doctorate.photo_annonce %}
+      {% bootstrap_field_with_tooltip form.proces_verbal %}
       {% field_data _("Diploma collection date") doctorate.date_retrait_diplome inline=True %}
       {% field_data _("DIAL link") '' inline=True %}
     </div>
   </div>
-
-{% endblock %}
-
-{% block style %}
-  {{ block.super }}
-  <style>
-    #date-hour-field label {
-      display: block;
-    }
-    #date-hour-field input {
-      display: inline-block;
-      width: 49.75%;
-    }
-    #date-hour-field input:last-child {
-      margin-left: 0.5%;
-    }
-  </style>
 
 {% endblock %}
