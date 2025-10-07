@@ -84,3 +84,10 @@ class PublicDefenseForm(forms.Form):
 
         lang_code = self.data.get(self.add_prefix('langue'), self.initial.get('langue'))
         self.fields['langue'].choices = get_language_initial_choices(lang_code, person)
+
+
+class PromoterPublicDefenseForm(forms.Form):
+    proces_verbal = DoctorateFileUploadField(
+        label=_('Public defence minutes'),
+        help_text=_('The minutes will be uploaded by the thesis exam board secretary or chair.'),
+    )

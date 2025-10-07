@@ -64,6 +64,9 @@ from osis_parcours_doctoral_sdk.model.submit_private_defense_minutes import (
     SubmitPrivateDefenseMinutes,
 )
 from osis_parcours_doctoral_sdk.model.submit_public_defense import SubmitPublicDefense
+from osis_parcours_doctoral_sdk.model.submit_public_defense_minutes import (
+    SubmitPublicDefenseMinutes,
+)
 from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
 from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
 
@@ -255,6 +258,14 @@ class DoctorateService(metaclass=ServiceMeta):
     def get_public_defense_minutes_canvas(cls, person, uuid) -> PublicDefenseMinutesCanvas:
         return DoctorateAPIClient().retrieve_public_defense_minutes_canvas(
             uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_public_defense_minutes(cls, person, doctorate_uuid, data):
+        return DoctorateAPIClient().submit_public_defense_minutes(
+            uuid=doctorate_uuid,
+            submit_public_defense_minutes=SubmitPublicDefenseMinutes(**data),
             **build_mandatory_auth_headers(person),
         )
 
