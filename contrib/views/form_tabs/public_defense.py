@@ -53,10 +53,14 @@ class PublicDefenseFormView(LoadViewMixin, WebServiceFormMixin, FormView):
     def get_form_class(self):
         return PublicDefenseForm if self.is_doctorate_student else PublicDefenseForm
 
+    def get_form_kwargs(self):
+        form_kwargs = super().get_form_kwargs()
+        form_kwargs['person'] = self.person
+        return form_kwargs
+
     def get_initial(self):
         doctorate = self.doctorate
         return {
-            'autre_langue': doctorate.autre_langue_soutenance_publique,
             'langue': doctorate.langue_soutenance_publique,
             'date_heure': doctorate.date_heure_soutenance_publique,
             'lieu': doctorate.lieu_soutenance_publique,

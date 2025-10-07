@@ -33,4 +33,12 @@
       At least half of the thesis exam board membership takes an active role in the public defence.
     {% endblocktranslate %}
   </p>
+  {% if doctorate|can_make_action:'retrieve_public_defense_minutes_canvas' %}
+    <p>
+      {% url 'parcours_doctoral:public-defense-minutes-canvas' view.kwargs.pk as canvas_url %}
+      {% blocktranslate trimmed %}
+        The canvas of the public defence minutes can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
+      {% endblocktranslate %}
+    </p>
+  {% endif %}
 </div>
