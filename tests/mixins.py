@@ -53,7 +53,6 @@ from base.tests.factories.person import PersonFactory
 from base.tests.test_case import OsisPortalTestCase
 from parcours_doctoral.contrib.enums import (
     AdmissionType,
-    ChoixLangueDefense,
     ChoixStatutDoctorat,
     TypeBourse,
 )
@@ -206,6 +205,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'create_jury_members',
                         'upload_pdf_confirmation',
                         'jury_request_signatures',
+                        'retrieve_public_defense_minutes_canvas',
                     ]
                 }
             ),
@@ -249,8 +249,8 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             commission_proximite=ChoixCommissionProximiteCDSS.ECLI.name,
             justification='Justification',
             titre_these_propose='Title',
-            langue_soutenance_publique=ChoixLangueDefense.FRENCH.name,
-            autre_langue_soutenance_publique='Japanese',
+            langue_soutenance_publique='FR',
+            nom_langue_soutenance_publique='French',
             date_heure_soutenance_publique=datetime.datetime(2024, 2, 2, 11, 30),
             lieu_soutenance_publique='Louvain-La-Neuve',
             local_deliberation='D1',
