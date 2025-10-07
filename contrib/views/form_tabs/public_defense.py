@@ -26,7 +26,10 @@
 
 from django.views.generic import FormView
 
-from parcours_doctoral.contrib.forms.public_defense import PublicDefenseForm
+from parcours_doctoral.contrib.forms.public_defense import (
+    PromoterPublicDefenseForm,
+    PublicDefenseForm,
+)
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.doctorate import DoctorateService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
@@ -39,23 +42,26 @@ __all__ = [
 class PublicDefenseFormView(LoadViewMixin, WebServiceFormMixin, FormView):
     @property
     def permission_link_to_check(self):
-        return 'update_public_defense' if self.is_doctorate_student else 'update_public_defense'
+        return 'update_public_defense' if self.is_doctorate_student else 'submit_public_defense_minutes'
 
     def get_template_names(self):
         return [
             (
                 'parcours_doctoral/forms/public_defense.html'
                 if self.is_doctorate_student
-                else 'parcours_doctoral/forms/public_defense.html'
+                else 'parcours_doctoral/forms/public_defense_minutes.html'
             ),
         ]
 
     def get_form_class(self):
-        return PublicDefenseForm if self.is_doctorate_student else PublicDefenseForm
+        return PublicDefenseForm if self.is_doctorate_student else PromoterPublicDefenseForm
 
     def get_form_kwargs(self):
         form_kwargs = super().get_form_kwargs()
-        form_kwargs['person'] = self.person
+
+        if self.is_doctorate_student:
+            form_kwargs['person'] = self.person
+
         return form_kwargs
 
     def get_initial(self):
@@ -67,6 +73,7 @@ class PublicDefenseFormView(LoadViewMixin, WebServiceFormMixin, FormView):
             'local_deliberation': doctorate.local_deliberation,
             'resume_annonce': doctorate.resume_annonce,
             'photo_annonce': doctorate.photo_annonce,
+            'proces_verbal': doctorate.proces_verbal_soutenance_publique,
         }
 
     def call_webservice(self, data):
@@ -77,4 +84,8 @@ class PublicDefenseFormView(LoadViewMixin, WebServiceFormMixin, FormView):
                 data=data,
             )
         else:
-            pass
+            DoctorateService.submit_public_defense_minutes(
+                person=self.person,
+                doctorate_uuid=self.doctorate_uuid,
+                data=data,
+            )

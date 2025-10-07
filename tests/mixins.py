@@ -206,6 +206,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'upload_pdf_confirmation',
                         'jury_request_signatures',
                         'retrieve_public_defense_minutes_canvas',
+                        'submit_public_defense_minutes',
                     ]
                 }
             ),
@@ -257,7 +258,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             informations_complementaires_soutenance_publique='Information',
             resume_annonce='Announcement summary',
             photo_annonce=[],
-            proces_verbal_soutenance_publique=[],
+            proces_verbal_soutenance_publique=['minutes-uuid'],
             date_retrait_diplome=datetime.date(2025, 2, 2),
         )
         self.mock_doctorate_api.return_value.doctorate_retrieve.return_value = self.mock_doctorate_object
