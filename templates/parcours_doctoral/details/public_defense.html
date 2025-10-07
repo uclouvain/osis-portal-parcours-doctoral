@@ -1,5 +1,4 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
-{% load doctorate_enums %}
 {% load i18n parcours_doctoral %}
 
 {% comment "License" %}
@@ -35,11 +34,7 @@
       {% include 'parcours_doctoral/includes/public_defense_description.html' %}
       <div>
         {% field_data _("Thesis title") doctorate.titre_these_propose inline=True %}
-        {% if doctorate.langue_soutenance_publique == 'OTHER' %}
-          {% field_data _("Public defence language") doctorate.autre_langue_soutenance_publique inline=True %}
-        {% else %}
-          {% field_data _("Public defence language") doctorate.langue_soutenance_publique|enum_display:'ChoixLangueDefense' inline=True %}
-        {% endif %}
+        {% field_data _("Public defence language") doctorate.nom_langue_soutenance_publique inline=True %}
         {% field_data _("Public defence date and time") doctorate.date_heure_soutenance_publique inline=True %}
         {% field_data _("Public defence location") doctorate.lieu_soutenance_publique inline=True %}
         {% field_data _("Deliberation room") doctorate.local_deliberation inline=True %}

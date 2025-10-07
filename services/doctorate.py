@@ -48,13 +48,16 @@ from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDocto
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_identity_dto import (
     ParcoursDoctoralIdentityDTO,
 )
-from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCommand
-from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe import (
-    RenvoyerInvitationSignatureExterne,
-)
 from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
 from osis_parcours_doctoral_sdk.model.private_defense_minutes_canvas import (
     PrivateDefenseMinutesCanvas,
+)
+from osis_parcours_doctoral_sdk.model.public_defense_minutes_canvas import (
+    PublicDefenseMinutesCanvas,
+)
+from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCommand
+from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe import (
+    RenvoyerInvitationSignatureExterne,
 )
 from osis_parcours_doctoral_sdk.model.submit_private_defense import SubmitPrivateDefense
 from osis_parcours_doctoral_sdk.model.submit_private_defense_minutes import (
@@ -245,6 +248,13 @@ class DoctorateService(metaclass=ServiceMeta):
         return DoctorateAPIClient().submit_public_defense(
             uuid=doctorate_uuid,
             submit_public_defense=SubmitPublicDefense(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_public_defense_minutes_canvas(cls, person, uuid) -> PublicDefenseMinutesCanvas:
+        return DoctorateAPIClient().retrieve_public_defense_minutes_canvas(
+            uuid=uuid,
             **build_mandatory_auth_headers(person),
         )
 

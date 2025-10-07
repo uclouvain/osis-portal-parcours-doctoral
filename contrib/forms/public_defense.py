@@ -23,27 +23,30 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
+from dal import forward
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from parcours_doctoral.constants import FIELD_REQUIRED_MESSAGE
-from parcours_doctoral.contrib.enums import ChoixLangueDefense
 from parcours_doctoral.contrib.forms import (
     JPEG_MIME_TYPE,
     PNG_MIME_TYPE,
     DoctorateDateTimeField,
     DoctorateFileUploadField,
+    get_language_initial_choices,
 )
+from parcours_doctoral.contrib.forms.autocomplete import ListSelect2
 
 
 class PublicDefenseForm(forms.Form):
     langue = forms.ChoiceField(
         label=_('Public defence language'),
-        choices=ChoixLangueDefense.choices(),
-    )
-    autre_langue = forms.CharField(
-        label='',
-        required=False,
+        widget=ListSelect2(
+            url="parcours_doctoral:autocomplete:language",
+            attrs={
+                "data-html": True,
+            },
+            forward=(forward.Const(True, 'show_top_languages'),),
+        ),
     )
     date_heure = DoctorateDateTimeField(
         label=_('Public defence date and time'),
@@ -76,13 +79,8 @@ class PublicDefenseForm(forms.Form):
     class Media:
         js = ('js/dependsOn.min.js',)
 
-    def clean(self):
-        cleaned_data = super().clean()
+    def __init__(self, person, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-        if cleaned_data.get('langue') == ChoixLangueDefense.OTHER.name:
-            if not cleaned_data.get('autre_langue'):
-                self.add_error('autre_langue', FIELD_REQUIRED_MESSAGE)
-        else:
-            cleaned_data['autre_langue'] = ''
-
-        return cleaned_data
+        lang_code = self.data.get(self.add_prefix('langue'), self.initial.get('langue'))
+        self.fields['langue'].choices = get_language_initial_choices(lang_code, person)

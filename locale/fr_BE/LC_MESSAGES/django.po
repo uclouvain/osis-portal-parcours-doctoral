@@ -1168,6 +1168,9 @@ msgstr "Président"
 msgid "PRIVATE_DEFENSE"
 msgstr "Défense privée"
 
+msgid "PROCLAME"
+msgstr "Proclamé"
+
 msgid "PUBLICATION"
 msgstr "Publications"
 
@@ -1499,6 +1502,12 @@ msgstr "Service institutionnel, didactique et d'expertise scientifique"
 msgid "SOUMISE"
 msgstr "Soumise"
 
+msgid "SOUTENANCE_PUBLIQUE_AUTORISEE"
+msgstr "Soutenance publique autorisée"
+
+msgid "SOUTENANCE_PUBLIQUE_SOUMISE"
+msgstr "Soutenance publique soumise"
+
 msgid "STATISTICS"
 msgstr "Statistiques"
 
@@ -1719,6 +1728,14 @@ msgid ""
 "href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
 msgstr ""
 "Le canevas de procès-verbal de la défense privée est téléchargeable <a "
+"href=\"%(canvas_url)s\" target=\"_blank\">ici</a>."
+
+#, python-format
+msgid ""
+"The canvas of the public defence minutes can be downloaded <a "
+"href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
+msgstr ""
+"Le canevas de procès-verbal de la soutenance publique est téléchargeable <a "
 "href=\"%(canvas_url)s\" target=\"_blank\">ici</a>."
 
 #, python-format
