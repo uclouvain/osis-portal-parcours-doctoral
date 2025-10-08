@@ -23,14 +23,16 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-
+from django.shortcuts import resolve_url
 from django.views.generic import RedirectView, TemplateView
+from osis_document_components.enums import PostProcessingWanted
 
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.doctorate import DoctorateService
 
 __all__ = [
     'PublicDefenseDetailView',
+    'PublicDefenseMinutesView',
     'PublicDefenseMinutesCanvasView',
 ]
 
@@ -52,3 +54,23 @@ class PublicDefenseMinutesCanvasView(LoadViewMixin, RedirectView):
             person=self.request.user.person,
             uuid=self.doctorate_uuid,
         ).url
+
+
+class PublicDefenseMinutesView(LoadViewMixin, RedirectView):
+    urlpatterns = 'public-defense-minutes'
+    permission_link_to_check = 'retrieve_public_defense'
+
+    def get_redirect_url(self, *args, **kwargs):
+        from osis_document_components.services import get_remote_token
+        from osis_document_components.utils import get_file_url
+
+        doctorate = self.doctorate
+        if doctorate and doctorate.proces_verbal_soutenance_publique:
+            reading_token = get_remote_token(
+                doctorate.proces_verbal_soutenance_publique[0],
+                wanted_post_process=PostProcessingWanted.ORIGINAL.name,
+            )
+
+            return get_file_url(reading_token)
+
+        return resolve_url('parcours_doctoral:public-defense', pk=self.doctorate_uuid)
