@@ -251,3 +251,45 @@ class PublicDefenseFormViewForPromoterTestCase(BaseDoctorateTestCase):
             ),
             **self.api_default_params,
         )
+
+
+class PublicDefenseMinutesViewTestCase(BaseDoctorateTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.person = PersonFactory()
+        cls.url = resolve_url('parcours_doctoral:public-defense-minutes', pk=cls.doctorate_uuid)
+        cls.public_defense_url = resolve_url('parcours_doctoral:public-defense', pk=cls.doctorate_uuid)
+
+    def test_get_no_permission(self):
+        self.client.force_login(self.person.user)
+        self.mock_doctorate_object.links['retrieve_public_defense'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_redirect_to_the_minutes_url_if_any(self):
+        self.client.force_login(self.person.user)
+
+        response = self.client.get(self.url)
+
+        self.assertRedirects(
+            response=response,
+            expected_url='http://dummyurl.com/document/file/foobar',
+            fetch_redirect_response=False,
+        )
+
+    def test_redirect_to_the_public_defense_url_if_no_minutes_to_redirect(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.proces_verbal_soutenance_publique = []
+
+        response = self.client.get(self.url)
+
+        self.assertRedirects(
+            response=response,
+            expected_url=self.public_defense_url,
+            fetch_redirect_response=False,
+        )
