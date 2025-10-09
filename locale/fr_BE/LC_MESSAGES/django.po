@@ -483,24 +483,24 @@ msgstr "Date d'envoi du manuscrit au jury"
 msgid "Decision"
 msgstr "Décision"
 
+msgctxt "doctorate tab"
+msgid "Defence"
+msgstr "Défense"
+
 msgid "Defence date"
 msgstr "Date de soutenance"
 
-msgctxt "doctorate tab"
-msgid "Defense"
-msgstr "Défense"
-
-msgid "Defense indicative date"
+msgid "Defence indicative date"
 msgstr "Date de soutenance indicative"
 
-msgid "Defense language"
+msgid "Defence language"
 msgstr "Langue de la soutenance"
 
-msgid "Defense method"
+msgid "Defence method"
 msgstr "Formule de défense"
 
 msgctxt "doctorate tab"
-msgid "Defense method"
+msgid "Defence method"
 msgstr "Modalités de défense"
 
 msgid "Definitive admission date"
@@ -791,7 +791,7 @@ msgstr ""
 
 msgid ""
 "If necessary, please finish inputting doctoral activities and complete the "
-"defense preparation below before submitting the jury proposition."
+"defence preparation below before submitting the jury proposition."
 msgstr ""
 "Le cas échéant, veuillez terminer l’encodage des activités de formation "
 "doctorale et compléter les modalités de défenses ci-dessous avant de "
@@ -1022,14 +1022,14 @@ msgid "Members"
 msgstr "Membres"
 
 msgid ""
-"Method 1 (the private defense and the public defense are separated by at "
+"Method 1 (the private defence and the public defence are separated by at "
 "least a month"
 msgstr ""
 "Formule 1 (la défense privée et la soutenance publique sont séparées d’au "
 "moins un mois) "
 
 msgid ""
-"Method 2 (The private defense and the public defense are organised the same "
+"Method 2 (The private defence and the public defence are organised the same "
 "day, and subjected to an admissibility condition)"
 msgstr ""
 "Formule 2 (La défense et la soutenance sont organisées le même jour, et "
@@ -1091,7 +1091,7 @@ msgstr "Aucune activité n'a été sélectionnée."
 msgid "No course created at present."
 msgstr "Aucun cours créé pour le moment."
 
-msgid "No defense reason"
+msgid "No defence reason"
 msgstr "Raison de non-soutenance"
 
 msgid "No joint supervision"
@@ -1287,8 +1287,11 @@ msgstr "Président"
 msgid "Previous confirmation exams"
 msgstr "Épreuves de confirmation passées"
 
-msgid "Previous private defenses"
+msgid "Previous private defences"
 msgstr "Défenses privées passées"
+
+msgid "Private defence"
+msgstr "Défense privée"
 
 msgid "Private defence date and time"
 msgstr "Date et heure de la défense privée"
@@ -1298,9 +1301,6 @@ msgstr "Lieu de la défense privée"
 
 msgid "Private defence minutes"
 msgstr "Procès verbal de la défense privée"
-
-msgid "Private defense"
-msgstr "Défense privée"
 
 msgid "Professor"
 msgstr "Professeur.e"
@@ -1369,6 +1369,9 @@ msgstr "Commission de proximité de recherche expérimentale et clinique (ECLI)"
 msgid "Proximity commission for public health, health and society (SPSS)"
 msgstr "Commission de proximité de santé publique, santé et société (SPSS)"
 
+msgid "Public defence"
+msgstr "Soutenance publique"
+
 msgid "Public defence date and time"
 msgstr "Date et heure de la soutenance"
 
@@ -1380,9 +1383,6 @@ msgstr "Lieu soutenance"
 
 msgid "Public defence minutes"
 msgstr "Procès verbal de soutenance"
-
-msgid "Public defense"
-msgstr "Soutenance publique"
 
 msgid "Publication status"
 msgstr "Statut de publication"
@@ -1679,7 +1679,7 @@ msgid "Surname"
 msgstr "Nom"
 
 msgid ""
-"The \"doctoral training\" must be completed before submitting the defense "
+"The \"doctoral training\" must be completed before submitting the defence "
 "preparation and the jury proposition."
 msgstr ""
 "La formation doctorale doit être complétée avant de soumettre les modalités "
@@ -1845,7 +1845,7 @@ msgstr "Il n'y a pas encore de secrétaire de désigné.e."
 msgid "There was an error while requesting signatures."
 msgstr "Erreur lors de la demande de signatures."
 
-msgid "Thesis defense"
+msgid "Thesis defence"
 msgstr "Défense et soutenance"
 
 msgid "Thesis language"
