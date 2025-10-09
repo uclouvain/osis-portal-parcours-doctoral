@@ -433,19 +433,19 @@ msgid "Current funding"
 msgstr ""
 
 msgid "DEFENSE_PRIVEE_AUTORISEE"
-msgstr "Authorized private defense"
+msgstr "Authorized private defence"
 
 msgid "DEFENSE_PRIVEE_A_RECOMMENCER"
-msgstr "Private defense to be repeated"
+msgstr "Private defence to be repeated"
 
 msgid "DEFENSE_PRIVEE_EN_ECHEC"
-msgstr "Private defense in failure"
+msgstr "Private defence in failure"
 
 msgid "DEFENSE_PRIVEE_REUSSIE"
-msgstr "Passed private defense"
+msgstr "Passed private defence"
 
 msgid "DEFENSE_PRIVEE_SOUMISE"
-msgstr "Submitted private defense"
+msgstr "Submitted private defence"
 
 msgid "DESINSCRITE"
 msgstr "Withdrawn"
@@ -465,24 +465,24 @@ msgstr ""
 msgid "Decision"
 msgstr ""
 
+msgctxt "doctorate tab"
+msgid "Defence"
+msgstr ""
+
 msgid "Defence date"
 msgstr ""
 
-msgctxt "doctorate tab"
-msgid "Defense"
+msgid "Defence indicative date"
 msgstr ""
 
-msgid "Defense indicative date"
+msgid "Defence language"
 msgstr ""
 
-msgid "Defense language"
-msgstr ""
-
-msgid "Defense method"
+msgid "Defence method"
 msgstr ""
 
 msgctxt "doctorate tab"
-msgid "Defense method"
+msgid "Defence method"
 msgstr ""
 
 msgid "Definitive admission date"
@@ -757,7 +757,7 @@ msgstr ""
 
 msgid ""
 "If necessary, please finish inputting doctoral activities and complete the "
-"defense preparation below before submitting the jury proposition."
+"defence preparation below before submitting the jury proposition."
 msgstr ""
 
 msgid ""
@@ -967,12 +967,12 @@ msgid "Members"
 msgstr ""
 
 msgid ""
-"Method 1 (the private defense and the public defense are separated by at "
+"Method 1 (the private defence and the public defence are separated by at "
 "least a month"
 msgstr ""
 
 msgid ""
-"Method 2 (The private defense and the public defense are organised the same "
+"Method 2 (The private defence and the public defence are organised the same "
 "day, and subjected to an admissibility condition)"
 msgstr ""
 
@@ -1032,7 +1032,7 @@ msgstr ""
 msgid "No course created at present."
 msgstr ""
 
-msgid "No defense reason"
+msgid "No defence reason"
 msgstr ""
 
 msgid "No joint supervision"
@@ -1210,7 +1210,10 @@ msgstr ""
 msgid "Previous confirmation exams"
 msgstr ""
 
-msgid "Previous private defenses"
+msgid "Previous private defences"
+msgstr ""
+
+msgid "Private defence"
 msgstr ""
 
 msgid "Private defence date and time"
@@ -1220,9 +1223,6 @@ msgid "Private defence location"
 msgstr ""
 
 msgid "Private defence minutes"
-msgstr ""
-
-msgid "Private defense"
 msgstr ""
 
 msgid "Professor"
@@ -1290,6 +1290,9 @@ msgstr ""
 msgid "Proximity commission for public health, health and society (SPSS)"
 msgstr ""
 
+msgid "Public defence"
+msgstr ""
+
 msgid "Public defence date and time"
 msgstr ""
 
@@ -1300,9 +1303,6 @@ msgid "Public defence location"
 msgstr ""
 
 msgid "Public defence minutes"
-msgstr ""
-
-msgid "Public defense"
 msgstr ""
 
 msgid "Publication status"
@@ -1418,10 +1418,10 @@ msgid "SOUMISE"
 msgstr "Submitted"
 
 msgid "SOUTENANCE_PUBLIQUE_AUTORISEE"
-msgstr "Authorized public defense"
+msgstr "Authorized public defence"
 
 msgid "SOUTENANCE_PUBLIQUE_SOUMISE"
-msgstr "Submitted public defense"
+msgstr "Submitted public defence"
 
 msgid "STATISTICS"
 msgstr "Statistics"
@@ -1584,7 +1584,7 @@ msgid "Surname"
 msgstr ""
 
 msgid ""
-"The \"doctoral training\" must be completed before submitting the defense "
+"The \"doctoral training\" must be completed before submitting the defence "
 "preparation and the jury proposition."
 msgstr ""
 
@@ -1702,7 +1702,7 @@ msgstr ""
 msgid "There was an error while requesting signatures."
 msgstr ""
 
-msgid "Thesis defense"
+msgid "Thesis defence"
 msgstr ""
 
 msgid "Thesis language"

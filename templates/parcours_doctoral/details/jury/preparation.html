@@ -26,7 +26,7 @@
 {% endcomment %}
 
 {% block tab_content %}
-  {% trans "Defense method" context "doctorate tab" as panel_title %}
+  {% trans "Defence method" context "doctorate tab" as panel_title %}
   {% panel panel_title %}
     {% include 'parcours_doctoral/includes/jury_description.html' %}
 
@@ -49,14 +49,14 @@
         </div>
       {% endif %}
     </div>
-    {% field_data _("Defense method") jury.formule_defense|enum_display:'FormuleDefense' %}
-    {% field_data _("Defense indicative date") jury.date_indicative %}
+    {% field_data _("Defence method") jury.formule_defense|enum_display:'FormuleDefense' %}
+    {% field_data _("Defence indicative date") jury.date_indicative %}
     <div class="row">
       <div class="col-md-4">
         {% field_data _("Thesis language") jury.nom_langue_redaction %}
       </div>
       <div class="col-md-4">
-        {% field_data _("Defense language") jury.nom_langue_soutenance %}
+        {% field_data _("Defence language") jury.nom_langue_soutenance %}
       </div>
     </div>
     {% if jury.commentaire %}{% field_data _("Comment") jury.commentaire|linebreaks %}{% endif %}
