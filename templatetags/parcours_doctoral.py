@@ -143,12 +143,12 @@ TAB_TREE = {
         Tab('course-enrollment', _('Course unit enrolment')),
         Tab('assessment-enrollment', _('Assessment enrollments')),
     ],
-    Tab('defense', pgettext_lazy('doctorate tab', 'Defense'), 'person-chalkboard'): [
-        Tab('jury-preparation', pgettext_lazy('doctorate tab', 'Defense method')),
+    Tab('defense', pgettext_lazy('doctorate tab', 'Defence'), 'person-chalkboard'): [
+        Tab('jury-preparation', pgettext_lazy('doctorate tab', 'Defence method')),
         Tab('jury', _('Jury composition')),
         # Tab('jury-supervision', _('Jury supervision')),
-        Tab('private-defense', _('Private defense')),
-        Tab('public-defense', _('Public defense')),
+        Tab('private-defense', _('Private defence')),
+        Tab('public-defense', _('Public defence')),
     ],
 }
 
@@ -500,7 +500,7 @@ def training_categories(activities):
         _("VAE"): [0, 0],
         _("Scientific residencies"): [0, 0],
         _("Confirmation exam"): [0, 0],
-        _("Thesis defense"): [0, 0],
+        _("Thesis defence"): [0, 0],
         _("Total"): [0, 0],
     }
     for activity in activities:
@@ -537,7 +537,7 @@ def training_categories(activities):
         elif category == CategorieActivite.PAPER.name and activity.type == ChoixTypeEpreuve.CONFIRMATION_PAPER.name:
             categories[_("Confirmation exam")][index] += activity.ects
         elif category == CategorieActivite.PAPER.name:
-            categories[_("Thesis defense")][index] += activity.ects
+            categories[_("Thesis defence")][index] += activity.ects
     if not added:
         return {}
     return {

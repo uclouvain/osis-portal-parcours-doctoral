@@ -46,7 +46,9 @@ from osis_parcours_doctoral_sdk.model.projet_dto_nested import ProjetDTONested
 from osis_parcours_doctoral_sdk.model.signature_membre_jury_dto_nested import (
     SignatureMembreJuryDTONested,
 )
+from osis_reference_sdk.model.country import Country
 from osis_reference_sdk.model.language import Language
+from osis_reference_sdk.model.paginated_country import PaginatedCountry
 from osis_reference_sdk.model.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
@@ -72,6 +74,23 @@ from parcours_doctoral.contrib.forms import PDF_MIME_TYPE
 )
 class BaseDoctorateTestCase(OsisPortalTestCase):
     mime_type = PDF_MIME_TYPE
+
+    @classmethod
+    def get_countries(cls, **kwargs):
+        countries = [
+            Country._from_openapi_data(iso_code='FR', name='France', name_en='France', european_union=True),
+            Country._from_openapi_data(iso_code='BE', name='Belgique', name_en='Belgium', european_union=True),
+        ]
+        if kwargs.get('iso_code'):
+            return PaginatedCountry._from_openapi_data(
+                results=[c for c in countries if c.iso_code == kwargs.get('iso_code')],
+            )
+        return PaginatedCountry._from_openapi_data(results=countries)
+
+    @classmethod
+    def get_country(cls, **kwargs):
+        countries = cls.get_countries(**kwargs)
+        return countries.results[0] if countries.results else None
 
     @classmethod
     def setUpTestData(cls):
@@ -377,6 +396,18 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             type=TypeBourse.BOURSE_INTERNATIONALE_DOCTORAT.name,
         )
         self.mock_scholarship_api.return_value.retrieve_scholarship.return_value = self.mock_scholarship_object
+
+        countries_api_patcher = patch("osis_reference_sdk.api.countries_api.CountriesApi")
+        self.mock_countries_api = countries_api_patcher.start()
+        self.mock_countries_api.return_value.countries_list.side_effect = lambda **kwargs: self.get_countries(**kwargs)
+
+        self.addCleanup(countries_api_patcher.stop)
+
+        # Mock the parent method to prevent to use the cache
+        mock_country_method = patch('parcours_doctoral.services.reference.CountriesService.get_country')
+        self.mock_country_method = mock_country_method.start()
+        self.addCleanup(self.mock_country_method.stop)
+        self.mock_country_method.side_effect = lambda **kwargs: self.get_country(**kwargs)
 
     def setUp(self):
         super().setUp()
