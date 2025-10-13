@@ -211,9 +211,9 @@ class TemplateTagsTestCase(TestCase):
         rendered = template.render(Context({'data': "Personal data"}))
         self.assertIn(str(_('Personal data')), rendered)
 
-    @patch('osis_document.api.utils.get_remote_token', return_value='foobar')
+    @patch('osis_document_components.services.get_remote_token', return_value='foobar')
     @patch(
-        'osis_document.api.utils.get_remote_metadata',
+        'osis_document_components.services.get_remote_metadata',
         return_value={
             'name': 'myfile',
             'mimetype': PDF_MIME_TYPE,
