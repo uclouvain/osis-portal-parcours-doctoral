@@ -209,6 +209,8 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'retrieve_complementary_training',
                         'retrieve_course_enrollment',
                         'retrieve_assessment_enrollment',
+                        'retrieve_admissibility',
+                        'update_admissibility',
                         'retrieve_private_defense',
                         'retrieve_private_defense_minutes_canvas',
                         'retrieve_public_defense',
