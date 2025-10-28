@@ -32,6 +32,7 @@ from django.conf import settings
 from django.utils.translation import get_language
 from osis_parcours_doctoral_sdk import ApiException
 from osis_parcours_doctoral_sdk.api import doctorate_api
+from osis_parcours_doctoral_sdk.model.admissibility_dto import AdmissibilityDTO
 from osis_parcours_doctoral_sdk.model.approuver_jury_command import ApprouverJuryCommand
 from osis_parcours_doctoral_sdk.model.approuver_jury_par_pdf_command import (
     ApprouverJuryParPdfCommand,
@@ -59,6 +60,7 @@ from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCom
 from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe import (
     RenvoyerInvitationSignatureExterne,
 )
+from osis_parcours_doctoral_sdk.model.submit_admissibility import SubmitAdmissibility
 from osis_parcours_doctoral_sdk.model.submit_private_defense import SubmitPrivateDefense
 from osis_parcours_doctoral_sdk.model.submit_private_defense_minutes import (
     SubmitPrivateDefenseMinutes,
@@ -201,6 +203,21 @@ class DoctorateService(metaclass=ServiceMeta):
         return DoctorateAPIClient().submit_confirmation_paper_extension_request(
             uuid=uuid,
             submit_confirmation_paper_extension_request_command=kwargs,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_admissibilities(cls, person, doctorate_uuid) -> List[AdmissibilityDTO]:
+        return DoctorateAPIClient().retrieve_admissibilities(
+            uuid=doctorate_uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_admissibility(cls, person, doctorate_uuid, data) -> ParcoursDoctoralIdentityDTO:
+        return DoctorateAPIClient().submit_admissibility(
+            uuid=doctorate_uuid,
+            submit_admissibility=SubmitAdmissibility(**data),
             **build_mandatory_auth_headers(person),
         )
 
