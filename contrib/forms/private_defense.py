@@ -49,8 +49,8 @@ class PrivateDefenseForm(forms.Form):
     lieu = forms.CharField(
         label=_('Private defence location'),
         help_text=_('If necessary, contact your administrator for practical arrangements.'),
-        widget=forms.Textarea(attrs={'rows': '2'}),
         required=False,
+        max_length=255,
     )
 
     date_envoi_manuscrit = forms.DateField(
@@ -64,4 +64,5 @@ class PromoterPrivateDefenseForm(forms.Form):
     proces_verbal = DoctorateFileUploadField(
         label=_('Private defence minutes'),
         help_text=_('The minutes will be uploaded by the thesis exam board secretary or chair.'),
+        required=False,
     )

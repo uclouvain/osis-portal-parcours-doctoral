@@ -51,7 +51,7 @@
       {% bootstrap_field_with_tooltip form.resume_annonce html_tag="blockquote" %}
       {% bootstrap_field form.photo_annonce wrapper_class='mb-3 required_field' %}
 
-      {% field_data _("Public defence minutes") doctorate.proces_verbal_soutenance_publique %}
+      {% field_data _("Public defence minutes") doctorate.proces_verbal_soutenance_publique tooltip=_('The minutes will be uploaded by the thesis exam board secretary or chair.') %}
       {% field_data _("Diploma collection date") doctorate.date_retrait_diplome inline=True %}
       {% field_data _("DIAL link") '' inline=True %}
     </div>

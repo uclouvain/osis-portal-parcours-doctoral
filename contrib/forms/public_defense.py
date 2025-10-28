@@ -55,14 +55,14 @@ class PublicDefenseForm(forms.Form):
     lieu = forms.CharField(
         label=_('Public defence location'),
         help_text=_('If necessary, contact your administrator for practical arrangements.'),
-        widget=forms.Textarea(attrs={'rows': '2'}),
         required=False,
+        max_length=255,
     )
     local_deliberation = forms.CharField(
         label=_('Deliberation room'),
         help_text=_('If necessary, contact your administrator for practical arrangements.'),
-        widget=forms.Textarea(attrs={'rows': '2'}),
         required=False,
+        max_length=255,
     )
     resume_annonce = forms.CharField(
         label=_('Summary for announcement'),
@@ -90,4 +90,5 @@ class PromoterPublicDefenseForm(forms.Form):
     proces_verbal = DoctorateFileUploadField(
         label=_('Public defence minutes'),
         help_text=_('The minutes will be uploaded by the thesis exam board secretary or chair.'),
+        required=False,
     )
