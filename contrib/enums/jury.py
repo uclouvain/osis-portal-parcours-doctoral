@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -23,15 +23,16 @@
 #    see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from django.utils.translation import gettext_lazy as _, pgettext_lazy
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 
 from base.models.utils.utils import ChoiceEnum
 
 
 class FormuleDefense(ChoiceEnum):
-    FORMULE_1 = _('Method 1 (the private defense and the public defense are separated by at least a month')
+    FORMULE_1 = _('Method 1 (the private defence and the public defence are separated by at least a month')
     FORMULE_2 = _(
-        'Method 2 (The private defense and the public defense are organised the same day, and subjected to '
+        'Method 2 (The private defence and the public defence are organised the same day, and subjected to '
         'an admissibility condition)'
     )
 
@@ -40,12 +41,15 @@ class RoleJury(ChoiceEnum):
     PRESIDENT = _('PRESIDENT')
     SECRETAIRE = _('SECRETAIRE')
     MEMBRE = _('MEMBRE')
+    VERIFICATEUR = _('VERIFICATEUR')
+    CDD = _('CDD')
+    ADRE = _('ADRE')
 
 
 class TitreMembre(ChoiceEnum):
     DOCTEUR = _('Doctor')
     PROFESSEUR = _('Professor')
-    NON_DOCTEUR = _('Does not have a doctor title')
+    NON_DOCTEUR = _('Without PhD degree')
 
 
 class GenreMembre(ChoiceEnum):

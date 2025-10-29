@@ -1,5 +1,5 @@
-{% extends "parcours_doctoral/tab_layout.html" %}
-{% load i18n static parcours_doctoral django_bootstrap5 %}
+{% extends "admission/admission_layout.html" %}
+{% load bootstrap3 i18n static admission enums %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -25,42 +25,10 @@
   * see http://www.gnu.org/licenses/.
 {% endcomment %}
 
-
-{% block form %}
-  <h3 class="mb-3">
-    {% blocktrans trimmed %}Give an opinion on "{{ object }}"?{% endblocktrans %}
-  </h3>
-
-  <label class="switch mb-3">
-    {{ form.approbation }}
-    <span class="osis-slider round"></span>
-  </label>
-  {% trans "Approval" %}
-
-  {% bootstrap_field form.commentaire placeholder="" %}
-{% endblock %}
-
-{% block submit_button %}
-  {% url request.resolver_match.namespace pk=view.kwargs.pk as back_url %}
-  <a href="{{ back_url }}#{{ view.kwargs.activity_id }}" class="text-danger">
-    {% trans "Cancel" %}
-  </a>
-  {{ block.super }}
-{% endblock %}
-
-{% block after_form %}
-  {% firstof 0 activity.object_type|snake_case|add:'.html' as template_name %}
-  {% if activity.parent %}
-    <div class="card">
-  {% endif %}
-  {% include "parcours_doctoral/details/training/"|add:template_name with remove_action=True %}
-  {% if activity.parent %}
+{% block content %}
+  {% block template_messages %}
+    <div id="template-messages-container">
+      {% include "template_messages.html" %}
     </div>
-  {% endif %}
-{% endblock %}
-
-
-{% block script %}
-  {{ block.super }}
-  <script type="text/javascript" src="{% static 'osis_document_components/osis-document.umd.min.js' %}"></script>
+  {% endblock %}
 {% endblock %}

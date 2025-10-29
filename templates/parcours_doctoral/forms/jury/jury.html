@@ -8,7 +8,7 @@
 * The core business involves the administration of students, teachers,
 * courses, programs and so on.
 *
-* Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -27,13 +27,37 @@
 
 {% block tab_content %}
   <h3>{% trans "Jury composition" %}</h3>
+  {% if doctorate|can_make_action:'jury_add_approval' and approval_form and approval_form.decision %}
+    {% include "parcours_doctoral/modal/prevent_quitting_modal.html" %}
+    {% panel _("Jury approval") %}
+      {% bootstrap_form_errors approval_form type='non_fields' %}
+      <form class="osis-form approval-form" method="post" action="">
+        {% csrf_token %}
+        {% bootstrap_field approval_form.decision %}
+        {% bootstrap_field approval_form.motif_refus %}
+        <div class="row">
+          <div class="col-md-6">
+            {% bootstrap_field approval_form.commentaire_interne %}
+          </div>
+          <div class="col-md-6">
+            {% bootstrap_field approval_form.commentaire_externe %}
+          </div>
+        </div>
+        {% bootstrap_button button_type="submit" content=_("Submit my decision") name="approval_submit" button_class="btn btn-primary" %}
+      </form>
+    {% endpanel %}
+  {% endif %}
 
   {% panel _("President") %}
     <div class="list-group">
     {% for membre in membre_president %}
-      <div class="list-group-item membre-container">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+      <div class="list-group-item membre-container flex-wrap">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
     {% empty %}
-      <div class="list-group-item">{% trans "You need to set a member as president." %}</div>
+      {% if can_set_roles %}
+        <div class="list-group-item">{% trans "You need to set a member as president." %}</div>
+      {% else %}
+        <div class="list-group-item">{% trans "There is no president set yet." %}</div>
+      {% endif %}
     {% endfor %}
     </div>
   {% endpanel %}
@@ -41,9 +65,13 @@
   {% panel _("Secretary") %}
     <div class="list-group">
     {% for membre in membre_secretaire %}
-      <div class="list-group-item membre-container">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+      <div class="list-group-item membre-container flex-wrap">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
     {% empty %}
-      <div class="list-group-item">{% trans "You need to set a member as secretary." %}</div>
+      {% if can_set_roles %}
+        <div class="list-group-item">{% trans "You need to set a member as secretary." %}</div>
+      {% else %}
+        <div class="list-group-item">{% trans "There is no secretary set yet." %}</div>
+      {% endif %}
     {% endfor %}
     </div>
   {% endpanel %}
@@ -51,15 +79,66 @@
   {% panel _("Members") %}
     <div class="list-group">
     {% for membre in membres %}
-      <div class="list-group-item membre-container">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+      <div class="list-group-item membre-container flex-wrap">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
     {% endfor %}
     </div>
   {% endpanel %}
 
-  {% if form %}
+  {% if membre_verificateur %}
+    {% panel _("Auditor") %}
+      <div class="list-group">
+      {% for membre in membre_verificateur %}
+        <div class="list-group-item membre-container flex-wrap">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+      {% endfor %}
+      </div>
+    {% endpanel %}
+  {% endif %}
+
+  {% if membre_cdd %}
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{% translate 'CDD Manager' %}</h4>
+        <div class="list-group">
+        {% for membre in membre_cdd %}
+          <div class="list-group-item membre-container flex-wrap">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if membre_adre %}
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{% translate 'ADRE Manager' %}</h4>
+        <div class="list-group">
+        {% for membre in membre_adre %}
+          <div class="list-group-item membre-container flex-wrap">{% include "parcours_doctoral/forms/jury/includes/member.html" %}</div>
+        {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if add_form %}
   {% panel _("Add a new member") %}
-    {% include "parcours_doctoral/forms/jury/includes/member_form.html" %}
+    {% include "parcours_doctoral/forms/jury/includes/member_form.html" with form=add_form %}
   {% endpanel %}
+  {% endif %}
+
+  {% if doctorate|can_make_action:'jury_request_signatures' %}
+    <div class="text-center">
+      <button
+        type="button"
+        class="btn btn-success btn-lg"
+        data-bs-toggle="modal"
+        data-bs-target="#request-signatures-modal"
+      >
+        {% trans "Request signatures" %}
+      </button>
+    </div>
+
+    {% include "parcours_doctoral/forms/jury/includes/request_signature_modal.html" %}
   {% endif %}
 
 {% endblock %}
@@ -67,7 +146,21 @@
 {% block script %}
   {{ block.super }}
 
-  {% if form %}
+  {% if approve_by_pdf_form %}
+    {{ approve_by_pdf_form.media.js }}
+  {% endif %}
+
+  {% if approval_form %}
+    {{ approval_form.media.js }}
+    <script>
+      $('#id_motif_refus').dependsOn({
+        'input[name=decision]': { values: ['DECLINED'] },
+      }, { duration: 0, valueOnDisable: '', });
+    </script>
+  {% endif %}
+
+  {% if add_form %}
+  {{ add_form.media.js }}
   <script>
     $(function () {
       $('#id_justification_non_docteur').closest('.mb-3').dependsOn({
@@ -79,15 +172,18 @@
       $('.ucl_hide').dependsOn({
         'input[name=institution_principale]': { values: ['OTHER'] },
       }, { duration: 0, valueOnDisable: '', });
-
-      $('.membre-role-submit').click(function(event) {
-          event.preventDefault();
-          event.stopPropagation();
-          window.preventQuitting = false;
-          const $form = $(this).closest('.btn-group').find('.membre-role-form');
-          $form.find('input[name=role]').val($(this).attr('data-role'));
-          $form.submit();
-      });
+    });
+  </script>
+  {% endif %}
+  {% if can_set_roles %}
+  <script>
+    $('.membre-role-submit').click(function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      window.preventQuitting = false;
+      const $form = $(this).closest('.btn-group').find('.membre-role-form');
+      $form.find('input[name=role]').val($(this).attr('data-role'));
+      $form.submit();
     });
   </script>
   {% endif %}
@@ -95,6 +191,19 @@
 
 {% block style %}
   {{ block.super }}
+
+  {% if add_form %}
+    {{ add_form.media.css }}
+  {% endif %}
+
+  {% if approve_by_pdf_form %}
+    {{ approve_by_pdf_form.media.css }}
+  {% endif %}
+
+  {% if approval_form %}
+    {{ approval_form.media.css }}
+  {% endif %}
+
   <style>
     #id_institution_principale .form-check {
      display: inline-block;
