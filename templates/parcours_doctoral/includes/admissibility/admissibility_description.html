@@ -36,4 +36,12 @@
       Submission format (paper and/or digital) is to be agreed upon with each thesis exam board member.
     {% endblocktranslate %}
   </p>
+  {% if doctorate|can_make_action:'retrieve_admissibility_minutes_canvas' %}
+    <p>
+      {% url 'parcours_doctoral:admissibility-minutes-canvas' view.kwargs.pk as canvas_url %}
+      {% blocktranslate trimmed %}
+        The canvas of the admissibility minutes can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
+      {% endblocktranslate %}
+    </p>
+  {% endif %}
 </div>
