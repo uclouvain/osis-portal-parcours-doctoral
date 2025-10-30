@@ -26,7 +26,10 @@
 
 from django.views.generic import FormView
 
-from parcours_doctoral.contrib.forms.admissibility import AdmissibilityForm
+from parcours_doctoral.contrib.forms.admissibility import (
+    AdmissibilityForm,
+    JuryMemberAdmissibilityForm,
+)
 from parcours_doctoral.contrib.views.details_tabs.admissibility import (
     AdmissibilityCommonViewMixin,
 )
@@ -39,19 +42,19 @@ __all__ = ['AdmissibilityFormView']
 class AdmissibilityFormView(AdmissibilityCommonViewMixin, WebServiceFormMixin, FormView):
     @property
     def permission_link_to_check(self):
-        return 'update_admissibility' if self.is_doctorate_student else 'update_admissibility'
+        return 'update_admissibility' if self.is_doctorate_student else 'submit_admissibility_minutes_and_opinions'
 
     def get_template_names(self):
         return [
             (
                 'parcours_doctoral/forms/admissibility.html'
                 if self.is_doctorate_student
-                else 'parcours_doctoral/forms/admissibility.html'
+                else 'parcours_doctoral/forms/jury_member_admissibility.html'
             ),
         ]
 
     def get_form_class(self):
-        return AdmissibilityForm if self.is_doctorate_student else AdmissibilityForm
+        return AdmissibilityForm if self.is_doctorate_student else JuryMemberAdmissibilityForm
 
     def get_initial(self):
         initial_data = {
@@ -70,6 +73,12 @@ class AdmissibilityFormView(AdmissibilityCommonViewMixin, WebServiceFormMixin, F
     def call_webservice(self, data):
         if self.is_doctorate_student:
             DoctorateService.submit_admissibility(
+                person=self.person,
+                doctorate_uuid=self.doctorate_uuid,
+                data=data,
+            )
+        else:
+            DoctorateService.submit_admissibility_minutes_and_opinions(
                 person=self.person,
                 doctorate_uuid=self.doctorate_uuid,
                 data=data,

@@ -32,11 +32,16 @@ from osis_parcours_doctoral_sdk.model.admissibility_minutes_canvas import (
     AdmissibilityMinutesCanvas,
 )
 from osis_parcours_doctoral_sdk.model.submit_admissibility import SubmitAdmissibility
+from osis_parcours_doctoral_sdk.model.submit_admissibility_minutes_and_opinions import (
+    SubmitAdmissibilityMinutesAndOpinions,
+)
 
 from base.tests.factories.person import PersonFactory
 from parcours_doctoral.constants import FIELD_REQUIRED_MESSAGE
-from parcours_doctoral.contrib.forms.admissibility import AdmissibilityForm
-from parcours_doctoral.contrib.forms.private_defense import PrivateDefenseForm
+from parcours_doctoral.contrib.forms.admissibility import (
+    AdmissibilityForm,
+    JuryMemberAdmissibilityForm,
+)
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
 
@@ -334,3 +339,119 @@ class AdmissibilityMinutesCanvasViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
 
         self.assertRedirects(response=response, expected_url=self.project_url, fetch_redirect_response=False)
+
+
+class AdmissibilityFormViewForPromoterTestCase(BaseDoctorateTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.promoter_person = PersonFactory(global_id='12345')
+        cls.url = resolve_url("parcours_doctoral:update:admissibility", pk=cls.doctorate_uuid)
+        cls.detail_url = resolve_url("parcours_doctoral:admissibility", pk=cls.doctorate_uuid)
+
+    def setUp(self):
+        super().setUp()
+
+        self.mock_doctorate_api.return_value.retrieve_admissibilities.return_value = [
+            AdmissibilityDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
+                uuid='p1',
+                est_active=True,
+                avis_jury=['file-11-uuid'],
+                proces_verbal=['file-12-uuid'],
+                canevas_proces_verbal=[],
+                date_decision=datetime.date(2025, 1, 1),
+                date_envoi_manuscrit=datetime.date(2025, 1, 2),
+            ),
+            AdmissibilityDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
+                uuid='p2',
+                est_active=False,
+                avis_jury=['file-21-uuid'],
+                proces_verbal=['file-22-uuid'],
+                canevas_proces_verbal=[],
+                date_decision=datetime.date(2024, 1, 1),
+                date_envoi_manuscrit=datetime.date(2024, 1, 2),
+            ),
+        ]
+
+    def test_get_no_permission(self):
+        self.client.force_login(self.promoter_person.user)
+        self.mock_doctorate_object.links['submit_admissibility_minutes_and_opinions'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_get_admissibility(self):
+        self.client.force_login(self.promoter_person.user)
+        response = self.client.get(self.url)
+
+        # Load the doctorate information
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
+        self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
+
+        # Load the private defenses information
+        self.mock_doctorate_api.return_value.retrieve_admissibilities.assert_called()
+
+        self.assertIsNotNone(response.context.get('all_admissibilities'))
+        self.assertEqual(response.context.get('all_admissibilities')[0].uuid, 'p1')
+        self.assertEqual(response.context.get('all_admissibilities')[1].uuid, 'p2')
+
+        self.assertIsNotNone(response.context.get('current_admissibility'))
+        self.assertEqual(response.context.get('current_admissibility').uuid, 'p1')
+
+        # Load the form
+        form = response.context['form']
+
+        self.assertIsInstance(form, JuryMemberAdmissibilityForm)
+
+        self.assertEqual(form['avis_jury'].value(), ['file-11-uuid'])
+        self.assertEqual(form['proces_verbal'].value(), ['file-12-uuid'])
+
+    def test_get_no_admissibility(self):
+        self.client.force_login(self.promoter_person.user)
+        self.mock_doctorate_api.return_value.retrieve_admissibilities.return_value = []
+
+        response = self.client.get(self.url)
+
+        # Load the doctorate information
+        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
+        self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
+
+        # Load the admissibilities information
+        self.mock_doctorate_api.return_value.retrieve_admissibilities.assert_called()
+
+        self.assertEqual(response.context.get('all_admissibilities'), [])
+
+        self.assertIsNone(response.context.get('current_admissibility'))
+
+        # Load the form
+        form = response.context['form']
+
+        self.assertEqual(form['proces_verbal'].value(), [])
+
+    def test_post_the_admissibility_minutes(self):
+        self.client.force_login(self.promoter_person.user)
+
+        response = self.client.post(
+            self.url,
+            data={
+                'avis_jury_0': ['file-uuid-12a'],
+                'proces_verbal_0': ['file-uuid-12b'],
+            },
+        )
+
+        self.assertRedirects(response, expected_url=self.detail_url, fetch_redirect_response=False)
+
+        # Call the API with the right data
+        self.mock_doctorate_api.return_value.submit_admissibility_minutes_and_opinions.assert_called()
+        self.mock_doctorate_api.return_value.submit_admissibility_minutes_and_opinions.assert_called_with(
+            uuid=self.doctorate_uuid,
+            submit_admissibility_minutes_and_opinions=SubmitAdmissibilityMinutesAndOpinions._new_from_openapi_data(
+                avis_jury=['file-uuid-12a'],
+                proces_verbal=['file-uuid-12b'],
+            ),
+            **self.api_default_params,
+        )

@@ -1750,6 +1750,9 @@ msgstr ""
 msgid "Thesis defence"
 msgstr ""
 
+msgid "Thesis exam board opinion"
+msgstr ""
+
 msgid "Thesis language"
 msgstr ""
 
