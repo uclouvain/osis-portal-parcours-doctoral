@@ -26,7 +26,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from parcours_doctoral.contrib.forms import CustomDateInput
+from parcours_doctoral.contrib.forms import CustomDateInput, DoctorateFileUploadField
 
 
 class AdmissibilityForm(forms.Form):
@@ -48,4 +48,15 @@ class AdmissibilityForm(forms.Form):
         ),
         required=False,
         widget=CustomDateInput,
+    )
+
+
+class JuryMemberAdmissibilityForm(forms.Form):
+    proces_verbal = DoctorateFileUploadField(
+        label=_('Admissibility minutes'),
+        required=False,
+    )
+    avis_jury = DoctorateFileUploadField(
+        label=_('Thesis exam board opinion'),
+        required=False,
     )

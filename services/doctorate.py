@@ -64,6 +64,9 @@ from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe impo
     RenvoyerInvitationSignatureExterne,
 )
 from osis_parcours_doctoral_sdk.model.submit_admissibility import SubmitAdmissibility
+from osis_parcours_doctoral_sdk.model.submit_admissibility_minutes_and_opinions import (
+    SubmitAdmissibilityMinutesAndOpinions,
+)
 from osis_parcours_doctoral_sdk.model.submit_private_defense import SubmitPrivateDefense
 from osis_parcours_doctoral_sdk.model.submit_private_defense_minutes import (
     SubmitPrivateDefenseMinutes,
@@ -221,6 +224,14 @@ class DoctorateService(metaclass=ServiceMeta):
         return DoctorateAPIClient().submit_admissibility(
             uuid=doctorate_uuid,
             submit_admissibility=SubmitAdmissibility(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_admissibility_minutes_and_opinions(cls, person, doctorate_uuid, data) -> ParcoursDoctoralIdentityDTO:
+        return DoctorateAPIClient().submit_admissibility_minutes_and_opinions(
+            uuid=doctorate_uuid,
+            submit_admissibility_minutes_and_opinions=SubmitAdmissibilityMinutesAndOpinions(**data),
             **build_mandatory_auth_headers(person),
         )
 
