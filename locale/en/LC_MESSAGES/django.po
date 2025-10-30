@@ -158,6 +158,12 @@ msgstr ""
 msgid "Additional information"
 msgstr ""
 
+msgid "Admissibility"
+msgstr ""
+
+msgid "Admissibility minutes"
+msgstr ""
+
 msgid "Admission"
 msgstr ""
 
@@ -457,6 +463,9 @@ msgid "DOCTORAL_TRAINING"
 msgstr "PhD training"
 
 msgid "Date"
+msgstr ""
+
+msgid "Date of admissibility decision"
 msgstr ""
 
 msgid "Date of manuscript submission to the thesis exam board"
@@ -1207,6 +1216,9 @@ msgstr ""
 msgid "President"
 msgstr ""
 
+msgid "Previous admissibilities"
+msgstr ""
+
 msgid "Previous confirmation exams"
 msgstr ""
 
@@ -1320,6 +1332,18 @@ msgstr ""
 msgctxt "publication-status"
 msgid "Published"
 msgstr ""
+
+msgid "RECEVABILITE_A_RECOMMENCER"
+msgstr "Admissibility to be repeated"
+
+msgid "RECEVABILITE_EN_ECHEC"
+msgstr "Admissibility in failure"
+
+msgid "RECEVABILITE_REUSSIE"
+msgstr "Passed admissibility"
+
+msgid "RECEVABILITE_SOUMISE"
+msgstr "Submitted admissibility"
 
 msgid "REFUSEE"
 msgstr "Denied"
@@ -1599,6 +1623,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"The admissibility decision date is chosen collectively by the board and in "
+"agreement with the PhD student."
+msgstr ""
+
+msgid ""
 "The aim of the confirmation exam is to establish, on the basis of the state "
 "of progress of the research work, that it is likely to lead to the "
 "submission of a PhD thesis (Art. 2.3.1. of the PhD Regulations)."
@@ -1675,6 +1704,16 @@ msgid ""
 "The thesis exam board must be present in full at the private defence. The "
 "date must therefore be chosen collectively by the board in agreement with "
 "the PhD student."
+msgstr ""
+
+msgid ""
+"The provisional text of your thesis must be submitted to thesis exam board "
+"members no later than one month before the admissibility decision date. This "
+"date is chosen collectively by the board and in agreement with the PhD "
+"student. The manuscript format may vary from one Subject-specific PhD "
+"Committee (CDD) to another; please check with your administrator. Submission "
+"format (paper and/or digital) is to be agreed upon with each thesis exam "
+"board member."
 msgstr ""
 
 msgid ""
