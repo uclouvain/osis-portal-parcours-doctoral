@@ -1642,6 +1642,12 @@ msgstr ""
 
 #, python-format
 msgid ""
+"The canvas of the admissibility minutes can be downloaded <a "
+"href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
+msgstr ""
+
+#, python-format
+msgid ""
 "The canvas of the private defence minutes can be downloaded <a "
 "href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
 msgstr ""

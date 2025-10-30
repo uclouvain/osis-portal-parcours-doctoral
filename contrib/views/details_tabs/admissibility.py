@@ -36,6 +36,7 @@ from parcours_doctoral.services.doctorate import DoctorateJuryService, Doctorate
 
 __all__ = [
     'AdmissibilityDetailView',
+    'AdmissibilityMinutesCanvasView',
 ]
 
 __namespace__ = False
@@ -73,3 +74,14 @@ class AdmissibilityDetailView(AdmissibilityCommonViewMixin, TemplateView):
     urlpatterns = 'admissibility'
     template_name = 'parcours_doctoral/details/admissibility.html'
     permission_link_to_check = 'retrieve_admissibility'
+
+
+class AdmissibilityMinutesCanvasView(LoadViewMixin, RedirectView):
+    urlpatterns = 'admissibility-minutes-canvas'
+    permission_link_to_check = 'retrieve_admissibility_minutes_canvas'
+
+    def get_redirect_url(self, *args, **kwargs):
+        return DoctorateService.get_admissibility_minutes_canvas(
+            person=self.request.user.person,
+            doctorate_uuid=self.doctorate_uuid,
+        ).url
