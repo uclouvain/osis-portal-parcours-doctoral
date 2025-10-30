@@ -28,6 +28,9 @@ import datetime
 from django.shortcuts import resolve_url
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 from osis_parcours_doctoral_sdk.model.admissibility_dto import AdmissibilityDTO
+from osis_parcours_doctoral_sdk.model.admissibility_minutes_canvas import (
+    AdmissibilityMinutesCanvas,
+)
 from osis_parcours_doctoral_sdk.model.submit_admissibility import SubmitAdmissibility
 
 from base.tests.factories.person import PersonFactory
@@ -299,3 +302,35 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
 
         self.assertEqual(len(form.errors), 1)
         self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('titre_these'))
+
+
+class AdmissibilityMinutesCanvasViewTestCase(BaseDoctorateTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+
+        cls.person = PersonFactory()
+        cls.url = resolve_url("parcours_doctoral:admissibility-minutes-canvas", pk=cls.doctorate_uuid)
+        cls.project_url = resolve_url('parcours_doctoral:project', pk=cls.doctorate_uuid)
+
+    def setUp(self):
+        super().setUp()
+
+        self.mock_doctorate_api.return_value.retrieve_admissibility_minutes_canvas.return_value = (
+            AdmissibilityMinutesCanvas._from_openapi_data(url=self.project_url)
+        )
+
+    def test_get_no_permission(self):
+        self.client.force_login(self.person.user)
+        self.mock_doctorate_object.links['retrieve_admissibility_minutes_canvas'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_redirect_to_the_specific_url(self):
+        self.client.force_login(self.person.user)
+
+        response = self.client.get(self.url)
+
+        self.assertRedirects(response=response, expected_url=self.project_url, fetch_redirect_response=False)
