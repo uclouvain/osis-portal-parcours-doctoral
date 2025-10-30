@@ -33,6 +33,9 @@ from django.utils.translation import get_language
 from osis_parcours_doctoral_sdk import ApiException
 from osis_parcours_doctoral_sdk.api import doctorate_api
 from osis_parcours_doctoral_sdk.model.admissibility_dto import AdmissibilityDTO
+from osis_parcours_doctoral_sdk.model.admissibility_minutes_canvas import (
+    AdmissibilityMinutesCanvas,
+)
 from osis_parcours_doctoral_sdk.model.approuver_jury_command import ApprouverJuryCommand
 from osis_parcours_doctoral_sdk.model.approuver_jury_par_pdf_command import (
     ApprouverJuryParPdfCommand,
@@ -218,6 +221,13 @@ class DoctorateService(metaclass=ServiceMeta):
         return DoctorateAPIClient().submit_admissibility(
             uuid=doctorate_uuid,
             submit_admissibility=SubmitAdmissibility(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_admissibility_minutes_canvas(cls, person, doctorate_uuid) -> AdmissibilityMinutesCanvas:
+        return DoctorateAPIClient().retrieve_admissibility_minutes_canvas(
+            uuid=doctorate_uuid,
             **build_mandatory_auth_headers(person),
         )
 
