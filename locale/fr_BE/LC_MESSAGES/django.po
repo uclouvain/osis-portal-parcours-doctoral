@@ -1905,6 +1905,9 @@ msgstr "Erreur lors de la demande de signatures."
 msgid "Thesis defence"
 msgstr "Défense et soutenance"
 
+msgid "Thesis exam board opinion"
+msgstr "Avis du jury"
+
 msgid "Thesis language"
 msgstr "Langue de rédaction de la thèse"
 
