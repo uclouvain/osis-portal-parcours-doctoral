@@ -24,6 +24,7 @@
 #
 # ##############################################################################
 import datetime
+import uuid
 
 from django.shortcuts import resolve_url
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
@@ -454,4 +455,74 @@ class AdmissibilityFormViewForPromoterTestCase(BaseDoctorateTestCase):
                 proces_verbal=['file-uuid-12b'],
             ),
             **self.api_default_params,
+        )
+
+
+class AdmissibilityMinutesViewTestCase(BaseDoctorateTestCase):
+    @classmethod
+    def setUpTestData(cls):
+        super().setUpTestData()
+        cls.first_admissibility_uuid = uuid.uuid4()
+        cls.second_admissibility_uuid = uuid.uuid4()
+
+        cls.person = PersonFactory()
+        cls.url = resolve_url(
+            'parcours_doctoral:admissibility-minutes',
+            pk=cls.doctorate_uuid,
+            admissibility_id=cls.first_admissibility_uuid,
+        )
+        cls.admissibility_url = resolve_url('parcours_doctoral:admissibility', pk=cls.doctorate_uuid)
+
+    def setUp(self):
+        super().setUp()
+
+        self.mock_doctorate_api.return_value.retrieve_admissibilities.return_value = [
+            AdmissibilityDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
+                uuid=str(self.first_admissibility_uuid),
+                est_active=True,
+                avis_jury=[],
+                proces_verbal=['file-1'],
+                canevas_proces_verbal=[],
+            ),
+            AdmissibilityDTO._from_openapi_data(
+                parcours_doctoral_uuid=self.doctorate_uuid,
+                uuid=str(self.second_admissibility_uuid),
+                est_active=False,
+                avis_jury=[],
+                proces_verbal=[],
+                canevas_proces_verbal=[],
+            ),
+        ]
+
+    def test_get_no_permission(self):
+        self.client.force_login(self.person.user)
+        self.mock_doctorate_object.links['retrieve_admissibility'] = ActionLink._from_openapi_data(
+            error='access error',
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 403)
+
+    def test_redirect_to_the_minutes_url_if_any(self):
+        self.client.force_login(self.person.user)
+
+        response = self.client.get(self.url)
+
+        self.assertRedirects(
+            response=response,
+            expected_url='http://dummyurl.com/document/file/foobar',
+            fetch_redirect_response=False,
+        )
+
+    def test_redirect_to_the_admissibilitys_url_if_no_minutes_to_redirect(self):
+        self.client.force_login(self.person.user)
+
+        self.mock_doctorate_api.return_value.retrieve_admissibilities.return_value[0].proces_verbal = []
+
+        response = self.client.get(self.url)
+
+        self.assertRedirects(
+            response=response,
+            expected_url=self.admissibility_url,
+            fetch_redirect_response=False,
         )
