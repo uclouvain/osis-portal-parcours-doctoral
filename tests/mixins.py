@@ -30,26 +30,25 @@ from uuid import uuid4
 
 from django.test import override_settings
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import (
-    CotutelleDTONested,
-)
+from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import CotutelleDTONested
 from osis_parcours_doctoral_sdk.model.entite_gestion_dto_nested import (
     EntiteGestionDTONested,
 )
-from osis_parcours_doctoral_sdk.model.financement_dto_nested import (
-    FinancementDTONested,
-)
-from osis_parcours_doctoral_sdk.model.formation_dto_nested import (
-    FormationDTONested,
-)
+from osis_parcours_doctoral_sdk.model.financement_dto_nested import FinancementDTONested
+from osis_parcours_doctoral_sdk.model.formation_dto_nested import FormationDTONested
+from osis_parcours_doctoral_sdk.model.jury_dto import JuryDTO
+from osis_parcours_doctoral_sdk.model.membre_jury_dto_nested import MembreJuryDTONested
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import (
     ParcoursDoctoralDTOLinks,
 )
-from osis_parcours_doctoral_sdk.model.projet_dto_nested import (
-    ProjetDTONested,
+from osis_parcours_doctoral_sdk.model.projet_dto_nested import ProjetDTONested
+from osis_parcours_doctoral_sdk.model.signature_membre_jury_dto_nested import (
+    SignatureMembreJuryDTONested,
 )
+from osis_reference_sdk.model.country import Country
 from osis_reference_sdk.model.language import Language
+from osis_reference_sdk.model.paginated_country import PaginatedCountry
 from osis_reference_sdk.model.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
@@ -74,6 +73,25 @@ from parcours_doctoral.contrib.forms import PDF_MIME_TYPE
     PARCOURS_DOCTORAL_TOKEN_EXTERNAL='api-token-external',
 )
 class BaseDoctorateTestCase(OsisPortalTestCase):
+    mime_type = PDF_MIME_TYPE
+
+    @classmethod
+    def get_countries(cls, **kwargs):
+        countries = [
+            Country._from_openapi_data(iso_code='FR', name='France', name_en='France', european_union=True),
+            Country._from_openapi_data(iso_code='BE', name='Belgique', name_en='Belgium', european_union=True),
+        ]
+        if kwargs.get('iso_code'):
+            return PaginatedCountry._from_openapi_data(
+                results=[c for c in countries if c.iso_code == kwargs.get('iso_code')],
+            )
+        return PaginatedCountry._from_openapi_data(results=countries)
+
+    @classmethod
+    def get_country(cls, **kwargs):
+        countries = cls.get_countries(**kwargs)
+        return countries.results[0] if countries.results else None
+
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -99,9 +117,11 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             statut=ChoixStatutDoctorat.ADMIS.name,
             date_changement_statut=datetime.datetime(2024, 1, 3),
             cree_le=datetime.datetime(2024, 1, 1),
+            archive=[],
             uuid_admission=str(uuid.uuid4()),
             type_admission=AdmissionType.ADMISSION.name,
             intitule_secteur_formation='First sector',
+            sigle_entite_gestion='SSH',
             formation=FormationDTONested._from_openapi_data(
                 sigle='SC3DP',
                 code='DKOE',
@@ -189,6 +209,12 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'retrieve_complementary_training',
                         'retrieve_course_enrollment',
                         'retrieve_assessment_enrollment',
+                        'retrieve_private_defense',
+                        'retrieve_private_defense_minutes_canvas',
+                        'retrieve_public_defense',
+                        'update_private_defense',
+                        'submit_private_defense_minutes',
+                        'update_public_defense',
                         'add_training',
                         'submit_training',
                         'assent_training',
@@ -197,6 +223,9 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'list_jury_members',
                         'create_jury_members',
                         'upload_pdf_confirmation',
+                        'jury_request_signatures',
+                        'retrieve_public_defense_minutes_canvas',
+                        'submit_public_defense_minutes',
                     ]
                 }
             ),
@@ -239,8 +268,83 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             nom_doctorant='Doe',
             commission_proximite=ChoixCommissionProximiteCDSS.ECLI.name,
             justification='Justification',
+            titre_these_propose='Title',
+            langue_soutenance_publique='FR',
+            nom_langue_soutenance_publique='French',
+            date_heure_soutenance_publique=datetime.datetime(2024, 2, 2, 11, 30),
+            lieu_soutenance_publique='Louvain-La-Neuve',
+            local_deliberation='D1',
+            informations_complementaires_soutenance_publique='Information',
+            resume_annonce='Announcement summary',
+            photo_annonce=[],
+            proces_verbal_soutenance_publique=['minutes-uuid'],
+            date_retrait_diplome=datetime.date(2025, 2, 2),
         )
         self.mock_doctorate_api.return_value.doctorate_retrieve.return_value = self.mock_doctorate_object
+        self.mock_doctorate_api.return_value.retrieve_jury_preparation.return_value = JuryDTO._from_openapi_data(
+            uuid=self.doctorate_uuid,
+            titre_propose='titre propose',
+            has_change_roles_permission=True,
+            membres=[
+                MembreJuryDTONested(
+                    uuid='7695d217-0a52-46fc-b4a8-3892621025e9',
+                    role='MEMBRE',
+                    est_promoteur=True,
+                    est_promoteur_de_reference=True,
+                    matricule='0123456789',
+                    institution='',
+                    autre_institution='',
+                    pays='pays',
+                    nom='Troufignon',
+                    prenom='prenom',
+                    titre='titre',
+                    justification_non_docteur='',
+                    genre='F',
+                    langue='FR',
+                    email='email@example.org',
+                    signature=SignatureMembreJuryDTONested(
+                        etat='APPROVED',
+                        commentaire_externe="A public comment to display",
+                        commentaire_interne='',
+                        motif_refus='',
+                        pdf=[],
+                    ),
+                ),
+                MembreJuryDTONested(
+                    uuid='74ca8fbf-4566-437c-b6bb-c0c4780ec046',
+                    role='MEMBRE',
+                    est_promoteur=True,
+                    est_promoteur_de_reference=False,
+                    matricule=self.person.global_id,
+                    institution='',
+                    autre_institution='',
+                    pays='pays',
+                    nom='nom',
+                    prenom='prenom',
+                    titre='titre',
+                    justification_non_docteur='',
+                    genre='F',
+                    langue='FR',
+                    email='email@example.org',
+                    signature=SignatureMembreJuryDTONested(
+                        etat='INVITED',
+                        commentaire_externe="",
+                        commentaire_interne='',
+                        motif_refus='',
+                        pdf=[],
+                    ),
+                ),
+            ],
+            formule_defense='',
+            date_indicative='2025-08-01',
+            nom_langue_redaction='',
+            langue_redaction='',
+            nom_langue_soutenance='',
+            langue_soutenance='',
+            commentaire='',
+            approbation_pdf=[],
+            situation_comptable=None,
+        )
 
     def _mock_document_api(self):
         document_api_patcher = patch('osis_document_components.services.get_remote_token', return_value='foobar')
@@ -249,7 +353,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
 
         document_api_patcher = patch(
             'osis_document_components.services.get_remote_metadata',
-            return_value={'name': 'myfile', 'mimetype': PDF_MIME_TYPE, 'size': 1},
+            return_value={'name': 'myfile', 'mimetype': self.mime_type, 'size': 1},
         )
         document_api_patcher.start()
 
@@ -292,6 +396,18 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             type=TypeBourse.BOURSE_INTERNATIONALE_DOCTORAT.name,
         )
         self.mock_scholarship_api.return_value.retrieve_scholarship.return_value = self.mock_scholarship_object
+
+        countries_api_patcher = patch("osis_reference_sdk.api.countries_api.CountriesApi")
+        self.mock_countries_api = countries_api_patcher.start()
+        self.mock_countries_api.return_value.countries_list.side_effect = lambda **kwargs: self.get_countries(**kwargs)
+
+        self.addCleanup(countries_api_patcher.stop)
+
+        # Mock the parent method to prevent to use the cache
+        mock_country_method = patch('parcours_doctoral.services.reference.CountriesService.get_country')
+        self.mock_country_method = mock_country_method.start()
+        self.addCleanup(self.mock_country_method.stop)
+        self.mock_country_method.side_effect = lambda **kwargs: self.get_country(**kwargs)
 
     def setUp(self):
         super().setUp()

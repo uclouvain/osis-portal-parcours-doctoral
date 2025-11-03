@@ -32,17 +32,40 @@ from django.conf import settings
 from django.utils.translation import get_language
 from osis_parcours_doctoral_sdk import ApiException
 from osis_parcours_doctoral_sdk.api import doctorate_api
+from osis_parcours_doctoral_sdk.model.approuver_jury_command import ApprouverJuryCommand
+from osis_parcours_doctoral_sdk.model.approuver_jury_par_pdf_command import (
+    ApprouverJuryParPdfCommand,
+)
 from osis_parcours_doctoral_sdk.model.confirmation_paper_canvas import (
     ConfirmationPaperCanvas,
 )
 from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
-from osis_parcours_doctoral_sdk.model.jury_identity_dto import JuryIdentityDTO
+from osis_parcours_doctoral_sdk.model.jury_dto import JuryDTO
 from osis_parcours_doctoral_sdk.model.membre_jury_identity_dto import (
     MembreJuryIdentityDTO,
 )
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
 from osis_parcours_doctoral_sdk.model.parcours_doctoral_identity_dto import (
     ParcoursDoctoralIdentityDTO,
+)
+from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
+from osis_parcours_doctoral_sdk.model.private_defense_minutes_canvas import (
+    PrivateDefenseMinutesCanvas,
+)
+from osis_parcours_doctoral_sdk.model.public_defense_minutes_canvas import (
+    PublicDefenseMinutesCanvas,
+)
+from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCommand
+from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe import (
+    RenvoyerInvitationSignatureExterne,
+)
+from osis_parcours_doctoral_sdk.model.submit_private_defense import SubmitPrivateDefense
+from osis_parcours_doctoral_sdk.model.submit_private_defense_minutes import (
+    SubmitPrivateDefenseMinutes,
+)
+from osis_parcours_doctoral_sdk.model.submit_public_defense import SubmitPublicDefense
+from osis_parcours_doctoral_sdk.model.submit_public_defense_minutes import (
+    SubmitPublicDefenseMinutes,
 )
 from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
 from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
@@ -178,6 +201,71 @@ class DoctorateService(metaclass=ServiceMeta):
         return DoctorateAPIClient().submit_confirmation_paper_extension_request(
             uuid=uuid,
             submit_confirmation_paper_extension_request_command=kwargs,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_private_defenses(cls, person, doctorate_uuid) -> List[PrivateDefenseDTO]:
+        return DoctorateAPIClient().retrieve_private_defenses(
+            uuid=doctorate_uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_private_defense(cls, person, doctorate_uuid, private_defense_uuid) -> PrivateDefenseDTO:
+        return DoctorateAPIClient().retrieve_private_defense(
+            uuid=doctorate_uuid,
+            private_defense_uuid=private_defense_uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_private_defense(cls, person, doctorate_uuid, private_defense_uuid, data) -> ParcoursDoctoralIdentityDTO:
+        return DoctorateAPIClient().submit_private_defense(
+            uuid=doctorate_uuid,
+            private_defense_uuid=private_defense_uuid,
+            submit_private_defense=SubmitPrivateDefense(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_private_defense_minutes_canvas(cls, person, uuid) -> PrivateDefenseMinutesCanvas:
+        return DoctorateAPIClient().retrieve_private_defense_minutes_canvas(
+            uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_private_defense_minutes(cls, person, doctorate_uuid, private_defense_uuid, data):
+        return DoctorateAPIClient().submit_private_defense_minutes(
+            uuid=doctorate_uuid,
+            submit_private_defense_minutes=SubmitPrivateDefenseMinutes(
+                uuid=private_defense_uuid,
+                **data,
+            ),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_public_defense(cls, person, doctorate_uuid, data):
+        return DoctorateAPIClient().submit_public_defense(
+            uuid=doctorate_uuid,
+            submit_public_defense=SubmitPublicDefense(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_public_defense_minutes_canvas(cls, person, uuid) -> PublicDefenseMinutesCanvas:
+        return DoctorateAPIClient().retrieve_public_defense_minutes_canvas(
+            uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_public_defense_minutes(cls, person, doctorate_uuid, data):
+        return DoctorateAPIClient().submit_public_defense_minutes(
+            uuid=doctorate_uuid,
+            submit_public_defense_minutes=SubmitPublicDefenseMinutes(**data),
             **build_mandatory_auth_headers(person),
         )
 
@@ -346,14 +434,14 @@ class DoctorateJuryService(metaclass=ServiceMeta):
         }
 
     @classmethod
-    def retrieve_jury(cls, person, uuid, **kwargs) -> JuryIdentityDTO:
+    def retrieve_jury(cls, person, uuid, **kwargs) -> JuryDTO:
         return DoctorateAPIClient().retrieve_jury_preparation(
             uuid=uuid,
             **build_mandatory_auth_headers(person),
         )
 
     @classmethod
-    def modifier_jury(cls, person, uuid, **kwargs) -> JuryIdentityDTO:
+    def modifier_jury(cls, person, uuid, **kwargs) -> JuryDTO:
         return DoctorateAPIClient().update_jury_preparation(
             uuid=uuid,
             modifier_jury_command=kwargs,
@@ -405,7 +493,79 @@ class DoctorateJuryService(metaclass=ServiceMeta):
         return DoctorateAPIClient().update_role_jury_member(
             uuid=uuid,
             member_uuid=member_uuid,
-            modifier_role_membre_command=kwargs,
+            patched_modifier_role_membre_command=kwargs,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def request_signatures(cls, person: Person, uuid):
+        return DoctorateAPIClient().request_signatures(
+            uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_signature_conditions(cls, person, uuid) -> List:
+        return DoctorateAPIClient().signature_conditions(
+            uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def resend_invite(cls, person, uuid, **kwargs):
+        return DoctorateAPIClient().resend_invite(
+            uuid=uuid,
+            renvoyer_invitation_signature_externe=RenvoyerInvitationSignatureExterne(**kwargs),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def approve_jury(cls, person, uuid, **kwargs):
+        return DoctorateAPIClient().approve_jury(
+            uuid=uuid,
+            approuver_jury_command=ApprouverJuryCommand(**kwargs),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def reject_jury(cls, person, uuid, **kwargs):
+        return DoctorateAPIClient().reject_jury(
+            uuid=uuid,
+            refuser_jury_command=RefuserJuryCommand(**kwargs),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_external_jury(cls, uuid, token, **kwargs):
+        return DoctorateAPIClient(api_config=cls.build_config()).get_external_jury(
+            uuid=uuid,
+            token=token,
+            **cls.build_mandatory_external_headers(),
+        )
+
+    @classmethod
+    def approve_external_jury(cls, uuid, token, **kwargs):
+        return DoctorateAPIClient(api_config=cls.build_config()).approve_external_jury(
+            uuid=uuid,
+            token=token,
+            approuver_jury_command=ApprouverJuryCommand(**kwargs),
+            **cls.build_mandatory_external_headers(),
+        )
+
+    @classmethod
+    def reject_external_jury(cls, uuid, token, **kwargs):
+        return DoctorateAPIClient(api_config=cls.build_config()).reject_external_jury(
+            uuid=uuid,
+            token=token,
+            refuser_jury_command=RefuserJuryCommand(**kwargs),
+            **cls.build_mandatory_external_headers(),
+        )
+
+    @classmethod
+    def approve_by_pdf(cls, person, uuid, **kwargs):
+        return DoctorateAPIClient().approve_by_pdf(
+            uuid=uuid,
+            approuver_jury_par_pdf_command=ApprouverJuryParPdfCommand(**kwargs),
             **build_mandatory_auth_headers(person),
         )
 
@@ -446,17 +606,18 @@ class ConfirmationPaperBusinessException(Enum):
 
 
 class JuryBusinessException(Enum):
-    PromoteurPresidentException = "JURY-1"
-    MembreNonTrouveDansJuryException = "JURY-3"
-    JuryNonTrouveException = "JURY-4"
-    PromoteurRetireException = "JURY-5"
-    PromoteurModifieException = "JURY-6"
-    NonDocteurSansJustificationException = "JURY-7"
-    MembreExterneSansInstitutionException = "JURY-8"
-    MembreExterneSansPaysException = "JURY-9"
-    MembreExterneSansNomException = "JURY-10"
-    MembreExterneSansPrenomException = "JURY-11"
-    MembreExterneSansTitreException = "JURY-12"
-    MembreExterneSansGenreException = "JURY-13"
-    MembreExterneSansEmailException = "JURY-14"
-    MembreDejaDansJuryException = "JURY-15"
+    PromoteurPresidentException = "JURY-7"
+    MembreNonTrouveDansJuryException = "JURY-8"
+    JuryNonTrouveException = "JURY-9"
+    PromoteurRetireException = "JURY-10"
+    PromoteurModifieException = "JURY-11"
+    NonDocteurSansJustificationException = "JURY-12"
+    MembreExterneSansInstitutionException = "JURY-13"
+    MembreExterneSansPaysException = "JURY-14"
+    MembreExterneSansNomException = "JURY-15"
+    MembreExterneSansPrenomException = "JURY-16"
+    MembreExterneSansTitreException = "JURY-17"
+    MembreExterneSansGenreException = "JURY-18"
+    MembreExterneSansEmailException = "JURY-19"
+    MembreDejaDansJuryException = "JURY-20"
+    MembreExterneSansLangueDeContactException = "JURY-29"

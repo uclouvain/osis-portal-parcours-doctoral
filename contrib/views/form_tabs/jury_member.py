@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,8 +36,12 @@ from frontoffice.settings.osis_sdk.utils import MultipleApiBusinessException
 from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
 from parcours_doctoral.contrib.forms.jury.membre_role import JuryMembreRoleForm
 from parcours_doctoral.contrib.views.details_tabs.jury import LoadJuryViewMixin
-from parcours_doctoral.services.doctorate import DoctorateJuryService, JuryBusinessException
+from parcours_doctoral.services.doctorate import (
+    DoctorateJuryService,
+    JuryBusinessException,
+)
 from parcours_doctoral.services.mixins import WebServiceFormMixin
+from parcours_doctoral.templatetags.parcours_doctoral import can_make_action
 from reference.services.country import CountryService
 
 __all__ = [
@@ -83,9 +87,15 @@ class JuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormMixin, For
         JuryBusinessException.MembreExterneSansTitreException: "titre",
         JuryBusinessException.MembreExterneSansGenreException: "genre",
         JuryBusinessException.MembreExterneSansEmailException: "email",
+        JuryBusinessException.MembreExterneSansLangueDeContactException: "langue",
         JuryBusinessException.MembreDejaDansJuryException: "matricule",
     }
     extra_context = {'submit_label': gettext_lazy('Update')}
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['person'] = self.request.user.person
+        return kwargs
 
     def get_success_url(self):
         return self.request.POST.get('redirect_to') or reverse(
@@ -104,15 +114,18 @@ class JuryMembreUpdateFormView(LoadJuryMemberViewMixin, WebServiceFormMixin, For
             'institution': self.membre.institution,
             'autre_institution': self.membre.autre_institution,
             'pays': (
-                CountryService.get_countries(person=self.request.user.person, name=self.membre.pays).results[0]
-                if self.membre.pays else None
+                CountryService.get_countries(person=self.request.user.person, name=self.membre.pays).results[0].iso_code
+                if self.membre.pays
+                else None
             ),
             'nom': self.membre.nom,
             'prenom': self.membre.prenom,
             'titre': self.membre.titre,
             'justification_non_docteur': self.membre.justification_non_docteur,
             'genre': self.membre.genre,
+            'langue': self.membre.langue,
             'email': self.membre.email,
+            'langue': self.membre.langue,
         }
 
     def call_webservice(self, data):
@@ -145,6 +158,9 @@ class JuryMemberRemoveView(LoadJuryMemberViewMixin, WebServiceFormMixin, View):
 class JuryMemberChangeRoleView(LoadJuryMemberViewMixin, WebServiceFormMixin, View):
     urlpatterns = 'change-role'
 
+    def has_permission(self):
+        return self.jury.has_change_roles_permission
+
     def post(self, request, *args, **kwargs):
         form = JuryMembreRoleForm(data=request.POST)
         if form.is_valid():
@@ -162,4 +178,6 @@ class JuryMemberChangeRoleView(LoadJuryMemberViewMixin, WebServiceFormMixin, Vie
                 messages.error(request, str(e))
         else:
             messages.error(self.request, str(form.errors))
-        return redirect('parcours_doctoral:update:jury', pk=self.doctorate_uuid)
+        if can_make_action(self.doctorate, 'update_jury_preparation'):
+            return redirect('parcours_doctoral:update:jury', pk=self.doctorate_uuid)
+        return redirect('parcours_doctoral:jury', pk=self.doctorate_uuid)
