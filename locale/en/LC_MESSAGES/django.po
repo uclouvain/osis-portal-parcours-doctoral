@@ -532,6 +532,7 @@ msgstr ""
 msgid "Diploma collection date"
 msgstr ""
 
+msgctxt "other gender"
 msgid "Doctor"
 msgstr ""
 
@@ -1225,6 +1226,7 @@ msgstr ""
 msgid "Private defence minutes"
 msgstr ""
 
+msgctxt "other gender"
 msgid "Professor"
 msgstr ""
 
@@ -1758,9 +1760,6 @@ msgstr ""
 
 #, no-python-format
 msgid "Time allocated for thesis (in %)"
-msgstr ""
-
-msgid "Title"
 msgstr ""
 
 msgctxt "doctorate"
