@@ -29,6 +29,9 @@ msgstr ""
 msgid "%(state)s on %(date)s"
 msgstr ""
 
+msgid ":"
+msgstr ""
+
 #, python-format
 msgid ""
 "<a href=\"%(enrollment_url)s\">Go to course enrolment</a> or <a "
@@ -49,11 +52,20 @@ msgstr ""
 msgid "A paper of each type has already been created."
 msgstr ""
 
+msgid "ABANDON"
+msgstr "Withdrawal"
+
 msgid "ACCEPTEE"
 msgstr "Accepted"
 
 msgid "ADMIS"
 msgstr "Admitted"
+
+msgid "ADRE"
+msgstr ""
+
+msgid "ADRE Manager"
+msgstr ""
 
 msgid "Academic year"
 msgstr ""
@@ -143,6 +155,9 @@ msgstr ""
 msgid "Add validation of prior experience (VAE)"
 msgstr ""
 
+msgid "Additional information"
+msgstr ""
+
 msgid "Admission"
 msgstr ""
 
@@ -151,6 +166,11 @@ msgid "All"
 msgstr ""
 
 msgid "An invitation has been sent again."
+msgstr ""
+
+msgid ""
+"Anticipated date or period for private defence (Format 1) or admissibility "
+"(Format 2)"
 msgstr ""
 
 msgid "Approval"
@@ -183,6 +203,10 @@ msgstr ""
 msgid "Are you sure you want to request signatures for this PhD?"
 msgstr ""
 
+msgid ""
+"Are you sure you want to request signatures to validate your thesis jury?"
+msgstr ""
+
 msgid "As it appears in an official course catalogue"
 msgstr ""
 
@@ -193,6 +217,9 @@ msgid "Attestation"
 msgstr ""
 
 msgid "Attestation of the communication"
+msgstr ""
+
+msgid "Auditor"
 msgstr ""
 
 msgid "Authors"
@@ -225,6 +252,12 @@ msgstr "Supervision committee member"
 
 msgid "CA members"
 msgstr "Supervision committee members"
+
+msgid "CDD"
+msgstr ""
+
+msgid "CDD Manager"
+msgstr ""
 
 msgid "CHEMISTRY"
 msgstr "Chemistry"
@@ -399,8 +432,26 @@ msgstr ""
 msgid "Current funding"
 msgstr ""
 
+msgid "DEFENSE_PRIVEE_AUTORISEE"
+msgstr "Authorized private defence"
+
+msgid "DEFENSE_PRIVEE_A_RECOMMENCER"
+msgstr "Private defence to be repeated"
+
+msgid "DEFENSE_PRIVEE_EN_ECHEC"
+msgstr "Private defence in failure"
+
+msgid "DEFENSE_PRIVEE_REUSSIE"
+msgstr "Passed private defence"
+
+msgid "DEFENSE_PRIVEE_SOUMISE"
+msgstr "Submitted private defence"
+
 msgid "DESINSCRITE"
 msgstr "Withdrawn"
+
+msgid "DIAL link"
+msgstr ""
 
 msgid "DOCTORAL_TRAINING"
 msgstr "PhD training"
@@ -408,33 +459,39 @@ msgstr "PhD training"
 msgid "Date"
 msgstr ""
 
+msgid "Date of manuscript submission to the thesis exam board"
+msgstr ""
+
 msgid "Decision"
+msgstr ""
+
+msgctxt "doctorate tab"
+msgid "Defence"
 msgstr ""
 
 msgid "Defence date"
 msgstr ""
 
-msgctxt "doctorate tab"
-msgid "Defense"
+msgid "Defence indicative date"
 msgstr ""
 
-msgid "Defense indicative date"
+msgid "Defence language"
 msgstr ""
 
-msgid "Defense language"
-msgstr ""
-
-msgid "Defense method"
+msgid "Defence method"
 msgstr ""
 
 msgctxt "doctorate tab"
-msgid "Defense method"
+msgid "Defence method"
 msgstr ""
 
 msgid "Definitive admission date"
 msgstr ""
 
 msgid "Delete"
+msgstr ""
+
+msgid "Deliberation room"
 msgstr ""
 
 msgctxt "doctorate decision"
@@ -472,6 +529,10 @@ msgstr ""
 msgid "Development cooperation (ARES)"
 msgstr ""
 
+msgid "Diploma collection date"
+msgstr ""
+
+msgctxt "other gender"
 msgid "Doctor"
 msgstr ""
 
@@ -481,10 +542,10 @@ msgstr ""
 msgid "Doctoral training proposal"
 msgstr ""
 
-msgid "Doctorate thesis field"
+msgid "Doctorate summary"
 msgstr ""
 
-msgid "Does not have a doctor title"
+msgid "Doctorate thesis field"
 msgstr ""
 
 msgid "Download as PDF"
@@ -692,9 +753,12 @@ msgid ""
 "the extension request."
 msgstr ""
 
+msgid "If necessary, contact your administrator for practical arrangements."
+msgstr ""
+
 msgid ""
 "If necessary, please finish inputting doctoral activities and complete the "
-"defense preparation below before submitting the jury proposition."
+"defence preparation below before submitting the jury proposition."
 msgstr ""
 
 msgid ""
@@ -830,7 +894,13 @@ msgctxt "session"
 msgid "June"
 msgstr ""
 
+msgid "Jury approval"
+msgstr ""
+
 msgid "Jury composition"
+msgstr ""
+
+msgid "Justification"
 msgstr ""
 
 msgid "Justification letter"
@@ -898,12 +968,12 @@ msgid "Members"
 msgstr ""
 
 msgid ""
-"Method 1 (the private defense and the public defense are separated by at "
+"Method 1 (the private defence and the public defence are separated by at "
 "least a month"
 msgstr ""
 
 msgid ""
-"Method 2 (The private defense and the public defense are organised the same "
+"Method 2 (The private defence and the public defence are organised the same "
 "day, and subjected to an admissibility condition)"
 msgstr ""
 
@@ -963,7 +1033,7 @@ msgstr ""
 msgid "No course created at present."
 msgstr ""
 
-msgid "No defense reason"
+msgid "No defence reason"
 msgstr ""
 
 msgid "No joint supervision"
@@ -1036,6 +1106,9 @@ msgstr ""
 msgid "PRIVATE_DEFENSE"
 msgstr "Private defence"
 
+msgid "PROCLAME"
+msgstr "Proclaimed"
+
 msgid "PUBLICATION"
 msgstr "Publications"
 
@@ -1078,6 +1151,9 @@ msgstr ""
 msgid "PhDs"
 msgstr ""
 
+msgid "Photo for announcement"
+msgstr ""
+
 msgid ""
 "Please check the details of the activity (and sub-activities) to fill in all "
 "the mandatory fields"
@@ -1087,13 +1163,13 @@ msgid ""
 "Please check the details of the activity to fill in all mandatory fields"
 msgstr ""
 
+msgid "Please contact your administrator to draft the announcement."
+msgstr ""
+
 msgid "Please correct the errors below"
 msgstr ""
 
 msgid "Please first correct the erros"
-msgstr ""
-
-msgid "Please justify why the member does not have a doctor title"
 msgstr ""
 
 msgid ""
@@ -1135,6 +1211,22 @@ msgstr ""
 msgid "Previous confirmation exams"
 msgstr ""
 
+msgid "Previous private defences"
+msgstr ""
+
+msgid "Private defence"
+msgstr ""
+
+msgid "Private defence date and time"
+msgstr ""
+
+msgid "Private defence location"
+msgstr ""
+
+msgid "Private defence minutes"
+msgstr ""
+
+msgctxt "other gender"
 msgid "Professor"
 msgstr ""
 
@@ -1200,6 +1292,21 @@ msgstr ""
 msgid "Proximity commission for public health, health and society (SPSS)"
 msgstr ""
 
+msgid "Public defence"
+msgstr ""
+
+msgid "Public defence date and time"
+msgstr ""
+
+msgid "Public defence language"
+msgstr ""
+
+msgid "Public defence location"
+msgstr ""
+
+msgid "Public defence minutes"
+msgstr ""
+
 msgid "Publication status"
 msgstr ""
 
@@ -1242,7 +1349,7 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-msgctxt "jury member"
+msgctxt "parcours_doctoral"
 msgid "Remove"
 msgstr ""
 
@@ -1311,6 +1418,12 @@ msgstr "Institutional, educational and scientific expertise service"
 
 msgid "SOUMISE"
 msgstr "Submitted"
+
+msgid "SOUTENANCE_PUBLIQUE_AUTORISEE"
+msgstr "Authorized public defence"
+
+msgid "SOUTENANCE_PUBLIQUE_SOUMISE"
+msgstr "Submitted public defence"
 
 msgid "STATISTICS"
 msgstr "Statistics"
@@ -1451,6 +1564,9 @@ msgctxt "paper summary"
 msgid "Summary"
 msgstr ""
 
+msgid "Summary for announcement"
+msgstr ""
+
 msgid "Summary of the communication"
 msgstr ""
 
@@ -1470,7 +1586,7 @@ msgid "Surname"
 msgstr ""
 
 msgid ""
-"The \"doctoral training\" must be completed before submitting the defense "
+"The \"doctoral training\" must be completed before submitting the defence "
 "preparation and the jury proposition."
 msgstr ""
 
@@ -1499,6 +1615,18 @@ msgstr ""
 
 #, python-format
 msgid ""
+"The canvas of the private defence minutes can be downloaded <a "
+"href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
+msgstr ""
+
+#, python-format
+msgid ""
+"The canvas of the public defence minutes can be downloaded <a "
+"href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
+msgstr ""
+
+#, python-format
+msgid ""
 "The canvas of the supervisory panel report must be sent to the accompanying "
 "committee during the test. It can be downloaded <a href=\"%(canvas_url)s\" "
 "target=\"_blank\">here</a>."
@@ -1517,28 +1645,75 @@ msgid ""
 msgstr ""
 
 msgid ""
+"The final text of your thesis must be submitted to thesis exam board members "
+"no later than two weeks before the public defence date. The submission "
+"format (paper and/or digital) is to be agreed upon with each thesis exam "
+"board member. At least half of the thesis exam board membership takes an "
+"active role in the public defence."
+msgstr ""
+
+msgid ""
 "The format of the documents to be uploaded below as well as the deadlines "
 "for submission may vary from one DDC to another; please check with your "
 "dossier manager and respect the usage foreseen by your domain doctoral "
 "committee."
 msgstr ""
 
+msgid ""
+"The minutes will be uploaded by the thesis exam board secretary or chair."
+msgstr ""
+
+msgid ""
+"The private defence date is chosen collectively by the jury and in agreement "
+"with the PhD student"
+msgstr ""
+
+msgid ""
+"The provisional text of your thesis must be sent to thesis exam board "
+"members no later than one month before the date set for the private defence. "
+"The manuscript format may vary from one Subject-specific PhD Committee (CDD) "
+"to another; please ask your administrator for details. The submission method "
+"(paper and/or digital) must be agreed with each thesis exam board member. "
+"The thesis exam board must be present in full at the private defence. The "
+"date must therefore be chosen collectively by the board in agreement with "
+"the PhD student."
+msgstr ""
+
+msgid ""
+"The public defence takes place at least one month after the private defence."
+msgstr ""
+
 msgid "The start date must be earlier than or the same as the end date."
+msgstr ""
+
+msgid "The summary of the doctorate in PDF format is not available."
 msgstr ""
 
 msgid "The summary of the proposal in PDF format cannot be found."
 msgstr ""
 
+msgid "There is no president set yet."
+msgstr ""
+
 msgid "There is no request for a new deadline."
 msgstr ""
 
-msgid "Thesis defense"
+msgid "There is no secretary set yet."
+msgstr ""
+
+msgid "There was an error while requesting signatures."
+msgstr ""
+
+msgid "Thesis defence"
 msgstr ""
 
 msgid "Thesis language"
 msgstr ""
 
 msgid "Thesis location"
+msgstr ""
+
+msgid "Thesis title"
 msgstr ""
 
 msgid "This activity and its potential subactivities will be discontinued"
@@ -1585,9 +1760,6 @@ msgstr ""
 
 #, no-python-format
 msgid "Time allocated for thesis (in %)"
-msgstr ""
-
-msgid "Title"
 msgstr ""
 
 msgctxt "doctorate"
@@ -1669,11 +1841,18 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
+msgctxt "verb"
+msgid "Update"
+msgstr ""
+
 msgid "Update member"
 msgstr ""
 
 msgid "VAE"
 msgstr "Validation of prior experience (VAE)"
+
+msgid "VERIFICATEUR"
+msgstr ""
 
 msgid "Validated"
 msgstr ""
@@ -1691,6 +1870,9 @@ msgid "Website"
 msgstr ""
 
 msgid "With reading committee"
+msgstr ""
+
+msgid "Without PhD degree"
 msgstr ""
 
 msgid "Without reading committee"
@@ -1731,6 +1913,10 @@ msgstr ""
 msgid "You must correct your application before you can request signatures."
 msgstr ""
 
+msgid ""
+"You must correct your jury composition before you can request signatures."
+msgstr ""
+
 msgid "You must reference a person in UCLouvain."
 msgstr ""
 
@@ -1768,6 +1954,9 @@ msgstr ""
 
 #, python-format
 msgid "from %(start)s to %(end)s"
+msgstr ""
+
+msgid "hh:mm"
 msgstr ""
 
 msgid "hours"

@@ -45,8 +45,8 @@ READ_ACTIONS_BY_TAB = {
     'complementary-training': 'retrieve_complementary_training',
     'course-enrollment': 'retrieve_course_enrollment',
     'assessment-enrollment': 'retrieve_assessment_enrollment',
-    'private-defense': '',
-    'public-defense': '',
+    'private-defense': 'retrieve_private_defense',
+    'public-defense': 'retrieve_public_defense',
     'messages': '',
 }
 
@@ -68,8 +68,8 @@ UPDATE_ACTIONS_BY_TAB = {
     'complementary-training': 'retrieve_complementary_training',
     'course-enrollment': 'retrieve_course_enrollment',
     'assessment-enrollment': 'retrieve_assessment_enrollment',
-    'private-defense': '',
-    'public-defense': '',
+    'private-defense': ['update_private_defense', 'submit_private_defense_minutes'],
+    'public-defense': ['update_public_defense', 'submit_public_defense_minutes'],
     'messages': '',
 }
 
