@@ -553,6 +553,7 @@ msgstr "ARES - Coopération au développement"
 msgid "Diploma collection date"
 msgstr "Date de retrait du diplôme"
 
+msgctxt "other gender"
 msgid "Doctor"
 msgstr "Docteur.e"
 
@@ -1007,7 +1008,7 @@ msgid "Male"
 msgstr "Masculin"
 
 msgid "Manage my PhD"
-msgstr "Gérer mon projet de recherche"
+msgstr "Gérer mon doctorat"
 
 msgid "Management of PhDs"
 msgstr "Gestion des doctorats"
@@ -1302,6 +1303,7 @@ msgstr "Lieu de la défense privée"
 msgid "Private defence minutes"
 msgstr "Procès verbal de la défense privée"
 
+msgctxt "other gender"
 msgid "Professor"
 msgstr "Professeur.e"
 
@@ -1920,9 +1922,6 @@ msgstr ""
 #, no-python-format
 msgid "Time allocated for thesis (in %)"
 msgstr "Temps consacré à la thèse (en %)"
-
-msgid "Title"
-msgstr "Titre"
 
 msgctxt "doctorate"
 msgid "Title"

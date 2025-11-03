@@ -23,7 +23,6 @@
 #    see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 
 from parcours_doctoral.services.doctorate import DoctorateService
@@ -36,7 +35,7 @@ __all__ = [
 __namespace__ = False
 
 
-class DoctorateListView(LoginRequiredMixin, TemplateView):
+class DoctorateListView(TemplateView):
     urlpatterns = {'list': 'list'}
     template_name = 'parcours_doctoral/doctorate_list.html'
 
@@ -48,7 +47,7 @@ class DoctorateListView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class DoctorateMemberListView(LoginRequiredMixin, TemplateView):
+class DoctorateMemberListView(TemplateView):
     urlpatterns = {'supervised-list': 'supervised'}
     template_name = 'parcours_doctoral/supervised_list.html'
 
