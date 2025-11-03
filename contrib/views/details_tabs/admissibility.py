@@ -37,6 +37,7 @@ from parcours_doctoral.services.doctorate import DoctorateJuryService, Doctorate
 __all__ = [
     'AdmissibilityDetailView',
     'AdmissibilityMinutesCanvasView',
+    'AdmissibilityMinutesView',
 ]
 
 __namespace__ = False
@@ -85,3 +86,30 @@ class AdmissibilityMinutesCanvasView(LoadViewMixin, RedirectView):
             person=self.request.user.person,
             doctorate_uuid=self.doctorate_uuid,
         ).url
+
+
+class AdmissibilityMinutesView(AdmissibilityCommonViewMixin, RedirectView):
+    urlpatterns = {
+        'admissibility-minutes': 'admissibility-minutes/<uuid:admissibility_id>',
+    }
+    permission_link_to_check = 'retrieve_admissibility'
+
+    def get_redirect_url(self, *args, **kwargs):
+        from osis_document_components.services import get_remote_token
+        from osis_document_components.utils import get_file_url
+
+        admissibility_uuid = str(self.kwargs['admissibility_id'])
+        current_admissibility = next(
+            (admissibility for admissibility in self.admissibilities if admissibility.uuid == admissibility_uuid),
+            None,
+        )
+
+        if current_admissibility and current_admissibility.proces_verbal:
+            reading_token = get_remote_token(
+                current_admissibility.proces_verbal[0],
+                wanted_post_process=PostProcessingWanted.ORIGINAL.name,
+            )
+
+            return get_file_url(reading_token)
+
+        return resolve_url('parcours_doctoral:admissibility', pk=self.doctorate_uuid)
