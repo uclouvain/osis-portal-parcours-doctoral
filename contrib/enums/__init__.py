@@ -29,6 +29,7 @@ ChoixStatutDoctorat
 """
 from .actor import *
 from .admission_type import *
+from .authorization_distribution import *
 from .doctorat import *
 from .experience_precedente import *
 from .financement import *

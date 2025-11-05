@@ -28,12 +28,8 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from parcours_doctoral.contrib.enums.jury import FormuleDefense
-from parcours_doctoral.contrib.forms import (
-    CustomDateInput,
-    get_language_initial_choices,
-)
+from parcours_doctoral.contrib.forms import get_language_initial_choices
 from parcours_doctoral.contrib.forms.autocomplete import ListSelect2
-from parcours_doctoral.contrib.views.autocomplete import LANGUAGE_UNDECIDED
 
 
 class JuryPreparationForm(forms.Form):
@@ -91,20 +87,14 @@ class JuryPreparationForm(forms.Form):
         # Initialize the fields with dynamic choices
         lang_code = self.data.get(self.add_prefix('langue_redaction'), self.initial.get('langue_redaction'))
 
-        if lang_code == LANGUAGE_UNDECIDED:
-            choices = ((LANGUAGE_UNDECIDED, _('Undecided')),)
-        else:
-            choices = get_language_initial_choices(lang_code, person)
+        choices = get_language_initial_choices(lang_code, person)
 
         self.fields['langue_redaction'].widget.choices = choices
         self.fields['langue_redaction'].choices = choices
 
         lang_code = self.data.get(self.add_prefix('langue_soutenance'), self.initial.get('langue_soutenance'))
 
-        if lang_code == LANGUAGE_UNDECIDED:
-            choices = ((LANGUAGE_UNDECIDED, _('Undecided')),)
-        else:
-            choices = get_language_initial_choices(lang_code, person)
+        choices = get_language_initial_choices(lang_code, person)
 
         self.fields['langue_soutenance'].widget.choices = choices
         self.fields['langue_soutenance'].choices = choices

@@ -149,6 +149,7 @@ TAB_TREE = {
         # Tab('jury-supervision', _('Jury supervision')),
         Tab('admissibility', _('Admissibility')),
         Tab('private-defense', _('Private defence')),
+        Tab('authorization-distribution', _('Authorization and distribution')),
         Tab('public-defense', _('Public defence')),
     ],
 }

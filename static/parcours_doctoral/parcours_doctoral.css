@@ -240,6 +240,10 @@ select.select2-hidden-accessible + span {
   display: none;
 }
 
+.select2-selection__choice {
+  padding: 5px !important;
+}
+
 .d-block {
   display: block;
 }
