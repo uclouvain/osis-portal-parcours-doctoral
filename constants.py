@@ -47,6 +47,7 @@ READ_ACTIONS_BY_TAB = {
     'assessment-enrollment': 'retrieve_assessment_enrollment',
     'admissibility': 'retrieve_admissibility',
     'private-defense': 'retrieve_private_defense',
+    'authorization-distribution': 'retrieve_authorization_distribution',
     'public-defense': 'retrieve_public_defense',
     'messages': '',
 }
@@ -71,6 +72,7 @@ UPDATE_ACTIONS_BY_TAB = {
     'assessment-enrollment': 'retrieve_assessment_enrollment',
     'admissibility': ['update_admissibility', 'submit_admissibility_minutes_and_opinions'],
     'private-defense': ['update_private_defense', 'submit_private_defense_minutes'],
+    'authorization-distribution': 'update_authorization_distribution',
     'public-defense': ['update_public_defense', 'submit_public_defense_minutes'],
     'messages': '',
 }
@@ -96,3 +98,7 @@ PLUS_5_ISO_CODES = [
     'LI',  # Liechtenstein
     'MC',  # Monaco
 ]
+
+
+# Some messages specified in django are not translated in fr_be so we defined it in this app
+TRANSLATIONS = {_('Item %(nth)s in the array did not validate:')}
