@@ -35,6 +35,7 @@ from parcours_doctoral.contrib.forms import (
     get_language_initial_choices,
 )
 from parcours_doctoral.contrib.forms.autocomplete import ListSelect2
+from parcours_doctoral.contrib.views.autocomplete import LANGUAGE_UNDECIDED
 
 
 class PublicDefenseForm(forms.Form):
@@ -84,6 +85,14 @@ class PublicDefenseForm(forms.Form):
 
         lang_code = self.data.get(self.add_prefix('langue'), self.initial.get('langue'))
         self.fields['langue'].choices = get_language_initial_choices(lang_code, person)
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if cleaned_data.get('langue') == LANGUAGE_UNDECIDED:
+            self.add_error('langue', _('Please select a language.'))
+
+        return cleaned_data
 
 
 class PromoterPublicDefenseForm(forms.Form):
