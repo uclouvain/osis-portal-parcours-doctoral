@@ -82,8 +82,35 @@ msgctxt "publication-status"
 msgid "Accepted"
 msgstr "Acceptée"
 
+#, python-format
+msgid "Accepted by %(first_name)s %(last_name)s on"
+msgstr "Accepté par %(first_name)s %(last_name)s le"
+
+msgid ""
+"Access may be restricted to certain parts of the thesis, for example to "
+"protect parts covered by confidentiality. Please specify this in this text "
+"area, mentioning the protected chapters and the type of access (restricted, "
+"forbidden, or embargo and date)."
+msgstr ""
+"L'accès peut être restreint à certaines parties de la thèse, pour protéger "
+"par exemple les parties couvertes par la confidentialité. Veuillez le "
+"spécifier dans cette zone texte, en mentionnant les chapitres protégés et le "
+"type d'accès (restreint, interdit, embargo + date)."
+
 msgid "Access my PhD students' applications"
 msgstr "Accéder aux dossiers de mes doctorants"
+
+msgid ""
+"Access to the digital thesis may be open to the entire world, limited to the "
+"UCLouvain intranet or reserved solely for administrators. Access may also be "
+"blocked for a specific period of time, if the author prefers paper "
+"distribution for a certain period of time (e.g. two or three years)."
+msgstr ""
+"L'accès à la thèse électronique peut être ouvert au monde entier, limité à "
+"l'intranet de l'UCL ou réservé aux seuls gestionnaires. L'accès peut "
+"également être bloqué durant une période déterminée, si l'auteur souhaite "
+"privilégier la diffusion papier pendant un certain temps (par exemple deux "
+"ou trois ans)."
 
 msgid "Actions"
 msgstr "Actions"
@@ -166,6 +193,9 @@ msgstr "Ajouter une valorisation des acquis de l'expérience"
 msgid "Additional information"
 msgstr "Informations complémentaires"
 
+msgid "Additional limitation for certain specific chapters"
+msgstr "Limitation additionnelle pour certains chapitres uniquement"
+
 msgid "Admissibility"
 msgstr "Recevabilité"
 
@@ -231,6 +261,9 @@ msgstr "Tel qu’il apparait dans un catalogue officiel de formation"
 msgid "Assessment enrollments"
 msgstr "Inscriptions aux évaluations"
 
+msgid "At the end of the embargo period, the thesis becomes public."
+msgstr "Au terme de la période d'embargo, la thèse devient publique."
+
 msgid "Attestation"
 msgstr "Attestation"
 
@@ -239,6 +272,9 @@ msgstr "Attestation de communication"
 
 msgid "Auditor"
 msgstr "Vérificateur.trice"
+
+msgid "Authorization and distribution"
+msgstr "Autorisation et diffusion"
 
 msgid "Authors"
 msgstr "Auteurs et autrices"
@@ -261,6 +297,29 @@ msgstr ""
 "Attention, certaines commissions doctorales exigent une preuve de l’activité "
 "dans leurs dispositions particulières. Référez-vous aux dispositions "
 "particulières de votre commission"
+
+#, python-format
+msgid ""
+"Before your defence, you must submit your thesis electronically to the DIAL "
+"electronic thesis repository (<a href=\"%(url)s\" target=\"_blank\">%(url)s</"
+"a>). Before you do so, please enter the metadata using the form below. "
+"Please also indicate your chosen distribution conditions (open or restricted "
+"access, blocking for a certain period, etc.), after discussing these with "
+"your supervisors. You will then receive an email confirming that your "
+"supervisor has approved the distribution, followed by an email from the "
+"library team regarding the deposit formalities to be completed in their DIAL "
+"application."
+msgstr ""
+"Avant votre soutenance, il convient de réaliser le dépôt électronique de "
+"votre thèse dans le répertoire électronique des thèses DIAL (<a "
+"href=\"%(url)s\">%(url)s</a>). Veuillez au préalable encoder les métadonnées "
+"à l’aide du formulaire ci-dessous. Veuillez également y indiquer les options "
+"de diffusion choisies (accès libre ou limité, blocage durant une certaine "
+"période, etc.), après discussion de celles-ci avec vos promoteurs·trices. "
+"Vous recevrez ensuite un mail comme quoi votre promoteur·trice de référence "
+"valide cette diffusion et recevrez ensuite un mail de l'équipe des "
+"bibliothèques pour les formalités de dépôt à accomplir dans leur application "
+"DIAL."
 
 msgid "Belgium"
 msgstr "Belgique"
@@ -562,6 +621,9 @@ msgstr "ARES - Coopération au développement"
 msgid "Diploma collection date"
 msgstr "Date de retrait du diplôme"
 
+msgid "Distribution conditions"
+msgstr "Modalités de diffusion"
+
 msgctxt "other gender"
 msgid "Doctor"
 msgstr "Docteur.e"
@@ -638,8 +700,14 @@ msgctxt "doctorate"
 msgid "Email"
 msgstr "E-mail"
 
+msgid "Embargo access"
+msgstr "Accès embargo"
+
 msgid "End date"
 msgstr "Date de fin"
+
+msgid "End of the embargo period"
+msgstr "Terme de la période d'embargo"
 
 msgid "English"
 msgstr "Anglais"
@@ -739,6 +807,12 @@ msgstr ""
 "Par exemple, un contrat, une lettre d'un•e promoteur•trice ou tout autre "
 "document indiquant que la bourse vous est octroyée aux dates indiquées."
 
+msgid "Forbidden access"
+msgstr "Accès interdit"
+
+msgid "Free access (Internet)"
+msgstr "Accès libre (Internet)"
+
 msgid "French"
 msgstr "Français"
 
@@ -783,6 +857,58 @@ msgstr "Titulaire d'un doctorat avec thèse"
 
 msgid "Hourly volume"
 msgstr "Volume d’heures"
+
+msgid "I accept"
+msgstr "J'accepte"
+
+msgid ""
+"I accept that the text of this thesis may be published in UCLouvain's "
+"digital thesis collection."
+msgstr ""
+"J'accepte que le texte de la thèse soit publié dans le recueil électronique "
+"des thèses de l'UCLouvain."
+
+msgid ""
+"I also certify that I have obtained, in accordance with copyright "
+"legislation and the requirements of image rights, all the necessary "
+"authorisations for the reproduction in the thesis of images, texts and/or "
+"any other works protected by copyright, and that I have obtained the "
+"necessary authorisations for their transmission to third parties."
+msgstr ""
+"Je certifie également avoir obtenu, conformément à la législation sur le "
+"droit d'auteur et aux exigences du droit à l'image, toutes les autorisations "
+"nécessaires à la reproduction dans la thèse d'images, de textes, et/ou de "
+"toutes autres oeuvres protégés par le droit d'auteur, et avoir obtenu les "
+"autorisations nécessaires à leur communication à des tiers."
+
+msgid "I am aware that the thesis summary will be available to the public."
+msgstr ""
+"Je suis conscient.e que le résumé de la thèse sera dans tous les cas "
+"disponible en accès public."
+
+msgid ""
+"I hereby certify that the digital version of the thesis submitted to "
+"UCLouvain for the purposes of the distribution authorised herein conforms to "
+"the official version approved by the thesis exam board."
+msgstr ""
+"Je certifie que la version électronique de la thèse remise à l'UCLouvain en "
+"vue de la diffusion autorisée par la présente est conforme à la version "
+"officielle approuvée par le jury de thèse."
+
+msgid ""
+"I retain all other rights regarding reproduction of and communications "
+"pertaining to the thesis, as well as the right to use the thesis in future "
+"works. I undertake, however, not to grant to third parties any rights which "
+"would in any way interfere with this authorisation and will reserve in any "
+"subsequent contract with third parties the rights and obligations arising "
+"from this authorisation."
+msgstr ""
+"Je conserve tous les autres droits pour la reproduction et la communication "
+"de la thèse, ainsi que le droit de l'utiliser dans de futurs travaux. Je "
+"m'engage toutefois à n'accorder à des tiers aucun droit qui viendrait d'une "
+"manière quelconque interférer avec la présente autorisation et réserverai "
+"dans tout contrat subséquent avec des tiers les droits et obligations "
+"découlant de la présente autorisation."
 
 msgid "INVITED"
 msgstr "Invité"
@@ -863,6 +989,19 @@ msgstr "En présentiel"
 msgid "In the context of a course, specify the name of the professor"
 msgstr "Dans le cadre d’un cours, indiquez ici le nom du ou de la professeur.e"
 
+msgid ""
+"In the event that a third party benefits from a right to review the "
+"publication and/or is the holder of a property right to all or part of the "
+"results described in the thesis, I certify that I have obtained their "
+"written authorisation for dissemination. This has been verified in "
+"collaboration with the Research Administration Department."
+msgstr ""
+"Au cas où un tiers bénéficie d’un droit de regard sur la publication et/ou "
+"est titulaire d’un droit de propriété sur tout ou partie des résultats "
+"décrits dans la thèse, je certifie avoir obtenu son autorisation écrite pour "
+"la diffusion. Cette vérification s'est faite en collaboration avec "
+"l'administration de la recherche."
+
 msgid "Incomplete field"
 msgstr "Non renseigné(e)"
 
@@ -917,6 +1056,10 @@ msgid ""
 msgstr ""
 "Votre demande d'admission est-elle en lien avec une candidature FNRS, FRIA, "
 "FRESH, CSC ?"
+
+#, python-format
+msgid "Item %(nth)s in the array did not validate:"
+msgstr "L'élément n°%(nth)s du tableau n’est pas valide :"
 
 msgid "JURY_APPROUVE_ADRE"
 msgstr "Jury approuvé par ADRE"
@@ -996,6 +1139,9 @@ msgstr "Quitter la page ?"
 
 msgid "Letters of recommendation"
 msgstr "Lettres de recommandation"
+
+msgid "Limited access (Intranet)"
+msgstr "Accès restreint (Intranet) "
 
 msgid "Lookup somebody"
 msgstr "Rechercher quelqu'un"
@@ -1263,6 +1409,9 @@ msgid ""
 msgstr ""
 "Veuillez consulter les dispositions particulières de votre commission "
 "doctorale de domaine pour le choix des activités."
+
+msgid "Please select a language."
+msgstr "Merci de sélectionner une langue."
 
 msgid "Please select a member"
 msgstr "Merci de sélectionner un membre"
@@ -1605,6 +1754,9 @@ msgstr "Voir le détail"
 msgid "Signature requests sent"
 msgstr "Demandes de signature envoyées"
 
+msgid "Sources of funding throughout PhD"
+msgstr "Sources de financement durant toute la durée du doctorat"
+
 msgid "Specify a scientific communication you made."
 msgstr "Indiquer ici une communication scientifique que vous avez réalisée."
 
@@ -1685,6 +1837,12 @@ msgstr "Résumé"
 
 msgid "Summary for announcement"
 msgstr "Résumé pour l’annonce"
+
+msgid "Summary in English"
+msgstr "Résumé en anglais"
+
+msgid "Summary in other language"
+msgstr "Résumé dans une autre langue"
 
 msgid "Summary of the communication"
 msgstr "Résumé de la communication"
@@ -1828,6 +1986,15 @@ msgstr ""
 "dépôt peuvent varier d'une CDD à l'autre; veillez à vous informer auprès de "
 "votre gestionnaire de dossier et respecter l'usage prévu par votre "
 "commission doctorale de domaine."
+
+msgid ""
+"The licence, which is free of charge and non-exclusive, is valid for the "
+"entire duration of the copyright, including any extensions, and for the "
+"entire world."
+msgstr ""
+"Cette licence, gratuite et non exclusive, est valable pour toute la durée de "
+"la propriété littéraire et artistique, y compris ses éventuelles "
+"prolongations, et pour le monde entier."
 
 msgid ""
 "The minutes will be uploaded by the thesis exam board secretary or chair."
@@ -2009,6 +2176,9 @@ msgstr ""
 "A téléverser obligatoirement si vous êtes boursier.ère du F.R.S.-FNRS (y "
 "compris Télévie), du FRIA ou du FRESH. Le canevas de cet avis est fourni par "
 "votre fonds de recherche."
+
+msgid "To this end, I license to UCLouvain the right to:"
+msgstr "A cette fin, je donne en licence à l'UCLouvain"
 
 msgid "Toggle navigation"
 msgstr "Afficher ou non la navigation"
@@ -2198,3 +2368,13 @@ msgstr "hh:mm"
 
 msgid "hours"
 msgstr "heures"
+
+msgid ""
+"impart the thesis to the public according to the procedures established "
+"below."
+msgstr ""
+"le droit de communiquer la thèse au public suivant les modalités définies ci-"
+"après."
+
+msgid "set and reproduce the thesis on a digital medium;"
+msgstr "le droit de fixer et de reproduire la thèse sur support électronique"
