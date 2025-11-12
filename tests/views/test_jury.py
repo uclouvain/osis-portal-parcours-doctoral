@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,14 +27,18 @@ import datetime
 from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
+from django.utils.translation import gettext_lazy as _
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 
+from frontoffice.settings.osis_sdk.utils import (
+    ApiBusinessException,
+    MultipleApiBusinessException,
+)
 from parcours_doctoral.contrib.enums import (
     FormuleDefense,
-    ChoixLangueRedactionThese,
+    GenreMembre,
     RoleJury,
     TitreMembre,
-    GenreMembre,
 )
 from parcours_doctoral.contrib.forms.jury.membre import JuryMembreForm
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
@@ -57,8 +61,8 @@ class JuryPreparationTestCase(BaseDoctorateTestCase):
             titre_propose="titre",
             formule_defense=FormuleDefense.FORMULE_1.name,
             date_indicative=datetime.date(2023, 4, 19),
-            langue_redaction=ChoixLangueRedactionThese.FRENCH.name,
-            langue_soutenance=ChoixLangueRedactionThese.FRENCH.name,
+            langue_redaction='FR',
+            langue_soutenance='FR',
             commentaire="Foobar",
         )
 
@@ -94,7 +98,7 @@ class JuryPreparationTestCase(BaseDoctorateTestCase):
                 "formule_defense": FormuleDefense.FORMULE_1.name,
                 "date_indicative": '2023-04-01',
                 "langue_redaction": 'FR',
-                "langue_soutenance": ChoixLangueRedactionThese.FRENCH.name,
+                "langue_soutenance": 'FR',
                 "commentaire": "Foobar bis",
             },
         )
@@ -114,42 +118,6 @@ class JuryTestCase(BaseDoctorateTestCase):
 
         self.client.force_login(self.person.user)
 
-        self.mock_doctorate_api.return_value.retrieve_jury_preparation.return_value = Mock(
-            uuid="3c5cdc60-2537-4a12-a396-64d2e9e34876",
-        )
-        self.mock_doctorate_api.return_value.list_jury_members.return_value = [
-            Mock(
-                uuid="3c5cdc60-2537-4a12-a396-64d2e9e34876",
-                role=RoleJury.MEMBRE.name,
-                est_promoteur=False,
-                matricule='',
-                institution='Université',
-                autre_institution='',
-                pays='pays',
-                nom='nom',
-                prenom='prenom',
-                titre=TitreMembre.DOCTEUR.name,
-                justification_non_docteur='',
-                genre=GenreMembre.AUTRE.name,
-                email='email',
-            ),
-            Mock(
-                uuid="3c5cdc60-2537-4a12-a396-64d2e9e34876",
-                role=RoleJury.SECRETAIRE.name,
-                est_promoteur=True,
-                matricule='0123456',
-                institution='UCLouvain',
-                autre_institution='',
-                pays='pays',
-                nom='autre nom',
-                prenom='autre prenom',
-                titre=TitreMembre.DOCTEUR.name,
-                justification_non_docteur='',
-                genre=GenreMembre.AUTRE.name,
-                email='email',
-            ),
-        ]
-
     def test_jury_get_no_permission(self):
         self.mock_doctorate_object.links['list_jury_members'] = ActionLink._from_openapi_data(error='access error')
         response = self.client.get(self.detail_url)
@@ -157,7 +125,7 @@ class JuryTestCase(BaseDoctorateTestCase):
 
     def test_jury_get(self):
         response = self.client.get(self.detail_url)
-        self.assertContains(response, "autre nom")
+        self.assertContains(response, "Troufignon")
 
     def test_jury_create_no_permission(self):
         self.mock_doctorate_object.links['create_jury_members'] = ActionLink._from_openapi_data(error='access error')
@@ -166,7 +134,7 @@ class JuryTestCase(BaseDoctorateTestCase):
 
     def test_jury_create(self):
         response = self.client.get(self.form_url)
-        self.assertContains(response, "autre nom")
+        self.assertContains(response, "Troufignon")
 
     def test_jury_create_with_data(self, *args):
         response = self.client.post(
@@ -190,3 +158,13 @@ class JuryTestCase(BaseDoctorateTestCase):
         last_call_kwargs = self.mock_doctorate_api.return_value.create_jury_members.call_args[1]
         self.assertIn("matricule", last_call_kwargs['ajouter_membre_command'])
         self.assertEqual(last_call_kwargs['ajouter_membre_command']['email'], "email@example.org")
+
+    def test_should_request_signatures(self):
+        url = resolve_url(
+            "parcours_doctoral:update:jury-request-signatures",
+            pk=self.doctorate_uuid,
+        )
+
+        response = self.client.post(url, {}, follow=True)
+        self.assertRedirects(response, self.detail_url)
+        self.assertTrue(self.mock_doctorate_api.return_value.request_signatures.called)

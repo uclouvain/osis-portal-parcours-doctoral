@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n parcours_doctoral %}
 
 {% comment "License" %}
 * OSIS stands for Open Student Information System. It's an application
@@ -7,7 +7,7 @@
 * The core business involves the administration of students, teachers,
 * courses, programs and so on.
 *
-* Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,19 +24,21 @@
 * see http://www.gnu.org/licenses/.
 {% endcomment %}
 
-<div class="text-justify fst-italic mb-4">
-  <p>{% trans "Important information:" %}</p>
-  <ul>
-    <li>
-      {% blocktrans trimmed %}
-        The "doctoral training" must be completed before submitting the defence preparation and the jury proposition.
-      {% endblocktrans %}
-    </li>
-    <li>
-      {% blocktrans trimmed %}
-        If necessary, please finish inputting doctoral activities and complete the defence preparation below before
-        submitting the jury proposition.
-      {% endblocktrans %}
-    </li>
-  </ul>
+<div class="text-text-justify fst-italic mb-4">
+  <p>{% translate "Important information:" %}</p>
+  <p>
+    {% blocktranslate trimmed %}
+      The final text of your thesis must be submitted to thesis exam board members no later than two weeks before the public defence date.
+      The submission format (paper and/or digital) is to be agreed upon with each thesis exam board member.
+      At least half of the thesis exam board membership takes an active role in the public defence.
+    {% endblocktranslate %}
+  </p>
+  {% if doctorate|can_make_action:'retrieve_public_defense_minutes_canvas' %}
+    <p>
+      {% url 'parcours_doctoral:public-defense-minutes-canvas' view.kwargs.pk as canvas_url %}
+      {% blocktranslate trimmed %}
+        The canvas of the public defence minutes can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
+      {% endblocktranslate %}
+    </p>
+  {% endif %}
 </div>
