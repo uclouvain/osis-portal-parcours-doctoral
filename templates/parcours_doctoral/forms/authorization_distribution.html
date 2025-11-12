@@ -1,0 +1,70 @@
+{% extends "parcours_doctoral/tab_layout.html" %}
+{% load static %}
+{% load i18n parcours_doctoral django_bootstrap5 %}
+
+{% comment "License" %}
+* OSIS stands for Open Student Information System. It's an application
+* designed to manage the core business of higher education institutions,
+* such as universities, faculties, institutes and professional schools.
+* The core business involves the administration of students, teachers,
+* courses, programs and so on.
+*
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* A copy of this license - GNU General Public License - is available
+* at the root of the source code of this program.  If not,
+* see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+{% block form %}
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4 class="card-title">{% translate "Authorization and distribution" %}</h4>
+    </div>
+    <div class="card-body">
+      {% include 'parcours_doctoral/includes/authorization_distribution/authorization_distribution_description.html' %}
+
+      {% bootstrap_form_errors form type='non_fields' %}
+
+      {% field_data _("Thesis title") doctorate.titre_these_propose inline=True %}
+      {% bootstrap_field form.sources_financement wrapper_class="mb-3 required_field" %}
+      {% bootstrap_field form.resume_anglais wrapper_class="mb-3 required_field" %}
+      {% bootstrap_field form.resume_autre_langue %}
+      {% bootstrap_field form.langue_redaction_these wrapper_class="mb-3 required_field" %}
+      {% bootstrap_field form.mots_cles wrapper_class="mb-3 required_field" %}
+
+      {{ accepted_text }}
+
+      <div class="row">
+        {% bootstrap_field_with_tooltip form.type_modalites_diffusion wrapper_class="mb-3 col-md-6 required_field" %}
+        {% bootstrap_field_with_tooltip form.date_embargo wrapper_class="mb-3 col-md-6 required_field embargo-date-field" %}
+      </div>
+      {% bootstrap_field_with_tooltip form.limitations_additionnelles_chapitres %}
+
+      {% bootstrap_field form.accepter_conditions wrapper_class="mb-3 required_field" %}
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block script %}
+  {{ block.super }}
+  <script src="{% static 'js/dependsOn.min.js' %}"></script>
+  <script type="application/javascript">
+  $(function () {
+    $('.embargo-date-field').dependsOn({
+      'select[name=type_modalites_diffusion]': { values: ['ACCES_EMBARGO'] },
+    }, { duration: 0 });
+  });
+  </script>
+{% endblock %}

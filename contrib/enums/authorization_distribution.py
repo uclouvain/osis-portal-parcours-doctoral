@@ -23,28 +23,33 @@
 #    see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from dal import autocomplete
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
+
+from base.models.utils.utils import ChoiceEnum
 
 __all__ = [
-    'ListSelect2',
-    'Select2',
-    'TagSelect2',
+    'ChoixEtatSignature',
+    'RoleActeur',
+    'TypeModalitesDiffusionThese',
 ]
 
 
-# The media of the select2 widget are loaded in the base layout.html so we don't need to do it twice
-class Select2WithoutMediaMixin:
-    class Media:
-        extend = False
+class TypeModalitesDiffusionThese(ChoiceEnum):
+    ACCES_LIBRE = _('Free access (Internet)')
+    ACCES_RESTREINT = _('Limited access (Intranet)')
+    ACCES_INTERDIT = _('Forbidden access')
+    ACCES_EMBARGO = _('Embargo access')
 
 
-class ListSelect2(Select2WithoutMediaMixin, autocomplete.ListSelect2):
-    pass
+class RoleActeur(ChoiceEnum):
+    PROMOTEUR = _('Supervisor')
+    CDD = _('CDD')
+    ADRE = _('ADRE')
 
 
-class Select2(Select2WithoutMediaMixin, autocomplete.Select2):
-    pass
-
-
-class TagSelect2(Select2WithoutMediaMixin, autocomplete.TagSelect2):
-    pass
+class ChoixEtatSignature(ChoiceEnum):
+    NOT_INVITED = _('NOT_INVITED')  # Pas encore envoyée au signataire
+    INVITED = _('INVITED')  # Envoyée au signataire
+    APPROVED = pgettext_lazy("doctorate decision", "Approved")  # Approuvée par le signataire
+    DECLINED = pgettext_lazy("doctorate decision", "Denied")  # Refusée par le signataire
