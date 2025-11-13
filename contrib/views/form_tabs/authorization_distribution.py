@@ -101,10 +101,21 @@ class AuthorizationDistributionFormView(AuthorizationDistributionCommonViewMixin
 
         return initial_data
 
-    def call_webservice(self, data):
+    def prepare_data(self, data):
+        data = super().prepare_data(data=data)
         data['modalites_diffusion_acceptees'] = self.accepted_text if data.pop('accepter_conditions', None) else ''
-        DoctorateService.update_authorization_distribution(
-            person=self.person,
-            uuid=self.doctorate_uuid,
-            data=data,
-        )
+        return data
+
+    def call_webservice(self, data):
+        if 'doctorate-main-form-confirm-modal-button' in self.request.POST:
+            DoctorateService.send_authorization_distribution_to_promoter(
+                person=self.person,
+                uuid=self.doctorate_uuid,
+                data=data,
+            )
+        else:
+            DoctorateService.update_authorization_distribution(
+                person=self.person,
+                uuid=self.doctorate_uuid,
+                data=data,
+            )

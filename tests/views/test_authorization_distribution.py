@@ -33,6 +33,9 @@ from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 from osis_parcours_doctoral_sdk.model.authorization_distribution_dto import (
     AuthorizationDistributionDTO,
 )
+from osis_parcours_doctoral_sdk.model.send_authorization_distribution_to_promoter import (
+    SendAuthorizationDistributionToPromoter,
+)
 from osis_parcours_doctoral_sdk.model.update_authorization_distribution import (
     UpdateAuthorizationDistribution,
 )
@@ -181,7 +184,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
 
         self.assertEqual(form.fields['langue_redaction_these'].choices, [EMPTY_CHOICE[0], ('FR', 'Français')])
 
-    def test_post_a_authorization_distribution_with_complete_data(self):
+    def test_post_authorization_distribution_with_complete_data(self):
         self.client.force_login(self.person.user)
 
         response = self.client.post(
@@ -206,6 +209,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
         )
 
         # Call the API with the right data
+        self.mock_doctorate_api.return_value.send_authorization_distribution_to_promoter.assert_not_called()
         self.mock_doctorate_api.return_value.update_authorization_distribution.assert_called()
         self.mock_doctorate_api.return_value.update_authorization_distribution.assert_called_with(
             uuid=self.doctorate_uuid,
@@ -223,7 +227,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
             **self.api_default_params,
         )
 
-    def test_post_a_authorization_distribution_with_minimal_data(self):
+    def test_post_authorization_distribution_with_minimal_data(self):
         self.client.force_login(self.person.user)
 
         self.mock_doctorate_api.return_value.retrieve_authorization_distribution.return_value = (
@@ -298,3 +302,47 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
 
         self.assertEqual(len(form.errors), 1)
         self.assertIn(gettext('Please select a language.'), form.errors.get('langue_redaction_these'))
+
+    def test_post_authorization_distribution_data_and_send_it_to_the_supervisor(self):
+        self.client.force_login(self.person.user)
+
+        response = self.client.post(
+            self.url,
+            data={
+                'sources_financement': 'New sources',
+                'resume_anglais': 'New summary in english',
+                'resume_autre_langue': 'New summary in another language',
+                'langue_redaction_these': 'FR',
+                'mots_cles': 'word-3,word-4',
+                'type_modalites_diffusion': TypeModalitesDiffusionThese.ACCES_RESTREINT.name,
+                'date_embargo': datetime.date(2026, 2, 2).isoformat(),
+                'limitations_additionnelles_chapitres': 'New limitations',
+                'accepter_conditions': 'on',
+                'doctorate-main-form-confirm-modal-button': '',
+            },
+        )
+
+        self.assertRedirects(response, expected_url=self.detail_url, fetch_redirect_response=False)
+
+        accepted_content = render_to_string(
+            'parcours_doctoral/includes/authorization_distribution/authorization_distribution_acceptation.html'
+        )
+
+        # Call the API with the right data
+        self.mock_doctorate_api.return_value.update_authorization_distribution.assert_not_called()
+        self.mock_doctorate_api.return_value.send_authorization_distribution_to_promoter.assert_called()
+        self.mock_doctorate_api.return_value.send_authorization_distribution_to_promoter.assert_called_with(
+            uuid=self.doctorate_uuid,
+            send_authorization_distribution_to_promoter=SendAuthorizationDistributionToPromoter._new_from_openapi_data(
+                sources_financement='New sources',
+                resume_anglais='New summary in english',
+                resume_autre_langue='New summary in another language',
+                langue_redaction_these='FR',
+                mots_cles=['word-3', 'word-4'],
+                type_modalites_diffusion=TypeModalitesDiffusionThese.ACCES_RESTREINT.name,
+                date_embargo=None,
+                limitations_additionnelles_chapitres='New limitations',
+                modalites_diffusion_acceptees=accepted_content,
+            ),
+            **self.api_default_params,
+        )
