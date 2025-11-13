@@ -1,4 +1,5 @@
-{% extends 'parcours_doctoral/modal/modal.html' %}{% load django_bootstrap5 i18n %}
+{% extends 'parcours_doctoral/modal/modal.html' %}
+{% load django_bootstrap5 i18n %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -24,9 +25,9 @@
   * see http://www.gnu.org/licenses/.
 {% endcomment %}
 
-{% block modal_id %}confirmation-modal{% endblock %}
+{% block modal_id %}{{ modal_id }}{% endblock %}
 
-{% block modal_title %}{% trans 'Confirmation' %}{% endblock %}
+{% block modal_title %}{% translate "Confirmation" %}{% endblock %}
 
 {% block modal_body %}
   <p>
@@ -39,12 +40,6 @@
 {% endblock %}
 
 {% block modal_footer %}
-  <form class="osis-form no-prevent-quitting" method="post" action="" id="confirmation-modal-form">
-    {% csrf_token %}
-    <input type="hidden" name="confirmed-id">
-    <button type="button" class="btn btn-light border border-dark-subtle" data-bs-dismiss="modal">{% trans "Cancel" %}</button>
-    <button type="submit" class="btn btn-danger" name="confirm" form="confirmation-modal-form">
-      {% trans "Confirm" %}
-    </button>
-  </form>
+  <button type="button" class="btn btn-light border border-dark-subtle" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+  <button type="submit" class="btn btn-success" name="{{ modal_id }}-button" form="{{ form_id }}">{% translate "Confirm" %}</button>
 {% endblock %}
