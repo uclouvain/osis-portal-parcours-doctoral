@@ -150,6 +150,7 @@ TAB_TREE = {
         Tab('admissibility', _('Admissibility')),
         Tab('private-defense', _('Private defence')),
         Tab('authorization-distribution', _('Authorization and distribution')),
+        Tab('manuscript-validation', _('Manuscript validation')),
         Tab('public-defense', _('Public defence')),
     ],
 }
