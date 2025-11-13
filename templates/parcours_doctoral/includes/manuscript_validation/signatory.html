@@ -1,0 +1,55 @@
+{% load i18n parcours_doctoral doctorate_enums %}
+
+{% comment "License" %}
+* OSIS stands for Open Student Information System. It's an application
+* designed to manage the core business of higher education institutions,
+* such as universities, faculties, institutes and professional schools.
+* The core business involves the administration of students, teachers,
+* courses, programs and so on.
+*
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* A copy of this license - GNU General Public License - is available
+* at the root of the source code of this program.  If not,
+* see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+{% if signataire %}
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">{{ signataire.role|enum_display:'RoleActeur' }}</h4>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <strong>{{ signataire.prenom }} {{ signataire.nom }}</strong>
+        (<a href="mailto:{{ signataire.email }}">{{ signataire.email }}</a>) - {{ signataire.institution }}
+        <em class="d-block">
+          {% blocktranslate with state=signataire.signature.etat|enum_display:'ChoixEtatSignature' date=signataire.signature.date_heure trimmed %}
+            {{ state }} on {{ date }}
+          {% endblocktranslate %}
+        </em>
+      </div>
+
+      {% if signataire.signature.etat == 'DECLINED' %}
+        {% field_data _('Grounds for denied') signataire.signature.motifs_refus html_tag='blockquote' %}
+      {% endif %}
+
+      {% if signataire.signature.etat == 'APPROVED' or signataire.signature.etat == 'DECLINED' %}
+        {% field_data _('Comment for the candidate') signataire.signature.commentaire_externe html_tag='blockquote' %}
+        {% if signataire.matricule == user.person.global_id %}
+          {% field_data _('Internal comment') signataire.signature.commentaire_interne html_tag='blockquote' %}
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
