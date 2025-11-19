@@ -23,7 +23,7 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import resolve_url
 from django.utils.functional import cached_property
 from django.views.generic.base import ContextMixin
@@ -32,7 +32,7 @@ from parcours_doctoral.services.doctorate import DoctorateService
 from parcours_doctoral.templatetags.parcours_doctoral import can_make_action
 
 
-class LoadViewMixin(LoginRequiredMixin, PermissionRequiredMixin, ContextMixin):
+class LoadViewMixin(PermissionRequiredMixin, ContextMixin):
     permission_link_to_check = ''
 
     def has_permission(self):

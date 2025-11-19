@@ -147,4 +147,4 @@ class CotutelleFormViewTestCase(BaseCotutelleTestCase):
         self.client.force_login(self.person.user)
         response = self.client.post(self.url, {'cotutelle': 'YES', 'motivation': 'Barbaz'})
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'institution', _('This field is required.'))
+        self.assertFormError(response.context['form'], 'institution', _('This field is required.'))
