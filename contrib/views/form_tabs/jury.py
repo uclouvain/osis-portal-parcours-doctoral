@@ -24,7 +24,6 @@
 #
 # ##############################################################################
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import Form
 from django.forms.models import ALL_FIELDS
 from django.http import HttpResponseRedirect
@@ -136,7 +135,7 @@ class JuryFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
         return self.request.path
 
 
-class JuryRequestSignaturesView(LoginRequiredMixin, WebServiceFormMixin, FormView):
+class JuryRequestSignaturesView(WebServiceFormMixin, FormView):
     urlpatterns = 'jury-request-signatures'
     form_class = Form
 

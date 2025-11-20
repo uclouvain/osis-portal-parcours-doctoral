@@ -25,7 +25,6 @@
 # ##############################################################################
 
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import Form
 from django.http import HttpResponseRedirect
@@ -39,7 +38,7 @@ from parcours_doctoral.services.mixins import WebServiceFormMixin
 __all__ = ['RequestSignaturesView']
 
 
-class RequestSignaturesView(LoginRequiredMixin, SuccessMessageMixin, WebServiceFormMixin, FormView):
+class RequestSignaturesView(SuccessMessageMixin, WebServiceFormMixin, FormView):
     urlpatterns = 'request-signatures'
     form_class = Form
     success_message = _("Signature requests sent")
