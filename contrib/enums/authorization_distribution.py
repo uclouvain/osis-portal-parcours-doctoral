@@ -24,12 +24,10 @@
 #
 # ##############################################################################
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import pgettext_lazy
 
 from base.models.utils.utils import ChoiceEnum
 
 __all__ = [
-    'ChoixEtatSignature',
     'RoleActeur',
     'TypeModalitesDiffusionThese',
 ]
@@ -44,12 +42,5 @@ class TypeModalitesDiffusionThese(ChoiceEnum):
 
 class RoleActeur(ChoiceEnum):
     PROMOTEUR = _('Supervisor')
-    CDD = _('CDD')
+    SCEB = _('SCEB')
     ADRE = _('ADRE')
-
-
-class ChoixEtatSignature(ChoiceEnum):
-    NOT_INVITED = _('NOT_INVITED')  # Pas encore envoyée au signataire
-    INVITED = _('INVITED')  # Envoyée au signataire
-    APPROVED = pgettext_lazy("doctorate decision", "Approved")  # Approuvée par le signataire
-    DECLINED = pgettext_lazy("doctorate decision", "Denied")  # Refusée par le signataire

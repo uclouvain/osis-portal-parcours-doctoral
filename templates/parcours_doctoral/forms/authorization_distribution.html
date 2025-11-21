@@ -56,6 +56,22 @@
   </div>
 {% endblock %}
 
+{% block submit_button %}
+  {{ block.super }}
+  <button
+    type="button"
+    class="btn btn-success"
+    data-bs-target="#doctorate-main-form-confirm-modal"
+    data-bs-toggle="modal"
+  >
+    <i class="fa-solid fa-floppy-disk-circle-arrow-right"></i>
+    {% translate "Save and send to the contact supervisor" %}
+  </button>
+{% endblock submit_button %}
+
+{% block after_form %}
+  {% include "parcours_doctoral/modal/confirmation_without_form_modal.html" with modal_id="doctorate-main-form-confirm-modal" form_id="doctorate-main-form" %}
+{% endblock %}
 
 {% block script %}
   {{ block.super }}

@@ -244,6 +244,9 @@ msgstr ""
 "Êtes-vous sûr de vouloir supprimer %(first_name)s %(last_name)s en tant que "
 "%(role)s ?"
 
+msgid "Are you sure you want to do it?"
+msgstr "Êtes-vous sûr de vouloir faire cela ?"
+
 #, python-format
 msgid "Are you sure you want to remove \"%(prenom)s %(nom)s\" from the jury?"
 msgstr "Êtes-vous sûr de vouloir retirer \"%(prenom)s %(nom)s\" du jury ?"
@@ -1168,6 +1171,9 @@ msgstr "Gérer mon doctorat"
 msgid "Management of PhDs"
 msgstr "Gestion des doctorats"
 
+msgid "Manuscript validation"
+msgstr "Validation du manuscrit"
+
 msgid "Mark or honours obtained"
 msgstr "Note ou mention obtenue"
 
@@ -1659,6 +1665,9 @@ msgstr "Renvoyer une invitation"
 msgid "Role"
 msgstr "Rôle"
 
+msgid "SCEB"
+msgstr "SCEB"
+
 msgid "SEARCH_SCHOLARSHIP"
 msgstr "Bourse de recherche"
 
@@ -1689,6 +1698,9 @@ msgstr "Statistiques"
 msgctxt "doctorate"
 msgid "Save"
 msgstr "Enregistrer"
+
+msgid "Save and send to the contact supervisor"
+msgstr "Enregistrer et envoyer au promoteur de contact"
 
 msgid "Scholarship end date"
 msgstr "Date de fin de la bourse"

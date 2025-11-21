@@ -66,6 +66,9 @@ from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCom
 from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe import (
     RenvoyerInvitationSignatureExterne,
 )
+from osis_parcours_doctoral_sdk.model.send_authorization_distribution_to_promoter import (
+    SendAuthorizationDistributionToPromoter,
+)
 from osis_parcours_doctoral_sdk.model.submit_admissibility import SubmitAdmissibility
 from osis_parcours_doctoral_sdk.model.submit_admissibility_minutes_and_opinions import (
     SubmitAdmissibilityMinutesAndOpinions,
@@ -303,6 +306,14 @@ class DoctorateService(metaclass=ServiceMeta):
         return DoctorateAPIClient().update_authorization_distribution(
             uuid=uuid,
             update_authorization_distribution=UpdateAuthorizationDistribution(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def send_authorization_distribution_to_promoter(cls, person, uuid, data):
+        return DoctorateAPIClient().send_authorization_distribution_to_promoter(
+            uuid=uuid,
+            send_authorization_distribution_to_promoter=SendAuthorizationDistributionToPromoter(**data),
             **build_mandatory_auth_headers(person),
         )
 
