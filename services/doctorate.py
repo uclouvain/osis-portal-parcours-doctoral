@@ -40,6 +40,9 @@ from osis_parcours_doctoral_sdk.model.approuver_jury_command import ApprouverJur
 from osis_parcours_doctoral_sdk.model.approuver_jury_par_pdf_command import (
     ApprouverJuryParPdfCommand,
 )
+from osis_parcours_doctoral_sdk.model.authorization_distribution_dto import (
+    AuthorizationDistributionDTO,
+)
 from osis_parcours_doctoral_sdk.model.confirmation_paper_canvas import (
     ConfirmationPaperCanvas,
 )
@@ -77,6 +80,9 @@ from osis_parcours_doctoral_sdk.model.submit_public_defense_minutes import (
 )
 from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
 from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
+from osis_parcours_doctoral_sdk.model.update_authorization_distribution import (
+    UpdateAuthorizationDistribution,
+)
 
 from base.models.person import Person
 from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk
@@ -88,6 +94,7 @@ __all__ = [
     "DoctorateSupervisionService",
     "ExternalDoctorateService",
     "ParcoursDoctoralBusinessException",
+    "AuthorizationDistributionBusinessException",
 ]
 
 
@@ -281,6 +288,21 @@ class DoctorateService(metaclass=ServiceMeta):
                 uuid=private_defense_uuid,
                 **data,
             ),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_authorization_distribution(cls, person, uuid) -> AuthorizationDistributionDTO:
+        return DoctorateAPIClient().retrieve_authorization_distribution(
+            uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def update_authorization_distribution(cls, person, uuid, data):
+        return DoctorateAPIClient().update_authorization_distribution(
+            uuid=uuid,
+            update_authorization_distribution=UpdateAuthorizationDistribution(**data),
             **build_mandatory_auth_headers(person),
         )
 
@@ -659,3 +681,14 @@ class JuryBusinessException(Enum):
     MembreExterneSansEmailException = "JURY-19"
     MembreDejaDansJuryException = "JURY-20"
     MembreExterneSansLangueDeContactException = "JURY-29"
+
+
+class AuthorizationDistributionBusinessException(Enum):
+    SourcesFinancementsNonCompleteesException = "AUTORISATION-DIFFUSION-THESE-1"
+    ResumeAnglaisNonCompleteException = "AUTORISATION-DIFFUSION-THESE-2"
+    LangueRedactionTheseNonCompleteeException = "AUTORISATION-DIFFUSION-THESE-3"
+    MotsClesNonCompletesException = "AUTORISATION-DIFFUSION-THESE-4"
+    TypeModalitesDiffusionNonCompleteException = "AUTORISATION-DIFFUSION-THESE-5"
+    DateEmbargoModalitesDiffusionNonCompleteeException = "AUTORISATION-DIFFUSION-THESE-6"
+    ModalitesDiffusionNonAccepteesException = "AUTORISATION-DIFFUSION-THESE-7"
+    AutorisationDiffusionTheseNonTrouveException = "AUTORISATION-DIFFUSION-THESE-8"

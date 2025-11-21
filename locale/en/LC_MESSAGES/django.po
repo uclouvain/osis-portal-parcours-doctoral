@@ -74,7 +74,25 @@ msgctxt "publication-status"
 msgid "Accepted"
 msgstr ""
 
+#, python-format
+msgid "Accepted by %(first_name)s %(last_name)s on"
+msgstr ""
+
+msgid ""
+"Access may be restricted to certain parts of the thesis, for example to "
+"protect parts covered by confidentiality. Please specify this in this text "
+"area, mentioning the protected chapters and the type of access (restricted, "
+"forbidden, or embargo and date)."
+msgstr ""
+
 msgid "Access my PhD students' applications"
+msgstr ""
+
+msgid ""
+"Access to the digital thesis may be open to the entire world, limited to the "
+"UCLouvain intranet or reserved solely for administrators. Access may also be "
+"blocked for a specific period of time, if the author prefers paper "
+"distribution for a certain period of time (e.g. two or three years)."
 msgstr ""
 
 msgid "Actions"
@@ -158,6 +176,9 @@ msgstr ""
 msgid "Additional information"
 msgstr ""
 
+msgid "Additional limitation for certain specific chapters"
+msgstr ""
+
 msgid "Admissibility"
 msgstr ""
 
@@ -219,6 +240,9 @@ msgstr ""
 msgid "Assessment enrollments"
 msgstr ""
 
+msgid "At the end of the embargo period, the thesis becomes public."
+msgstr ""
+
 msgid "Attestation"
 msgstr ""
 
@@ -226,6 +250,9 @@ msgid "Attestation of the communication"
 msgstr ""
 
 msgid "Auditor"
+msgstr ""
+
+msgid "Authorization and distribution"
 msgstr ""
 
 msgid "Authors"
@@ -245,6 +272,19 @@ msgstr ""
 msgid ""
 "Be careful, some doctorales commissions require an activity proof in their "
 "specifics dispositions. Refer to your commission specifics dispositions."
+msgstr ""
+
+#, python-format
+msgid ""
+"Before your defence, you must submit your thesis electronically to the DIAL "
+"electronic thesis repository (<a href=\"%(url)s\" target=\"_blank\">%(url)s</"
+"a>). Before you do so, please enter the metadata using the form below. "
+"Please also indicate your chosen distribution conditions (open or restricted "
+"access, blocking for a certain period, etc.), after discussing these with "
+"your supervisors. You will then receive an email confirming that your "
+"supervisor has approved the distribution, followed by an email from the "
+"library team regarding the deposit formalities to be completed in their DIAL "
+"application."
 msgstr ""
 
 msgid "Belgium"
@@ -541,6 +581,9 @@ msgstr ""
 msgid "Diploma collection date"
 msgstr ""
 
+msgid "Distribution conditions"
+msgstr ""
+
 msgctxt "other gender"
 msgid "Doctor"
 msgstr ""
@@ -617,7 +660,13 @@ msgctxt "doctorate"
 msgid "Email"
 msgstr ""
 
+msgid "Embargo access"
+msgstr ""
+
 msgid "End date"
+msgstr ""
+
+msgid "End of the embargo period"
 msgstr ""
 
 msgid "English"
@@ -710,6 +759,12 @@ msgid ""
 "showing that you have been awarded the scholarship on the dates indicated."
 msgstr ""
 
+msgid "Forbidden access"
+msgstr ""
+
+msgid "Free access (Internet)"
+msgstr ""
+
 msgid "French"
 msgstr ""
 
@@ -752,6 +807,40 @@ msgid "Holder of a PhD with thesis"
 msgstr ""
 
 msgid "Hourly volume"
+msgstr ""
+
+msgid "I accept"
+msgstr ""
+
+msgid ""
+"I accept that the text of this thesis may be published in UCLouvain's "
+"digital thesis collection."
+msgstr ""
+
+msgid ""
+"I also certify that I have obtained, in accordance with copyright "
+"legislation and the requirements of image rights, all the necessary "
+"authorisations for the reproduction in the thesis of images, texts and/or "
+"any other works protected by copyright, and that I have obtained the "
+"necessary authorisations for their transmission to third parties."
+msgstr ""
+
+msgid "I am aware that the thesis summary will be available to the public."
+msgstr ""
+
+msgid ""
+"I hereby certify that the digital version of the thesis submitted to "
+"UCLouvain for the purposes of the distribution authorised herein conforms to "
+"the official version approved by the thesis exam board."
+msgstr ""
+
+msgid ""
+"I retain all other rights regarding reproduction of and communications "
+"pertaining to the thesis, as well as the right to use the thesis in future "
+"works. I undertake, however, not to grant to third parties any rights which "
+"would in any way interfere with this authorisation and will reserve in any "
+"subsequent contract with third parties the rights and obligations arising "
+"from this authorisation."
 msgstr ""
 
 msgid "INVITED"
@@ -814,6 +903,14 @@ msgstr ""
 msgid "In the context of a course, specify the name of the professor"
 msgstr ""
 
+msgid ""
+"In the event that a third party benefits from a right to review the "
+"publication and/or is the holder of a property right to all or part of the "
+"results described in the thesis, I certify that I have obtained their "
+"written authorisation for dissemination. This has been verified in "
+"collaboration with the Research Administration Department."
+msgstr ""
+
 msgid "Incomplete field"
 msgstr ""
 
@@ -863,6 +960,10 @@ msgstr ""
 
 msgid ""
 "Is your admission request linked with a FNRS, FRIA, FRESH or CSC application?"
+msgstr ""
+
+#, python-format
+msgid "Item %(nth)s in the array did not validate:"
 msgstr ""
 
 msgid "JURY_APPROUVE_ADRE"
@@ -940,6 +1041,9 @@ msgid "Leave page?"
 msgstr ""
 
 msgid "Letters of recommendation"
+msgstr ""
+
+msgid "Limited access (Intranet)"
 msgstr ""
 
 msgid "Lookup somebody"
@@ -1189,6 +1293,9 @@ msgstr ""
 msgid ""
 "Please refer to the specifics disposition of your domain doctoral commission "
 "for your activities choice."
+msgstr ""
+
+msgid "Please select a language."
 msgstr ""
 
 msgid "Please select a member"
@@ -1520,6 +1627,9 @@ msgstr ""
 msgid "Signature requests sent"
 msgstr ""
 
+msgid "Sources of funding throughout PhD"
+msgstr ""
+
 msgid "Specify a scientific communication you made."
 msgstr ""
 
@@ -1589,6 +1699,12 @@ msgid "Summary"
 msgstr ""
 
 msgid "Summary for announcement"
+msgstr ""
+
+msgid "Summary in English"
+msgstr ""
+
+msgid "Summary in other language"
 msgstr ""
 
 msgid "Summary of the communication"
@@ -1692,6 +1808,12 @@ msgid ""
 "for submission may vary from one DDC to another; please check with your "
 "dossier manager and respect the usage foreseen by your domain doctoral "
 "committee."
+msgstr ""
+
+msgid ""
+"The licence, which is free of charge and non-exclusive, is valid for the "
+"entire duration of the copyright, including any extensions, and for the "
+"entire world."
 msgstr ""
 
 msgid ""
@@ -1837,6 +1959,9 @@ msgid ""
 msgstr ""
 "To be uploaded if you have a F.R.S.-FNRS (including Télévie), FRIA or FRESH "
 "grant. The canvas for this opinion is provided by your research fund."
+
+msgid "To this end, I license to UCLouvain the right to:"
+msgstr ""
 
 msgid "Toggle navigation"
 msgstr ""
@@ -2008,4 +2133,12 @@ msgid "hh:mm"
 msgstr ""
 
 msgid "hours"
+msgstr ""
+
+msgid ""
+"impart the thesis to the public according to the procedures established "
+"below."
+msgstr ""
+
+msgid "set and reproduce the thesis on a digital medium;"
 msgstr ""
