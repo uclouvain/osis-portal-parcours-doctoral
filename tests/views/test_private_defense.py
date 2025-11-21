@@ -24,6 +24,7 @@
 #
 # ##############################################################################
 import datetime
+import uuid
 
 from django.shortcuts import resolve_url
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
@@ -473,9 +474,15 @@ class PrivateDefenseMinutesViewTestCase(BaseDoctorateTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
+        cls.first_private_defense_uuid = uuid.uuid4()
+        cls.second_private_defense_uuid = uuid.uuid4()
 
         cls.person = PersonFactory()
-        cls.url = resolve_url('parcours_doctoral:private-defense-minutes', pk=cls.doctorate_uuid)
+        cls.url = resolve_url(
+            'parcours_doctoral:private-defense-minutes',
+            pk=cls.doctorate_uuid,
+            private_defense_id=cls.first_private_defense_uuid,
+        )
         cls.private_defense_url = resolve_url('parcours_doctoral:private-defense', pk=cls.doctorate_uuid)
 
     def setUp(self):
@@ -484,7 +491,7 @@ class PrivateDefenseMinutesViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.retrieve_private_defenses.return_value = [
             PrivateDefenseDTO._from_openapi_data(
                 parcours_doctoral_uuid=self.doctorate_uuid,
-                uuid='p1',
+                uuid=str(self.first_private_defense_uuid),
                 est_active=True,
                 titre_these='Thesis title 1',
                 lieu='Louvain-La-Neuve',
@@ -493,7 +500,7 @@ class PrivateDefenseMinutesViewTestCase(BaseDoctorateTestCase):
             ),
             PrivateDefenseDTO._from_openapi_data(
                 parcours_doctoral_uuid=self.doctorate_uuid,
-                uuid='p2',
+                uuid=str(self.second_private_defense_uuid),
                 est_active=False,
                 titre_these='Thesis title 2',
                 lieu='Louvain-La-Neuve',
