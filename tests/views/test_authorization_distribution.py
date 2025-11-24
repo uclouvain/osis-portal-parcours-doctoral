@@ -95,7 +95,7 @@ class AuthorizationDistributionDetailViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
-        # Load the private defenses information
+        # Load the authorization distribution information
         self.mock_doctorate_api.return_value.retrieve_authorization_distribution.assert_called()
 
         self.assertIsNotNone(response.context.get('authorization_distribution'))
@@ -145,7 +145,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
-        # Load the private defenses information
+        # Load the authorization distribution information
         self.mock_doctorate_api.return_value.retrieve_authorization_distribution.assert_called()
 
         self.assertIsNotNone(response.context.get('authorization_distribution'))

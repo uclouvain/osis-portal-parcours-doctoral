@@ -116,7 +116,7 @@ class AdmissibilityDetailViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
-        # Load the private defenses information
+        # Load the admissibility information
         self.mock_doctorate_api.return_value.retrieve_admissibilities.assert_called()
 
         self.assertEqual(response.context.get('all_admissibilities'), [])
@@ -203,7 +203,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
-        # Load the private defenses information
+        # Load the admissibility information
         self.mock_doctorate_api.return_value.retrieve_admissibilities.assert_called()
 
         self.assertEqual(response.context.get('all_admissibilities'), [])
@@ -393,7 +393,7 @@ class AdmissibilityFormViewForPromoterTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
         self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
 
-        # Load the private defenses information
+        # Load the admissibility information
         self.mock_doctorate_api.return_value.retrieve_admissibilities.assert_called()
 
         self.assertIsNotNone(response.context.get('all_admissibilities'))
