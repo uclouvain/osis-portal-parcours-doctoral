@@ -215,6 +215,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'submit_admissibility_minutes_and_opinions',
                         'retrieve_authorization_distribution',
                         'update_authorization_distribution',
+                        'validate_manuscript',
                         'retrieve_private_defense',
                         'retrieve_private_defense_minutes_canvas',
                         'retrieve_public_defense',
