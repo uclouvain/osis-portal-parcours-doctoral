@@ -32,6 +32,9 @@ from django.conf import settings
 from django.utils.translation import get_language
 from osis_parcours_doctoral_sdk import ApiException
 from osis_parcours_doctoral_sdk.api import doctorate_api
+from osis_parcours_doctoral_sdk.model.accept_thesis_by_lead_promoter import (
+    AcceptThesisByLeadPromoter,
+)
 from osis_parcours_doctoral_sdk.model.admissibility_dto import AdmissibilityDTO
 from osis_parcours_doctoral_sdk.model.admissibility_minutes_canvas import (
     AdmissibilityMinutesCanvas,
@@ -325,6 +328,14 @@ class DoctorateService(metaclass=ServiceMeta):
         return DoctorateAPIClient().reject_thesis_by_lead_promoter(
             uuid=uuid,
             reject_thesis_by_lead_promoter=RejectThesisByLeadPromoter(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def accept_thesis_by_lead_promoter(cls, person, uuid, data):
+        return DoctorateAPIClient().accept_thesis_by_lead_promoter(
+            uuid=uuid,
+            accept_thesis_by_lead_promoter=AcceptThesisByLeadPromoter(**data),
             **build_mandatory_auth_headers(person),
         )
 
