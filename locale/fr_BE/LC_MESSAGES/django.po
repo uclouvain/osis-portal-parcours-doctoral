@@ -2060,6 +2060,9 @@ msgid ""
 msgstr ""
 "La soutenance publique a lieu au moins un mois après la défense privée."
 
+msgid "The signing process has not yet started."
+msgstr "Le processus de signature n'a pas encore commencé."
+
 msgid "The start date must be earlier than or the same as the end date."
 msgstr "La date de début doit être antérieure ou égale à la date de fin."
 

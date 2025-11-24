@@ -27,6 +27,9 @@ import datetime
 import uuid
 
 from django.shortcuts import resolve_url
+from osis_parcours_doctoral_sdk.model.accept_thesis_by_lead_promoter import (
+    AcceptThesisByLeadPromoter,
+)
 from osis_parcours_doctoral_sdk.model.action_link import ActionLink
 from osis_parcours_doctoral_sdk.model.authorization_distribution_dto import (
     AuthorizationDistributionDTO,
@@ -108,7 +111,7 @@ class ManuscriptValidationDetailViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
-    def test_get_authorization_distribution(self):
+    def test_get_manuscript_validation_data(self):
         self.client.force_login(self.person.user)
         response = self.client.get(self.url)
 
@@ -181,7 +184,7 @@ class ManuscriptValidationFormViewTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
-    def test_get_authorization_distribution(self):
+    def test_get_manuscript_validation_data(self):
         self.client.force_login(self.person.user)
         response = self.client.get(self.url)
 
@@ -201,7 +204,7 @@ class ManuscriptValidationFormViewTestCase(BaseDoctorateTestCase):
 
         self.assertIsInstance(response.context.get('form'), ManuscriptValidationApprovalForm)
 
-    def test_post_invalid_authorization_distribution_data(self):
+    def test_post_invalid_manuscript_validation_data(self):
         self.client.force_login(self.person.user)
 
         response = self.client.post(self.url, data={})
@@ -224,7 +227,7 @@ class ManuscriptValidationFormViewTestCase(BaseDoctorateTestCase):
         self.assertEqual(len(form.errors), 1)
         self.assertEqual(form.errors.get('motif_refus'), [FIELD_REQUIRED_MESSAGE])
 
-    def test_post_valid_authorization_distribution_data(self):
+    def test_post_valid_manuscript_validation_reject_data(self):
         self.client.force_login(self.person.user)
 
         response = self.client.post(
@@ -245,6 +248,32 @@ class ManuscriptValidationFormViewTestCase(BaseDoctorateTestCase):
             uuid=self.doctorate_uuid,
             reject_thesis_by_lead_promoter=RejectThesisByLeadPromoter._new_from_openapi_data(
                 motif_refus='Refusal reason',
+                commentaire_interne='Internal comment',
+                commentaire_externe='External comment',
+            ),
+            **self.api_default_params,
+        )
+
+    def test_post_valid_manuscript_validation_accept_data(self):
+        self.client.force_login(self.person.user)
+
+        response = self.client.post(
+            self.url,
+            data={
+                'decision': DecisionApprovalEnum.APPROVED.name,
+                'motif_refus': 'Refusal reason',
+                'commentaire_interne': 'Internal comment',
+                'commentaire_externe': 'External comment',
+            },
+        )
+
+        self.assertRedirects(response=response, expected_url=self.details_url)
+
+        # Call the API with the right data
+        self.mock_doctorate_api.return_value.accept_thesis_by_lead_promoter.assert_called()
+        self.mock_doctorate_api.return_value.accept_thesis_by_lead_promoter.assert_called_with(
+            uuid=self.doctorate_uuid,
+            accept_thesis_by_lead_promoter=AcceptThesisByLeadPromoter._new_from_openapi_data(
                 commentaire_interne='Internal comment',
                 commentaire_externe='External comment',
             ),
