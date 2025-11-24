@@ -1,4 +1,5 @@
 {% extends "parcours_doctoral/tab_layout.html" %}
+{% load i18n %}
 
 {% comment "License" %}
 * OSIS stands for Open Student Information System. It's an application
@@ -25,6 +26,16 @@
 {% endcomment %}
 
 {% block tab_content %}
+  {% if not signatories %}
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">{% translate "Manuscript validation" %}</h4>
+      </div>
+      <div class="card-body">
+        <p>{% translate 'The signing process has not yet started.' %}</p>
+      </div>
+    </div>
+  {% endif %}
   {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.PROMOTEUR %}
   {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.ADRE %}
   {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.SCEB %}
