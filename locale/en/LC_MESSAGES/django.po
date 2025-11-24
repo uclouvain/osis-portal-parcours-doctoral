@@ -1862,6 +1862,9 @@ msgid ""
 "The public defence takes place at least one month after the private defence."
 msgstr ""
 
+msgid "The signing process has not yet started."
+msgstr ""
+
 msgid "The start date must be earlier than or the same as the end date."
 msgstr ""
 

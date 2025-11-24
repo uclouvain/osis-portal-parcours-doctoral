@@ -23,6 +23,8 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
+from typing import Callable
+
 from django.utils.translation import gettext_lazy
 from django.views.generic import FormView
 
@@ -55,6 +57,14 @@ class ManuscriptValidationApprovalFormView(ManuscriptValidationCommonViewMixin, 
 
         if decision == DecisionApprovalEnum.DECLINED.name:
             DoctorateService.reject_thesis_by_lead_promoter(
+                person=self.person,
+                uuid=self.doctorate_uuid,
+                data=data,
+            )
+
+        elif decision == DecisionApprovalEnum.APPROVED.name:
+            data.pop('motif_refus', None)
+            DoctorateService.accept_thesis_by_lead_promoter(
                 person=self.person,
                 uuid=self.doctorate_uuid,
                 data=data,
