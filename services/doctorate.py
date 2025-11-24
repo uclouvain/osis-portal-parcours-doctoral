@@ -63,6 +63,9 @@ from osis_parcours_doctoral_sdk.model.public_defense_minutes_canvas import (
     PublicDefenseMinutesCanvas,
 )
 from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCommand
+from osis_parcours_doctoral_sdk.model.reject_thesis_by_lead_promoter import (
+    RejectThesisByLeadPromoter,
+)
 from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe import (
     RenvoyerInvitationSignatureExterne,
 )
@@ -314,6 +317,14 @@ class DoctorateService(metaclass=ServiceMeta):
         return DoctorateAPIClient().send_authorization_distribution_to_promoter(
             uuid=uuid,
             send_authorization_distribution_to_promoter=SendAuthorizationDistributionToPromoter(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def reject_thesis_by_lead_promoter(cls, person, uuid, data):
+        return DoctorateAPIClient().reject_thesis_by_lead_promoter(
+            uuid=uuid,
+            reject_thesis_by_lead_promoter=RejectThesisByLeadPromoter(**data),
             **build_mandatory_auth_headers(person),
         )
 

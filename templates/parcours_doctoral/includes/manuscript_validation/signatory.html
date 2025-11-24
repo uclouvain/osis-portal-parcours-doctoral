@@ -41,7 +41,7 @@
       </div>
 
       {% if signataire.signature.etat == 'DECLINED' %}
-        {% field_data _('Grounds for denied') signataire.signature.motifs_refus html_tag='blockquote' %}
+        {% field_data _('Grounds for denied') signataire.signature.motif_refus html_tag='blockquote' %}
       {% endif %}
 
       {% if signataire.signature.etat == 'APPROVED' or signataire.signature.etat == 'DECLINED' %}
