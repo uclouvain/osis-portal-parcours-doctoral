@@ -48,7 +48,7 @@ READ_ACTIONS_BY_TAB = {
     'admissibility': 'retrieve_admissibility',
     'private-defense': 'retrieve_private_defense',
     'authorization-distribution': 'retrieve_authorization_distribution',
-    'manuscript-validation': 'retrieve_authorization_distribution',
+    'manuscript-validation': 'retrieve_manuscript_validation',
     'public-defense': 'retrieve_public_defense',
     'messages': '',
 }
