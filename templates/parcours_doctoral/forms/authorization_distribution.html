@@ -70,7 +70,8 @@
 {% endblock submit_button %}
 
 {% block after_form %}
-  {% include "parcours_doctoral/modal/confirmation_without_form_modal.html" with modal_id="doctorate-main-form-confirm-modal" form_id="doctorate-main-form" %}
+  {% translate 'Are you sure you want to submit your form to the contact supervisor?' as confirmation_text %}
+  {% include "parcours_doctoral/modal/confirmation_without_form_modal.html" with modal_id="doctorate-main-form-confirm-modal" form_id="doctorate-main-form" confirmation_text=confirmation_text %}
 {% endblock %}
 
 {% block script %}
