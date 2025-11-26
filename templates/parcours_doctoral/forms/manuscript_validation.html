@@ -50,23 +50,36 @@
 {% endblock %}
 
 {% block after_form %}
-  {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.PROMOTEUR %}
-  {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.ADRE %}
-  {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.SCEB %}
+  {% if signatories %}
+    {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.PROMOTEUR %}
+    {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.ADRE %}
+    {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.SCEB %}
+  {% else %}
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">{% translate "Manuscript validation" %}</h4>
+      </div>
+      <div class="card-body">
+        {% translate "The signing process has not yet started." %}
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block script %}
   {{ block.super }}
-  <script>
-    $(function () {
-      // Hide the reason input if the promoter approves the proposition
-      $('#id_motif_refus').dependsOn({
-        'input[name="decision"]': {
-          values: ['DECLINED'],
-        },
-      }, {
-        duration: 0,
+  {% if form.motif_refus %}
+    <script>
+      $(function () {
+        // Hide the reason input if the promoter approves the proposition
+        $('#id_motif_refus').dependsOn({
+          'input[name="decision"]': {
+            values: ['DECLINED'],
+          },
+        }, {
+          duration: 0,
+        });
       });
-    });
-  </script>
+    </script>
+  {% endif %}
 {% endblock %}

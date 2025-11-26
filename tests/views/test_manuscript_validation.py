@@ -26,6 +26,7 @@
 import datetime
 import uuid
 
+from django.forms import Form
 from django.shortcuts import resolve_url
 from osis_parcours_doctoral_sdk.model.accept_thesis_by_lead_promoter import (
     AcceptThesisByLeadPromoter,
@@ -58,7 +59,7 @@ from parcours_doctoral.contrib.forms.manuscript_validation import (
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
 
-class ManuscriptValidationDetailViewTestCase(BaseDoctorateTestCase):
+class ManuscriptValidationViewTestCase(BaseDoctorateTestCase):
     @classmethod
     def setUpTestData(cls):
         super().setUpTestData()
@@ -105,7 +106,7 @@ class ManuscriptValidationDetailViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_authorization_distribution'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links['retrieve_manuscript_validation'] = ActionLink._from_openapi_data(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -113,6 +114,9 @@ class ManuscriptValidationDetailViewTestCase(BaseDoctorateTestCase):
 
     def test_get_manuscript_validation_data(self):
         self.client.force_login(self.person.user)
+
+        self.mock_doctorate_object.links['validate_manuscript'] = ActionLink._from_openapi_data(error='access error')
+
         response = self.client.get(self.url)
 
         # Load the doctorate information
@@ -129,78 +133,11 @@ class ManuscriptValidationDetailViewTestCase(BaseDoctorateTestCase):
         self.assertIsNotNone(response.context['signatories']['PROMOTEUR'])
         self.assertEqual(response.context['signatories']['PROMOTEUR'].matricule, '0123456789')
 
+        self.assertIsInstance(response.context.get('form'), Form)
 
-class ManuscriptValidationFormViewTestCase(BaseDoctorateTestCase):
-    @classmethod
-    def setUpTestData(cls):
-        super().setUpTestData()
+        self.mock_doctorate_object.links['validate_manuscript'] = ActionLink._from_openapi_data(url='abc')
 
-        cls.person = PersonFactory()
-        cls.url = resolve_url('parcours_doctoral:update:manuscript-validation', pk=cls.doctorate_uuid)
-        cls.details_url = resolve_url('parcours_doctoral:manuscript-validation', pk=cls.doctorate_uuid)
-
-    def setUp(self):
-        super().setUp()
-
-        self.mock_doctorate_api.return_value.retrieve_authorization_distribution.return_value = (
-            AuthorizationDistributionDTO._from_openapi_data(
-                uuid=self.doctorate_uuid,
-                statut='DIFFUSION_NON_SOUMISE',
-                sources_financement='Sources',
-                resume_anglais='Summary in english',
-                resume_autre_langue='Summary in another language',
-                mots_cles=['word-1', 'word-2'],
-                type_modalites_diffusion=TypeModalitesDiffusionThese.ACCES_EMBARGO.name,
-                limitations_additionnelles_chapitres='Limitations',
-                signataires=[
-                    SignataireAutorisationDiffusionTheseDTONested._from_openapi_data(
-                        uuid=str(uuid.uuid4()),
-                        matricule='0123456789',
-                        prenom='John',
-                        nom='Doe',
-                        email='john.doe@uclouvain.be',
-                        genre='H',
-                        institution='UCLouvain',
-                        role=RoleActeur.PROMOTEUR.name,
-                        signature=SignatureAutorisationDiffusionTheseDTONested._from_openapi_data(
-                            etat=ChoixEtatSignature.INVITED.name,
-                            date_heure=datetime.datetime(2025, 1, 1, 11, 30),
-                            commentaire_externe='External comment',
-                            commentaire_interne='Internal comment',
-                            motif_refus='Refusal reason',
-                        ),
-                    )
-                ],
-                date_embargo=datetime.date(2025, 1, 1),
-                modalites_diffusion_acceptees_le=datetime.date(2024, 1, 1),
-            )
-        )
-
-    def test_get_no_permission(self):
-        self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['validate_manuscript'] = ActionLink._from_openapi_data(
-            error='access error',
-        )
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 403)
-
-    def test_get_manuscript_validation_data(self):
-        self.client.force_login(self.person.user)
-        response = self.client.get(self.url)
-
-        # Load the doctorate information
-        self.mock_doctorate_api.return_value.doctorate_retrieve.assert_called()
-        self.assertEqual(response.context.get('doctorate').uuid, self.doctorate_uuid)
-
-        # Load the manuscript validation information
-        self.mock_doctorate_api.return_value.retrieve_authorization_distribution.assert_called()
-
-        self.assertIsNotNone(response.context.get('authorization_distribution'))
-        self.assertEqual(response.context.get('authorization_distribution').uuid, self.doctorate_uuid)
-
-        self.assertIsNotNone(response.context.get('signatories'))
-        self.assertIsNotNone(response.context['signatories']['PROMOTEUR'])
-        self.assertEqual(response.context['signatories']['PROMOTEUR'].matricule, '0123456789')
 
         self.assertIsInstance(response.context.get('form'), ManuscriptValidationApprovalForm)
 
@@ -240,7 +177,7 @@ class ManuscriptValidationFormViewTestCase(BaseDoctorateTestCase):
             },
         )
 
-        self.assertRedirects(response=response, expected_url=self.details_url)
+        self.assertRedirects(response=response, expected_url=self.url)
 
         # Call the API with the right data
         self.mock_doctorate_api.return_value.reject_thesis_by_lead_promoter.assert_called()
@@ -267,7 +204,7 @@ class ManuscriptValidationFormViewTestCase(BaseDoctorateTestCase):
             },
         )
 
-        self.assertRedirects(response=response, expected_url=self.details_url)
+        self.assertRedirects(response=response, expected_url=self.url)
 
         # Call the API with the right data
         self.mock_doctorate_api.return_value.accept_thesis_by_lead_promoter.assert_called()
