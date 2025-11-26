@@ -237,6 +237,9 @@ msgid ""
 "Are you sure you want to request signatures to validate your thesis jury?"
 msgstr ""
 
+msgid "Are you sure you want to submit your form to the contact supervisor?"
+msgstr ""
+
 msgid "As it appears in an official course catalogue"
 msgstr ""
 
