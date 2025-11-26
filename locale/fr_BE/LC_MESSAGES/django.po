@@ -258,6 +258,9 @@ msgid ""
 "Are you sure you want to request signatures to validate your thesis jury?"
 msgstr "Êtes-vous sûr de vouloir requérir les signatures pour ce jury ?"
 
+msgid "Are you sure you want to submit your form to the contact supervisor?"
+msgstr "Êtes-vous sûr de vouloir soumettre votre formulaire au·à la promoteur·trice de contact ?"
+
 msgid "As it appears in an official course catalogue"
 msgstr "Tel qu’il apparait dans un catalogue officiel de formation"
 
@@ -1700,7 +1703,7 @@ msgid "Save"
 msgstr "Enregistrer"
 
 msgid "Save and send to the contact supervisor"
-msgstr "Enregistrer et envoyer au promoteur de contact"
+msgstr "Enregistrer et envoyer au·à la promoteur·trice de contact"
 
 msgid "Scholarship end date"
 msgstr "Date de fin de la bourse"
