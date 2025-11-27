@@ -106,9 +106,9 @@ class PublicDefenseFormViewTestCase(BaseDoctorateTestCase):
 
         self.assertIsInstance(form, PublicDefenseForm)
 
-        self.assertEqual(form['langue'].value(), 'FR')
-        self.assertEqual(form['date_heure'].value(), datetime.datetime(2024, 2, 2, 11, 30))
-        self.assertEqual(form['lieu'].value(), 'Louvain-La-Neuve')
+        self.assertEqual(form['langue_soutenance_publique'].value(), 'FR')
+        self.assertEqual(form['date_heure_soutenance_publique'].value(), datetime.datetime(2024, 2, 2, 11, 30))
+        self.assertEqual(form['lieu_soutenance_publique'].value(), 'Louvain-La-Neuve')
         self.assertEqual(form['local_deliberation'].value(), 'D1')
         self.assertEqual(form['resume_annonce'].value(), 'Announcement summary')
         self.assertEqual(form['photo_annonce'].value(), [])
@@ -121,10 +121,10 @@ class PublicDefenseFormViewTestCase(BaseDoctorateTestCase):
         response = self.client.post(
             self.url,
             data={
-                'langue': 'FR',
-                'date_heure_0': '01/01/2026',
-                'date_heure_1': '11:00',
-                'lieu': 'Louvain',
+                'langue_soutenance_publique': 'FR',
+                'date_heure_soutenance_publique_0': '01/01/2026',
+                'date_heure_soutenance_publique_1': '11:00',
+                'lieu_soutenance_publique': 'Louvain',
                 'local_deliberation': 'D2',
                 'resume_annonce': 'New summary',
                 'photo_annonce_0': [file_uuid],
@@ -163,8 +163,8 @@ class PublicDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.assertFalse(form.is_valid())
 
         self.assertEqual(len(form.errors), 3)
-        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('langue'))
-        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('date_heure'))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('langue_soutenance_publique'))
+        self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('date_heure_soutenance_publique'))
         self.assertIn(FIELD_REQUIRED_MESSAGE, form.errors.get('photo_annonce'))
 
 
@@ -230,14 +230,14 @@ class PublicDefenseFormViewForPromoterTestCase(BaseDoctorateTestCase):
 
         self.assertIsInstance(form, PromoterPublicDefenseForm)
 
-        self.assertEqual(form['proces_verbal'].value(), ['minutes-uuid'])
+        self.assertEqual(form['proces_verbal_soutenance_publique'].value(), ['minutes-uuid'])
 
     def test_post_the_public_defense_minutes(self):
         self.client.force_login(self.promoter_person.user)
 
         response = self.client.post(
             self.url,
-            data={'proces_verbal_0': ['file-uuid-3']},
+            data={'proces_verbal_soutenance_publique_0': ['file-uuid-3']},
         )
 
         self.assertRedirects(response, expected_url=self.detail_url, fetch_redirect_response=False)
