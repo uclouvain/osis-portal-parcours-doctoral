@@ -26,35 +26,43 @@
 
 from django.views.generic import FormView
 
-from parcours_doctoral.contrib.forms.public_defense import (
-    PromoterPublicDefenseForm,
-    PublicDefenseForm,
+from parcours_doctoral.contrib.forms.private_public_defenses import (
+    PrivatePublicDefensesForm,
 )
-from parcours_doctoral.contrib.views.mixins import LoadViewMixin
+from parcours_doctoral.contrib.views.details_tabs.private_defense import (
+    PrivateDefenseCommonViewMixin,
+)
 from parcours_doctoral.services.doctorate import DoctorateService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
 
 __all__ = [
-    'PublicDefenseFormView',
+    'PrivatePublicDefensesFormView',
 ]
 
+__namespace__ = False
 
-class PublicDefenseFormView(LoadViewMixin, WebServiceFormMixin, FormView):
+
+class PrivatePublicDefensesFormView(PrivateDefenseCommonViewMixin, WebServiceFormMixin, FormView):
+    urlpatterns = 'private-public-defenses'
+    template_name = 'parcours_doctoral/details/private_public_defenses.html'
+
     @property
     def permission_link_to_check(self):
-        return 'update_public_defense' if self.is_doctorate_student else 'submit_public_defense_minutes'
+        return (
+            'update_private_public_defenses' if self.is_doctorate_student else 'submit_private_public_defenses_minutes'
+        )
 
     def get_template_names(self):
         return [
             (
-                'parcours_doctoral/forms/public_defense.html'
+                'parcours_doctoral/forms/private_public_defenses.html'
                 if self.is_doctorate_student
-                else 'parcours_doctoral/forms/public_defense_minutes.html'
+                else 'parcours_doctoral/forms/private_public_defenses_minutes.html'
             ),
         ]
 
     def get_form_class(self):
-        return PublicDefenseForm if self.is_doctorate_student else PromoterPublicDefenseForm
+        return PrivatePublicDefensesForm if self.is_doctorate_student else PrivatePublicDefensesForm
 
     def get_form_kwargs(self):
         form_kwargs = super().get_form_kwargs()
@@ -66,7 +74,9 @@ class PublicDefenseFormView(LoadViewMixin, WebServiceFormMixin, FormView):
 
     def get_initial(self):
         doctorate = self.doctorate
-        return {
+
+        initial_data = {
+            'titre_these': doctorate.titre_these_propose,
             'langue_soutenance_publique': doctorate.langue_soutenance_publique,
             'date_heure_soutenance_publique': doctorate.date_heure_soutenance_publique,
             'lieu_soutenance_publique': doctorate.lieu_soutenance_publique,
@@ -76,25 +86,23 @@ class PublicDefenseFormView(LoadViewMixin, WebServiceFormMixin, FormView):
             'proces_verbal_soutenance_publique': doctorate.proces_verbal_soutenance_publique,
         }
 
+        current_private_defense = self.current_private_defense
+        if current_private_defense:
+            initial_data.update(
+                {
+                    'date_heure_defense_privee': current_private_defense.date_heure,
+                    'lieu_defense_privee': current_private_defense.lieu,
+                    'date_envoi_manuscrit': current_private_defense.date_envoi_manuscrit,
+                    'proces_verbal_defense_privee': current_private_defense.proces_verbal,
+                }
+            )
+
+        return initial_data
+
     def call_webservice(self, data):
         if self.is_doctorate_student:
-            DoctorateService.submit_public_defense(
+            DoctorateService.submit_private_public_defenses(
                 person=self.person,
                 doctorate_uuid=self.doctorate_uuid,
-                data={
-                    'langue': data['langue_soutenance_publique'],
-                    'date_heure': data['date_heure_soutenance_publique'],
-                    'lieu': data['lieu_soutenance_publique'],
-                    'local_deliberation': data['local_deliberation'],
-                    'resume_annonce': data['resume_annonce'],
-                    'photo_annonce': data['photo_annonce'],
-                },
-            )
-        else:
-            DoctorateService.submit_public_defense_minutes(
-                person=self.person,
-                doctorate_uuid=self.doctorate_uuid,
-                data={
-                    'proces_verbal': data['proces_verbal_soutenance_publique'],
-                },
+                data=data,
             )

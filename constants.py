@@ -50,6 +50,7 @@ READ_ACTIONS_BY_TAB = {
     'authorization-distribution': 'retrieve_authorization_distribution',
     'manuscript-validation': 'retrieve_manuscript_validation',
     'public-defense': 'retrieve_public_defense',
+    'private-public-defenses': 'retrieve_private_public_defenses',
     'messages': '',
 }
 
@@ -76,6 +77,7 @@ UPDATE_ACTIONS_BY_TAB = {
     'authorization-distribution': 'update_authorization_distribution',
     'manuscript-validation': 'validate_manuscript',
     'public-defense': ['update_public_defense', 'submit_public_defense_minutes'],
+    'private-public-defenses': ['update_private_public_defenses', 'submit_private_public_defenses_minutes'],
     'messages': '',
 }
 
