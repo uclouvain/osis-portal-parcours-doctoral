@@ -23,19 +23,40 @@
 #  see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-"""
-ChoixStatutDoctorat
-    > Admitted: The phd student is allowed to register.
-"""
-from .actor import *
-from .admission_type import *
-from .authorization_distribution import *
-from .doctorat import *
-from .experience_precedente import *
-from .financement import *
-from .jury import *
-from .person import *
-from .proximity_commission import *
-from .scholarship import *
-from .supervision import *
-from .training import *
+from django import forms
+from django.utils.translation import gettext_lazy as _
+
+from parcours_doctoral.contrib.forms import CustomDateInput, DoctorateFileUploadField
+
+
+class AdmissibilityForm(forms.Form):
+    titre_these = forms.CharField(
+        label=_('Thesis title'),
+        max_length=255,
+    )
+
+    date_envoi_manuscrit = forms.DateField(
+        label=_('Date of manuscript submission to the thesis exam board'),
+        required=False,
+        widget=CustomDateInput,
+    )
+
+    date_decision = forms.DateField(
+        label=_('Date of admissibility decision'),
+        help_text=_(
+            'The admissibility decision date is chosen collectively by the board and in agreement with the PhD student.'
+        ),
+        required=False,
+        widget=CustomDateInput,
+    )
+
+
+class JuryMemberAdmissibilityForm(forms.Form):
+    proces_verbal = DoctorateFileUploadField(
+        label=_('Admissibility minutes'),
+        required=False,
+    )
+    avis_jury = DoctorateFileUploadField(
+        label=_('Thesis exam board opinion'),
+        required=False,
+    )

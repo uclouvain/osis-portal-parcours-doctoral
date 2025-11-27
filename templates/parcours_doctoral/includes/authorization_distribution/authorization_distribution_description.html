@@ -25,27 +25,15 @@
 {% endcomment %}
 
 <div class="text-justify fst-italic mb-4">
-  <p>{% trans "Important information:" %}</p>
-  <ul>
-    <li>
-      {% blocktrans trimmed %}
-        The "doctoral training" must be updated before the confirmation paper and made available to the accompanying
-        committee on the day of the test.
-      {% endblocktrans %}
-    </li>
-    <li>
-      {% blocktrans trimmed %}
-        The format of the documents to be uploaded below as well as the deadlines for submission may vary from
-        one DDC to another; please check with your dossier manager and respect the usage foreseen by your domain
-        doctoral committee.
-      {% endblocktrans %}
-    </li>
-  </ul>
+  <p>{% translate "Important information:" %}</p>
   <p>
-    {% url 'parcours_doctoral:confirmation-paper-canvas' view.kwargs.pk as canvas_url %}
-    {% blocktrans trimmed %}
-      The canvas of the supervisory panel report must be sent to the accompanying committee during the test.
-      It can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
-    {% endblocktrans %}
+    {% blocktranslate trimmed with url='http://dial.academielouvain.be' %}
+      Before your defence, you must submit your thesis electronically to the DIAL electronic thesis repository
+      (<a href="{{ url }}" target="_blank">{{ url }}</a>). Before you do so, please enter
+      the metadata using the form below. Please also indicate your chosen distribution conditions
+      (open or restricted access, blocking for a certain period, etc.), after discussing these with your supervisors.
+      You will then receive an email confirming that your supervisor has approved the distribution, followed by an
+      email from the library team regarding the deposit formalities to be completed in their DIAL application.
+    {% endblocktranslate %}
   </p>
 </div>

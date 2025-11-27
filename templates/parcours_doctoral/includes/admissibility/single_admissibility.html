@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load parcours_doctoral %}
 
 {% comment "License" %}
 * OSIS stands for Open Student Information System. It's an application
@@ -24,28 +24,11 @@
 * see http://www.gnu.org/licenses/.
 {% endcomment %}
 
-<div class="text-justify fst-italic mb-4">
-  <p>{% trans "Important information:" %}</p>
-  <ul>
-    <li>
-      {% blocktrans trimmed %}
-        The "doctoral training" must be updated before the confirmation paper and made available to the accompanying
-        committee on the day of the test.
-      {% endblocktrans %}
-    </li>
-    <li>
-      {% blocktrans trimmed %}
-        The format of the documents to be uploaded below as well as the deadlines for submission may vary from
-        one DDC to another; please check with your dossier manager and respect the usage foreseen by your domain
-        doctoral committee.
-      {% endblocktrans %}
-    </li>
-  </ul>
-  <p>
-    {% url 'parcours_doctoral:confirmation-paper-canvas' view.kwargs.pk as canvas_url %}
-    {% blocktrans trimmed %}
-      The canvas of the supervisory panel report must be sent to the accompanying committee during the test.
-      It can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
-    {% endblocktrans %}
-  </p>
+<div class="row">
+  {% field_data _("Date of manuscript submission to the thesis exam board") admissibility.date_envoi_manuscrit inline=True css_class='col-md-6' %}
+  {% field_data _("Date of admissibility decision") admissibility.date_decision inline=True css_class='col-md-6' %}
 </div>
+{% if not view.is_doctorate_student %}
+  {% field_data _("Thesis exam board opinion") admissibility.avis_jury %}
+{% endif %}
+{% field_data _("Admissibility minutes") admissibility.proces_verbal %}

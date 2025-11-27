@@ -1,0 +1,62 @@
+{% extends "parcours_doctoral/tab_layout.html" %}
+{% load static %}
+{% load django_bootstrap5 i18n parcours_doctoral %}
+
+{% comment "License" %}
+* OSIS stands for Open Student Information System. It's an application
+* designed to manage the core business of higher education institutions,
+* such as universities, faculties, institutes and professional schools.
+* The core business involves the administration of students, teachers,
+* courses, programs and so on.
+*
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* A copy of this license - GNU General Public License - is available
+* at the root of the source code of this program.  If not,
+* see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+{% block form %}
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4 class="card-title">{% translate "Admissibility" %}</h4>
+    </div>
+    <div class="card-body">
+      {% include 'parcours_doctoral/includes/admissibility/admissibility_description.html' %}
+      <div>
+        {% bootstrap_form_errors form type='non_fields' %}
+
+        {% csrf_token %}
+
+        {% bootstrap_field form.titre_these wrapper_class="mb-3 required_field" %}
+
+        {% include 'parcours_doctoral/includes/private_defense/supervision_panel.html' %}
+
+        <div class="row">
+          {% bootstrap_field form.date_envoi_manuscrit wrapper_class="mb-3 col-md-6" %}
+          {% bootstrap_field_with_tooltip form.date_decision wrapper_class="mb-3 col-md-6" %}
+        </div>
+
+        {% field_data _("Admissibility minutes") current_admissibility.proces_verbal tooltip=_('The minutes will be uploaded by the thesis exam board secretary or chair.') %}
+      </div>
+    </div>
+  </div>
+
+  {% include 'parcours_doctoral/includes/admissibility/previous_admissibilities.html' %}
+
+{% endblock %}
+
+{% block script %}
+  {{ block.super }}
+  <script type="text/javascript" src="{% static 'osis_document_components/osis-document.umd.min.js' %}"></script>
+{% endblock %}

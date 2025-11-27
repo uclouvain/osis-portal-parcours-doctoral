@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n parcours_doctoral %}
 
 {% comment "License" %}
 * OSIS stands for Open Student Information System. It's an application
@@ -24,28 +24,19 @@
 * see http://www.gnu.org/licenses/.
 {% endcomment %}
 
-<div class="text-justify fst-italic mb-4">
-  <p>{% trans "Important information:" %}</p>
-  <ul>
-    <li>
-      {% blocktrans trimmed %}
-        The "doctoral training" must be updated before the confirmation paper and made available to the accompanying
-        committee on the day of the test.
-      {% endblocktrans %}
-    </li>
-    <li>
-      {% blocktrans trimmed %}
-        The format of the documents to be uploaded below as well as the deadlines for submission may vary from
-        one DDC to another; please check with your dossier manager and respect the usage foreseen by your domain
-        doctoral committee.
-      {% endblocktrans %}
-    </li>
-  </ul>
-  <p>
-    {% url 'parcours_doctoral:confirmation-paper-canvas' view.kwargs.pk as canvas_url %}
-    {% blocktrans trimmed %}
-      The canvas of the supervisory panel report must be sent to the accompanying committee during the test.
-      It can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
-    {% endblocktrans %}
-  </p>
-</div>
+{% if all_admissibilities|length > 1 %}
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4 class="card-title">{% trans "Previous admissibilities" %}</h4>
+    </div>
+    <div class="card-body">
+      {% for admissibility in all_admissibilities %}
+        {% if not admissibility.est_active %}
+          <div class="items-with-separator">
+            {% include 'parcours_doctoral/includes/admissibility/single_admissibility.html' with admissibility=admissibility %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

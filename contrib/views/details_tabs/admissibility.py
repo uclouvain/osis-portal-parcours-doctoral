@@ -29,39 +29,37 @@ from django.shortcuts import resolve_url
 from django.utils.functional import cached_property
 from django.views.generic import RedirectView, TemplateView
 from osis_document_components.enums import PostProcessingWanted
-from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
+from osis_parcours_doctoral_sdk.model.admissibility_dto import AdmissibilityDTO
 
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.doctorate import DoctorateJuryService, DoctorateService
 
 __all__ = [
-    'PrivateDefenseDetailView',
-    'PrivateDefenseMinutesCanvasView',
-    'PrivateDefenseMinutesView',
+    'AdmissibilityDetailView',
+    'AdmissibilityMinutesCanvasView',
+    'AdmissibilityMinutesView',
 ]
 
 __namespace__ = False
 
 
-class PrivateDefenseCommonViewMixin(LoadViewMixin):
-    urlpatterns = 'private-defense'
-
+class AdmissibilityCommonViewMixin(LoadViewMixin):
     @cached_property
-    def private_defenses(self) -> List[PrivateDefenseDTO]:
-        return DoctorateService.get_private_defenses(
+    def admissibilities(self) -> List[AdmissibilityDTO]:
+        return DoctorateService.get_admissibilities(
             person=self.request.user.person,
             doctorate_uuid=self.doctorate_uuid,
         )
 
     @cached_property
-    def current_private_defense(self) -> PrivateDefenseDTO:
-        return next((private_defense for private_defense in self.private_defenses if private_defense.est_active), None)
+    def current_admissibility(self) -> AdmissibilityDTO:
+        return next((admissibility for admissibility in self.admissibilities if admissibility.est_active), None)
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
 
-        context_data['all_private_defenses'] = self.private_defenses
-        context_data['current_private_defense'] = self.current_private_defense
+        context_data['all_admissibilities'] = self.admissibilities
+        context_data['current_admissibility'] = self.current_admissibility
 
         jury = DoctorateJuryService.retrieve_jury(
             person=self.request.user.person,
@@ -73,49 +71,45 @@ class PrivateDefenseCommonViewMixin(LoadViewMixin):
         return context_data
 
 
-class PrivateDefenseDetailView(PrivateDefenseCommonViewMixin, TemplateView):
-    urlpatterns = 'private-defense'
-    template_name = 'parcours_doctoral/details/private_defenses.html'
-    permission_link_to_check = 'retrieve_private_defense'
+class AdmissibilityDetailView(AdmissibilityCommonViewMixin, TemplateView):
+    urlpatterns = 'admissibility'
+    template_name = 'parcours_doctoral/details/admissibility.html'
+    permission_link_to_check = 'retrieve_admissibility'
 
 
-class PrivateDefenseMinutesCanvasView(LoadViewMixin, RedirectView):
-    urlpatterns = 'private-defense-minutes-canvas'
-    permission_link_to_check = 'retrieve_private_defense_minutes_canvas'
+class AdmissibilityMinutesCanvasView(LoadViewMixin, RedirectView):
+    urlpatterns = 'admissibility-minutes-canvas'
+    permission_link_to_check = 'retrieve_admissibility_minutes_canvas'
 
     def get_redirect_url(self, *args, **kwargs):
-        return DoctorateService.get_private_defense_minutes_canvas(
+        return DoctorateService.get_admissibility_minutes_canvas(
             person=self.request.user.person,
-            uuid=self.doctorate_uuid,
+            doctorate_uuid=self.doctorate_uuid,
         ).url
 
 
-class PrivateDefenseMinutesView(PrivateDefenseCommonViewMixin, RedirectView):
+class AdmissibilityMinutesView(AdmissibilityCommonViewMixin, RedirectView):
     urlpatterns = {
-        'private-defense-minutes': 'private-defense-minutes/<uuid:private_defense_id>',
+        'admissibility-minutes': 'admissibility-minutes/<uuid:admissibility_id>',
     }
-    permission_link_to_check = 'retrieve_private_defense'
+    permission_link_to_check = 'retrieve_admissibility'
 
     def get_redirect_url(self, *args, **kwargs):
         from osis_document_components.services import get_remote_token
         from osis_document_components.utils import get_file_url
 
-        private_defense_uuid = str(self.kwargs['private_defense_id'])
-        current_private_defense = next(
-            (
-                private_defense
-                for private_defense in self.private_defenses
-                if private_defense.uuid == private_defense_uuid
-            ),
+        admissibility_uuid = str(self.kwargs['admissibility_id'])
+        current_admissibility = next(
+            (admissibility for admissibility in self.admissibilities if admissibility.uuid == admissibility_uuid),
             None,
         )
 
-        if current_private_defense and current_private_defense.proces_verbal:
+        if current_admissibility and current_admissibility.proces_verbal:
             reading_token = get_remote_token(
-                current_private_defense.proces_verbal[0],
+                current_admissibility.proces_verbal[0],
                 wanted_post_process=PostProcessingWanted.ORIGINAL.name,
             )
 
             return get_file_url(reading_token)
 
-        return resolve_url('parcours_doctoral:private-defense', pk=self.doctorate_uuid)
+        return resolve_url('parcours_doctoral:admissibility', pk=self.doctorate_uuid)

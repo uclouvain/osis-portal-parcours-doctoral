@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n parcours_doctoral %}
 
 {% comment "License" %}
 * OSIS stands for Open Student Information System. It's an application
@@ -26,26 +26,22 @@
 
 <div class="text-justify fst-italic mb-4">
   <p>{% trans "Important information:" %}</p>
-  <ul>
-    <li>
-      {% blocktrans trimmed %}
-        The "doctoral training" must be updated before the confirmation paper and made available to the accompanying
-        committee on the day of the test.
-      {% endblocktrans %}
-    </li>
-    <li>
-      {% blocktrans trimmed %}
-        The format of the documents to be uploaded below as well as the deadlines for submission may vary from
-        one DDC to another; please check with your dossier manager and respect the usage foreseen by your domain
-        doctoral committee.
-      {% endblocktrans %}
-    </li>
-  </ul>
   <p>
-    {% url 'parcours_doctoral:confirmation-paper-canvas' view.kwargs.pk as canvas_url %}
-    {% blocktrans trimmed %}
-      The canvas of the supervisory panel report must be sent to the accompanying committee during the test.
-      It can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
-    {% endblocktrans %}
+    {% blocktranslate trimmed %}
+      The provisional text of your thesis must be submitted to thesis exam board members no later than one month before
+      the admissibility decision date. This date is chosen collectively by the board and in agreement with the PhD
+      student.
+      The manuscript format may vary from one Subject-specific PhD Committee (CDD) to another; please check with your
+      administrator.
+      Submission format (paper and/or digital) is to be agreed upon with each thesis exam board member.
+    {% endblocktranslate %}
   </p>
+  {% if doctorate|can_make_action:'retrieve_admissibility_minutes_canvas' %}
+    <p>
+      {% url 'parcours_doctoral:admissibility-minutes-canvas' view.kwargs.pk as canvas_url %}
+      {% blocktranslate trimmed %}
+        The canvas of the admissibility minutes can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
+      {% endblocktranslate %}
+    </p>
+  {% endif %}
 </div>

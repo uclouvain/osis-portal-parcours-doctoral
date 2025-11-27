@@ -23,28 +23,24 @@
 #    see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from dal import autocomplete
+from django.utils.translation import gettext_lazy as _
+
+from base.models.utils.utils import ChoiceEnum
 
 __all__ = [
-    'ListSelect2',
-    'Select2',
-    'TagSelect2',
+    'RoleActeur',
+    'TypeModalitesDiffusionThese',
 ]
 
 
-# The media of the select2 widget are loaded in the base layout.html so we don't need to do it twice
-class Select2WithoutMediaMixin:
-    class Media:
-        extend = False
+class TypeModalitesDiffusionThese(ChoiceEnum):
+    ACCES_LIBRE = _('Free access (Internet)')
+    ACCES_RESTREINT = _('Limited access (Intranet)')
+    ACCES_INTERDIT = _('Forbidden access')
+    ACCES_EMBARGO = _('Embargo access')
 
 
-class ListSelect2(Select2WithoutMediaMixin, autocomplete.ListSelect2):
-    pass
-
-
-class Select2(Select2WithoutMediaMixin, autocomplete.Select2):
-    pass
-
-
-class TagSelect2(Select2WithoutMediaMixin, autocomplete.TagSelect2):
-    pass
+class RoleActeur(ChoiceEnum):
+    PROMOTEUR = _('Supervisor')
+    SCEB = _('SCEB')
+    ADRE = _('ADRE')
