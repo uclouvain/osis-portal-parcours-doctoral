@@ -25,4 +25,4 @@
 {% endcomment %}
 
 {% display activity.ects|default:""|floatformat:"-1" " ECTS" as ects %}
-{{ activity.category|enum_display:'CategorieActivite' }}{% if ects %} - {{ ects }}{% endif %}
+{{ categories_labels_dict | get_item:activity.category }}{% if ects %} - {{ ects }}{% endif %}
