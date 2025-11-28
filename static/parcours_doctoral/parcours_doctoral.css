@@ -189,6 +189,8 @@ fieldset.custom-fieldset > legend {
 #subtabs {
   border: solid 1px #ddd;
   padding: 10px;
+  width: max-content;
+  max-width: 20%;
 }
 
 #subtabs .nav {
@@ -438,6 +440,17 @@ body, html {
 
 .items-with-separator:last-child:after {
   border: none;
+}
+
+.date-hour-field label {
+    display: block;
+}
+.date-hour-field input {
+    display: inline-block;
+    width: 49.75%;
+}
+.date-hour-field input:last-child {
+    margin-left: 0.5%;
 }
 
 /* The following code related to the bootstrap migration will be moved in the base css files in the future. */

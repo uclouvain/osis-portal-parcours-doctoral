@@ -234,6 +234,8 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'jury_request_signatures',
                         'retrieve_public_defense_minutes_canvas',
                         'submit_public_defense_minutes',
+                        'retrieve_private_public_defenses',
+                        'update_private_public_defenses',
                     ]
                 }
             ),
@@ -276,7 +278,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             nom_doctorant='Doe',
             commission_proximite=ChoixCommissionProximiteCDSS.ECLI.name,
             justification='Justification',
-            titre_these_propose='Title',
+            titre_these_propose='Thesis title 1',
             langue_soutenance_publique='FR',
             nom_langue_soutenance_publique='French',
             date_heure_soutenance_publique=datetime.datetime(2024, 2, 2, 11, 30),

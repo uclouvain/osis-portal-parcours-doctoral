@@ -39,16 +39,14 @@
 
       {% field_data _("Thesis title") doctorate.titre_these_propose inline=True %}
 
-      {% bootstrap_field form.langue wrapper_class='mb-3 required_field' %}
+      {% bootstrap_field form.langue_soutenance_publique wrapper_class='mb-3 required_field' %}
 
-      <div id="date-hour-field">
-        {% bootstrap_field_with_tooltip form.date_heure wrapper_class='mb-3 required_field' %}
-      </div>
+      {% bootstrap_field_with_tooltip form.date_heure_soutenance_publique wrapper_class='mb-3 required_field date-hour-field' %}
 
-      {% bootstrap_field_with_tooltip form.lieu %}
+      {% bootstrap_field_with_tooltip form.lieu_soutenance_publique %}
       {% bootstrap_field_with_tooltip form.local_deliberation %}
-      {% field_data _("Additional information") doctorate.informations_complementaires_soutenance_publique %}
-      {% bootstrap_field_with_tooltip form.resume_annonce html_tag="blockquote" %}
+      {% field_data _("Additional information") doctorate.informations_complementaires_soutenance_publique html_tag="blockquote" %}
+      {% bootstrap_field_with_tooltip form.resume_annonce %}
       {% bootstrap_field form.photo_annonce wrapper_class='mb-3 required_field' %}
 
       {% field_data _("Public defence minutes") doctorate.proces_verbal_soutenance_publique tooltip=_('The minutes will be uploaded by the thesis exam board secretary or chair.') %}
@@ -56,22 +54,5 @@
       {% field_data _("DIAL link") '' inline=True %}
     </div>
   </div>
-
-{% endblock %}
-
-{% block style %}
-  {{ block.super }}
-  <style>
-    #date-hour-field label {
-      display: block;
-    }
-    #date-hour-field input {
-      display: inline-block;
-      width: 49.75%;
-    }
-    #date-hour-field input:last-child {
-      margin-left: 0.5%;
-    }
-  </style>
 
 {% endblock %}

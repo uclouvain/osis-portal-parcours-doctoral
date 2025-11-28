@@ -32,7 +32,7 @@
     </div>
     <div class="card-body">
       {% include 'parcours_doctoral/includes/admissibility/admissibility_description.html' %}
-      {% field_data _("Thesis title") doctorate.titre_these_propose inline=True %}
+      {% field_data _("Thesis title") doctorate.titre_these_propose %}
 
       {% include 'parcours_doctoral/includes/private_defense/supervision_panel.html' %}
 

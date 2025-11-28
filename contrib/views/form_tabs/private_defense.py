@@ -60,11 +60,11 @@ class PrivateDefenseFormView(PrivateDefenseCommonViewMixin, WebServiceFormMixin,
         current_private_defense = self.current_private_defense
         return (
             {
-                'titre_these': current_private_defense.titre_these,
-                'date_heure': current_private_defense.date_heure,
-                'lieu': current_private_defense.lieu,
+                'titre_these': self.doctorate.titre_these_propose,
+                'date_heure_defense_privee': current_private_defense.date_heure,
+                'lieu_defense_privee': current_private_defense.lieu,
                 'date_envoi_manuscrit': current_private_defense.date_envoi_manuscrit,
-                'proces_verbal': current_private_defense.proces_verbal,
+                'proces_verbal_defense_privee': current_private_defense.proces_verbal,
             }
             if current_private_defense
             else {}
@@ -75,13 +75,19 @@ class PrivateDefenseFormView(PrivateDefenseCommonViewMixin, WebServiceFormMixin,
             DoctorateService.submit_private_defense(
                 person=self.person,
                 doctorate_uuid=self.doctorate_uuid,
-                private_defense_uuid=self.current_private_defense.uuid,
-                data=data,
+                data={
+                    'titre_these': data['titre_these'],
+                    'date_heure': data['date_heure_defense_privee'],
+                    'lieu': data['lieu_defense_privee'],
+                    'date_envoi_manuscrit': data['date_envoi_manuscrit'],
+                },
             )
         else:
             DoctorateService.submit_private_defense_minutes(
                 person=self.person,
                 doctorate_uuid=self.doctorate_uuid,
                 private_defense_uuid=self.current_private_defense.uuid,
-                data=data,
+                data={
+                    'proces_verbal': data['proces_verbal_defense_privee'],
+                },
             )

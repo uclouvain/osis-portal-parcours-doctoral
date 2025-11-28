@@ -1,0 +1,82 @@
+{% extends "parcours_doctoral/tab_layout.html" %}
+{% load static %}
+{% load django_bootstrap5 i18n parcours_doctoral %}
+
+{% comment "License" %}
+* OSIS stands for Open Student Information System. It's an application
+* designed to manage the core business of higher education institutions,
+* such as universities, faculties, institutes and professional schools.
+* The core business involves the administration of students, teachers,
+* courses, programs and so on.
+*
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* A copy of this license - GNU General Public License - is available
+* at the root of the source code of this program.  If not,
+* see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+{% block form %}
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4 class="card-title">{% translate "Private defence / Public defence" %}</h4>
+    </div>
+    <div class="card-body">
+      {% include 'parcours_doctoral/includes/private_public_defenses_description.html' %}
+      <div>
+        {% bootstrap_form_errors form type='non_fields' %}
+
+        {% csrf_token %}
+
+        {% bootstrap_field form.titre_these wrapper_class="mb-3 required_field" %}
+        {% bootstrap_field form.langue_soutenance_publique wrapper_class='mb-3 required_field' %}
+
+        {% include 'parcours_doctoral/includes/private_defense/supervision_panel.html' %}
+
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">{% translate 'Private defence' %}</h5>
+          </div>
+          <div class="card-body">
+            {% bootstrap_field_with_tooltip form.date_heure_defense_privee wrapper_class="mb-3 required_field date-hour-field" %}
+            {% bootstrap_field_with_tooltip form.lieu_defense_privee %}
+            <div class="row">
+              {% bootstrap_field form.date_envoi_manuscrit wrapper_class="mb-3 col-md-6" %}
+            </div>
+            {% field_data _("Private defence minutes") current_private_defense.proces_verbal tooltip=_('The minutes will be uploaded by the thesis exam board secretary or chair.') %}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">{% translate 'Public defence' %}</h5>
+          </div>
+          <div class="card-body">
+            {% bootstrap_field_with_tooltip form.date_heure_soutenance_publique wrapper_class='mb-3 required_field date-hour-field' %}
+            {% bootstrap_field_with_tooltip form.lieu_soutenance_publique %}
+            {% bootstrap_field_with_tooltip form.local_deliberation %}
+            {% field_data _("Additional information") doctorate.informations_complementaires_soutenance_publique html_tag="blockquote" %}
+            {% bootstrap_field_with_tooltip form.resume_annonce %}
+            {% bootstrap_field form.photo_annonce wrapper_class='mb-3 required_field' %}
+            {% field_data _("Public defence minutes") doctorate.proces_verbal_soutenance_publique %}
+            {% field_data _("Diploma collection date") doctorate.date_retrait_diplome %}
+            {% field_data _("DIAL link") '' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'parcours_doctoral/includes/private_defense/previous_private_defenses.html' %}
+
+{% endblock %}

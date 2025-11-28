@@ -189,7 +189,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
 
         self.assertIsInstance(form, AdmissibilityForm)
 
-        self.assertEqual(form['titre_these'].value(), 'Title')
+        self.assertEqual(form['titre_these'].value(), 'Thesis title 1')
         self.assertEqual(form['date_decision'].value(), datetime.date(2025, 11, 1))
         self.assertEqual(form['date_envoi_manuscrit'].value(), datetime.date(2025, 11, 10))
 
@@ -213,7 +213,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
         # Load the form
         form = response.context['form']
 
-        self.assertEqual(form['titre_these'].value(), 'Title')
+        self.assertEqual(form['titre_these'].value(), 'Thesis title 1')
         self.assertEqual(form['date_decision'].value(), None)
         self.assertEqual(form['date_envoi_manuscrit'].value(), None)
 

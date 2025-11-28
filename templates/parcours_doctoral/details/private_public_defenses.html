@@ -1,0 +1,75 @@
+{% extends "parcours_doctoral/tab_layout.html" %}
+{% load i18n parcours_doctoral %}
+
+{% comment "License" %}
+* OSIS stands for Open Student Information System. It's an application
+* designed to manage the core business of higher education institutions,
+* such as universities, faculties, institutes and professional schools.
+* The core business involves the administration of students, teachers,
+* courses, programs and so on.
+*
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* A copy of this license - GNU General Public License - is available
+* at the root of the source code of this program.  If not,
+* see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+{% block tab_content %}
+  <div class="card mb-3">
+    <div class="card-header">
+      <h4 class="card-title">{% translate "Private defence / Public defence" %}</h4>
+    </div>
+    <div class="card-body">
+      {% include 'parcours_doctoral/includes/private_public_defenses_description.html' %}
+      <div>
+        {% field_data _("Thesis title") doctorate.titre_these_propose %}
+        {% field_data _("Public defence language") doctorate.nom_langue_soutenance_publique %}
+
+        {% include 'parcours_doctoral/includes/private_defense/supervision_panel.html' %}
+
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">{% translate 'Private defence' %}</h5>
+          </div>
+          <div class="card-body">
+            {% field_data _("Private defence date and time") current_private_defense.date_heure %}
+            {% field_data _("Private defence location") current_private_defense.lieu %}
+            {% field_data _("Date of manuscript submission to the thesis exam board") current_private_defense.date_envoi_manuscrit %}
+            {% field_data _("Private defence minutes") current_private_defense.proces_verbal %}
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h5 class="card-title">{% translate 'Public defence' %}</h5>
+          </div>
+          <div class="card-body">
+            {% field_data _("Public defence date and time") doctorate.date_heure_soutenance_publique %}
+            {% field_data _("Public defence location") doctorate.lieu_soutenance_publique %}
+            {% field_data _("Deliberation room") doctorate.local_deliberation %}
+            {% field_data _("Additional information") doctorate.informations_complementaires_soutenance_publique html_tag="blockquote" %}
+            {% field_data _("Summary for announcement") doctorate.resume_annonce html_tag="blockquote" %}
+            {% field_data _("Photo for announcement") doctorate.photo_annonce %}
+            {% field_data _("Public defence minutes") doctorate.proces_verbal_soutenance_publique %}
+            {% field_data _("Diploma collection date") doctorate.date_retrait_diplome %}
+            {% field_data _("DIAL link") '' %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'parcours_doctoral/includes/private_defense/previous_private_defenses.html' %}
+
+{% endblock %}

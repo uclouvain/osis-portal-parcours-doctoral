@@ -1345,6 +1345,9 @@ msgstr ""
 msgid "Private defence"
 msgstr ""
 
+msgid "Private defence / Public defence"
+msgstr ""
+
 msgid "Private defence date and time"
 msgstr ""
 
@@ -1808,6 +1811,15 @@ msgid ""
 "The declaration of you doctoral training activities must be consistent with "
 "the specifics disposition of your domain. Please refer to those on the "
 "website of your Domain Doctoral Commission for more information."
+msgstr ""
+
+msgid ""
+"The final text of your thesis must be submitted to thesis exam board members "
+"no later than one month before the private defence date. This date must be "
+"chosen collectively by the board and in agreement with the PhD student. The "
+"board must be present in its entirety at the private defence and, barring "
+"exceptions, at the public defence. Thesis submission format (paper and/or "
+"digital) is determined by agreement with each board member."
 msgstr ""
 
 msgid ""

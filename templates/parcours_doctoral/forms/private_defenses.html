@@ -42,10 +42,8 @@
 
         {% include 'parcours_doctoral/includes/private_defense/supervision_panel.html' %}
 
-        <div id="date-hour-field">
-          {% bootstrap_field_with_tooltip form.date_heure wrapper_class="mb-3 required_field" %}
-        </div>
-        {% bootstrap_field_with_tooltip form.lieu %}
+        {% bootstrap_field_with_tooltip form.date_heure_defense_privee wrapper_class="mb-3 required_field date-hour-field" %}
+        {% bootstrap_field_with_tooltip form.lieu_defense_privee %}
         <div class="row">
           {% bootstrap_field form.date_envoi_manuscrit wrapper_class="mb-3 col-md-6" %}
         </div>
@@ -62,21 +60,4 @@
 {% block script %}
   {{ block.super }}
   <script type="text/javascript" src="{% static 'osis_document_components/osis-document.umd.min.js' %}"></script>
-{% endblock %}
-
-{% block style %}
-  {{ block.super }}
-  <style>
-      #date-hour-field label {
-          display: block;
-      }
-      #date-hour-field input {
-          display: inline-block;
-          width: 49.75%;
-      }
-      #date-hour-field input:last-child {
-          margin-left: 0.5%;
-      }
-  </style>
-
 {% endblock %}

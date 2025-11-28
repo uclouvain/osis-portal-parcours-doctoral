@@ -39,7 +39,7 @@ from parcours_doctoral.contrib.views.autocomplete import LANGUAGE_UNDECIDED
 
 
 class PublicDefenseForm(forms.Form):
-    langue = forms.ChoiceField(
+    langue_soutenance_publique = forms.ChoiceField(
         label=_('Public defence language'),
         widget=ListSelect2(
             url="parcours_doctoral:autocomplete:language",
@@ -49,11 +49,11 @@ class PublicDefenseForm(forms.Form):
             forward=(forward.Const(True, 'show_top_languages'),),
         ),
     )
-    date_heure = DoctorateDateTimeField(
+    date_heure_soutenance_publique = DoctorateDateTimeField(
         label=_('Public defence date and time'),
         help_text=_('The public defence takes place at least one month after the private defence.'),
     )
-    lieu = forms.CharField(
+    lieu_soutenance_publique = forms.CharField(
         label=_('Public defence location'),
         help_text=_('If necessary, contact your administrator for practical arrangements.'),
         required=False,
@@ -83,20 +83,23 @@ class PublicDefenseForm(forms.Form):
     def __init__(self, person, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        lang_code = self.data.get(self.add_prefix('langue'), self.initial.get('langue'))
-        self.fields['langue'].choices = get_language_initial_choices(lang_code, person)
+        lang_code = self.data.get(
+            self.add_prefix('langue_soutenance_publique'),
+            self.initial.get('langue_soutenance_publique'),
+        )
+        self.fields['langue_soutenance_publique'].choices = get_language_initial_choices(lang_code, person)
 
     def clean(self):
         cleaned_data = super().clean()
 
-        if cleaned_data.get('langue') == LANGUAGE_UNDECIDED:
-            self.add_error('langue', _('Please select a language.'))
+        if cleaned_data.get('langue_soutenance_publique') == LANGUAGE_UNDECIDED:
+            self.add_error('langue_soutenance_publique', _('Please select a language.'))
 
         return cleaned_data
 
 
 class PromoterPublicDefenseForm(forms.Form):
-    proces_verbal = DoctorateFileUploadField(
+    proces_verbal_soutenance_publique = DoctorateFileUploadField(
         label=_('Public defence minutes'),
         help_text=_('The minutes will be uploaded by the thesis exam board secretary or chair.'),
         required=False,
