@@ -151,7 +151,7 @@ class ActivityFormMixin(forms.Form):
     summary = FileUploadField(label=pgettext_lazy("paper summary", "Summary"), max_files=1)
     subtype = forms.CharField(label=_("Activity subtype"), max_length=100)
     subtitle = forms.CharField(widget=forms.Textarea())
-    authors = forms.CharField(label=_("Authors"), max_length=100)
+    authors = forms.CharField(label=_("Authors"))
     role = forms.ChoiceField(label=_("Role"), choices=ChoixRolePublication.choices())
     keywords = forms.CharField(label=_("Keywords"), max_length=100)
     journal = forms.CharField(label=_("Journal, publishing house or depository institution"), max_length=100)
@@ -704,6 +704,7 @@ class SeminarForm(ActivityFormMixin, forms.Form):
         labels = {
             'title': _("Activity name"),
             'participating_proof': _("Proof of participation for the whole activity"),
+            'hourly_volume': _("Total volume"),
         }
 
     def __init__(self, *args, **kwargs):

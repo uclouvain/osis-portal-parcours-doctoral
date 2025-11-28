@@ -62,6 +62,7 @@ class DoctoralTrainingListView(LoadViewMixin, WebServiceFormMixin, FormView):
         original_constants = list(dict(CategorieActivite.choices()).keys())
         original_constants.remove(CategorieActivite.UCL_COURSE.name)
         context_data['categories'] = list(zip(original_constants, config.category_labels[get_language()]))
+        context_data['categories_labels_dict'] = dict(context_data['categories'])
         context_data['activities_form'] = context_data.pop('form')  # Trick template
         return context_data
 
