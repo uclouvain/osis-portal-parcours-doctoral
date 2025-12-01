@@ -484,6 +484,12 @@ msgstr ""
 msgid "Current funding"
 msgstr ""
 
+msgid "DEFENSE_ET_SOUTENANCE_AUTORISEES"
+msgstr "Authorized defences"
+
+msgid "DEFENSE_ET_SOUTENANCE_SOUMISES"
+msgstr "Submitted defences"
+
 msgid "DEFENSE_PRIVEE_AUTORISEE"
 msgstr "Authorized private defence"
 
@@ -1716,9 +1722,6 @@ msgctxt "paper summary"
 msgid "Summary"
 msgstr ""
 
-msgid "Summary for announcement"
-msgstr ""
-
 msgid "Summary in English"
 msgstr ""
 
@@ -1741,6 +1744,9 @@ msgid "Support committee"
 msgstr ""
 
 msgid "Surname"
+msgstr ""
+
+msgid "Text for the poster"
 msgstr ""
 
 msgid ""

@@ -94,7 +94,7 @@ class PrivateDefenseMinutesView(PrivateDefenseCommonViewMixin, RedirectView):
     urlpatterns = {
         'private-defense-minutes': 'private-defense-minutes/<uuid:private_defense_id>',
     }
-    permission_link_to_check = 'retrieve_private_defense'
+    permission_link_to_check = ['retrieve_private_defense', 'retrieve_private_public_defenses']
 
     def get_redirect_url(self, *args, **kwargs):
         from osis_document_components.services import get_remote_token
