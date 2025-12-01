@@ -23,7 +23,6 @@
 #    see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -63,7 +62,7 @@ class RedirectDetailView(LoadViewMixin, RedirectView):
         return reverse('parcours_doctoral:list')
 
 
-class RedirectView(LoginRequiredMixin, TemplateView):
+class RedirectView(TemplateView):
     urlpatterns = {'redirect': ''}
     template_name = 'parcours_doctoral/doctorate_list.html'
 
