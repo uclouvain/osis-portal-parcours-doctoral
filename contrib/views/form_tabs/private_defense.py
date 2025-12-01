@@ -57,18 +57,19 @@ class PrivateDefenseFormView(PrivateDefenseCommonViewMixin, WebServiceFormMixin,
         return PrivateDefenseForm if self.is_doctorate_student else PromoterPrivateDefenseForm
 
     def get_initial(self):
+        initial_data = {
+            'titre_these': self.doctorate.titre_these_propose,
+        }
+
         current_private_defense = self.current_private_defense
-        return (
-            {
-                'titre_these': self.doctorate.titre_these_propose,
-                'date_heure_defense_privee': current_private_defense.date_heure,
-                'lieu_defense_privee': current_private_defense.lieu,
-                'date_envoi_manuscrit': current_private_defense.date_envoi_manuscrit,
-                'proces_verbal_defense_privee': current_private_defense.proces_verbal,
-            }
-            if current_private_defense
-            else {}
-        )
+
+        if current_private_defense:
+            initial_data['date_heure_defense_privee'] = current_private_defense.date_heure
+            initial_data['lieu_defense_privee'] = current_private_defense.lieu
+            initial_data['date_envoi_manuscrit'] = current_private_defense.date_envoi_manuscrit
+            initial_data['proces_verbal_defense_privee'] = current_private_defense.proces_verbal
+
+        return initial_data
 
     def call_webservice(self, data):
         if self.is_doctorate_student:

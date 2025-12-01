@@ -36,7 +36,7 @@
 
       {% bootstrap_form_errors form type='non_fields' %}
 
-      {% field_data _("Thesis title") doctorate.titre_these_propose inline=True %}
+      {% field_data _("Thesis title") doctorate.titre_these_propose %}
       {% bootstrap_field form.sources_financement wrapper_class="mb-3 required_field" %}
       {% bootstrap_field form.resume_anglais wrapper_class="mb-3 required_field" %}
       {% bootstrap_field form.resume_autre_langue %}

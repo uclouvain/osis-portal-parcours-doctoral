@@ -37,7 +37,7 @@
 
       {% include 'parcours_doctoral/includes/public_defense_description.html' %}
 
-      {% field_data _("Thesis title") doctorate.titre_these_propose inline=True %}
+      {% field_data _("Thesis title") doctorate.titre_these_propose %}
 
       {% bootstrap_field form.langue_soutenance_publique wrapper_class='mb-3 required_field' %}
 
@@ -50,8 +50,8 @@
       {% bootstrap_field form.photo_annonce wrapper_class='mb-3 required_field' %}
 
       {% field_data _("Public defence minutes") doctorate.proces_verbal_soutenance_publique tooltip=_('The minutes will be uploaded by the thesis exam board secretary or chair.') %}
-      {% field_data _("Diploma collection date") doctorate.date_retrait_diplome inline=True %}
-      {% field_data _("DIAL link") '' inline=True %}
+      {% field_data _("Diploma collection date") doctorate.date_retrait_diplome %}
+      {% field_data _("DIAL link") '' %}
     </div>
   </div>
 
