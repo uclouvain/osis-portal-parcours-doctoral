@@ -507,9 +507,9 @@ class PrivateDefenseMinutesViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_private_defense'] = ActionLink._from_openapi_data(
-            error='access error',
-        )
+        action_error = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links['retrieve_private_defense'] = action_error
+        self.mock_doctorate_object.links['retrieve_private_public_defenses'] = action_error
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
