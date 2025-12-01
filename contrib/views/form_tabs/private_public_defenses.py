@@ -28,6 +28,7 @@ from django.views.generic import FormView
 
 from parcours_doctoral.contrib.forms.private_public_defenses import (
     PrivatePublicDefensesForm,
+    PromoterPrivatePublicDefensesForm,
 )
 from parcours_doctoral.contrib.views.details_tabs.private_defense import (
     PrivateDefenseCommonViewMixin,
@@ -44,7 +45,6 @@ __namespace__ = False
 
 class PrivatePublicDefensesFormView(PrivateDefenseCommonViewMixin, WebServiceFormMixin, FormView):
     urlpatterns = 'private-public-defenses'
-    template_name = 'parcours_doctoral/details/private_public_defenses.html'
 
     @property
     def permission_link_to_check(self):
@@ -62,7 +62,7 @@ class PrivatePublicDefensesFormView(PrivateDefenseCommonViewMixin, WebServiceFor
         ]
 
     def get_form_class(self):
-        return PrivatePublicDefensesForm if self.is_doctorate_student else PrivatePublicDefensesForm
+        return PrivatePublicDefensesForm if self.is_doctorate_student else PromoterPrivatePublicDefensesForm
 
     def get_form_kwargs(self):
         form_kwargs = super().get_form_kwargs()
@@ -102,6 +102,12 @@ class PrivatePublicDefensesFormView(PrivateDefenseCommonViewMixin, WebServiceFor
     def call_webservice(self, data):
         if self.is_doctorate_student:
             DoctorateService.submit_private_public_defenses(
+                person=self.person,
+                doctorate_uuid=self.doctorate_uuid,
+                data=data,
+            )
+        else:
+            DoctorateService.submit_private_public_defenses_minutes(
                 person=self.person,
                 doctorate_uuid=self.doctorate_uuid,
                 data=data,
