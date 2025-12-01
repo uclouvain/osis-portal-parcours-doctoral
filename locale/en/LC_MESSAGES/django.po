@@ -493,6 +493,12 @@ msgstr "Private defence to be repeated"
 msgid "DEFENSE_PRIVEE_EN_ECHEC"
 msgstr "Private defence in failure"
 
+msgid "DEFENSE_PRIVEE_ET_SOUTENANCE_PUBLIQUE_AUTORISEES"
+msgstr "Authorized private and public defences"
+
+msgid "DEFENSE_PRIVEE_ET_SOUTENANCE_PUBLIQUE_SOUMISES"
+msgstr "Submitted private and public defences"
+
 msgid "DEFENSE_PRIVEE_REUSSIE"
 msgstr "Passed private defence"
 
@@ -1716,9 +1722,6 @@ msgctxt "paper summary"
 msgid "Summary"
 msgstr ""
 
-msgid "Summary for announcement"
-msgstr ""
-
 msgid "Summary in English"
 msgstr ""
 
@@ -1741,6 +1744,9 @@ msgid "Support committee"
 msgstr ""
 
 msgid "Surname"
+msgstr ""
+
+msgid "Text for the poster"
 msgstr ""
 
 msgid ""
