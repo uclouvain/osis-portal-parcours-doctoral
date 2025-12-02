@@ -66,7 +66,7 @@ class PublicDefenseForm(forms.Form):
         max_length=255,
     )
     resume_annonce = forms.CharField(
-        label=_('Summary for announcement'),
+        label=_('Text for the poster'),
         help_text=_('Please contact your administrator to draft the announcement.'),
         widget=forms.Textarea(attrs={'rows': '2'}),
         required=False,
@@ -101,6 +101,5 @@ class PublicDefenseForm(forms.Form):
 class PromoterPublicDefenseForm(forms.Form):
     proces_verbal_soutenance_publique = DoctorateFileUploadField(
         label=_('Public defence minutes'),
-        help_text=_('The minutes will be uploaded by the thesis exam board secretary or chair.'),
         required=False,
     )

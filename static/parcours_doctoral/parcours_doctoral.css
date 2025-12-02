@@ -189,12 +189,12 @@ fieldset.custom-fieldset > legend {
 #subtabs {
   border: solid 1px #ddd;
   padding: 10px;
-  width: max-content;
-  max-width: 20%;
+  max-width: min-content;
 }
 
 #subtabs .nav {
   gap: 1px;
+  min-width: 200px;
 }
 
 #subtabs li a {

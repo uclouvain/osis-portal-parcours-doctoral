@@ -236,6 +236,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                         'submit_public_defense_minutes',
                         'retrieve_private_public_defenses',
                         'update_private_public_defenses',
+                        'submit_private_public_defenses_minutes',
                     ]
                 }
             ),

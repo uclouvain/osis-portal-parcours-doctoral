@@ -33,19 +33,18 @@ from parcours_doctoral.templatetags.parcours_doctoral import can_make_action
 
 
 class LoadViewMixin(PermissionRequiredMixin, ContextMixin):
-    permission_link_to_check = ''
+    permission_link_to_check: str | list[str] = ''  # For a list, give access if one action is possible
 
     def has_permission(self):
         if self.doctorate_uuid and self.permission_link_to_check:
             doctorate = self.doctorate
 
-            if not can_make_action(doctorate, self.permission_link_to_check):
-                return False
+            if isinstance(self.permission_link_to_check, str):
+                return can_make_action(doctorate, self.permission_link_to_check)
+
+            return any(can_make_action(doctorate=doctorate, action_name=act) for act in self.permission_link_to_check)
 
         return True
-
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
