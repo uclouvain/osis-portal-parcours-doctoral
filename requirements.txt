@@ -1,1 +1,1 @@
-git+https://github.com/uclouvain/osis-parcours-doctoral-sdk.git@build-1.1.6.dev1648
+git+https://github.com/uclouvain/osis-parcours-doctoral-sdk.git@build-1.1.7
