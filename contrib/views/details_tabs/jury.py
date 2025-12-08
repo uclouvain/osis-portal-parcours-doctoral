@@ -25,8 +25,10 @@
 # ##############################################################################
 from django import forms
 from django.contrib import messages
+from django.contrib.auth.decorators import login_not_required
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import redirect, resolve_url
+from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView, TemplateView
@@ -56,8 +58,6 @@ __all__ = [
     'JuryExternalApprovalView',
     'JuryExternalConfirmView',
 ]
-
-from parcours_doctoral.templatetags.parcours_doctoral import can_make_action
 
 SSS_ACRONYM = 'SSS'
 SSH_ACRONYM = 'SSH'
@@ -234,6 +234,7 @@ class JuryResendView(LoadJuryViewMixin, WebServiceFormMixin, BaseFormView):
         return redirect('parcours_doctoral:jury', pk=self.kwargs['pk'])
 
 
+@method_decorator(login_not_required, name="dispatch")
 class JuryExternalApprovalView(UserPassesTestMixin, WebServiceFormMixin, FormView):
     urlpatterns = {'jury-external-approval': 'jury/external-approval/<token>'}
     form_class = JuryApprovalForm

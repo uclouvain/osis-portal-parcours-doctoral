@@ -25,7 +25,6 @@
 # ##############################################################################
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.shortcuts import redirect, resolve_url
@@ -226,7 +225,7 @@ class DoctorateEditExternalMemberView(LoadViewMixin, WebServiceFormMixin, FormVi
         return redirect('parcours_doctoral:supervision', pk=self.kwargs['pk'])
 
 
-class DoctorateSetReferencePromoterView(LoginRequiredMixin, WebServiceFormMixin, BaseFormView):
+class DoctorateSetReferencePromoterView(WebServiceFormMixin, BaseFormView):
     urlpatterns = {'set-reference-promoter': 'set-reference-promoter/<uuid>'}
     form_class = forms.Form
 
@@ -253,7 +252,7 @@ class DoctorateSetReferencePromoterView(LoginRequiredMixin, WebServiceFormMixin,
         return redirect('parcours_doctoral:supervision', pk=self.kwargs['pk'])
 
 
-class DoctorateApprovalByPdfView(LoginRequiredMixin, WebServiceFormMixin, BaseFormView):
+class DoctorateApprovalByPdfView(WebServiceFormMixin, BaseFormView):
     urlpatterns = 'approve-by-pdf'
     form_class = DoctorateApprovalByPdfForm
 
@@ -274,7 +273,7 @@ class DoctorateApprovalByPdfView(LoginRequiredMixin, WebServiceFormMixin, BaseFo
         return redirect('parcours_doctoral:supervision', pk=self.kwargs['pk'])
 
 
-class DoctorateExternalResendView(LoginRequiredMixin, WebServiceFormMixin, BaseFormView):
+class DoctorateExternalResendView(WebServiceFormMixin, BaseFormView):
     urlpatterns = {'resend-invite': 'resend-invite/<uuid>'}
     template_name = 'parcours_doctoral/forms/external_confirm.html'
     form_class = forms.Form
