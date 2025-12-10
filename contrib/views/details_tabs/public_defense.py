@@ -58,7 +58,7 @@ class PublicDefenseMinutesCanvasView(LoadViewMixin, RedirectView):
 
 class PublicDefenseMinutesView(LoadViewMixin, RedirectView):
     urlpatterns = 'public-defense-minutes'
-    permission_link_to_check = 'retrieve_public_defense'
+    permission_link_to_check = ['retrieve_public_defense', 'retrieve_private_public_defenses']
 
     def get_redirect_url(self, *args, **kwargs):
         from osis_document_components.services import get_remote_token

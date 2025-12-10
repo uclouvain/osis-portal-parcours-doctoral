@@ -63,6 +63,5 @@ class PrivateDefenseForm(forms.Form):
 class PromoterPrivateDefenseForm(forms.Form):
     proces_verbal_defense_privee = DoctorateFileUploadField(
         label=_('Private defence minutes'),
-        help_text=_('The minutes will be uploaded by the thesis exam board secretary or chair.'),
         required=False,
     )

@@ -1,3 +1,4 @@
+{% load parcours_doctoral %}
 {% load i18n %}
 
 {% comment "License" %}
@@ -34,4 +35,20 @@
       Thesis submission format (paper and/or digital) is determined by agreement with each board member.
     {% endblocktranslate %}
   </p>
+  {% if doctorate|can_make_action:'retrieve_private_defense_minutes_canvas' %}
+    {% url 'parcours_doctoral:private-defense-minutes-canvas' view.kwargs.pk as canvas_url %}
+    <p>
+      {% blocktranslate trimmed %}
+        The canvas of the private defence minutes can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
+      {% endblocktranslate %}
+    </p>
+  {% endif %}
+  {% if doctorate|can_make_action:'retrieve_public_defense_minutes_canvas' %}
+    {% url 'parcours_doctoral:public-defense-minutes-canvas' view.kwargs.pk as canvas_url %}
+    <p>
+      {% blocktranslate trimmed %}
+        The canvas of the public defence minutes can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
+      {% endblocktranslate %}
+    </p>
+  {% endif %}
 </div>

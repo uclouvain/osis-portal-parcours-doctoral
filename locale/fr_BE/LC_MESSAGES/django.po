@@ -532,6 +532,12 @@ msgstr "Défense privée à recommencer"
 msgid "DEFENSE_PRIVEE_EN_ECHEC"
 msgstr "Défense privée en échec"
 
+msgid "DEFENSE_ET_SOUTENANCE_AUTORISEES"
+msgstr "Défense/Soutenance autorisées"
+
+msgid "DEFENSE_ET_SOUTENANCE_SOUMISES"
+msgstr "Défense/Soutenance soumises"
+
 msgid "DEFENSE_PRIVEE_REUSSIE"
 msgstr "Défense privée réussie"
 
@@ -1855,9 +1861,6 @@ msgctxt "paper summary"
 msgid "Summary"
 msgstr "Résumé"
 
-msgid "Summary for announcement"
-msgstr "Résumé pour l’annonce"
-
 msgid "Summary in English"
 msgstr "Résumé en anglais"
 
@@ -1881,6 +1884,9 @@ msgstr "Comité d'accompagnement"
 
 msgid "Surname"
 msgstr "Nom"
+
+msgid "Text for the poster"
+msgstr "Texte pour l'affiche"
 
 msgid ""
 "The \"doctoral training\" must be completed before submitting the defence "
@@ -1991,11 +1997,12 @@ msgid ""
 "exceptions, at the public defence. Thesis submission format (paper and/or "
 "digital) is determined by agreement with each board member."
 msgstr ""
-"Le texte définitif de votre thèse doit parvenir aux membres du jury au plus tard "
-"un mois avant la date fixée pour la défense privée. Cette date doit être "
-"choisie collégialement par le jury, en accord avec le doctorant ou la doctorante. "
-"Le jury doit être présent au complet lors de la défense privée et, sauf exceptions, lors de la soutenance publique. "
-"Les modalités d’envoi (papier et/ou électronique) sont à convenir avec chaque membre du jury."
+"Le texte définitif de votre thèse doit parvenir aux membres du jury au plus "
+"tard un mois avant la date fixée pour la défense privée. Cette date doit "
+"être choisie collégialement par le jury, en accord avec le doctorant ou la "
+"doctorante. Le jury doit être présent au complet lors de la défense privée "
+"et, sauf exceptions, lors de la soutenance publique. Les modalités d’envoi "
+"(papier et/ou électronique) sont à convenir avec chaque membre du jury."
 
 msgid ""
 "The final text of your thesis must be submitted to thesis exam board members "
