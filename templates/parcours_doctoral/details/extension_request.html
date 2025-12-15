@@ -40,7 +40,7 @@
       {% include 'parcours_doctoral/includes/new_deadline_description.html' %}
       {% if confirmation_paper.demande_prolongation %}
       <div>
-        {% field_data _("Proposed new deadline") confirmation_paper.demande_prolongation.nouvelle_echeance inline=True %}
+        {% field_data _("Proposed new deadline") confirmation_paper.demande_prolongation.nouvelle_echeance|convert_date_string inline=True %}
         {% field_data _("Brief justification") confirmation_paper.demande_prolongation.justification_succincte html_tag="blockquote" %}
         {% field_data _("Justification letter") confirmation_paper.demande_prolongation.lettre_justification %}
         {% field_data _("PhD Committee opinion") confirmation_paper.demande_prolongation.avis_cdd hide_empty=True html_tag="blockquote" %}

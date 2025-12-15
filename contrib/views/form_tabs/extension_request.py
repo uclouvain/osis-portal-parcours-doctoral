@@ -27,13 +27,14 @@ from django.shortcuts import redirect
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
-from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
 
+from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
 from parcours_doctoral.contrib.enums import ChoixStatutDoctorat
 from parcours_doctoral.contrib.forms.extension_request import ExtensionRequestForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.doctorate import DoctorateService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
+from parcours_doctoral.templatetags.parcours_doctoral import convert_date_string
 
 __all__ = ['ExtensionRequestFormView']
 
@@ -62,7 +63,9 @@ class ExtensionRequestFormView(LoadViewMixin, WebServiceFormMixin, FormView):
     def get_initial(self):
         return (
             {
-                'nouvelle_echeance': self.confirmation_paper.demande_prolongation['nouvelle_echeance'],
+                'nouvelle_echeance': convert_date_string(
+                    self.confirmation_paper.demande_prolongation['nouvelle_echeance'],
+                ),
                 'justification_succincte': self.confirmation_paper.demande_prolongation['justification_succincte'],
                 'lettre_justification': self.confirmation_paper.demande_prolongation['lettre_justification'],
             }
