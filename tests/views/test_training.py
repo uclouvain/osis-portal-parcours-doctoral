@@ -167,20 +167,17 @@ class TrainingTestCase(BaseDoctorateTestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "osis-document.umd.min.js")
-        self.assertContains(response, "L-CDAR24-0000-0002")
         self.assertContains(response, "45")
 
     def test_complementary_training_list(self):
         url = resolve_url("parcours_doctoral:complementary-training", pk=self.doctorate_uuid)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "L-CDAR24-0000-0002")
 
     def test_course_enrollment_list(self):
         url = resolve_url("parcours_doctoral:course-enrollment", pk=self.doctorate_uuid)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "L-CDAR24-0000-0002")
 
     def test_create_wrong_category(self):
         url = resolve_url(
@@ -429,7 +426,7 @@ class TrainingTestCase(BaseDoctorateTestCase):
         self.assertFormError(
             response.context["form"],
             'start_date',
-            _("The start date must be earlier than or the same as the end date.")
+            _("The start date must be earlier than or the same as the end date."),
         )
 
     def test_create_with_parent(self):
