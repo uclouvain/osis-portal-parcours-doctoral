@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2023 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ from dal import autocomplete
 __all__ = [
     'ListSelect2',
     'Select2',
+    'TagSelect2',
 ]
 
 
@@ -42,4 +43,8 @@ class ListSelect2(Select2WithoutMediaMixin, autocomplete.ListSelect2):
 
 
 class Select2(Select2WithoutMediaMixin, autocomplete.Select2):
+    pass
+
+
+class TagSelect2(Select2WithoutMediaMixin, autocomplete.TagSelect2):
     pass

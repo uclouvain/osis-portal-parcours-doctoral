@@ -67,13 +67,13 @@ class PublicDefenseFormView(LoadViewMixin, WebServiceFormMixin, FormView):
     def get_initial(self):
         doctorate = self.doctorate
         return {
-            'langue': doctorate.langue_soutenance_publique,
-            'date_heure': doctorate.date_heure_soutenance_publique,
-            'lieu': doctorate.lieu_soutenance_publique,
+            'langue_soutenance_publique': doctorate.langue_soutenance_publique,
+            'date_heure_soutenance_publique': doctorate.date_heure_soutenance_publique,
+            'lieu_soutenance_publique': doctorate.lieu_soutenance_publique,
             'local_deliberation': doctorate.local_deliberation,
             'resume_annonce': doctorate.resume_annonce,
             'photo_annonce': doctorate.photo_annonce,
-            'proces_verbal': doctorate.proces_verbal_soutenance_publique,
+            'proces_verbal_soutenance_publique': doctorate.proces_verbal_soutenance_publique,
         }
 
     def call_webservice(self, data):
@@ -81,11 +81,20 @@ class PublicDefenseFormView(LoadViewMixin, WebServiceFormMixin, FormView):
             DoctorateService.submit_public_defense(
                 person=self.person,
                 doctorate_uuid=self.doctorate_uuid,
-                data=data,
+                data={
+                    'langue': data['langue_soutenance_publique'],
+                    'date_heure': data['date_heure_soutenance_publique'],
+                    'lieu': data['lieu_soutenance_publique'],
+                    'local_deliberation': data['local_deliberation'],
+                    'resume_annonce': data['resume_annonce'],
+                    'photo_annonce': data['photo_annonce'],
+                },
             )
         else:
             DoctorateService.submit_public_defense_minutes(
                 person=self.person,
                 doctorate_uuid=self.doctorate_uuid,
-                data=data,
+                data={
+                    'proces_verbal': data['proces_verbal_soutenance_publique'],
+                },
             )

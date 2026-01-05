@@ -32,9 +32,19 @@ from django.conf import settings
 from django.utils.translation import get_language
 from osis_parcours_doctoral_sdk import ApiException
 from osis_parcours_doctoral_sdk.api import doctorate_api
+from osis_parcours_doctoral_sdk.model.accept_thesis_by_lead_promoter import (
+    AcceptThesisByLeadPromoter,
+)
+from osis_parcours_doctoral_sdk.model.admissibility_dto import AdmissibilityDTO
+from osis_parcours_doctoral_sdk.model.admissibility_minutes_canvas import (
+    AdmissibilityMinutesCanvas,
+)
 from osis_parcours_doctoral_sdk.model.approuver_jury_command import ApprouverJuryCommand
 from osis_parcours_doctoral_sdk.model.approuver_jury_par_pdf_command import (
     ApprouverJuryParPdfCommand,
+)
+from osis_parcours_doctoral_sdk.model.authorization_distribution_dto import (
+    AuthorizationDistributionDTO,
 )
 from osis_parcours_doctoral_sdk.model.confirmation_paper_canvas import (
     ConfirmationPaperCanvas,
@@ -56,12 +66,28 @@ from osis_parcours_doctoral_sdk.model.public_defense_minutes_canvas import (
     PublicDefenseMinutesCanvas,
 )
 from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCommand
+from osis_parcours_doctoral_sdk.model.reject_thesis_by_lead_promoter import (
+    RejectThesisByLeadPromoter,
+)
 from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe import (
     RenvoyerInvitationSignatureExterne,
+)
+from osis_parcours_doctoral_sdk.model.send_authorization_distribution_to_promoter import (
+    SendAuthorizationDistributionToPromoter,
+)
+from osis_parcours_doctoral_sdk.model.submit_admissibility import SubmitAdmissibility
+from osis_parcours_doctoral_sdk.model.submit_admissibility_minutes_and_opinions import (
+    SubmitAdmissibilityMinutesAndOpinions,
 )
 from osis_parcours_doctoral_sdk.model.submit_private_defense import SubmitPrivateDefense
 from osis_parcours_doctoral_sdk.model.submit_private_defense_minutes import (
     SubmitPrivateDefenseMinutes,
+)
+from osis_parcours_doctoral_sdk.model.submit_private_public_defenses import (
+    SubmitPrivatePublicDefenses,
+)
+from osis_parcours_doctoral_sdk.model.submit_private_public_defenses_minutes import (
+    SubmitPrivatePublicDefensesMinutes,
 )
 from osis_parcours_doctoral_sdk.model.submit_public_defense import SubmitPublicDefense
 from osis_parcours_doctoral_sdk.model.submit_public_defense_minutes import (
@@ -69,6 +95,9 @@ from osis_parcours_doctoral_sdk.model.submit_public_defense_minutes import (
 )
 from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
 from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
+from osis_parcours_doctoral_sdk.model.update_authorization_distribution import (
+    UpdateAuthorizationDistribution,
+)
 
 from base.models.person import Person
 from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk
@@ -80,6 +109,7 @@ __all__ = [
     "DoctorateSupervisionService",
     "ExternalDoctorateService",
     "ParcoursDoctoralBusinessException",
+    "AuthorizationDistributionBusinessException",
 ]
 
 
@@ -205,6 +235,62 @@ class DoctorateService(metaclass=ServiceMeta):
         )
 
     @classmethod
+    def get_admissibilities(cls, person, doctorate_uuid) -> List[AdmissibilityDTO]:
+        return DoctorateAPIClient().retrieve_admissibilities(
+            uuid=doctorate_uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_admissibility(cls, person, doctorate_uuid, data) -> ParcoursDoctoralIdentityDTO:
+        return DoctorateAPIClient().submit_admissibility(
+            uuid=doctorate_uuid,
+            submit_admissibility=SubmitAdmissibility(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_admissibility_minutes_and_opinions(cls, person, doctorate_uuid, data) -> ParcoursDoctoralIdentityDTO:
+        return DoctorateAPIClient().submit_admissibility_minutes_and_opinions(
+            uuid=doctorate_uuid,
+            submit_admissibility_minutes_and_opinions=SubmitAdmissibilityMinutesAndOpinions(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_admissibility_minutes_canvas(cls, person, doctorate_uuid) -> AdmissibilityMinutesCanvas:
+        return DoctorateAPIClient().retrieve_admissibility_minutes_canvas(
+            uuid=doctorate_uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_private_public_defenses(
+        cls,
+        person,
+        doctorate_uuid,
+        data,
+    ) -> ParcoursDoctoralIdentityDTO:
+        return DoctorateAPIClient().submit_private_public_defenses(
+            uuid=doctorate_uuid,
+            submit_private_public_defenses=SubmitPrivatePublicDefenses(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def submit_private_public_defenses_minutes(
+        cls,
+        person,
+        doctorate_uuid,
+        data,
+    ) -> ParcoursDoctoralIdentityDTO:
+        return DoctorateAPIClient().submit_private_public_defenses_minutes(
+            uuid=doctorate_uuid,
+            submit_private_public_defenses_minutes=SubmitPrivatePublicDefensesMinutes(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
     def get_private_defenses(cls, person, doctorate_uuid) -> List[PrivateDefenseDTO]:
         return DoctorateAPIClient().retrieve_private_defenses(
             uuid=doctorate_uuid,
@@ -220,10 +306,9 @@ class DoctorateService(metaclass=ServiceMeta):
         )
 
     @classmethod
-    def submit_private_defense(cls, person, doctorate_uuid, private_defense_uuid, data) -> ParcoursDoctoralIdentityDTO:
+    def submit_private_defense(cls, person, doctorate_uuid, data) -> ParcoursDoctoralIdentityDTO:
         return DoctorateAPIClient().submit_private_defense(
             uuid=doctorate_uuid,
-            private_defense_uuid=private_defense_uuid,
             submit_private_defense=SubmitPrivateDefense(**data),
             **build_mandatory_auth_headers(person),
         )
@@ -243,6 +328,45 @@ class DoctorateService(metaclass=ServiceMeta):
                 uuid=private_defense_uuid,
                 **data,
             ),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def get_authorization_distribution(cls, person, uuid) -> AuthorizationDistributionDTO:
+        return DoctorateAPIClient().retrieve_authorization_distribution(
+            uuid=uuid,
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def update_authorization_distribution(cls, person, uuid, data):
+        return DoctorateAPIClient().update_authorization_distribution(
+            uuid=uuid,
+            update_authorization_distribution=UpdateAuthorizationDistribution(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def send_authorization_distribution_to_promoter(cls, person, uuid, data):
+        return DoctorateAPIClient().send_authorization_distribution_to_promoter(
+            uuid=uuid,
+            send_authorization_distribution_to_promoter=SendAuthorizationDistributionToPromoter(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def reject_thesis_by_lead_promoter(cls, person, uuid, data):
+        return DoctorateAPIClient().reject_thesis_by_lead_promoter(
+            uuid=uuid,
+            reject_thesis_by_lead_promoter=RejectThesisByLeadPromoter(**data),
+            **build_mandatory_auth_headers(person),
+        )
+
+    @classmethod
+    def accept_thesis_by_lead_promoter(cls, person, uuid, data):
+        return DoctorateAPIClient().accept_thesis_by_lead_promoter(
+            uuid=uuid,
+            accept_thesis_by_lead_promoter=AcceptThesisByLeadPromoter(**data),
             **build_mandatory_auth_headers(person),
         )
 
@@ -621,3 +745,14 @@ class JuryBusinessException(Enum):
     MembreExterneSansEmailException = "JURY-19"
     MembreDejaDansJuryException = "JURY-20"
     MembreExterneSansLangueDeContactException = "JURY-29"
+
+
+class AuthorizationDistributionBusinessException(Enum):
+    SourcesFinancementsNonCompleteesException = "AUTORISATION-DIFFUSION-THESE-1"
+    ResumeAnglaisNonCompleteException = "AUTORISATION-DIFFUSION-THESE-2"
+    LangueRedactionTheseNonCompleteeException = "AUTORISATION-DIFFUSION-THESE-3"
+    MotsClesNonCompletesException = "AUTORISATION-DIFFUSION-THESE-4"
+    TypeModalitesDiffusionNonCompleteException = "AUTORISATION-DIFFUSION-THESE-5"
+    DateEmbargoModalitesDiffusionNonCompleteeException = "AUTORISATION-DIFFUSION-THESE-6"
+    ModalitesDiffusionNonAccepteesException = "AUTORISATION-DIFFUSION-THESE-7"
+    AutorisationDiffusionTheseNonTrouveException = "AUTORISATION-DIFFUSION-THESE-8"

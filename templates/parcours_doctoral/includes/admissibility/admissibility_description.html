@@ -1,0 +1,47 @@
+{% load i18n parcours_doctoral %}
+
+{% comment "License" %}
+* OSIS stands for Open Student Information System. It's an application
+* designed to manage the core business of higher education institutions,
+* such as universities, faculties, institutes and professional schools.
+* The core business involves the administration of students, teachers,
+* courses, programs and so on.
+*
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* A copy of this license - GNU General Public License - is available
+* at the root of the source code of this program.  If not,
+* see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+<div class="text-justify fst-italic mb-4">
+  <p>{% trans "Important information:" %}</p>
+  <p>
+    {% blocktranslate trimmed %}
+      The provisional text of your thesis must be submitted to thesis exam board members no later than one month before
+      the admissibility decision date. This date is chosen collectively by the board and in agreement with the PhD
+      student.
+      The manuscript format may vary from one Subject-specific PhD Committee (CDD) to another; please check with your
+      administrator.
+      Submission format (paper and/or digital) is to be agreed upon with each thesis exam board member.
+    {% endblocktranslate %}
+  </p>
+  {% if doctorate|can_make_action:'retrieve_admissibility_minutes_canvas' %}
+    <p>
+      {% url 'parcours_doctoral:admissibility-minutes-canvas' view.kwargs.pk as canvas_url %}
+      {% blocktranslate trimmed %}
+        The canvas of the admissibility minutes can be downloaded <a href="{{ canvas_url }}" target="_blank">here</a>.
+      {% endblocktranslate %}
+    </p>
+  {% endif %}
+</div>

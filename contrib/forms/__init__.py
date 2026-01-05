@@ -32,6 +32,7 @@ from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from osis_document_components.fields import FileUploadField
 
+from parcours_doctoral.contrib.views.autocomplete import LANGUAGE_UNDECIDED
 from parcours_doctoral.services.organisation import EntitiesService
 from parcours_doctoral.services.reference import (
     AcademicYearService,
@@ -78,6 +79,8 @@ def get_language_initial_choices(code, person):
     """Return the unique initial choice for a language when data is either set from initial or from webservice."""
     if not code:
         return EMPTY_CHOICE
+    if code == LANGUAGE_UNDECIDED:
+        return ((LANGUAGE_UNDECIDED, _('Undecided')),)
     language = LanguageService.get_language(code=code, person=person)
     return EMPTY_CHOICE + (
         (language.code, language.name if get_language() == settings.LANGUAGE_CODE else language.name_en),
