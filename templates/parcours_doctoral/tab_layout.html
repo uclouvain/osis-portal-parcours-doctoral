@@ -130,7 +130,7 @@
     {% if subtabs|length > 1 %}
       {# If there are multiple subtabs, display them on the side #}
       <div id="subtabs-row" class="row m-auto gap-3 align-items-start">
-      <div id="subtabs" class="col d-none d-md-block subtabs" style="max-width: min-content">
+      <div id="subtabs" class="col d-none d-md-block subtabs">
         {% get_current_parent_tab as current_parent %}
         <div class="mt-1 fst-italic">{{ current_parent.label }}</div>
         <hr>
@@ -169,8 +169,8 @@
             </div>
           {% endblock submit_button_bottom %}
         </form>
-        {% block after_form %}{% endblock %}
       {% endif %}
+      {% block after_form %}{% endblock %}
     {% endblock %}
   </div>
   {% if subtabs|length > 1 %}

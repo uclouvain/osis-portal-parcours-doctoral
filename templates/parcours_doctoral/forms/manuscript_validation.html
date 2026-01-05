@@ -1,0 +1,85 @@
+{% extends "parcours_doctoral/tab_layout.html" %}
+{% load i18n %}
+{% load django_bootstrap5 %}
+
+{% comment "License" %}
+* OSIS stands for Open Student Information System. It's an application
+* designed to manage the core business of higher education institutions,
+* such as universities, faculties, institutes and professional schools.
+* The core business involves the administration of students, teachers,
+* courses, programs and so on.
+*
+* Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* A copy of this license - GNU General Public License - is available
+* at the root of the source code of this program.  If not,
+* see http://www.gnu.org/licenses/.
+{% endcomment %}
+
+{% block form %}
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title">{% translate "Manuscript validation" %}</h4>
+    </div>
+    <div class="card-body">
+      {% bootstrap_form_errors form type='non_fields' %}
+
+      {% bootstrap_field form.decision wrapper_class='required_field mb-3' %}
+      {% bootstrap_field form.motif_refus wrapper_class='required_field mb-3' %}
+
+      <div class="row">
+        <div class="col-md-6">
+          {% bootstrap_field form.commentaire_interne %}
+        </div>
+        <div class="col-md-6">
+          {% bootstrap_field form.commentaire_externe %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block after_form %}
+  {% if signatories %}
+    {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.PROMOTEUR %}
+    {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.ADRE %}
+    {% include 'parcours_doctoral/includes/manuscript_validation/signatory.html' with signataire=signatories.SCEB %}
+  {% else %}
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">{% translate "Manuscript validation" %}</h4>
+      </div>
+      <div class="card-body">
+        {% translate "The signing process has not yet started." %}
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block script %}
+  {{ block.super }}
+  {% if form.motif_refus %}
+    <script>
+      $(function () {
+        // Hide the reason input if the promoter approves the proposition
+        $('#id_motif_refus').dependsOn({
+          'input[name="decision"]': {
+            values: ['DECLINED'],
+          },
+        }, {
+          duration: 0,
+        });
+      });
+    </script>
+  {% endif %}
+{% endblock %}

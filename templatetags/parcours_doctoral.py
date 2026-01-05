@@ -147,8 +147,12 @@ TAB_TREE = {
         Tab('jury-preparation', pgettext_lazy('doctorate tab', 'Defence method')),
         Tab('jury', _('Jury composition')),
         # Tab('jury-supervision', _('Jury supervision')),
+        Tab('admissibility', _('Admissibility')),
         Tab('private-defense', _('Private defence')),
+        Tab('authorization-distribution', _('Authorization and distribution')),
+        Tab('manuscript-validation', _('Manuscript validation')),
         Tab('public-defense', _('Public defence')),
+        Tab('private-public-defenses', _('Private defence / Public defence')),
     ],
 }
 

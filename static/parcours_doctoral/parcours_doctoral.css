@@ -189,10 +189,12 @@ fieldset.custom-fieldset > legend {
 #subtabs {
   border: solid 1px #ddd;
   padding: 10px;
+  max-width: min-content;
 }
 
 #subtabs .nav {
   gap: 1px;
+  min-width: 200px;
 }
 
 #subtabs li a {
@@ -238,6 +240,10 @@ select.select2-hidden-accessible + span {
 
 .select2-selection__arrow {
   display: none;
+}
+
+.select2-selection__choice {
+  padding: 5px !important;
 }
 
 .d-block {
@@ -434,6 +440,17 @@ body, html {
 
 .items-with-separator:last-child:after {
   border: none;
+}
+
+.date-hour-field label {
+    display: block;
+}
+.date-hour-field input {
+    display: inline-block;
+    width: 49.75%;
+}
+.date-hour-field input:last-child {
+    margin-left: 0.5%;
 }
 
 /* The following code related to the bootstrap migration will be moved in the base css files in the future. */
