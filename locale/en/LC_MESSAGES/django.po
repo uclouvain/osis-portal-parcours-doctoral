@@ -74,7 +74,25 @@ msgctxt "publication-status"
 msgid "Accepted"
 msgstr ""
 
+#, python-format
+msgid "Accepted by %(first_name)s %(last_name)s on"
+msgstr ""
+
+msgid ""
+"Access may be restricted to certain parts of the thesis, for example to "
+"protect parts covered by confidentiality. Please specify this in this text "
+"area, mentioning the protected chapters and the type of access (restricted, "
+"forbidden, or embargo and date)."
+msgstr ""
+
 msgid "Access my PhD students' applications"
+msgstr ""
+
+msgid ""
+"Access to the digital thesis may be open to the entire world, limited to the "
+"UCLouvain intranet or reserved solely for administrators. Access may also be "
+"blocked for a specific period of time, if the author prefers paper "
+"distribution for a certain period of time (e.g. two or three years)."
 msgstr ""
 
 msgid "Actions"
@@ -158,6 +176,15 @@ msgstr ""
 msgid "Additional information"
 msgstr ""
 
+msgid "Additional limitation for certain specific chapters"
+msgstr ""
+
+msgid "Admissibility"
+msgstr ""
+
+msgid "Admissibility minutes"
+msgstr ""
+
 msgid "Admission"
 msgstr ""
 
@@ -196,6 +223,9 @@ msgid ""
 "Are you sure you want to delete %(first_name)s %(last_name)s as %(role)s?"
 msgstr ""
 
+msgid "Are you sure you want to do it?"
+msgstr ""
+
 #, python-format
 msgid "Are you sure you want to remove \"%(prenom)s %(nom)s\" from the jury?"
 msgstr ""
@@ -207,10 +237,16 @@ msgid ""
 "Are you sure you want to request signatures to validate your thesis jury?"
 msgstr ""
 
+msgid "Are you sure you want to submit your form to the contact supervisor?"
+msgstr ""
+
 msgid "As it appears in an official course catalogue"
 msgstr ""
 
 msgid "Assessment enrollments"
+msgstr ""
+
+msgid "At the end of the embargo period, the thesis becomes public."
 msgstr ""
 
 msgid "Attestation"
@@ -220,6 +256,9 @@ msgid "Attestation of the communication"
 msgstr ""
 
 msgid "Auditor"
+msgstr ""
+
+msgid "Authorization and distribution"
 msgstr ""
 
 msgid "Authors"
@@ -239,6 +278,19 @@ msgstr ""
 msgid ""
 "Be careful, some doctorales commissions require an activity proof in their "
 "specifics dispositions. Refer to your commission specifics dispositions."
+msgstr ""
+
+#, python-format
+msgid ""
+"Before your defence, you must submit your thesis electronically to the DIAL "
+"electronic thesis repository (<a href=\"%(url)s\" target=\"_blank\">%(url)s</"
+"a>). Before you do so, please enter the metadata using the form below. "
+"Please also indicate your chosen distribution conditions (open or restricted "
+"access, blocking for a certain period, etc.), after discussing these with "
+"your supervisors. You will then receive an email confirming that your "
+"supervisor has approved the distribution, followed by an email from the "
+"library team regarding the deposit formalities to be completed in their DIAL "
+"application."
 msgstr ""
 
 msgid "Belgium"
@@ -432,6 +484,12 @@ msgstr ""
 msgid "Current funding"
 msgstr ""
 
+msgid "DEFENSE_ET_SOUTENANCE_AUTORISEES"
+msgstr "Authorized defences"
+
+msgid "DEFENSE_ET_SOUTENANCE_SOUMISES"
+msgstr "Submitted defences"
+
 msgid "DEFENSE_PRIVEE_AUTORISEE"
 msgstr "Authorized private defence"
 
@@ -457,6 +515,9 @@ msgid "DOCTORAL_TRAINING"
 msgstr "PhD training"
 
 msgid "Date"
+msgstr ""
+
+msgid "Date of admissibility decision"
 msgstr ""
 
 msgid "Date of manuscript submission to the thesis exam board"
@@ -530,6 +591,9 @@ msgid "Development cooperation (ARES)"
 msgstr ""
 
 msgid "Diploma collection date"
+msgstr ""
+
+msgid "Distribution conditions"
 msgstr ""
 
 msgctxt "other gender"
@@ -608,7 +672,13 @@ msgctxt "doctorate"
 msgid "Email"
 msgstr ""
 
+msgid "Embargo access"
+msgstr ""
+
 msgid "End date"
+msgstr ""
+
+msgid "End of the embargo period"
 msgstr ""
 
 msgid "English"
@@ -701,6 +771,12 @@ msgid ""
 "showing that you have been awarded the scholarship on the dates indicated."
 msgstr ""
 
+msgid "Forbidden access"
+msgstr ""
+
+msgid "Free access (Internet)"
+msgstr ""
+
 msgid "French"
 msgstr ""
 
@@ -743,6 +819,40 @@ msgid "Holder of a PhD with thesis"
 msgstr ""
 
 msgid "Hourly volume"
+msgstr ""
+
+msgid "I accept"
+msgstr ""
+
+msgid ""
+"I accept that the text of this thesis may be published in UCLouvain's "
+"digital thesis collection."
+msgstr ""
+
+msgid ""
+"I also certify that I have obtained, in accordance with copyright "
+"legislation and the requirements of image rights, all the necessary "
+"authorisations for the reproduction in the thesis of images, texts and/or "
+"any other works protected by copyright, and that I have obtained the "
+"necessary authorisations for their transmission to third parties."
+msgstr ""
+
+msgid "I am aware that the thesis summary will be available to the public."
+msgstr ""
+
+msgid ""
+"I hereby certify that the digital version of the thesis submitted to "
+"UCLouvain for the purposes of the distribution authorised herein conforms to "
+"the official version approved by the thesis exam board."
+msgstr ""
+
+msgid ""
+"I retain all other rights regarding reproduction of and communications "
+"pertaining to the thesis, as well as the right to use the thesis in future "
+"works. I undertake, however, not to grant to third parties any rights which "
+"would in any way interfere with this authorisation and will reserve in any "
+"subsequent contract with third parties the rights and obligations arising "
+"from this authorisation."
 msgstr ""
 
 msgid "INVITED"
@@ -805,6 +915,14 @@ msgstr ""
 msgid "In the context of a course, specify the name of the professor"
 msgstr ""
 
+msgid ""
+"In the event that a third party benefits from a right to review the "
+"publication and/or is the holder of a property right to all or part of the "
+"results described in the thesis, I certify that I have obtained their "
+"written authorisation for dissemination. This has been verified in "
+"collaboration with the Research Administration Department."
+msgstr ""
+
 msgid "Incomplete field"
 msgstr ""
 
@@ -854,6 +972,10 @@ msgstr ""
 
 msgid ""
 "Is your admission request linked with a FNRS, FRIA, FRESH or CSC application?"
+msgstr ""
+
+#, python-format
+msgid "Item %(nth)s in the array did not validate:"
 msgstr ""
 
 msgid "JURY_APPROUVE_ADRE"
@@ -933,6 +1055,9 @@ msgstr ""
 msgid "Letters of recommendation"
 msgstr ""
 
+msgid "Limited access (Intranet)"
+msgstr ""
+
 msgid "Lookup somebody"
 msgstr ""
 
@@ -956,6 +1081,9 @@ msgid "Manage my PhD"
 msgstr ""
 
 msgid "Management of PhDs"
+msgstr ""
+
+msgid "Manuscript validation"
 msgstr ""
 
 msgid "Mark or honours obtained"
@@ -1182,6 +1310,9 @@ msgid ""
 "for your activities choice."
 msgstr ""
 
+msgid "Please select a language."
+msgstr ""
+
 msgid "Please select a member"
 msgstr ""
 
@@ -1208,6 +1339,9 @@ msgstr ""
 msgid "President"
 msgstr ""
 
+msgid "Previous admissibilities"
+msgstr ""
+
 msgid "Previous confirmation exams"
 msgstr ""
 
@@ -1215,6 +1349,9 @@ msgid "Previous private defences"
 msgstr ""
 
 msgid "Private defence"
+msgstr ""
+
+msgid "Private defence / Public defence"
 msgstr ""
 
 msgid "Private defence date and time"
@@ -1323,6 +1460,18 @@ msgctxt "publication-status"
 msgid "Published"
 msgstr ""
 
+msgid "RECEVABILITE_A_RECOMMENCER"
+msgstr "Admissibility to be repeated"
+
+msgid "RECEVABILITE_EN_ECHEC"
+msgstr "Admissibility in failure"
+
+msgid "RECEVABILITE_REUSSIE"
+msgstr "Passed admissibility"
+
+msgid "RECEVABILITE_SOUMISE"
+msgstr "Submitted admissibility"
+
 msgid "REFUSEE"
 msgstr "Denied"
 
@@ -1401,6 +1550,9 @@ msgstr ""
 msgid "Role"
 msgstr ""
 
+msgid "SCEB"
+msgstr ""
+
 msgid "SEARCH_SCHOLARSHIP"
 msgstr "Research scholarship"
 
@@ -1430,6 +1582,9 @@ msgstr "Statistics"
 
 msgctxt "doctorate"
 msgid "Save"
+msgstr ""
+
+msgid "Save and send to the contact supervisor"
 msgstr ""
 
 msgid "Scholarship end date"
@@ -1494,6 +1649,9 @@ msgid "Show details"
 msgstr ""
 
 msgid "Signature requests sent"
+msgstr ""
+
+msgid "Sources of funding throughout PhD"
 msgstr ""
 
 msgid "Specify a scientific communication you made."
@@ -1564,7 +1722,10 @@ msgctxt "paper summary"
 msgid "Summary"
 msgstr ""
 
-msgid "Summary for announcement"
+msgid "Summary in English"
+msgstr ""
+
+msgid "Summary in other language"
 msgstr ""
 
 msgid "Summary of the communication"
@@ -1585,6 +1746,9 @@ msgstr ""
 msgid "Surname"
 msgstr ""
 
+msgid "Text for the poster"
+msgstr ""
+
 msgid ""
 "The \"doctoral training\" must be completed before submitting the defence "
 "preparation and the jury proposition."
@@ -1601,6 +1765,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"The admissibility decision date is chosen collectively by the board and in "
+"agreement with the PhD student."
+msgstr ""
+
+msgid ""
 "The aim of the confirmation exam is to establish, on the basis of the state "
 "of progress of the research work, that it is likely to lead to the "
 "submission of a PhD thesis (Art. 2.3.1. of the PhD Regulations)."
@@ -1611,6 +1780,12 @@ msgid ""
 "the website of you domain doctoral commission. If the publication must be "
 "associated to a conference, first input the conference and use the menu "
 "action \"Add a publication to this conference\""
+msgstr ""
+
+#, python-format
+msgid ""
+"The canvas of the admissibility minutes can be downloaded <a "
+"href=\"%(canvas_url)s\" target=\"_blank\">here</a>."
 msgstr ""
 
 #, python-format
@@ -1646,6 +1821,15 @@ msgstr ""
 
 msgid ""
 "The final text of your thesis must be submitted to thesis exam board members "
+"no later than one month before the private defence date. This date must be "
+"chosen collectively by the board and in agreement with the PhD student. The "
+"board must be present in its entirety at the private defence and, barring "
+"exceptions, at the public defence. Thesis submission format (paper and/or "
+"digital) is determined by agreement with each board member."
+msgstr ""
+
+msgid ""
+"The final text of your thesis must be submitted to thesis exam board members "
 "no later than two weeks before the public defence date. The submission "
 "format (paper and/or digital) is to be agreed upon with each thesis exam "
 "board member. At least half of the thesis exam board membership takes an "
@@ -1657,6 +1841,12 @@ msgid ""
 "for submission may vary from one DDC to another; please check with your "
 "dossier manager and respect the usage foreseen by your domain doctoral "
 "committee."
+msgstr ""
+
+msgid ""
+"The licence, which is free of charge and non-exclusive, is valid for the "
+"entire duration of the copyright, including any extensions, and for the "
+"entire world."
 msgstr ""
 
 msgid ""
@@ -1680,7 +1870,20 @@ msgid ""
 msgstr ""
 
 msgid ""
+"The provisional text of your thesis must be submitted to thesis exam board "
+"members no later than one month before the admissibility decision date. This "
+"date is chosen collectively by the board and in agreement with the PhD "
+"student. The manuscript format may vary from one Subject-specific PhD "
+"Committee (CDD) to another; please check with your administrator. Submission "
+"format (paper and/or digital) is to be agreed upon with each thesis exam "
+"board member."
+msgstr ""
+
+msgid ""
 "The public defence takes place at least one month after the private defence."
+msgstr ""
+
+msgid "The signing process has not yet started."
 msgstr ""
 
 msgid "The start date must be earlier than or the same as the end date."
@@ -1705,6 +1908,9 @@ msgid "There was an error while requesting signatures."
 msgstr ""
 
 msgid "Thesis defence"
+msgstr ""
+
+msgid "Thesis exam board opinion"
 msgstr ""
 
 msgid "Thesis language"
@@ -1789,6 +1995,9 @@ msgid ""
 msgstr ""
 "To be uploaded if you have a F.R.S.-FNRS (including Télévie), FRIA or FRESH "
 "grant. The canvas for this opinion is provided by your research fund."
+
+msgid "To this end, I license to UCLouvain the right to:"
+msgstr ""
 
 msgid "Toggle navigation"
 msgstr ""
@@ -1960,4 +2169,12 @@ msgid "hh:mm"
 msgstr ""
 
 msgid "hours"
+msgstr ""
+
+msgid ""
+"impart the thesis to the public according to the procedures established "
+"below."
+msgstr ""
+
+msgid "set and reproduce the thesis on a digital medium;"
 msgstr ""
