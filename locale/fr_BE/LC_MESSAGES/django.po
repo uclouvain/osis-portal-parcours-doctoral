@@ -351,7 +351,7 @@ msgid "CHEMISTRY"
 msgstr "Chimie"
 
 msgid "COMMUNICATION"
-msgstr "Communication orale (hors conférences)"
+msgstr "Communication orale"
 
 msgid "COMPLEMENTARY_TRAINING"
 msgstr "Formation complémentaire"
@@ -489,10 +489,6 @@ msgstr "Thèse en cotutelle"
 
 msgid "Country"
 msgstr "Pays"
-
-msgctxt "doctorate"
-msgid "Course"
-msgstr "Formation"
 
 msgid "Course choice"
 msgstr "Choix de formation"
@@ -2232,6 +2228,13 @@ msgstr "Total"
 
 msgid "Total hourly volume"
 msgstr "Volume horaire total"
+
+msgid "Total volume"
+msgstr "Volume total"
+
+msgctxt "doctorate"
+msgid "Training"
+msgstr "Formation"
 
 msgctxt "doctorate"
 msgid "Type"
