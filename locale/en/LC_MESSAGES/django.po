@@ -315,7 +315,7 @@ msgid "CHEMISTRY"
 msgstr "Chemistry"
 
 msgid "COMMUNICATION"
-msgstr "Oral communication (excluding conference)"
+msgstr "Oral communication"
 
 msgid "COMPLEMENTARY_TRAINING"
 msgstr "Further training"
@@ -449,10 +449,6 @@ msgid "Cotutelle thesis"
 msgstr ""
 
 msgid "Country"
-msgstr ""
-
-msgctxt "doctorate"
-msgid "Course"
 msgstr ""
 
 msgid "Course choice"
@@ -2006,6 +2002,13 @@ msgid "Total"
 msgstr ""
 
 msgid "Total hourly volume"
+msgstr ""
+
+msgid "Total volume"
+msgstr ""
+
+msgctxt "doctorate"
+msgid "Training"
 msgstr ""
 
 msgctxt "doctorate"
