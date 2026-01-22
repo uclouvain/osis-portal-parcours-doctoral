@@ -27,12 +27,12 @@ import datetime
 import uuid
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
-from osis_parcours_doctoral_sdk.model.submit_private_public_defenses import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.private_defense_dto import PrivateDefenseDTO
+from osis_parcours_doctoral_sdk.models.submit_private_public_defenses import (
     SubmitPrivatePublicDefenses,
 )
-from osis_parcours_doctoral_sdk.model.submit_private_public_defenses_minutes import (
+from osis_parcours_doctoral_sdk.models.submit_private_public_defenses_minutes import (
     SubmitPrivatePublicDefensesMinutes,
 )
 

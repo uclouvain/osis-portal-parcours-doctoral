@@ -27,11 +27,11 @@ from typing import Union
 
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
-from osis_organisation_sdk.model.entite import Entite
-from osis_reference_sdk.model.high_school import HighSchool
-from osis_reference_sdk.model.scholarship import Scholarship
-from osis_reference_sdk.model.superior_non_university import SuperiorNonUniversity
-from osis_reference_sdk.model.university import University
+from osis_organisation_sdk.models.entite import Entite
+from osis_reference_sdk.models.high_school import HighSchool
+from osis_reference_sdk.models.scholarship import Scholarship
+from osis_reference_sdk.models.superior_non_university import SuperiorNonUniversity
+from osis_reference_sdk.models.university import University
 
 
 def format_entity_title(entity: Entite):

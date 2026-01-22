@@ -45,9 +45,9 @@ from osis_parcours_doctoral_sdk.exceptions import (
     NotFoundException,
     UnauthorizedException,
 )
-from osis_parcours_doctoral_sdk.model.membre_cadto_nested import MembreCADTONested
-from osis_parcours_doctoral_sdk.model.membre_jury_dto_nested import MembreJuryDTONested
-from osis_parcours_doctoral_sdk.model.promoteur_dto_nested import PromoteurDTONested
+from osis_parcours_doctoral_sdk.models.membre_cadto_nested import MembreCADTONested
+from osis_parcours_doctoral_sdk.models.membre_jury_dto_nested import MembreJuryDTONested
+from osis_parcours_doctoral_sdk.models.promoteur_dto_nested import PromoteurDTONested
 
 from parcours_doctoral.constants import READ_ACTIONS_BY_TAB, UPDATE_ACTIONS_BY_TAB
 from parcours_doctoral.contrib.enums.training import (

@@ -27,13 +27,13 @@ import datetime
 import uuid
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.admissibility_dto import AdmissibilityDTO
-from osis_parcours_doctoral_sdk.model.admissibility_minutes_canvas import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.admissibility_dto import AdmissibilityDTO
+from osis_parcours_doctoral_sdk.models.admissibility_minutes_canvas import (
     AdmissibilityMinutesCanvas,
 )
-from osis_parcours_doctoral_sdk.model.submit_admissibility import SubmitAdmissibility
-from osis_parcours_doctoral_sdk.model.submit_admissibility_minutes_and_opinions import (
+from osis_parcours_doctoral_sdk.models.submit_admissibility import SubmitAdmissibility
+from osis_parcours_doctoral_sdk.models.submit_admissibility_minutes_and_opinions import (
     SubmitAdmissibilityMinutesAndOpinions,
 )
 

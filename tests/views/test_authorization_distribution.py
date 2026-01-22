@@ -29,14 +29,14 @@ import uuid
 from django.shortcuts import resolve_url
 from django.template.loader import render_to_string
 from django.utils.translation.trans_real import gettext
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.authorization_distribution_dto import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.authorization_distribution_dto import (
     AuthorizationDistributionDTO,
 )
-from osis_parcours_doctoral_sdk.model.send_authorization_distribution_to_promoter import (
+from osis_parcours_doctoral_sdk.models.send_authorization_distribution_to_promoter import (
     SendAuthorizationDistributionToPromoter,
 )
-from osis_parcours_doctoral_sdk.model.update_authorization_distribution import (
+from osis_parcours_doctoral_sdk.models.update_authorization_distribution import (
     UpdateAuthorizationDistribution,
 )
 

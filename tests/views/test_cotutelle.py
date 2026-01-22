@@ -28,8 +28,8 @@ from unittest.mock import patch, MagicMock
 
 from django.shortcuts import resolve_url
 from django.utils.translation import gettext_lazy as _
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import CotutelleDTONested
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.cotutelle_dto_nested import CotutelleDTONested
 
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 

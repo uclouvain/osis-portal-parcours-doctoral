@@ -25,15 +25,15 @@
 # ##############################################################################
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.membre_cadto_nested import MembreCADTONested
-from osis_parcours_doctoral_sdk.model.promoteur_dto_nested import PromoteurDTONested
-from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
-from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
-from osis_parcours_doctoral_sdk.model.detail_signature_membre_cadto_nested import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.membre_cadto_nested import MembreCADTONested
+from osis_parcours_doctoral_sdk.models.promoteur_dto_nested import PromoteurDTONested
+from osis_parcours_doctoral_sdk.models.supervision_canvas import SupervisionCanvas
+from osis_parcours_doctoral_sdk.models.supervision_dto import SupervisionDTO
+from osis_parcours_doctoral_sdk.models.detail_signature_membre_cadto_nested import (
     DetailSignatureMembreCADTONested,
 )
-from osis_parcours_doctoral_sdk.model.detail_signature_promoteur_dto_nested import (
+from osis_parcours_doctoral_sdk.models.detail_signature_promoteur_dto_nested import (
     DetailSignaturePromoteurDTONested,
 )
 

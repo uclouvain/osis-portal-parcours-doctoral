@@ -27,9 +27,9 @@ import datetime
 from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.demande_prolongation_dto_nested import DemandeProlongationDTONested
-from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.demande_prolongation_dto_nested import DemandeProlongationDTONested
+from osis_parcours_doctoral_sdk.models.confirmation_paper_dto import ConfirmationPaperDTO
 
 from base.tests.factories.person import PersonFactory
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase

@@ -28,7 +28,7 @@ from django.shortcuts import resolve_url
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy
 from django.views.generic import FormView
-from osis_parcours_doctoral_sdk.model.authorization_distribution_dto import (
+from osis_parcours_doctoral_sdk.models.authorization_distribution_dto import (
     AuthorizationDistributionDTO,
 )
 

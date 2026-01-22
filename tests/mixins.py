@@ -29,27 +29,27 @@ from unittest.mock import ANY, MagicMock, patch
 from uuid import uuid4
 
 from django.test import override_settings
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import CotutelleDTONested
-from osis_parcours_doctoral_sdk.model.entite_gestion_dto_nested import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.cotutelle_dto_nested import CotutelleDTONested
+from osis_parcours_doctoral_sdk.models.entite_gestion_dto_nested import (
     EntiteGestionDTONested,
 )
-from osis_parcours_doctoral_sdk.model.financement_dto_nested import FinancementDTONested
-from osis_parcours_doctoral_sdk.model.formation_dto_nested import FormationDTONested
-from osis_parcours_doctoral_sdk.model.jury_dto import JuryDTO
-from osis_parcours_doctoral_sdk.model.membre_jury_dto_nested import MembreJuryDTONested
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import (
+from osis_parcours_doctoral_sdk.models.financement_dto_nested import FinancementDTONested
+from osis_parcours_doctoral_sdk.models.formation_dto_nested import FormationDTONested
+from osis_parcours_doctoral_sdk.models.jury_dto import JuryDTO
+from osis_parcours_doctoral_sdk.models.membre_jury_dto_nested import MembreJuryDTONested
+from osis_parcours_doctoral_sdk.models.parcours_doctoral_dto import ParcoursDoctoralDTO
+from osis_parcours_doctoral_sdk.models.parcours_doctoral_dto_links import (
     ParcoursDoctoralDTOLinks,
 )
-from osis_parcours_doctoral_sdk.model.projet_dto_nested import ProjetDTONested
-from osis_parcours_doctoral_sdk.model.signature_membre_jury_dto_nested import (
+from osis_parcours_doctoral_sdk.models.projet_dto_nested import ProjetDTONested
+from osis_parcours_doctoral_sdk.models.signature_membre_jury_dto_nested import (
     SignatureMembreJuryDTONested,
 )
-from osis_reference_sdk.model.country import Country
-from osis_reference_sdk.model.language import Language
-from osis_reference_sdk.model.paginated_country import PaginatedCountry
-from osis_reference_sdk.model.scholarship import Scholarship
+from osis_reference_sdk.models.country import Country
+from osis_reference_sdk.models.language import Language
+from osis_reference_sdk.models.paginated_country import PaginatedCountry
+from osis_reference_sdk.models.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
 from base.tests.test_case import OsisPortalTestCase

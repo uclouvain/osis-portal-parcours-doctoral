@@ -33,8 +33,8 @@ from django.utils.dates import MONTHS_ALT
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext_lazy
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
-from osis_parcours_doctoral_sdk.model.type_enum import TypeEnum as PaperTypeEnum
+from osis_parcours_doctoral_sdk.models.parcours_doctoral_dto import ParcoursDoctoralDTO
+from osis_parcours_doctoral_sdk.models.type_enum import TypeEnum as PaperTypeEnum
 
 from admission.contrib.forms import get_past_academic_years_choices
 from base.models.person import Person

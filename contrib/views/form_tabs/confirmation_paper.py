@@ -26,7 +26,7 @@
 from django.utils.functional import cached_property
 from django.utils.translation import gettext as _
 from django.views.generic import FormView
-from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
+from osis_parcours_doctoral_sdk.models.confirmation_paper_dto import ConfirmationPaperDTO
 
 from parcours_doctoral.contrib.forms.confirmation_paper import (
     ConfirmationPaperForm,

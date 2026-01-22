@@ -27,7 +27,7 @@ import datetime
 from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
 
 from base.tests.factories.person import PersonFactory
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase

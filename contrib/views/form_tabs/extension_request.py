@@ -28,7 +28,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView
 
-from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
+from osis_parcours_doctoral_sdk.models.confirmation_paper_dto import ConfirmationPaperDTO
 from parcours_doctoral.contrib.enums import ChoixStatutDoctorat
 from parcours_doctoral.contrib.forms.extension_request import ExtensionRequestForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin

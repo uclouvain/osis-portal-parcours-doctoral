@@ -29,7 +29,7 @@ from django.shortcuts import resolve_url
 from django.utils.functional import cached_property
 from django.views.generic import RedirectView, TemplateView
 from osis_document_components.enums import PostProcessingWanted
-from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
+from osis_parcours_doctoral_sdk.models.private_defense_dto import PrivateDefenseDTO
 
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.doctorate import DoctorateJuryService, DoctorateService

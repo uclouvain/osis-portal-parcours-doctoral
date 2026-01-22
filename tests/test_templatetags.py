@@ -35,8 +35,8 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext
 from django.views.generic import FormView
 from osis_parcours_doctoral_sdk.exceptions import UnauthorizedException
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.parcours_doctoral_dto_links import (
     ParcoursDoctoralDTOLinks,
 )
 

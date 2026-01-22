@@ -28,7 +28,7 @@ from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
 from django.utils.translation import gettext_lazy as _
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
 
 from frontoffice.settings.osis_sdk.utils import (
     ApiBusinessException,

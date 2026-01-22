@@ -26,8 +26,8 @@
 import uuid
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.inscription_evaluation_dto import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.inscription_evaluation_dto import (
     InscriptionEvaluationDTO,
 )
 

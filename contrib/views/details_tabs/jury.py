@@ -33,7 +33,7 @@ from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView, TemplateView
 from django.views.generic.edit import BaseFormView
-from osis_parcours_doctoral_sdk.model.jury_dto import JuryDTO
+from osis_parcours_doctoral_sdk.models.jury_dto import JuryDTO
 
 from parcours_doctoral.contrib.enums import (
     ChoixStatutDoctorat,

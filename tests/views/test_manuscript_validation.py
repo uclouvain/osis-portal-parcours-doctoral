@@ -28,20 +28,20 @@ import uuid
 
 from django.forms import Form
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.accept_thesis_by_lead_promoter import (
+from osis_parcours_doctoral_sdk.models.accept_thesis_by_lead_promoter import (
     AcceptThesisByLeadPromoter,
 )
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.authorization_distribution_dto import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.authorization_distribution_dto import (
     AuthorizationDistributionDTO,
 )
-from osis_parcours_doctoral_sdk.model.reject_thesis_by_lead_promoter import (
+from osis_parcours_doctoral_sdk.models.reject_thesis_by_lead_promoter import (
     RejectThesisByLeadPromoter,
 )
-from osis_parcours_doctoral_sdk.model.signataire_autorisation_diffusion_these_dto_nested import (
+from osis_parcours_doctoral_sdk.models.signataire_autorisation_diffusion_these_dto_nested import (
     SignataireAutorisationDiffusionTheseDTONested,
 )
-from osis_parcours_doctoral_sdk.model.signature_autorisation_diffusion_these_dto_nested import (
+from osis_parcours_doctoral_sdk.models.signature_autorisation_diffusion_these_dto_nested import (
     SignatureAutorisationDiffusionTheseDTONested,
 )
 

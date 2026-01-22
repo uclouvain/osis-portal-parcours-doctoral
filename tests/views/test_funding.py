@@ -27,7 +27,7 @@ import datetime
 from uuid import uuid4
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
 
 from admission.constants import FIELD_REQUIRED_MESSAGE
 from frontoffice.settings.osis_sdk.utils import (

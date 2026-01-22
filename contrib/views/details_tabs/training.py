@@ -35,8 +35,8 @@ from django.utils.functional import cached_property
 from django.utils.translation import get_language
 from django.views.generic import FormView
 from django.views.generic.edit import FormMixin
-from osis_parcours_doctoral_sdk.model.category_enum import CategoryEnum
-from osis_parcours_doctoral_sdk.model.context_enum import ContextEnum
+from osis_parcours_doctoral_sdk.models.category_enum import CategoryEnum
+from osis_parcours_doctoral_sdk.models.context_enum import ContextEnum
 
 from parcours_doctoral.contrib.enums.training import (
     CategorieActivite,
