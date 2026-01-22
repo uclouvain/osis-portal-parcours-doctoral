@@ -135,7 +135,7 @@ TAB_TREE = {
         Tab('confirmation-paper', _('Confirmation exam')),
         Tab('extension-request', _('New deadline')),
     ],
-    Tab('training', pgettext_lazy('doctorate', 'Course'), 'book-open-reader'): [
+    Tab('training', pgettext_lazy('doctorate', 'Training'), 'book-open-reader'): [
         Tab('doctoral-training', _('PhD training')),
         Tab('complementary-training', _('Complementary training')),
     ],
@@ -346,7 +346,9 @@ def get_dashboard_links(context):
 
 @register.filter
 def get_item(dictionary, key):
-    return dictionary.get(key)
+    if not dictionary:
+        return ""
+    return dictionary.get(str(key))
 
 
 @register.filter
