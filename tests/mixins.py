@@ -160,7 +160,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                 resume='Summary',
                 langue_redaction_these='FR-BE',
                 nom_langue_redaction_these='French',
-                institut_these=str(uuid4()),
+                institut_these=uuid4(),
                 nom_institut_these='Institute',
                 sigle_institut_these='I1',
                 lieu_these='Louvain-La-Neuve',
