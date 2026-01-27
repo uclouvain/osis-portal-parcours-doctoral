@@ -64,10 +64,10 @@ class ExtensionRequestFormView(LoadViewMixin, WebServiceFormMixin, FormView):
         return (
             {
                 'nouvelle_echeance': convert_date_string(
-                    self.confirmation_paper.demande_prolongation['nouvelle_echeance'],
+                    self.confirmation_paper.demande_prolongation.nouvelle_echeance,
                 ),
-                'justification_succincte': self.confirmation_paper.demande_prolongation['justification_succincte'],
-                'lettre_justification': self.confirmation_paper.demande_prolongation['lettre_justification'],
+                'justification_succincte': self.confirmation_paper.demande_prolongation.justification_succincte,
+                'lettre_justification': self.confirmation_paper.demande_prolongation.lettre_justification,
             }
             if self.confirmation_paper and self.confirmation_paper.demande_prolongation
             else {}

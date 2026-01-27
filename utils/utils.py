@@ -36,7 +36,7 @@ from osis_reference_sdk.models.university import University
 
 def format_entity_title(entity: Entite):
     """Return the concatenation of the entity name and acronym."""
-    return '{title} ({acronym})'.format_map(entity)
+    return '{title} ({acronym})'.format_map(entity.to_dict())
 
 
 def format_address(street='', street_number='', postal_code='', city='', country=''):
@@ -63,7 +63,7 @@ def format_school_title(school: Union[HighSchool, SuperiorNonUniversity, Univers
 
 
 def format_scholarship(scholarship: Scholarship):
-    return scholarship['long_name'] or scholarship['short_name']
+    return scholarship.long_name or scholarship.short_name
 
 
 def to_snake_case(value):

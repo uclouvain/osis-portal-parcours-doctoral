@@ -78,14 +78,14 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
     @classmethod
     def get_countries(cls, **kwargs):
         countries = [
-            Country._from_openapi_data(iso_code='FR', name='France', name_en='France', european_union=True),
-            Country._from_openapi_data(iso_code='BE', name='Belgique', name_en='Belgium', european_union=True),
+            Country(iso_code='FR', name='France', name_en='France', european_union=True),
+            Country(iso_code='BE', name='Belgique', name_en='Belgium', european_union=True),
         ]
         if kwargs.get('iso_code'):
-            return PaginatedCountry._from_openapi_data(
+            return PaginatedCountry(
                 results=[c for c in countries if c.iso_code == kwargs.get('iso_code')],
             )
-        return PaginatedCountry._from_openapi_data(results=countries)
+        return PaginatedCountry(results=countries)
 
     @classmethod
     def get_country(cls, **kwargs):
@@ -111,7 +111,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
         self.mock_doctorate_api = doctorate_api_patcher.start()
         self.addCleanup(doctorate_api_patcher.stop)
 
-        self.mock_doctorate_object = ParcoursDoctoralDTO._from_openapi_data(
+        self.mock_doctorate_object = ParcoursDoctoralDTO(
             uuid=self.doctorate_uuid,
             reference='L-CDAR24-0000-0002',
             statut=ChoixStatutDoctorat.ADMIS.name,
@@ -122,14 +122,14 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             type_admission=AdmissionType.ADMISSION.name,
             intitule_secteur_formation='First sector',
             sigle_entite_gestion='SSH',
-            formation=FormationDTONested._from_openapi_data(
+            formation=FormationDTONested(
                 sigle='SC3DP',
                 code='DKOE',
                 annee=2024,
                 intitule='Doctorate',
                 intitule_fr='Doctorat',
                 intitule_en='Doctorate',
-                entite_gestion=EntiteGestionDTONested._from_openapi_data(
+                entite_gestion=EntiteGestionDTONested(
                     sigle='CDAR',
                     intitule='First commission',
                     lieu='Place de l\'université',
@@ -142,7 +142,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                     nom_pays='Belgique',
                 ),
                 campus=dict(
-                    uuid='',
+                    uuid=uuid.uuid4(),
                     nom='Louvain-La-Neuve',
                     code_postal='1348',
                     ville='Louvain-La-Neuve',
@@ -155,7 +155,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                 ),
                 type='PHD',
             ),
-            projet=ProjetDTONested._from_openapi_data(
+            projet=ProjetDTONested(
                 titre='Title',
                 resume='Summary',
                 langue_redaction_these='FR-BE',
@@ -187,9 +187,9 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             date_naissance_doctorant=datetime.date(2000, 1, 1),
             lieu_naissance_doctorant='Bruxelles',
             pays_naissance_doctorant='Belgique',
-            links=ParcoursDoctoralDTOLinks._from_openapi_data(
+            links=ParcoursDoctoralDTOLinks(
                 **{
-                    action: ActionLink._from_openapi_data(
+                    action: ActionLink(
                         url='ok',
                         error='',
                         method='GET',
@@ -240,7 +240,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                     ]
                 }
             ),
-            cotutelle=CotutelleDTONested._from_openapi_data(
+            cotutelle=CotutelleDTONested(
                 cotutelle=True,
                 motivation='Cotutelle reason',
                 institution_fwb=True,
@@ -252,7 +252,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
                 convention=[],
                 autres_documents=[],
             ),
-            financement=FinancementDTONested._from_openapi_data(
+            financement=FinancementDTONested(
                 type=ChoixTypeFinancement.WORK_CONTRACT.name,
                 type_contrat_travail=ChoixTypeContratTravail.UCLOUVAIN_SCIENTIFIC_STAFF.name,
                 eft=10,
@@ -292,7 +292,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
             date_retrait_diplome=datetime.date(2025, 2, 2),
         )
         self.mock_doctorate_api.return_value.doctorate_retrieve.return_value = self.mock_doctorate_object
-        self.mock_doctorate_api.return_value.retrieve_jury_preparation.return_value = JuryDTO._from_openapi_data(
+        self.mock_doctorate_api.return_value.retrieve_jury_preparation.return_value = JuryDTO(
             uuid=self.doctorate_uuid,
             titre_propose='titre propose',
             has_change_roles_permission=True,
@@ -375,7 +375,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
 
         self.mock_language_api.return_value.languages_list.return_value = MagicMock(
             results=[
-                Language._from_openapi_data(
+                Language(
                     code='FR',
                     name='Français',
                     name_en='French',
@@ -400,7 +400,7 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
         self.mock_scholarship_api = scholarship_patcher.start()
         self.addCleanup(scholarship_patcher.stop)
 
-        self.mock_scholarship_object = Scholarship._from_openapi_data(
+        self.mock_scholarship_object = Scholarship(
             uuid=self.scholarship_uuid,
             short_name='DS1',
             long_name='Doctorate Scholarship 1',

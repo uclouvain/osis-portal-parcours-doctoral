@@ -60,7 +60,7 @@ class PublicDefenseDetailViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_public_defense'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_public_defense = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -87,7 +87,7 @@ class PublicDefenseFormViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['update_public_defense'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.update_public_defense = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -137,7 +137,7 @@ class PublicDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.submit_public_defense.assert_called()
         self.mock_doctorate_api.return_value.submit_public_defense.assert_called_with(
             uuid=self.doctorate_uuid,
-            submit_public_defense=SubmitPublicDefense._new_from_openapi_data(
+            submit_public_defense=SubmitPublicDefense(
                 langue='FR',
                 date_heure=datetime.datetime(2026, 1, 1, 11, tzinfo=get_tzinfo()),
                 lieu='Louvain',
@@ -181,12 +181,12 @@ class PublicDefenseMinutesCanvasViewTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_public_defense_minutes_canvas.return_value = (
-            PublicDefenseMinutesCanvas._from_openapi_data(url=self.project_url)
+            PublicDefenseMinutesCanvas(url=self.project_url)
         )
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_public_defense_minutes_canvas'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_public_defense_minutes_canvas = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -211,7 +211,7 @@ class PublicDefenseFormViewForPromoterTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.promoter_person.user)
-        self.mock_doctorate_object.links['submit_public_defense_minutes'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.submit_public_defense_minutes = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -246,7 +246,7 @@ class PublicDefenseFormViewForPromoterTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.submit_public_defense_minutes.assert_called()
         self.mock_doctorate_api.return_value.submit_public_defense_minutes.assert_called_with(
             uuid=self.doctorate_uuid,
-            submit_public_defense_minutes=SubmitPublicDefenseMinutes._new_from_openapi_data(
+            submit_public_defense_minutes=SubmitPublicDefenseMinutes(
                 proces_verbal=['file-uuid-3'],
             ),
             **self.api_default_params,
@@ -264,9 +264,9 @@ class PublicDefenseMinutesViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        action_error = ActionLink._from_openapi_data(error='access error')
-        self.mock_doctorate_object.links['retrieve_public_defense'] = action_error
-        self.mock_doctorate_object.links['retrieve_private_public_defenses'] = action_error
+        action_error = ActionLink(error='access error')
+        self.mock_doctorate_object.links.retrieve_public_defense = action_error
+        self.mock_doctorate_object.links.retrieve_private_public_defenses = action_error
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 

@@ -64,7 +64,7 @@ class AuthorizationDistributionDetailViewTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_authorization_distribution.return_value = (
-            AuthorizationDistributionDTO._from_openapi_data(
+            AuthorizationDistributionDTO(
                 uuid=self.doctorate_uuid,
                 statut='DIFFUSION_NON_SOUMISE',
                 sources_financement='Sources',
@@ -81,7 +81,7 @@ class AuthorizationDistributionDetailViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_authorization_distribution'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_authorization_distribution = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -114,7 +114,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_authorization_distribution.return_value = (
-            AuthorizationDistributionDTO._from_openapi_data(
+            AuthorizationDistributionDTO(
                 uuid=self.doctorate_uuid,
                 statut='DIFFUSION_NON_SOUMISE',
                 sources_financement='Sources',
@@ -131,7 +131,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['update_authorization_distribution'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.update_authorization_distribution = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -157,7 +157,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
         self.assertIsInstance(form, AuthorizationDistributionForm)
 
         self.mock_doctorate_api.return_value.retrieve_authorization_distribution.return_value = (
-            AuthorizationDistributionDTO._from_openapi_data(
+            AuthorizationDistributionDTO(
                 uuid=self.doctorate_uuid,
                 statut='DIFFUSION_NON_SOUMISE',
                 sources_financement='Sources',
@@ -213,7 +213,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.update_authorization_distribution.assert_called()
         self.mock_doctorate_api.return_value.update_authorization_distribution.assert_called_with(
             uuid=self.doctorate_uuid,
-            update_authorization_distribution=UpdateAuthorizationDistribution._new_from_openapi_data(
+            update_authorization_distribution=UpdateAuthorizationDistribution(
                 sources_financement='New sources',
                 resume_anglais='New summary in english',
                 resume_autre_langue='New summary in another language',
@@ -231,7 +231,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
         self.client.force_login(self.person.user)
 
         self.mock_doctorate_api.return_value.retrieve_authorization_distribution.return_value = (
-            AuthorizationDistributionDTO._from_openapi_data(
+            AuthorizationDistributionDTO(
                 uuid=self.doctorate_uuid,
                 statut='DIFFUSION_NON_SOUMISE',
                 sources_financement='',
@@ -254,7 +254,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.update_authorization_distribution.assert_called()
         self.mock_doctorate_api.return_value.update_authorization_distribution.assert_called_with(
             uuid=self.doctorate_uuid,
-            update_authorization_distribution=UpdateAuthorizationDistribution._new_from_openapi_data(
+            update_authorization_distribution=UpdateAuthorizationDistribution(
                 sources_financement='',
                 resume_anglais='',
                 resume_autre_langue='',
@@ -272,7 +272,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
         self.client.force_login(self.person.user)
 
         self.mock_doctorate_api.return_value.retrieve_authorization_distribution.return_value = (
-            AuthorizationDistributionDTO._from_openapi_data(
+            AuthorizationDistributionDTO(
                 uuid=self.doctorate_uuid,
                 statut='DIFFUSION_NON_SOUMISE',
                 sources_financement='',
@@ -333,7 +333,7 @@ class AuthorizationDistributionFormViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.send_authorization_distribution_to_promoter.assert_called()
         self.mock_doctorate_api.return_value.send_authorization_distribution_to_promoter.assert_called_with(
             uuid=self.doctorate_uuid,
-            send_authorization_distribution_to_promoter=SendAuthorizationDistributionToPromoter._new_from_openapi_data(
+            send_authorization_distribution_to_promoter=SendAuthorizationDistributionToPromoter(
                 sources_financement='New sources',
                 resume_anglais='New summary in english',
                 resume_autre_langue='New summary in another language',

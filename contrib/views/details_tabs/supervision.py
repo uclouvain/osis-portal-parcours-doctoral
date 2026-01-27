@@ -108,7 +108,7 @@ class SupervisionDetailView(LoadViewMixin, WebServiceFormMixin, FormView):
                 ]
                 + [
                     signature['membre_ca']['uuid']
-                    for signature in self.supervision['signatures_membres_ca']
+                    for signature in self.supervision.get('signatures_membres_ca', None)
                     if self.person.global_id == signature['membre_ca']['matricule']
                 ]
             ),

@@ -43,7 +43,7 @@ class AssessmentEnrollmentListViewTestCase(BaseDoctorateTestCase):
         cls.url = resolve_url('parcours_doctoral:assessment-enrollment', pk=cls.doctorate_uuid)
 
         cls.enrollments = [
-            InscriptionEvaluationDTO._from_openapi_data(
+            InscriptionEvaluationDTO(
                 uuid=str(uuid.uuid4()),
                 session=Session.JANUARY.name,
                 inscription_tardive=False,
@@ -54,7 +54,7 @@ class AssessmentEnrollmentListViewTestCase(BaseDoctorateTestCase):
                 intitule_unite_enseignement='I1',
                 annee_unite_enseignement=2020,
             ),
-            InscriptionEvaluationDTO._from_openapi_data(
+            InscriptionEvaluationDTO(
                 uuid=str(uuid.uuid4()),
                 session=Session.JANUARY.name,
                 inscription_tardive=False,
@@ -65,7 +65,7 @@ class AssessmentEnrollmentListViewTestCase(BaseDoctorateTestCase):
                 intitule_unite_enseignement='I2',
                 annee_unite_enseignement=2020,
             ),
-            InscriptionEvaluationDTO._from_openapi_data(
+            InscriptionEvaluationDTO(
                 uuid=str(uuid.uuid4()),
                 session=Session.JUNE.name,
                 inscription_tardive=False,
@@ -85,7 +85,7 @@ class AssessmentEnrollmentListViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_assessment_enrollment'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_assessment_enrollment = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -124,7 +124,7 @@ class AssessmentEnrollmentDetailsViewTestCase(BaseDoctorateTestCase):
     def setUpTestData(cls):
         super().setUpTestData()
 
-        cls.enrollment = InscriptionEvaluationDTO._from_openapi_data(
+        cls.enrollment = InscriptionEvaluationDTO(
             uuid=str(uuid.uuid4()),
             session=Session.JANUARY.name,
             inscription_tardive=False,
@@ -149,7 +149,7 @@ class AssessmentEnrollmentDetailsViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_assessment_enrollment'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_assessment_enrollment = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)

@@ -104,7 +104,7 @@ class JuryFormView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
 
     def get(self, request, *args, **kwargs):
         context = self.get_context_data()
-        if 'url' not in self.doctorate.links['jury_request_signatures']:
+        if 'url' not in self.doctorate.links.jury_request_signatures:
             return redirect('parcours_doctoral:jury', **self.kwargs)
         return self.render_to_response(context)
 

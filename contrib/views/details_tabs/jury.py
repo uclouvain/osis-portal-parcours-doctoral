@@ -125,28 +125,28 @@ class JuryDetailView(LoadJuryViewMixin, WebServiceFormMixin, FormView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['membres'] = (
-            membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.MEMBRE.name
+            membre for membre in self.jury.to_dict().get('membres', []) if membre.role == RoleJury.MEMBRE.name
         )
         context_data['membre_president'] = (
-            membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.PRESIDENT.name
+            membre for membre in self.jury.to_dict().get('membres', []) if membre.role == RoleJury.PRESIDENT.name
         )
         context_data['membre_secretaire'] = (
-            membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.SECRETAIRE.name
+            membre for membre in self.jury.to_dict().get('membres', []) if membre.role == RoleJury.SECRETAIRE.name
         )
         context_data['membre_verificateur'] = [
-            membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.VERIFICATEUR.name
+            membre for membre in self.jury.to_dict().get('membres', []) if membre.role == RoleJury.VERIFICATEUR.name
         ]
         context_data['membre_cdd'] = [
-            membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.CDD.name
+            membre for membre in self.jury.to_dict().get('membres', []) if membre.role == RoleJury.CDD.name
         ]
         context_data['membre_adre'] = [
-            membre for membre in self.jury.get('membres', []) if membre.role == RoleJury.ADRE.name
+            membre for membre in self.jury.to_dict().get('membres', []) if membre.role == RoleJury.ADRE.name
         ]
         context_data['approve_by_pdf_form'] = JuryApprovalByPdfForm()
         context_data['approval_form'] = context_data.pop('form')  # Trick template to remove save button
         if any(
             membre.uuid
-            for membre in self.jury.get('membres', [])
+            for membre in self.jury.to_dict().get('membres', [])
             if membre.matricule == self.request.user.person.global_id
             and membre.signature.etat in {DecisionApprovalEnum.APPROVED.name, DecisionApprovalEnum.DECLINED.name}
         ):

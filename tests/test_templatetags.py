@@ -63,11 +63,11 @@ class TemplateTagsTestCase(TestCase):
     def setUpTestData(cls):
         class Doctorate:
             def __init__(self, links=None):
-                self.links = links or {
+                self.links = links or ParcoursDoctoralDTOLinks(**{
                     'retrieve_funding': {'url': 'my_url', 'method': 'GET'},
                     'update_funding': {'url': 'my_url', 'method': 'POST'},
                     'retrieve_project': {'error': 'Method not allowed', 'method': 'GET'},
-                }
+                })
 
         cls.Doctorate = Doctorate
 
@@ -155,7 +155,7 @@ class TemplateTagsTestCase(TestCase):
         doctorate = Mock(
             uuid=doctorate_uuid,
             links=ParcoursDoctoralDTOLinks(
-                retrieve_project=ActionLink._from_openapi_data(method='GET', url='ok'),
+                retrieve_project=ActionLink(method='GET', url='ok'),
             ),
         )
 

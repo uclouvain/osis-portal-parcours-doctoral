@@ -37,6 +37,7 @@ from osis_parcours_doctoral_sdk.models.paper import Paper
 from osis_parcours_doctoral_sdk.models.seminar_communication import SeminarCommunication
 from osis_parcours_doctoral_sdk.models.type_enum import TypeEnum
 from osis_parcours_doctoral_sdk.models.ucl_course import UclCourse
+from osis_parcours_doctoral_sdk.models.status_enum import StatusEnum
 
 from parcours_doctoral.contrib.enums import (
     CategorieActivite,
@@ -569,14 +570,14 @@ class TrainingTestCase(BaseDoctorateTestCase):
             pk=self.doctorate_uuid,
             activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
         )
-        self.mock_doctorate_api.return_value.retrieve_training.return_value = UclCourse._from_openapi_data(
+        self.mock_doctorate_api.return_value.retrieve_training.return_value = UclCourse(
             object_type='UclCourse',
             category=CategoryEnum('UCL_COURSE'),
             context=ContextEnum('DOCTORAL_TRAINING'),
             course='ESA2003',
             academic_year=2020,
             uuid='64d2e9e3-2537-4a12-a396-48763c5cdc60',
-            status='',
+            status=StatusEnum('SOUMISE'),
             parcours_doctoral=10,
             reference_promoter_assent=None,
             reference_promoter_comment='',
@@ -602,7 +603,7 @@ class TrainingTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.update_training.assert_called_with(
             uuid=self.doctorate_uuid,
             activity_id='64d2e9e3-2537-4a12-a396-48763c5cdc60',
-            doctoral_training_activity=UclCourse._from_openapi_data(
+            doctoral_training_activity=UclCourse(
                 object_type='UclCourse',
                 category=CategoryEnum('UCL_COURSE'),
                 context=ContextEnum('DOCTORAL_TRAINING'),

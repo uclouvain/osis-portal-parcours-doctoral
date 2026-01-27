@@ -61,7 +61,7 @@ class CotutelleDetailViewTestCase(BaseCotutelleTestCase):
 
     def test_get_cotutelle_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_cotutelle'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.retrieve_cotutelle = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
@@ -81,7 +81,7 @@ class CotutelleFormViewTestCase(BaseCotutelleTestCase):
 
     def test_update_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['update_cotutelle'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.update_cotutelle = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
@@ -99,7 +99,7 @@ class CotutelleFormViewTestCase(BaseCotutelleTestCase):
     def test_cotutelle_get_form_no_cotutelle(self):
         self.client.force_login(self.person.user)
 
-        self.mock_doctorate_object.cotutelle = CotutelleDTONested._from_openapi_data(
+        self.mock_doctorate_object.cotutelle = CotutelleDTONested(
             cotutelle=False,
             motivation='',
             institution='',

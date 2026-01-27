@@ -31,7 +31,7 @@ from unittest.mock import ANY, Mock, patch
 from django.urls import reverse
 from osis_organisation_sdk.models.entite import Entite
 from osis_organisation_sdk.models.paginated_entites import PaginatedEntites
-from osis_reference_sdk.models.academic_calendar import AcademicCalendar
+from osis_reference_sdk.models.academic_year import AcademicYear
 from osis_reference_sdk.models.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
@@ -200,16 +200,18 @@ class AutocompleteTestCase(OsisPortalTestCase):
 
     @patch('osis_organisation_sdk.api.entites_api.EntitesApi')
     def test_autocomplete_institute_list(self, api):
+        uuid_1 = uuid.uuid4()
+        uuid_2 = uuid.uuid4()
         mock_entities = [
             Entite(
-                uuid='uuid1',
+                uuid=uuid_1,
                 organization_name='Université Catholique de Louvain',
                 organization_acronym='UCL',
                 title='Institute of technology',
                 acronym='IT',
             ),
             Entite(
-                uuid='uuid2',
+                uuid=uuid_2,
                 organization_name='Université Catholique de Louvain',
                 organization_acronym='UCL',
                 title='Institute of foreign languages',
@@ -223,11 +225,11 @@ class AutocompleteTestCase(OsisPortalTestCase):
         response = self.client.get(url, {'q': 'Institute'})
         expected = [
             {
-                'id': 'uuid1',
+                'id': str(uuid_2),
                 'text': 'Institute of technology (IT)',
             },
             {
-                'id': 'uuid2',
+                'id': str(uuid_2),
                 'text': 'Institute of foreign languages (IFL)',
             },
         ]
@@ -239,7 +241,7 @@ class AutocompleteTestCase(OsisPortalTestCase):
         today = datetime.date.today()
         mock_anac.return_value.get_academic_years.return_value = Mock(
             results=[
-                AcademicCalendar(
+                AcademicYear(
                     year=2019,
                     start_date=today - datetime.timedelta(days=1),
                     end_date=today + datetime.timedelta(days=1),
@@ -266,13 +268,13 @@ class AutocompleteTestCase(OsisPortalTestCase):
         second_scholarship_uuid = str(uuid.uuid4())
 
         mock_scholarships = [
-            Scholarship._from_openapi_data(
+            Scholarship(
                 uuid=first_scholarship_uuid,
                 short_name="EM-1",
                 long_name="Erasmus Mundus 1",
                 type=TypeBourse.ERASMUS_MUNDUS.name,
             ),
-            Scholarship._from_openapi_data(
+            Scholarship(
                 uuid=second_scholarship_uuid,
                 short_name="EM-2",
                 long_name="",
