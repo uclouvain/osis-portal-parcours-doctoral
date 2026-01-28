@@ -39,10 +39,17 @@
   {% endif %}
 {% endblock %}
 
-{% block script %}
+{% block header_script %}
   {{ block.super }}
   <script src="{% static 'js/vue.min.js' %}"></script>
   <script src="{% static 'js/vue-i18n.min.js' %}"></script>
+  {% if 'osis_notification' in installed_apps %}
+    <script type="text/javascript" src="{% static 'osis_notification/osis-notification.umd.min.js' %}"></script>
+  {% endif %}
+{% endblock %}
+
+{% block script %}
+  {{ block.super }}
   {% if form %}
     {{ form.media.js }}
   {% else %}
