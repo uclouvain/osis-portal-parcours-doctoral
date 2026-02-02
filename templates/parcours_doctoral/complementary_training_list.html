@@ -30,8 +30,6 @@
   {% url "parcours_doctoral:complementary-training:add" pk=view.kwargs.pk category='COURSE' as add_url %}
   <h3>{% trans "Complementary training" %}</h3>
 
-  <p>{% lorem %}</p>
-
   {% if doctorate|can_make_action:'add_training' %}
     <a href="{{ add_url }}" class="btn btn-light border border-dark-subtle mb-3">
       {% trans "Add a course unit" %}

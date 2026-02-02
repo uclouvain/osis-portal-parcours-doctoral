@@ -30,6 +30,7 @@ from contextlib import suppress
 from dataclasses import dataclass
 from inspect import getfullargspec
 
+import waffle
 from django import template
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
@@ -197,8 +198,17 @@ def get_valid_tab_tree(tab_tree, doctorate):
     if doctorate:
         valid_tab_tree = {}
 
+        # Some tabs are temporary hidden depending on a switch
+        doctorate_limited_tabs = waffle.switch_is_active('parcours_doctoral_limited_tabs')
+
         # Loop over the tabs of the original tab tree
         for parent_tab, sub_tabs in tab_tree.items():
+            if doctorate_limited_tabs and parent_tab.name not in {
+                'doctorate',
+                'training',
+                'course-enrollment',
+            }:
+                continue
             # Get the accessible sub tabs depending on the user permissions
             valid_sub_tabs = [tab for tab in sub_tabs if _can_access_tab(doctorate, tab.name, READ_ACTIONS_BY_TAB)]
             # Only add the parent tab if at least one sub tab is allowed
