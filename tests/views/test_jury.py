@@ -28,7 +28,7 @@ from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
 from django.utils.translation import gettext_lazy as _
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
 
 from frontoffice.settings.osis_sdk.utils import (
     ApiBusinessException,
@@ -67,14 +67,14 @@ class JuryPreparationTestCase(BaseDoctorateTestCase):
         )
 
     def test_jury_update_no_permission(self):
-        self.mock_doctorate_object.links['update_jury_preparation'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.update_jury_preparation = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
     def test_jury_get_no_permission(self):
-        self.mock_doctorate_object.links['retrieve_jury_preparation'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_jury_preparation = ActionLink(
             error='access error',
         )
         response = self.client.get(self.detail_url)
@@ -119,7 +119,7 @@ class JuryTestCase(BaseDoctorateTestCase):
         self.client.force_login(self.person.user)
 
     def test_jury_get_no_permission(self):
-        self.mock_doctorate_object.links['list_jury_members'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.list_jury_members = ActionLink(error='access error')
         response = self.client.get(self.detail_url)
         self.assertEqual(response.status_code, 403)
 
@@ -128,7 +128,7 @@ class JuryTestCase(BaseDoctorateTestCase):
         self.assertContains(response, "Troufignon")
 
     def test_jury_create_no_permission(self):
-        self.mock_doctorate_object.links['create_jury_members'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.create_jury_members = ActionLink(error='access error')
         response = self.client.get(self.form_url)
         self.assertEqual(response.status_code, 403)
 

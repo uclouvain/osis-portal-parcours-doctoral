@@ -32,70 +32,70 @@ from django.conf import settings
 from django.utils.translation import get_language
 from osis_parcours_doctoral_sdk import ApiException
 from osis_parcours_doctoral_sdk.api import doctorate_api
-from osis_parcours_doctoral_sdk.model.accept_thesis_by_lead_promoter import (
+from osis_parcours_doctoral_sdk.models.accept_thesis_by_lead_promoter import (
     AcceptThesisByLeadPromoter,
 )
-from osis_parcours_doctoral_sdk.model.admissibility_dto import AdmissibilityDTO
-from osis_parcours_doctoral_sdk.model.admissibility_minutes_canvas import (
+from osis_parcours_doctoral_sdk.models.admissibility_dto import AdmissibilityDTO
+from osis_parcours_doctoral_sdk.models.admissibility_minutes_canvas import (
     AdmissibilityMinutesCanvas,
 )
-from osis_parcours_doctoral_sdk.model.approuver_jury_command import ApprouverJuryCommand
-from osis_parcours_doctoral_sdk.model.approuver_jury_par_pdf_command import (
+from osis_parcours_doctoral_sdk.models.approuver_jury_command import ApprouverJuryCommand
+from osis_parcours_doctoral_sdk.models.approuver_jury_par_pdf_command import (
     ApprouverJuryParPdfCommand,
 )
-from osis_parcours_doctoral_sdk.model.authorization_distribution_dto import (
+from osis_parcours_doctoral_sdk.models.authorization_distribution_dto import (
     AuthorizationDistributionDTO,
 )
-from osis_parcours_doctoral_sdk.model.confirmation_paper_canvas import (
+from osis_parcours_doctoral_sdk.models.confirmation_paper_canvas import (
     ConfirmationPaperCanvas,
 )
-from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
-from osis_parcours_doctoral_sdk.model.jury_dto import JuryDTO
-from osis_parcours_doctoral_sdk.model.membre_jury_identity_dto import (
+from osis_parcours_doctoral_sdk.models.confirmation_paper_dto import ConfirmationPaperDTO
+from osis_parcours_doctoral_sdk.models.jury_dto import JuryDTO
+from osis_parcours_doctoral_sdk.models.membre_jury_identity_dto import (
     MembreJuryIdentityDTO,
 )
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto import ParcoursDoctoralDTO
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_identity_dto import (
+from osis_parcours_doctoral_sdk.models.parcours_doctoral_dto import ParcoursDoctoralDTO
+from osis_parcours_doctoral_sdk.models.parcours_doctoral_identity_dto import (
     ParcoursDoctoralIdentityDTO,
 )
-from osis_parcours_doctoral_sdk.model.private_defense_dto import PrivateDefenseDTO
-from osis_parcours_doctoral_sdk.model.private_defense_minutes_canvas import (
+from osis_parcours_doctoral_sdk.models.private_defense_dto import PrivateDefenseDTO
+from osis_parcours_doctoral_sdk.models.private_defense_minutes_canvas import (
     PrivateDefenseMinutesCanvas,
 )
-from osis_parcours_doctoral_sdk.model.public_defense_minutes_canvas import (
+from osis_parcours_doctoral_sdk.models.public_defense_minutes_canvas import (
     PublicDefenseMinutesCanvas,
 )
-from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCommand
-from osis_parcours_doctoral_sdk.model.reject_thesis_by_lead_promoter import (
+from osis_parcours_doctoral_sdk.models.refuser_jury_command import RefuserJuryCommand
+from osis_parcours_doctoral_sdk.models.reject_thesis_by_lead_promoter import (
     RejectThesisByLeadPromoter,
 )
-from osis_parcours_doctoral_sdk.model.renvoyer_invitation_signature_externe import (
+from osis_parcours_doctoral_sdk.models.renvoyer_invitation_signature_externe import (
     RenvoyerInvitationSignatureExterne,
 )
-from osis_parcours_doctoral_sdk.model.send_authorization_distribution_to_promoter import (
+from osis_parcours_doctoral_sdk.models.send_authorization_distribution_to_promoter import (
     SendAuthorizationDistributionToPromoter,
 )
-from osis_parcours_doctoral_sdk.model.submit_admissibility import SubmitAdmissibility
-from osis_parcours_doctoral_sdk.model.submit_admissibility_minutes_and_opinions import (
+from osis_parcours_doctoral_sdk.models.submit_admissibility import SubmitAdmissibility
+from osis_parcours_doctoral_sdk.models.submit_admissibility_minutes_and_opinions import (
     SubmitAdmissibilityMinutesAndOpinions,
 )
-from osis_parcours_doctoral_sdk.model.submit_private_defense import SubmitPrivateDefense
-from osis_parcours_doctoral_sdk.model.submit_private_defense_minutes import (
+from osis_parcours_doctoral_sdk.models.submit_private_defense import SubmitPrivateDefense
+from osis_parcours_doctoral_sdk.models.submit_private_defense_minutes import (
     SubmitPrivateDefenseMinutes,
 )
-from osis_parcours_doctoral_sdk.model.submit_private_public_defenses import (
+from osis_parcours_doctoral_sdk.models.submit_private_public_defenses import (
     SubmitPrivatePublicDefenses,
 )
-from osis_parcours_doctoral_sdk.model.submit_private_public_defenses_minutes import (
+from osis_parcours_doctoral_sdk.models.submit_private_public_defenses_minutes import (
     SubmitPrivatePublicDefensesMinutes,
 )
-from osis_parcours_doctoral_sdk.model.submit_public_defense import SubmitPublicDefense
-from osis_parcours_doctoral_sdk.model.submit_public_defense_minutes import (
+from osis_parcours_doctoral_sdk.models.submit_public_defense import SubmitPublicDefense
+from osis_parcours_doctoral_sdk.models.submit_public_defense_minutes import (
     SubmitPublicDefenseMinutes,
 )
-from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
-from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
-from osis_parcours_doctoral_sdk.model.update_authorization_distribution import (
+from osis_parcours_doctoral_sdk.models.supervision_canvas import SupervisionCanvas
+from osis_parcours_doctoral_sdk.models.supervision_dto import SupervisionDTO
+from osis_parcours_doctoral_sdk.models.update_authorization_distribution import (
     UpdateAuthorizationDistribution,
 )
 

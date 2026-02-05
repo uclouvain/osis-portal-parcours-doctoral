@@ -28,7 +28,7 @@ from importlib import import_module
 import osis_parcours_doctoral_sdk
 from django.http import HttpResponseBadRequest
 from osis_parcours_doctoral_sdk.api import doctorate_api
-from osis_parcours_doctoral_sdk.model.type_enum import TypeEnum
+from osis_parcours_doctoral_sdk.models.type_enum import TypeEnum
 
 from frontoffice.settings.osis_sdk import parcours_doctoral as parcours_doctoral_sdk
 from frontoffice.settings.osis_sdk.utils import (
@@ -128,7 +128,7 @@ class DoctorateTrainingService(metaclass=ServiceMeta):
     @classmethod
     def _get_activity(cls, kwargs):
         class_name = kwargs["object_type"]
-        module = import_module(f'osis_parcours_doctoral_sdk.model.{to_snake_case(class_name)}')
+        module = import_module(f'osis_parcours_doctoral_sdk.models.{to_snake_case(class_name)}')
         activity_class = getattr(module, class_name)
         return activity_class(**kwargs)
 

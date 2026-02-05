@@ -27,13 +27,13 @@ import datetime
 import uuid
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.admissibility_dto import AdmissibilityDTO
-from osis_parcours_doctoral_sdk.model.admissibility_minutes_canvas import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.admissibility_dto import AdmissibilityDTO
+from osis_parcours_doctoral_sdk.models.admissibility_minutes_canvas import (
     AdmissibilityMinutesCanvas,
 )
-from osis_parcours_doctoral_sdk.model.submit_admissibility import SubmitAdmissibility
-from osis_parcours_doctoral_sdk.model.submit_admissibility_minutes_and_opinions import (
+from osis_parcours_doctoral_sdk.models.submit_admissibility import SubmitAdmissibility
+from osis_parcours_doctoral_sdk.models.submit_admissibility_minutes_and_opinions import (
     SubmitAdmissibilityMinutesAndOpinions,
 )
 
@@ -58,7 +58,7 @@ class AdmissibilityDetailViewTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_admissibilities.return_value = [
-            AdmissibilityDTO._from_openapi_data(
+            AdmissibilityDTO(
                 parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p1',
                 est_active=True,
@@ -68,7 +68,7 @@ class AdmissibilityDetailViewTestCase(BaseDoctorateTestCase):
                 date_decision=datetime.date(2025, 11, 1),
                 date_envoi_manuscrit=datetime.date(2025, 11, 10),
             ),
-            AdmissibilityDTO._from_openapi_data(
+            AdmissibilityDTO(
                 parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p2',
                 est_active=False,
@@ -82,7 +82,7 @@ class AdmissibilityDetailViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_admissibility'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_admissibility = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -136,7 +136,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_admissibilities.return_value = [
-            AdmissibilityDTO._from_openapi_data(
+            AdmissibilityDTO(
                 parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p1',
                 est_active=True,
@@ -146,7 +146,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
                 date_decision=datetime.date(2025, 11, 1),
                 date_envoi_manuscrit=datetime.date(2025, 11, 10),
             ),
-            AdmissibilityDTO._from_openapi_data(
+            AdmissibilityDTO(
                 parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p2',
                 est_active=False,
@@ -160,7 +160,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['update_admissibility'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.update_admissibility = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -235,7 +235,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.submit_admissibility.assert_called()
         self.mock_doctorate_api.return_value.submit_admissibility.assert_called_with(
             uuid=self.doctorate_uuid,
-            submit_admissibility=SubmitAdmissibility._new_from_openapi_data(
+            submit_admissibility=SubmitAdmissibility(
                 titre_these='My new title',
                 date_decision=datetime.date(2025, 12, 1),
                 date_envoi_manuscrit=datetime.date(2025, 12, 10),
@@ -247,7 +247,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.client.force_login(self.person.user)
 
         self.mock_doctorate_api.return_value.retrieve_admissibilities.return_value = [
-            AdmissibilityDTO._from_openapi_data(
+            AdmissibilityDTO(
                 parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p1',
                 est_active=True,
@@ -271,7 +271,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.submit_admissibility.assert_called()
         self.mock_doctorate_api.return_value.submit_admissibility.assert_called_with(
             uuid=self.doctorate_uuid,
-            submit_admissibility=SubmitAdmissibility._new_from_openapi_data(
+            submit_admissibility=SubmitAdmissibility(
                 titre_these='My new title',
                 date_decision=None,
                 date_envoi_manuscrit=None,
@@ -283,7 +283,7 @@ class PrivateDefenseFormViewTestCase(BaseDoctorateTestCase):
         self.client.force_login(self.person.user)
 
         self.mock_doctorate_api.return_value.retrieve_admissibilities.return_value = [
-            AdmissibilityDTO._from_openapi_data(
+            AdmissibilityDTO(
                 parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p1',
                 est_active=True,
@@ -323,12 +323,12 @@ class AdmissibilityMinutesCanvasViewTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_admissibility_minutes_canvas.return_value = (
-            AdmissibilityMinutesCanvas._from_openapi_data(url=self.project_url)
+            AdmissibilityMinutesCanvas(url=self.project_url)
         )
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_admissibility_minutes_canvas'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_admissibility_minutes_canvas = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -355,7 +355,7 @@ class AdmissibilityFormViewForPromoterTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_admissibilities.return_value = [
-            AdmissibilityDTO._from_openapi_data(
+            AdmissibilityDTO(
                 parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p1',
                 est_active=True,
@@ -365,7 +365,7 @@ class AdmissibilityFormViewForPromoterTestCase(BaseDoctorateTestCase):
                 date_decision=datetime.date(2025, 1, 1),
                 date_envoi_manuscrit=datetime.date(2025, 1, 2),
             ),
-            AdmissibilityDTO._from_openapi_data(
+            AdmissibilityDTO(
                 parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid='p2',
                 est_active=False,
@@ -379,7 +379,7 @@ class AdmissibilityFormViewForPromoterTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.promoter_person.user)
-        self.mock_doctorate_object.links['submit_admissibility_minutes_and_opinions'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.submit_admissibility_minutes_and_opinions = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -450,7 +450,7 @@ class AdmissibilityFormViewForPromoterTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.submit_admissibility_minutes_and_opinions.assert_called()
         self.mock_doctorate_api.return_value.submit_admissibility_minutes_and_opinions.assert_called_with(
             uuid=self.doctorate_uuid,
-            submit_admissibility_minutes_and_opinions=SubmitAdmissibilityMinutesAndOpinions._new_from_openapi_data(
+            submit_admissibility_minutes_and_opinions=SubmitAdmissibilityMinutesAndOpinions(
                 avis_jury=['file-uuid-12a'],
                 proces_verbal=['file-uuid-12b'],
             ),
@@ -477,7 +477,7 @@ class AdmissibilityMinutesViewTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_admissibilities.return_value = [
-            AdmissibilityDTO._from_openapi_data(
+            AdmissibilityDTO(
                 parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid=str(self.first_admissibility_uuid),
                 est_active=True,
@@ -485,7 +485,7 @@ class AdmissibilityMinutesViewTestCase(BaseDoctorateTestCase):
                 proces_verbal=['file-1'],
                 canevas_proces_verbal=[],
             ),
-            AdmissibilityDTO._from_openapi_data(
+            AdmissibilityDTO(
                 parcours_doctoral_uuid=self.doctorate_uuid,
                 uuid=str(self.second_admissibility_uuid),
                 est_active=False,
@@ -497,7 +497,7 @@ class AdmissibilityMinutesViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_admissibility'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_admissibility = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)

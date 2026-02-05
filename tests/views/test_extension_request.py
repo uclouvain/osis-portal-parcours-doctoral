@@ -27,9 +27,9 @@ import datetime
 from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.demande_prolongation_dto_nested import DemandeProlongationDTONested
-from osis_parcours_doctoral_sdk.model.confirmation_paper_dto import ConfirmationPaperDTO
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.demande_prolongation_dto_nested import DemandeProlongationDTONested
+from osis_parcours_doctoral_sdk.models.confirmation_paper_dto import ConfirmationPaperDTO
 
 from base.tests.factories.person import PersonFactory
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
@@ -47,7 +47,7 @@ class ExtensionRequestDetailViewTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.return_value = (
-            ConfirmationPaperDTO._from_openapi_data(
+            ConfirmationPaperDTO(
                 uuid='c1',
                 date_limite=datetime.date(2022, 6, 10),
                 date=datetime.date(2022, 4, 3),
@@ -62,7 +62,7 @@ class ExtensionRequestDetailViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['update_confirmation_extension'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.update_confirmation_extension = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -111,7 +111,7 @@ class ExtensionRequestFormViewTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_last_confirmation_paper.return_value = (
-            ConfirmationPaperDTO._from_openapi_data(
+            ConfirmationPaperDTO(
                 uuid='c1',
                 date_limite=datetime.date(2022, 6, 10),
                 date=datetime.date(2022, 4, 3),
@@ -131,7 +131,7 @@ class ExtensionRequestFormViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['update_confirmation_extension'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.update_confirmation_extension = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)

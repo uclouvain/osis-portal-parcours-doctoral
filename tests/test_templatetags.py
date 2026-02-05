@@ -35,8 +35,8 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext
 from django.views.generic import FormView
 from osis_parcours_doctoral_sdk.exceptions import UnauthorizedException
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.parcours_doctoral_dto_links import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.parcours_doctoral_dto_links import (
     ParcoursDoctoralDTOLinks,
 )
 
@@ -63,11 +63,11 @@ class TemplateTagsTestCase(TestCase):
     def setUpTestData(cls):
         class Doctorate:
             def __init__(self, links=None):
-                self.links = links or {
+                self.links = links or ParcoursDoctoralDTOLinks(**{
                     'retrieve_funding': {'url': 'my_url', 'method': 'GET'},
                     'update_funding': {'url': 'my_url', 'method': 'POST'},
                     'retrieve_project': {'error': 'Method not allowed', 'method': 'GET'},
-                }
+                })
 
         cls.Doctorate = Doctorate
 
@@ -155,7 +155,7 @@ class TemplateTagsTestCase(TestCase):
         doctorate = Mock(
             uuid=doctorate_uuid,
             links=ParcoursDoctoralDTOLinks(
-                retrieve_project=ActionLink._from_openapi_data(method='GET', url='ok'),
+                retrieve_project=ActionLink(method='GET', url='ok'),
             ),
         )
 

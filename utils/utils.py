@@ -27,16 +27,16 @@ from typing import Union
 
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
-from osis_organisation_sdk.model.entite import Entite
-from osis_reference_sdk.model.high_school import HighSchool
-from osis_reference_sdk.model.scholarship import Scholarship
-from osis_reference_sdk.model.superior_non_university import SuperiorNonUniversity
-from osis_reference_sdk.model.university import University
+from osis_organisation_sdk.models.entite import Entite
+from osis_reference_sdk.models.high_school import HighSchool
+from osis_reference_sdk.models.scholarship import Scholarship
+from osis_reference_sdk.models.superior_non_university import SuperiorNonUniversity
+from osis_reference_sdk.models.university import University
 
 
 def format_entity_title(entity: Entite):
     """Return the concatenation of the entity name and acronym."""
-    return '{title} ({acronym})'.format_map(entity)
+    return '{title} ({acronym})'.format_map(entity.to_dict())
 
 
 def format_address(street='', street_number='', postal_code='', city='', country=''):
@@ -63,7 +63,7 @@ def format_school_title(school: Union[HighSchool, SuperiorNonUniversity, Univers
 
 
 def format_scholarship(scholarship: Scholarship):
-    return scholarship['long_name'] or scholarship['short_name']
+    return scholarship.long_name or scholarship.short_name
 
 
 def to_snake_case(value):

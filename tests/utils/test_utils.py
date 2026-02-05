@@ -23,11 +23,12 @@
 #    see http://www.gnu.org/licenses/.
 #
 # ##############################################################################
+import uuid
 
 from django.test import TestCase
-from osis_organisation_sdk.model.address import Address
-from osis_organisation_sdk.model.entite import Entite
-from osis_reference_sdk.model.scholarship import Scholarship
+from osis_organisation_sdk.models.address import Address
+from osis_organisation_sdk.models.entite import Entite
+from osis_reference_sdk.models.scholarship import Scholarship
 
 from parcours_doctoral.contrib.enums.scholarship import TypeBourse
 from parcours_doctoral.utils import *
@@ -43,7 +44,7 @@ class UtilsTestCase(TestCase):
             state="Belgique",
         )
         self.entity = Entite(
-            uuid='uuid',
+            uuid=uuid.uuid4(),
             organization_name='Université Catholique de Louvain',
             organization_acronym='UCL',
             title='Institute of technology',
@@ -54,7 +55,7 @@ class UtilsTestCase(TestCase):
         """Return the concatenation of the entity name and acronym."""
         self.assertEqual(
             format_entity_title(entity=self.entity),
-            '{title} ({acronym})'.format_map(self.entity),
+            '{title} ({acronym})'.format_map(self.entity.to_dict()),
         )
 
     def test_format_scholarship_with_long_name_and_short_name(self):

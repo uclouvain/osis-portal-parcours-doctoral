@@ -31,12 +31,13 @@ from django.shortcuts import resolve_url
 from django.test import override_settings
 from django.utils.translation import gettext_lazy as _
 from osis_parcours_doctoral_sdk import ApiException
-from osis_parcours_doctoral_sdk.model.category_enum import CategoryEnum
-from osis_parcours_doctoral_sdk.model.context_enum import ContextEnum
-from osis_parcours_doctoral_sdk.model.paper import Paper
-from osis_parcours_doctoral_sdk.model.seminar_communication import SeminarCommunication
-from osis_parcours_doctoral_sdk.model.type_enum import TypeEnum
-from osis_parcours_doctoral_sdk.model.ucl_course import UclCourse
+from osis_parcours_doctoral_sdk.models.category_enum import CategoryEnum
+from osis_parcours_doctoral_sdk.models.context_enum import ContextEnum
+from osis_parcours_doctoral_sdk.models.paper import Paper
+from osis_parcours_doctoral_sdk.models.seminar_communication import SeminarCommunication
+from osis_parcours_doctoral_sdk.models.type_enum import TypeEnum
+from osis_parcours_doctoral_sdk.models.ucl_course import UclCourse
+from osis_parcours_doctoral_sdk.models.status_enum import StatusEnum
 
 from parcours_doctoral.contrib.enums import (
     CategorieActivite,
@@ -569,14 +570,14 @@ class TrainingTestCase(BaseDoctorateTestCase):
             pk=self.doctorate_uuid,
             activity_id="64d2e9e3-2537-4a12-a396-48763c5cdc60",
         )
-        self.mock_doctorate_api.return_value.retrieve_training.return_value = UclCourse._from_openapi_data(
+        self.mock_doctorate_api.return_value.retrieve_training.return_value = UclCourse(
             object_type='UclCourse',
             category=CategoryEnum('UCL_COURSE'),
             context=ContextEnum('DOCTORAL_TRAINING'),
             course='ESA2003',
             academic_year=2020,
             uuid='64d2e9e3-2537-4a12-a396-48763c5cdc60',
-            status='',
+            status=StatusEnum('SOUMISE'),
             parcours_doctoral=10,
             reference_promoter_assent=None,
             reference_promoter_comment='',
@@ -602,7 +603,7 @@ class TrainingTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.update_training.assert_called_with(
             uuid=self.doctorate_uuid,
             activity_id='64d2e9e3-2537-4a12-a396-48763c5cdc60',
-            doctoral_training_activity=UclCourse._from_openapi_data(
+            doctoral_training_activity=UclCourse(
                 object_type='UclCourse',
                 category=CategoryEnum('UCL_COURSE'),
                 context=ContextEnum('DOCTORAL_TRAINING'),

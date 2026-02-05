@@ -25,15 +25,15 @@
 # ##############################################################################
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.membre_cadto_nested import MembreCADTONested
-from osis_parcours_doctoral_sdk.model.promoteur_dto_nested import PromoteurDTONested
-from osis_parcours_doctoral_sdk.model.supervision_canvas import SupervisionCanvas
-from osis_parcours_doctoral_sdk.model.supervision_dto import SupervisionDTO
-from osis_parcours_doctoral_sdk.model.detail_signature_membre_cadto_nested import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.membre_cadto_nested import MembreCADTONested
+from osis_parcours_doctoral_sdk.models.promoteur_dto_nested import PromoteurDTONested
+from osis_parcours_doctoral_sdk.models.supervision_canvas import SupervisionCanvas
+from osis_parcours_doctoral_sdk.models.supervision_dto import SupervisionDTO
+from osis_parcours_doctoral_sdk.models.detail_signature_membre_cadto_nested import (
     DetailSignatureMembreCADTONested,
 )
-from osis_parcours_doctoral_sdk.model.detail_signature_promoteur_dto_nested import (
+from osis_parcours_doctoral_sdk.models.detail_signature_promoteur_dto_nested import (
     DetailSignaturePromoteurDTONested,
 )
 
@@ -47,10 +47,10 @@ class SupervisionTestCase(BaseDoctorateTestCase):
 
         self.detail_url = resolve_url("parcours_doctoral:supervision", pk=self.doctorate_uuid)
 
-        self.mock_doctorate_api.return_value.retrieve_supervision.return_value = SupervisionDTO._from_openapi_data(
+        self.mock_doctorate_api.return_value.retrieve_supervision.return_value = SupervisionDTO(
             signatures_promoteurs=[
-                DetailSignaturePromoteurDTONested._from_openapi_data(
-                    promoteur=PromoteurDTONested._from_openapi_data(
+                DetailSignaturePromoteurDTONested(
+                    promoteur=PromoteurDTONested(
                         uuid="uuid-0123456978",
                         matricule="0123456978",
                         prenom="Marie-Odile",
@@ -67,8 +67,8 @@ class SupervisionTestCase(BaseDoctorateTestCase):
                     statut=ChoixEtatSignature.APPROVED.name,
                     commentaire_externe="A public comment to display",
                 ),
-                DetailSignaturePromoteurDTONested._from_openapi_data(
-                    promoteur=PromoteurDTONested._from_openapi_data(
+                DetailSignaturePromoteurDTONested(
+                    promoteur=PromoteurDTONested(
                         uuid="uuid-9876543210",
                         matricule="9876543210",
                         prenom="John",
@@ -85,8 +85,8 @@ class SupervisionTestCase(BaseDoctorateTestCase):
                     statut=ChoixEtatSignature.DECLINED.name,
                     commentaire_externe="A public comment to display",
                 ),
-                DetailSignaturePromoteurDTONested._from_openapi_data(
-                    promoteur=PromoteurDTONested._from_openapi_data(
+                DetailSignaturePromoteurDTONested(
+                    promoteur=PromoteurDTONested(
                         uuid="uuid-externe",
                         matricule="",
                         prenom="Marcel",
@@ -105,8 +105,8 @@ class SupervisionTestCase(BaseDoctorateTestCase):
                 ),
             ],
             signatures_membres_ca=[
-                DetailSignatureMembreCADTONested._from_openapi_data(
-                    membre_ca=MembreCADTONested._from_openapi_data(
+                DetailSignatureMembreCADTONested(
+                    membre_ca=MembreCADTONested(
                         uuid=f"uuid-{self.person.global_id}",
                         matricule=self.person.global_id,
                         prenom="Jacques-Eudes",
@@ -129,7 +129,7 @@ class SupervisionTestCase(BaseDoctorateTestCase):
     def test_should_return_permission_denied_if_no_access(self):
         self.client.force_login(self.person.user)
 
-        self.mock_doctorate_object.links['retrieve_supervision'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.retrieve_supervision = ActionLink(error='access error')
 
         response = self.client.get(self.detail_url)
 
@@ -154,7 +154,7 @@ class SupervisionTestCase(BaseDoctorateTestCase):
     def test_should_not_display_supervision_canvas_link_if_forbidden(self):
         self.client.force_login(self.person.user)
 
-        self.mock_doctorate_object.links['retrieve_supervision_canvas'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_supervision_canvas = ActionLink(
             error='access error',
         )
 
@@ -173,12 +173,12 @@ class SupervisionCanvasTestCase(BaseDoctorateTestCase):
         self.canvas_file_url = resolve_url('parcours_doctoral:project', pk=self.doctorate_uuid)
 
         self.retrieve_supervision_canvas = self.mock_doctorate_api.return_value.retrieve_supervision_canvas
-        self.retrieve_supervision_canvas.return_value = SupervisionCanvas._from_openapi_data(url=self.canvas_file_url)
+        self.retrieve_supervision_canvas.return_value = SupervisionCanvas(url=self.canvas_file_url)
 
     def test_should_return_permission_denied_if_no_access(self):
         self.client.force_login(self.person.user)
 
-        self.mock_doctorate_object.links['retrieve_supervision_canvas'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_supervision_canvas = ActionLink(
             error='access error',
         )
 

@@ -28,20 +28,20 @@ import uuid
 
 from django.forms import Form
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.accept_thesis_by_lead_promoter import (
+from osis_parcours_doctoral_sdk.models.accept_thesis_by_lead_promoter import (
     AcceptThesisByLeadPromoter,
 )
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.authorization_distribution_dto import (
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.authorization_distribution_dto import (
     AuthorizationDistributionDTO,
 )
-from osis_parcours_doctoral_sdk.model.reject_thesis_by_lead_promoter import (
+from osis_parcours_doctoral_sdk.models.reject_thesis_by_lead_promoter import (
     RejectThesisByLeadPromoter,
 )
-from osis_parcours_doctoral_sdk.model.signataire_autorisation_diffusion_these_dto_nested import (
+from osis_parcours_doctoral_sdk.models.signataire_autorisation_diffusion_these_dto_nested import (
     SignataireAutorisationDiffusionTheseDTONested,
 )
-from osis_parcours_doctoral_sdk.model.signature_autorisation_diffusion_these_dto_nested import (
+from osis_parcours_doctoral_sdk.models.signature_autorisation_diffusion_these_dto_nested import (
     SignatureAutorisationDiffusionTheseDTONested,
 )
 
@@ -71,7 +71,7 @@ class ManuscriptValidationViewTestCase(BaseDoctorateTestCase):
         super().setUp()
 
         self.mock_doctorate_api.return_value.retrieve_authorization_distribution.return_value = (
-            AuthorizationDistributionDTO._from_openapi_data(
+            AuthorizationDistributionDTO(
                 uuid=self.doctorate_uuid,
                 statut='DIFFUSION_NON_SOUMISE',
                 sources_financement='Sources',
@@ -81,7 +81,7 @@ class ManuscriptValidationViewTestCase(BaseDoctorateTestCase):
                 type_modalites_diffusion=TypeModalitesDiffusionThese.ACCES_EMBARGO.name,
                 limitations_additionnelles_chapitres='Limitations',
                 signataires=[
-                    SignataireAutorisationDiffusionTheseDTONested._from_openapi_data(
+                    SignataireAutorisationDiffusionTheseDTONested(
                         uuid=str(uuid.uuid4()),
                         matricule='0123456789',
                         prenom='John',
@@ -90,7 +90,7 @@ class ManuscriptValidationViewTestCase(BaseDoctorateTestCase):
                         genre='H',
                         institution='UCLouvain',
                         role=RoleActeur.PROMOTEUR.name,
-                        signature=SignatureAutorisationDiffusionTheseDTONested._from_openapi_data(
+                        signature=SignatureAutorisationDiffusionTheseDTONested(
                             etat=ChoixEtatSignature.INVITED.name,
                             date_heure=datetime.datetime(2025, 1, 1, 11, 30),
                             commentaire_externe='External comment',
@@ -106,7 +106,7 @@ class ManuscriptValidationViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_manuscript_validation'] = ActionLink._from_openapi_data(
+        self.mock_doctorate_object.links.retrieve_manuscript_validation = ActionLink(
             error='access error',
         )
         response = self.client.get(self.url)
@@ -115,7 +115,7 @@ class ManuscriptValidationViewTestCase(BaseDoctorateTestCase):
     def test_get_manuscript_validation_data(self):
         self.client.force_login(self.person.user)
 
-        self.mock_doctorate_object.links['validate_manuscript'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.validate_manuscript = ActionLink(error='access error')
 
         response = self.client.get(self.url)
 
@@ -135,7 +135,7 @@ class ManuscriptValidationViewTestCase(BaseDoctorateTestCase):
 
         self.assertIsInstance(response.context.get('form'), Form)
 
-        self.mock_doctorate_object.links['validate_manuscript'] = ActionLink._from_openapi_data(url='abc')
+        self.mock_doctorate_object.links.validate_manuscript = ActionLink(url='abc')
 
         response = self.client.get(self.url)
 
@@ -183,7 +183,7 @@ class ManuscriptValidationViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.reject_thesis_by_lead_promoter.assert_called()
         self.mock_doctorate_api.return_value.reject_thesis_by_lead_promoter.assert_called_with(
             uuid=self.doctorate_uuid,
-            reject_thesis_by_lead_promoter=RejectThesisByLeadPromoter._new_from_openapi_data(
+            reject_thesis_by_lead_promoter=RejectThesisByLeadPromoter(
                 motif_refus='Refusal reason',
                 commentaire_interne='Internal comment',
                 commentaire_externe='External comment',
@@ -210,7 +210,7 @@ class ManuscriptValidationViewTestCase(BaseDoctorateTestCase):
         self.mock_doctorate_api.return_value.accept_thesis_by_lead_promoter.assert_called()
         self.mock_doctorate_api.return_value.accept_thesis_by_lead_promoter.assert_called_with(
             uuid=self.doctorate_uuid,
-            accept_thesis_by_lead_promoter=AcceptThesisByLeadPromoter._new_from_openapi_data(
+            accept_thesis_by_lead_promoter=AcceptThesisByLeadPromoter(
                 commentaire_interne='Internal comment',
                 commentaire_externe='External comment',
             ),

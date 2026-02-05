@@ -35,7 +35,7 @@ from osis_reference_sdk.api import (
     superior_non_universities_api,
     universities_api,
 )
-from osis_reference_sdk.model.academic_year import AcademicYear
+from osis_reference_sdk.models.academic_year import AcademicYear
 
 from frontoffice.settings.osis_sdk import reference as reference_sdk
 from frontoffice.settings.osis_sdk.utils import build_mandatory_auth_headers

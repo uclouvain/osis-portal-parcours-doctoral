@@ -28,8 +28,8 @@ from unittest.mock import patch, MagicMock
 
 from django.shortcuts import resolve_url
 from django.utils.translation import gettext_lazy as _
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
-from osis_parcours_doctoral_sdk.model.cotutelle_dto_nested import CotutelleDTONested
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.cotutelle_dto_nested import CotutelleDTONested
 
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
@@ -61,7 +61,7 @@ class CotutelleDetailViewTestCase(BaseCotutelleTestCase):
 
     def test_get_cotutelle_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_cotutelle'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.retrieve_cotutelle = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
@@ -81,7 +81,7 @@ class CotutelleFormViewTestCase(BaseCotutelleTestCase):
 
     def test_update_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['update_cotutelle'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.update_cotutelle = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
@@ -99,7 +99,7 @@ class CotutelleFormViewTestCase(BaseCotutelleTestCase):
     def test_cotutelle_get_form_no_cotutelle(self):
         self.client.force_login(self.person.user)
 
-        self.mock_doctorate_object.cotutelle = CotutelleDTONested._from_openapi_data(
+        self.mock_doctorate_object.cotutelle = CotutelleDTONested(
             cotutelle=False,
             motivation='',
             institution='',

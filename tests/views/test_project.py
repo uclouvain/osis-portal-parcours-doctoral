@@ -26,7 +26,7 @@
 
 from django.shortcuts import resolve_url
 from django.utils.translation import gettext_lazy as _
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
 
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
 
@@ -40,7 +40,7 @@ class ProjectDetailViewTestCase(BaseDoctorateTestCase):
 
     def test_detail_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_project'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.retrieve_project = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 

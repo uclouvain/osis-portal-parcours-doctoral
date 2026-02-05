@@ -27,7 +27,7 @@ import datetime
 from uuid import uuid4
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
 
 from admission.constants import FIELD_REQUIRED_MESSAGE
 from frontoffice.settings.osis_sdk.utils import (
@@ -52,7 +52,7 @@ class FundingDetailViewTestCase(BaseDoctorateTestCase):
 
     def test_detail_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_funding'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.retrieve_funding = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
@@ -90,7 +90,7 @@ class FundingFormViewTestCase(BaseDoctorateTestCase):
 
     def test_update_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['update_funding'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.update_funding = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 

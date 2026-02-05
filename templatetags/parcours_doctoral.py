@@ -46,9 +46,9 @@ from osis_parcours_doctoral_sdk.exceptions import (
     NotFoundException,
     UnauthorizedException,
 )
-from osis_parcours_doctoral_sdk.model.membre_cadto_nested import MembreCADTONested
-from osis_parcours_doctoral_sdk.model.membre_jury_dto_nested import MembreJuryDTONested
-from osis_parcours_doctoral_sdk.model.promoteur_dto_nested import PromoteurDTONested
+from osis_parcours_doctoral_sdk.models.membre_cadto_nested import MembreCADTONested
+from osis_parcours_doctoral_sdk.models.membre_jury_dto_nested import MembreJuryDTONested
+from osis_parcours_doctoral_sdk.models.promoteur_dto_nested import PromoteurDTONested
 
 from parcours_doctoral.constants import READ_ACTIONS_BY_TAB, UPDATE_ACTIONS_BY_TAB
 from parcours_doctoral.contrib.enums.training import (
@@ -170,7 +170,7 @@ def can_make_action(doctorate, action_name):
     """Return true if the specified action can be applied for this doctorate, otherwise return False"""
     if not doctorate:
         return False
-    return 'url' in doctorate.links.get(action_name, {})
+    return 'url' in doctorate.links.to_dict().get(action_name, {})
 
 
 def _can_access_tab(doctorate, tab_name, actions_by_tab):

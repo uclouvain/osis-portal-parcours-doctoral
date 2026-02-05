@@ -34,9 +34,9 @@ from frontoffice.settings.osis_sdk.utils import (
     ApiBusinessException,
     MultipleApiBusinessException,
 )
-from osis_parcours_doctoral_sdk.model.approuver_jury_command import ApprouverJuryCommand
-from osis_parcours_doctoral_sdk.model.refuser_jury_command import RefuserJuryCommand
-from osis_reference_sdk.model.country import Country
+from osis_parcours_doctoral_sdk.models.approuver_jury_command import ApprouverJuryCommand
+from osis_parcours_doctoral_sdk.models.refuser_jury_command import RefuserJuryCommand
+from osis_reference_sdk.models.country import Country
 from parcours_doctoral.contrib.enums import (
     DecisionApprovalEnum,
     GenreMembre,

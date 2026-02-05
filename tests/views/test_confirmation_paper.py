@@ -27,7 +27,7 @@ import datetime
 from unittest.mock import Mock
 
 from django.shortcuts import resolve_url
-from osis_parcours_doctoral_sdk.model.action_link import ActionLink
+from osis_parcours_doctoral_sdk.models.action_link import ActionLink
 
 from base.tests.factories.person import PersonFactory
 from parcours_doctoral.tests.mixins import BaseDoctorateTestCase
@@ -69,7 +69,7 @@ class ConfirmationPaperDetailViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_confirmation'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.retrieve_confirmation = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
@@ -142,15 +142,13 @@ class ConfirmationPaperFormViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission_with_student(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['update_confirmation'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.update_confirmation = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
     def test_get_no_permission_with_promoter(self):
         self.client.force_login(self.promoter.user)
-        self.mock_doctorate_object.links['upload_pdf_confirmation'] = ActionLink._from_openapi_data(
-            error='access error'
-        )
+        self.mock_doctorate_object.links.upload_pdf_confirmation = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
@@ -308,7 +306,7 @@ class DoctorateConfirmationPaperCanvasExportViewTestCase(BaseDoctorateTestCase):
 
     def test_get_no_permission(self):
         self.client.force_login(self.person.user)
-        self.mock_doctorate_object.links['retrieve_confirmation'] = ActionLink._from_openapi_data(error='access error')
+        self.mock_doctorate_object.links.retrieve_confirmation = ActionLink(error='access error')
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 403)
 
