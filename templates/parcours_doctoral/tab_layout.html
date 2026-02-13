@@ -70,7 +70,7 @@
         <a href="{% url 'parcours_doctoral:supervised-list' %}">{% trans "PhDs" %}</a>
       </li>
       <li class="breadcrumb-item active">
-        {{ doctorate.formation.intitule }} ({{ doctorate.reference }})
+        {{ doctorate.formation.intitule }}
       </li>
     {% endif %}
   {% endif %}
@@ -86,7 +86,7 @@
   {# Header page title #}
   <div class="page-header h3 clearfix">
     <span class="d-inline-block">
-      {% block header_title %}{{ doctorate.formation.intitule }} ({{ doctorate.reference }}){% endblock %}
+      {% block header_title %}{{ doctorate.formation.intitule }}{% endblock %}
     </span>
   </div>
 
@@ -96,7 +96,7 @@
       <div>
         {% trans "Reference:" %}
         {% display doctorate.formation.intitule " (" doctorate.formation.campus.nom ")" as doctorate_title %}
-        {{ doctorate_title }} ({{ doctorate.reference }})
+        {{ doctorate_title }}
       </div>
       <div>
         {% trans "Status:" %}

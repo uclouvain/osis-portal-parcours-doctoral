@@ -113,7 +113,6 @@ class BaseDoctorateTestCase(OsisPortalTestCase):
 
         self.mock_doctorate_object = ParcoursDoctoralDTO._from_openapi_data(
             uuid=self.doctorate_uuid,
-            reference='L-CDAR24-0000-0002',
             statut=ChoixStatutDoctorat.ADMIS.name,
             date_changement_statut=datetime.datetime(2024, 1, 3),
             cree_le=datetime.datetime(2024, 1, 1),
