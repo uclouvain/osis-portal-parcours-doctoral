@@ -7,7 +7,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2026 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -43,17 +43,17 @@
   >
     <div class="p-3">
       <p>
-        {{ activity.subtitle }}, {{ activity.title }}
+        {% if activity.subtitle %}{{ activity.subtitle }}, {% endif %}{{ activity.title }}
       </p>
       <div class="row">
         {% if activity.organizing_institution %}
           <p class="col-md-4">
-            <strong class="d-block">{% trans "Organising institution" %}</strong> {{ activity.organizing_institution }}
+            <strong class="d-block">{% trans "Organising institutions" %}</strong> {{ activity.organizing_institution }}
           </p>
         {% endif %}
         {% if activity.authors %}
           <p class="col-md-4">
-            <strong class="d-block">{% trans "Course owner" %}</strong> {{ activity.authors }}
+            <strong class="d-block">{% trans "Organisers or academic responsibles" %}</strong> {{ activity.authors }}
           </p>
         {% endif %}
       </div>
