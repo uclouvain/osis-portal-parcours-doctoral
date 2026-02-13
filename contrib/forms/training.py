@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2026 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 import datetime
 from functools import partial
 
+from dal import forward
 from dal.forward import Const
 from django import forms
 from django.core import validators
@@ -138,10 +139,11 @@ class ActivityFormMixin(forms.Form):
             attrs={
                 "data-html": True,
             },
+            forward=(forward.Const(True, 'highlight_eu_countries'),),
         ),
     )
     city = forms.CharField(label=_("City"), max_length=100)
-    organizing_institution = forms.CharField(label=_("Organising institution"), max_length=100)
+    organizing_institution = forms.CharField(label=_("Organising institutions"), max_length=100)
     website = forms.URLField(label=_("Website"))
     committee = forms.ChoiceField(
         choices=ChoixComiteSelection.choices(),
@@ -313,8 +315,9 @@ class ConferenceCommunicationForm(ActivityFormMixin, forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['title'].help_text = _("Specify the title in the language of the activity")
+        self.fields['acceptation_proof'].help_text = _("A document proving that the committee approved the publication")
         self.fields['participating_proof'].help_text = _(
-            "A document proving that the communication was done (i.e. communication certificate)"
+            "A document proving that the communication was done (not a transport certificate)"
         )
 
     def clean(self):
@@ -486,6 +489,10 @@ class CommunicationForm(ActivityFormMixin, forms.Form):
             "Required field for some of the doctoral commissions."
             " Refer to the website of your commission for more detail."
         )
+        self.fields['acceptation_proof'].help_text = _("A document proving that the committee approved the publication")
+        self.fields['participating_proof'].help_text = _(
+            "A document proving that the communication was done (not a transport certificate)"
+        )
 
 
 class PublicationForm(ActivityFormMixin, forms.Form):
@@ -643,6 +650,9 @@ class ResidencyCommunicationForm(ActivityFormMixin, forms.Form):
         self.fields['summary'].help_text = _(
             "Required field if some doctorals commissions, refer to your commission specifics dispositions."
         )
+        self.fields['participating_proof'].help_text = _(
+            "A document proving that the communication was done (not a transport certificate)"
+        )
 
 
 class ServiceForm(ActivityFormMixin, forms.Form):
@@ -709,10 +719,7 @@ class SeminarForm(ActivityFormMixin, forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['hour_volume'].help_text = _(
-            "Following the specifics of your domain doctoral commission,"
-            " specify the total time dedicated to this activity"
-        )
+        self.fields['hour_volume'].help_text = _("Specify the total time dedicated to this activity")
         self.fields['city'].help_text = _("If the seminar takes place in several places, leave this field empty.")
 
 
@@ -737,6 +744,13 @@ class SeminarCommunicationForm(ActivityFormMixin, forms.Form):
             'authors': _("First name and last name of the speaker"),
             'participating_proof': _("Certificate of participation in the presentation"),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['participating_proof'].help_text = _(
+            "A document proving that the communication was done (not a transport certificate)"
+        )
 
 
 class ValorisationForm(ActivityFormMixin, forms.Form):
