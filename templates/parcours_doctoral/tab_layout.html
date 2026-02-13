@@ -1,5 +1,5 @@
 {% extends "bootstrap5/layout.html" %}
-{% load i18n static parcours_doctoral doctorate_enums django_bootstrap5 %}
+{% load academic_year_display i18n static parcours_doctoral doctorate_enums django_bootstrap5 %}
 
 {% comment "License" %}
   * OSIS stands for Open Student Information System. It's an application
@@ -8,7 +8,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2026 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -93,15 +93,43 @@
   {# Well #}
   {% block well %}
     <div class="card card-body bg-light mb-3">
-      <div>
-        {% trans "Reference:" %}
-        {% display doctorate.formation.intitule " (" doctorate.formation.campus.nom ")" as doctorate_title %}
-        {{ doctorate_title }} ({{ doctorate.reference }})
-      </div>
-      <div>
-        {% trans "Status:" %}
-        {{ doctorate.statut|enum_display:'ChoixStatutDoctorat' }}
-      </div>
+      {% if doctorate.matricule_doctorant == user.person.global_id %}
+        <div>
+          {% trans "Reference:" %}
+          {% display doctorate.formation.intitule " (" doctorate.formation.campus.nom ")" as doctorate_title %}
+          {{ doctorate_title }} ({{ doctorate.reference }})
+        </div>
+        <div>
+          {% trans "Status:" %}
+          {{ doctorate.statut|enum_display:'ChoixStatutDoctorat' }}
+        </div>
+      {% else %}
+        <div class="d-flex">
+          <div class="flex-grow-1">
+            <span>
+              {% if doctorate.noma_doctorant %}
+                  {{ doctorate.noma_doctorant }}
+              {% else %}
+                {% translate 'Unknown noma' %}
+              {% endif %}
+            </span> -
+            <span class="bold-text">{{ doctorate.nom_doctorant }}, {{ doctorate.prenom_doctorant }}</span>
+            <br>
+            <span>
+                {{ doctorate.formation.sigle }} - {{ doctorate.formation.intitule }} ({{ doctorate.formation.campus.nom }})
+                <span class="badge bg-secondary">{{ doctorate.formation.annee|display_as_academic_year }}</span>
+            </span>
+          </div>
+          <div>
+            {% if doctorate.type_admission == 'PRE_ADMISSION' %}
+              <span class="bold-text">{{ doctorate.type_admission|enum_display:'ChoixTypeAdmission' }}</span>
+              <br>
+            {% endif %}
+            {% translate 'Status:' %} <span class="badge">{{ doctorate.statut|enum_display:'ChoixStatutDoctorat' }}</span>
+            <br>
+          </div>
+        </div>
+      {% endif %}
     </div>
   {% endblock well %}
 

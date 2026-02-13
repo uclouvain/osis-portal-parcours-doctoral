@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2026 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,16 +27,16 @@
 from copy import copy
 
 from django.utils.functional import cached_property
-from django.utils.translation import get_language
 from django.views.generic import FormView, RedirectView, TemplateView
 
 from frontoffice.settings.osis_sdk.utils import MultipleApiBusinessException
-from parcours_doctoral.contrib.enums import CategorieActivite, StatutActivite
+from parcours_doctoral.contrib.enums import StatutActivite
 from parcours_doctoral.contrib.forms.training import BatchActivityForm
 from parcours_doctoral.contrib.views.mixins import LoadViewMixin
 from parcours_doctoral.services.doctorate import DoctorateService
 from parcours_doctoral.services.mixins import WebServiceFormMixin
 from parcours_doctoral.services.training import DoctorateTrainingService
+from parcours_doctoral.utils.utils import get_categories
 
 __all__ = [
     'DoctoralTrainingListView',
@@ -59,9 +59,7 @@ class DoctoralTrainingListView(LoadViewMixin, WebServiceFormMixin, FormView):
         context_data['activities'] = self.activities
         context_data['statuses'] = StatutActivite.choices()
         config = DoctorateTrainingService.get_config(person=self.person, uuid=self.doctorate_uuid)
-        original_constants = list(dict(CategorieActivite.choices()).keys())
-        original_constants.remove(CategorieActivite.UCL_COURSE.name)
-        context_data['categories'] = list(zip(original_constants, config.category_labels[get_language()]))
+        context_data['categories'] = get_categories(config)
         context_data['categories_labels_dict'] = dict(context_data['categories'])
         context_data['activities_form'] = context_data.pop('form')  # Trick template
         return context_data
@@ -157,11 +155,12 @@ class AssessmentEnrollmentListView(LoadViewMixin, TemplateView):
 
 
 class TrainingRecapPdfView(LoadViewMixin, RedirectView):
-    urlpatterns = 'training-recap-pdf'
+    urlpatterns = {'training-recap-pdf': 'training-recap-pdf/<str:status>'}
     permission_link_to_check = 'retrieve_doctorate_training'
 
     def get_redirect_url(self, *args, **kwargs):
         return DoctorateService.get_training_recap_pdf(
             person=self.person,
             uuid_doctorate=self.doctorate_uuid,
+            status=self.kwargs['status'],
         ).url
