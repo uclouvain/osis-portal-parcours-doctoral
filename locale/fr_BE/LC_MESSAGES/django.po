@@ -50,12 +50,16 @@ msgstr ""
 "doctorat.html' target='_blank'>https://uclouvain.be/fr/chercher/valodoc/"
 "attestation-acces-au-doctorat.html</a>"
 
+msgid "A document proving that the committee approved the publication"
+msgstr ""
+"Un document prouvant qu'un comité de sélection a accepté la publication"
+
 msgid ""
-"A document proving that the communication was done (i.e. communication "
+"A document proving that the communication was done (not a transport "
 "certificate)"
 msgstr ""
-"Un document prouvant que la communication a eu lieu (i.e. certificat de "
-"communication)"
+"Un document prouvant que la communication a eu lieu (pas un titre de "
+"transport)"
 
 msgid "A paper of each type has already been created."
 msgstr "Une épreuve de chaque type a déjà été créée."
@@ -81,6 +85,9 @@ msgstr "Année académique"
 msgctxt "publication-status"
 msgid "Accepted"
 msgstr "Acceptée"
+
+msgid "Accepted activities"
+msgstr "Activités acceptées"
 
 #, python-format
 msgid "Accepted by %(first_name)s %(last_name)s on"
@@ -142,9 +149,6 @@ msgstr "Ajouter une conférence"
 msgid "Add a conference, a symposium"
 msgstr "Ajouter une conférence, un colloque"
 
-msgid "Add a course unit"
-msgstr "Ajouter un cours"
-
 msgid "Add a new member"
 msgstr "Ajouter un nouveau membre"
 
@@ -187,6 +191,9 @@ msgstr "Ajouter un·e promoteur·trice ou un·e membre du comité d'accompagneme
 msgid "Add an activity"
 msgstr "Ajouter une activité"
 
+msgid "Add course units, courses and schools"
+msgstr "Ajouter cours, formations et écoles"
+
 msgid "Add validation of prior experience (VAE)"
 msgstr "Ajouter une valorisation des acquis de l'expérience"
 
@@ -228,6 +235,13 @@ msgstr "Approuver via PDF"
 #, python-format
 msgid "Approve on behalf of %(first_name)s %(last_name)s"
 msgstr "Approuver de la part de %(first_name)s %(last_name)s"
+
+msgid "Approve/Deny"
+msgstr "Approuver/Refuser"
+
+#, python-format
+msgid "Approve/Deny \"%(object)s\"?"
+msgstr "Approuver/Refuser \"%(object)s\""
 
 msgctxt "doctorate decision"
 msgid "Approved"
@@ -780,13 +794,6 @@ msgstr "Nom et prénom de l’orateur.trice"
 msgid "Followed courses"
 msgstr "Cours suivis"
 
-msgid ""
-"Following the specifics of your domain doctoral commission, specify the "
-"total time dedicated to this activity"
-msgstr ""
-"En suivant les dispositions particulières de votre commission doctorale de "
-"domaine, indiquer ici la durée totale consacrée à cette activité"
-
 msgid "Fondation Mont-Godinne"
 msgstr "Fondation Mont Godinne"
 
@@ -820,6 +827,9 @@ msgstr ""
 msgid "Forbidden access"
 msgstr "Accès interdit"
 
+msgid "France"
+msgstr "France"
+
 msgid "Free access (Internet)"
 msgstr "Accès libre (Internet)"
 
@@ -844,13 +854,6 @@ msgstr "Graphe de Gantt"
 
 msgid "Gender"
 msgstr "Genre"
-
-msgid "Give an opinion"
-msgstr "Donner son avis"
-
-#, python-format
-msgid "Give an opinion on \"%(object)s\"?"
-msgstr "Donner son avis sur \"%(object)s\""
 
 msgid "Grounds for denied"
 msgstr "Motif de refus"
@@ -1067,6 +1070,9 @@ msgstr ""
 "Votre demande d'admission est-elle en lien avec une candidature FNRS, FRIA, "
 "FRESH, CSC ?"
 
+msgid "Italy"
+msgstr "Italie"
+
 #, python-format
 msgid "Item %(nth)s in the array did not validate:"
 msgstr "L'élément n°%(nth)s du tableau n’est pas valide :"
@@ -1245,6 +1251,9 @@ msgstr "Publication nationale"
 msgid "Negative assessment by contact supervisor"
 msgstr "Avis négatif du·de la promoteur·trice de contact"
 
+msgid "Netherlands"
+msgstr "Pays-Bas"
+
 msgid "New deadline"
 msgstr "Nouvelle échéance"
 
@@ -1307,8 +1316,8 @@ msgstr "Exposé oral"
 msgid "Organisers or academic responsibles"
 msgstr "Organisateur.trice.s ou responsables académiques"
 
-msgid "Organising institution"
-msgstr "Institution organisatrice"
+msgid "Organising institutions"
+msgstr "Institutions organisatrices"
 
 msgid "Other"
 msgstr "Autre"
@@ -1779,6 +1788,9 @@ msgstr "Demandes de signature envoyées"
 msgid "Sources of funding throughout PhD"
 msgstr "Sources de financement durant toute la durée du doctorat"
 
+msgid "Spain"
+msgstr "Espagne"
+
 msgid "Specify a scientific communication you made."
 msgstr "Indiquer ici une communication scientifique que vous avez réalisée."
 
@@ -1802,6 +1814,9 @@ msgstr ""
 
 msgid "Specify the title in the language of the activity"
 msgstr "Inscrire le titre dans la langue de l’activité"
+
+msgid "Specify the total time dedicated to this activity"
+msgstr "Indiquer ici la durée totale consacrée à cette activité"
 
 msgid ""
 "Specify your participation in a course in the context of your doctoral "
@@ -1852,6 +1867,9 @@ msgstr "Soumise"
 msgctxt "publication-status"
 msgid "Submitted"
 msgstr "Soumise"
+
+msgid "Submitted activities"
+msgstr "Activités soumises"
 
 msgctxt "paper summary"
 msgid "Summary"
@@ -2276,8 +2294,14 @@ msgstr ""
 "faire l’objet d’une valorisation des acquis de l’expérience (art. 2.2.4 du "
 "règlement doctoral)."
 
+msgid "United Kingdom"
+msgstr "Royaume-Uni"
+
 msgid "University"
 msgstr "Université"
+
+msgid "Unknown noma"
+msgstr "Nom inconnu"
 
 msgctxt "publication-status"
 msgid "Unsubmitted"
@@ -2425,3 +2449,10 @@ msgstr ""
 
 msgid "set and reproduce the thesis on a digital medium;"
 msgstr "le droit de fixer et de reproduire la thèse sur support électronique"
+
+#~ msgid ""
+#~ "A document proving that the communication was done (i.e. communication "
+#~ "certificate)"
+#~ msgstr ""
+#~ "Un document prouvant que la communication a eu lieu (i.e. certificat de "
+#~ "communication)"

@@ -8,7 +8,7 @@
   * The core business involves the administration of students, teachers,
   * courses, programs and so on.
   *
-  * Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+  * Copyright (C) 2015-2026 Université catholique de Louvain (http://www.uclouvain.be)
   *
   * This program is free software: you can redistribute it and/or modify
   * it under the terms of the GNU General Public License as published by
@@ -35,10 +35,20 @@
 
   <h4 class="clearfix">
     {% trans "Activities" %}
-    {% if doctorate|can_make_action:'add_training' %}
+    {% if doctorate|can_make_action:'retrieve_doctorate_training' %}
       <div class="float-end">
-        <a href="{% url "parcours_doctoral:training-recap-pdf" doctorate.uuid %}" class="btn btn-light border border-dark-subtle">{% translate "Download the PDF recap" %}</a>
+        <div class="dropdown">
+          <button class="btn btn-default border border-dark-subtle dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% translate "Download the PDF recap" %}
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url "parcours_doctoral:training-recap-pdf" doctorate.uuid 'SOUMISE' %}">{% translate "Submitted activities" %}</a></li>
+            <li><a class="dropdown-item" href="{% url "parcours_doctoral:training-recap-pdf" doctorate.uuid 'ACCEPTEE' %}">{% translate "Accepted activities" %}</a></li>
+          </ul>
+        </div>
       </div>
+    {% endif %}
+    {% if doctorate|can_make_action:'add_training' %}
       <div class="btn-group float-end">
         <button
           type="button"

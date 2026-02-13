@@ -6,7 +6,7 @@
 #    The core business involves the administration of students, teachers,
 #    courses, programs and so on.
 #
-#    Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+#    Copyright (C) 2015-2026 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -27,11 +27,14 @@ from typing import Union
 
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe
+from django.utils.translation import get_language
 from osis_organisation_sdk.model.entite import Entite
 from osis_reference_sdk.model.high_school import HighSchool
 from osis_reference_sdk.model.scholarship import Scholarship
 from osis_reference_sdk.model.superior_non_university import SuperiorNonUniversity
 from osis_reference_sdk.model.university import University
+
+from parcours_doctoral.contrib.enums import CategorieActivite
 
 
 def format_entity_title(entity: Entite):
@@ -76,3 +79,14 @@ def _mark_safe(value, **kwargs):
 
 
 mark_safe_lazy = lazy(_mark_safe, str)
+
+
+def get_categories(config):
+    original_constants = CategorieActivite.get_names()
+    original_constants.remove(CategorieActivite.UCL_COURSE.name)
+    enabled_categories = set(map(str, config.enabled_categories))
+    return [
+        values
+        for values in zip(original_constants, config.category_labels[get_language()])
+        if values[0] in enabled_categories
+    ]

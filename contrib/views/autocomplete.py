@@ -6,7 +6,7 @@
 #  The core business involves the administration of students, teachers,
 #  courses, programs and so on.
 #
-#  Copyright (C) 2015-2025 Université catholique de Louvain (http://www.uclouvain.be)
+#  Copyright (C) 2015-2026 Université catholique de Louvain (http://www.uclouvain.be)
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,14 @@ from osis_reference_sdk.model.scholarship import Scholarship
 from osis_reference_sdk.model.university import University
 
 from base.models.enums.entity_type import INSTITUTE
-from parcours_doctoral.constants import BE_ISO_CODE
+from parcours_doctoral.constants import (
+    BE_ISO_CODE,
+    ESPAGNE_ISO_CODE,
+    FRANCE_ISO_CODE,
+    ITALIE_ISO_CODE,
+    PAYS_BAS_ISO_CODE,
+    ROYAUME_UNI_ISO_CODE,
+)
 from parcours_doctoral.contrib.enums import TypeBourse
 from parcours_doctoral.contrib.enums.diploma import StudyType
 from parcours_doctoral.services.autocomplete import DoctorateAutocompleteService
@@ -135,17 +142,52 @@ class CountryAutocomplete(PaginatedAutocompleteMixin, autocomplete.Select2ListVi
 
     def results(self, results):
         page = self.get_page()
-        belgique = []
-        if not self.q and not self.forwarded.get('exclude_be', False) and page == 1:
-            belgique = [
-                {
-                    'id': BE_ISO_CODE,
-                    'text': _('Belgium'),
-                    'european_union': True,
-                },
-                {'id': None, 'text': '<hr>'},
-            ]
-        return belgique + [
+        highlights = []
+        if not self.q and page == 1:
+            if self.forwarded.get('highlight_eu_countries', False):
+                highlights = [
+                    {
+                        'id': BE_ISO_CODE,
+                        'text': _('Belgium'),
+                        'european_union': True,
+                    },
+                    {
+                        'id': ESPAGNE_ISO_CODE,
+                        'text': _('Spain'),
+                        'european_union': True,
+                    },
+                    {
+                        'id': FRANCE_ISO_CODE,
+                        'text': _('France'),
+                        'european_union': True,
+                    },
+                    {
+                        'id': ITALIE_ISO_CODE,
+                        'text': _('Italy'),
+                        'european_union': True,
+                    },
+                    {
+                        'id': PAYS_BAS_ISO_CODE,
+                        'text': _('Netherlands'),
+                        'european_union': True,
+                    },
+                    {
+                        'id': ROYAUME_UNI_ISO_CODE,
+                        'text': _('United Kingdom'),
+                        'european_union': True,
+                    },
+                ]
+            elif not self.forwarded.get('exclude_be', False):
+                highlights = [
+                    {
+                        'id': BE_ISO_CODE,
+                        'text': _('Belgium'),
+                        'european_union': True,
+                    },
+                ]
+        if highlights:
+            highlights.append({'id': None, 'text': '<hr>'})
+        return highlights + [
             dict(
                 id=country.iso_code,
                 text=country.name if get_language() == settings.LANGUAGE_CODE else country.name_en,
