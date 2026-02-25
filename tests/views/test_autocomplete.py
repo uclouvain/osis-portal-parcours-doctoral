@@ -29,10 +29,10 @@ import uuid
 from unittest.mock import ANY, Mock, patch
 
 from django.urls import reverse
-from osis_organisation_sdk.model.entite import Entite
-from osis_organisation_sdk.model.paginated_entites import PaginatedEntites
-from osis_reference_sdk.model.academic_calendar import AcademicCalendar
-from osis_reference_sdk.model.scholarship import Scholarship
+from osis_organisation_sdk.models.entite import Entite
+from osis_organisation_sdk.models.paginated_entites import PaginatedEntites
+from osis_reference_sdk.models.academic_calendar import AcademicCalendar
+from osis_reference_sdk.models.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
 from base.tests.test_case import OsisPortalTestCase
