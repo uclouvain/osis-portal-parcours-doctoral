@@ -46,10 +46,10 @@ from osis_parcours_doctoral_sdk.model.projet_dto_nested import ProjetDTONested
 from osis_parcours_doctoral_sdk.model.signature_membre_jury_dto_nested import (
     SignatureMembreJuryDTONested,
 )
-from osis_reference_sdk.model.country import Country
-from osis_reference_sdk.model.language import Language
-from osis_reference_sdk.model.paginated_country import PaginatedCountry
-from osis_reference_sdk.model.scholarship import Scholarship
+from osis_reference_sdk.models.country import Country
+from osis_reference_sdk.models.language import Language
+from osis_reference_sdk.models.paginated_country import PaginatedCountry
+from osis_reference_sdk.models.scholarship import Scholarship
 
 from base.tests.factories.person import PersonFactory
 from base.tests.test_case import OsisPortalTestCase
