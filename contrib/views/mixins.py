@@ -51,6 +51,9 @@ class LoadViewMixin(PermissionRequiredMixin, ContextMixin):
 
         if self.doctorate_uuid:
             context['doctorate'] = self.doctorate
+            context['utilisateur_connecte_est_doctorant'] = (
+                    self.doctorate.matricule_doctorant == self.request.user.person.global_id
+            )
 
         return context
 

@@ -44,8 +44,11 @@ msgid ""
 "valodoc/confirmation-eligibility-doctoral-programme.html</a>"
 msgstr ""
 
+msgid "A document proving that the committee approved the publication"
+msgstr ""
+
 msgid ""
-"A document proving that the communication was done (i.e. communication "
+"A document proving that the communication was done (not a transport "
 "certificate)"
 msgstr ""
 
@@ -72,6 +75,9 @@ msgstr ""
 
 msgctxt "publication-status"
 msgid "Accepted"
+msgstr ""
+
+msgid "Accepted activities"
 msgstr ""
 
 #, python-format
@@ -125,9 +131,6 @@ msgstr ""
 msgid "Add a conference, a symposium"
 msgstr ""
 
-msgid "Add a course unit"
-msgstr ""
-
 msgid "Add a new member"
 msgstr ""
 
@@ -170,6 +173,9 @@ msgstr "Add a supervisor or a supervision committee member"
 msgid "Add an activity"
 msgstr ""
 
+msgid "Add course units, courses and schools"
+msgstr ""
+
 msgid "Add validation of prior experience (VAE)"
 msgstr ""
 
@@ -208,6 +214,13 @@ msgstr ""
 
 #, python-format
 msgid "Approve on behalf of %(first_name)s %(last_name)s"
+msgstr ""
+
+msgid "Approve/Deny"
+msgstr ""
+
+#, python-format
+msgid "Approve/Deny \"%(object)s\"?"
 msgstr ""
 
 msgctxt "doctorate decision"
@@ -738,11 +751,6 @@ msgstr ""
 msgid "Followed courses"
 msgstr ""
 
-msgid ""
-"Following the specifics of your domain doctoral commission, specify the "
-"total time dedicated to this activity"
-msgstr ""
-
 msgid "Fondation Mont-Godinne"
 msgstr ""
 
@@ -770,6 +778,9 @@ msgstr ""
 msgid "Forbidden access"
 msgstr ""
 
+msgid "France"
+msgstr ""
+
 msgid "Free access (Internet)"
 msgstr ""
 
@@ -793,13 +804,6 @@ msgid "Gantt chart"
 msgstr "Gantt chart"
 
 msgid "Gender"
-msgstr ""
-
-msgid "Give an opinion"
-msgstr ""
-
-#, python-format
-msgid "Give an opinion on \"%(object)s\"?"
 msgstr ""
 
 msgid "Grounds for denied"
@@ -968,6 +972,9 @@ msgstr ""
 
 msgid ""
 "Is your admission request linked with a FNRS, FRIA, FRESH or CSC application?"
+msgstr ""
+
+msgid "Italy"
 msgstr ""
 
 #, python-format
@@ -1142,6 +1149,9 @@ msgstr ""
 msgid "Negative assessment by contact supervisor"
 msgstr ""
 
+msgid "Netherlands"
+msgstr ""
+
 msgid "New deadline"
 msgstr ""
 
@@ -1200,7 +1210,7 @@ msgstr ""
 msgid "Organisers or academic responsibles"
 msgstr ""
 
-msgid "Organising institution"
+msgid "Organising institutions"
 msgstr ""
 
 msgid "Other"
@@ -1650,6 +1660,9 @@ msgstr ""
 msgid "Sources of funding throughout PhD"
 msgstr ""
 
+msgid "Spain"
+msgstr ""
+
 msgid "Specify a scientific communication you made."
 msgstr ""
 
@@ -1668,6 +1681,9 @@ msgid ""
 msgstr ""
 
 msgid "Specify the title in the language of the activity"
+msgstr ""
+
+msgid "Specify the total time dedicated to this activity"
 msgstr ""
 
 msgid ""
@@ -1712,6 +1728,9 @@ msgstr ""
 
 msgctxt "publication-status"
 msgid "Submitted"
+msgstr ""
+
+msgid "Submitted activities"
 msgstr ""
 
 msgctxt "paper summary"
@@ -2043,7 +2062,13 @@ msgid ""
 "the PhD Regulations)."
 msgstr ""
 
+msgid "United Kingdom"
+msgstr ""
+
 msgid "University"
+msgstr ""
+
+msgid "Unknown noma"
 msgstr ""
 
 msgctxt "publication-status"
