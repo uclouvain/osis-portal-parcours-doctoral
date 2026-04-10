@@ -207,6 +207,7 @@ def get_valid_tab_tree(tab_tree, doctorate):
                 'doctorate',
                 'training',
                 'course-enrollment',
+                'confirmation-paper',
             }:
                 continue
             # Get the accessible sub tabs depending on the user permissions
