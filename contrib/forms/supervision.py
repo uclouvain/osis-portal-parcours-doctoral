@@ -28,7 +28,6 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import pgettext_lazy
 
-from parcours_doctoral.constants import BE_ISO_CODE
 from parcours_doctoral.contrib.enums.actor import ActorType
 from parcours_doctoral.contrib.enums.supervision import DecisionApprovalEnum
 from parcours_doctoral.contrib.forms import EMPTY_CHOICE
@@ -38,6 +37,7 @@ from parcours_doctoral.contrib.forms import (
     get_country_initial_choices,
     get_thesis_institute_initial_choices,
 )
+from reference.services.country import CountryIsoCodes
 
 ACTOR_EXTERNAL = "EXTERNAL"
 EXTERNAL_FIELDS = [
@@ -91,7 +91,7 @@ class DoctorateMemberSupervisionForm(forms.Form):
                 "data-html": True,
             },
         ),
-        initial=BE_ISO_CODE,
+        initial=CountryIsoCodes.BELGIQUE,
     )
     langue = forms.ChoiceField(
         label=_("Contact language"),
